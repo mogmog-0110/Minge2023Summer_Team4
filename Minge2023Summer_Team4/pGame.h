@@ -3,7 +3,7 @@
 
 class Game :public App::Scene {
 private:
-
+	MouseCursor mouseCursor;
 public:
 	Game(const InitData& init);
 

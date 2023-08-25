@@ -1,4 +1,5 @@
 ﻿#include"pGame.h"
+#include "oMouseCursor.h"
 
 Game::Game(const InitData& init)
 	:IScene(init)
@@ -9,8 +10,6 @@ Game::Game(const InitData& init)
 	Scene::SetBackground(ColorF{ 0.8, 0.9, 1.0 });
 
 	Print << U"Push [A] key";
-
-
 }
 
 void Game::update()
@@ -28,7 +27,8 @@ void Game::update()
 
 void Game::draw() const
 {
-	
+	// マウスカーソルを描画 | Draw mouse cursor
+	mouseCursor.draw(Cursor::Pos());
 }
 
 void Game::debug()
