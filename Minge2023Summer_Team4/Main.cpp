@@ -19,7 +19,7 @@ void Main()
 	manager.init(SceneList::Title);
 
 	// 画面サイズを変更
-	Window::Resize(800, 600);
+	Window::Resize(1024, 768);
 
 	while (System::Update())
 	{
