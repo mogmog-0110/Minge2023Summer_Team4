@@ -153,6 +153,12 @@
     <ClCompile Include="pResult.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="pObjectManager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="pObjectAppearanceManager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Image Include="App\icon.ico">
@@ -795,6 +801,12 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="pGame.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="pObjectManager.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="pObjectAppearanceManager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

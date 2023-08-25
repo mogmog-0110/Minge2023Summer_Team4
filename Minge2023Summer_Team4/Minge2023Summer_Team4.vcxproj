@@ -117,6 +117,8 @@
   <ItemGroup>
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="pGame.cpp" />
+    <ClCompile Include="pObjectAppearanceManager.cpp" />
+    <ClCompile Include="pObjectManager.cpp" />
     <ClCompile Include="pResult.cpp" />
     <ClCompile Include="pTitle.cpp" />
     <ClCompile Include="stdafx.cpp">
@@ -320,6 +322,8 @@
   <ItemGroup>
     <ClInclude Include="Define.h" />
     <ClInclude Include="pGame.h" />
+    <ClInclude Include="pObjectAppearanceManager.h" />
+    <ClInclude Include="pObjectManager.h" />
     <ClInclude Include="pResult.h" />
     <ClInclude Include="pTitle.h" />
     <ClInclude Include="stdafx.h" />
