@@ -13,6 +13,6 @@ public:
 	SuperObject();
 	~SuperObject();
 
-	void update();
-	void draw(Vec2 offset) const;
+	virtual void update();
+	virtual void draw(Vec2 offset) const;
 };
