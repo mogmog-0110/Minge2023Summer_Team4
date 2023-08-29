@@ -168,7 +168,7 @@
     <ClCompile Include="oGameObject.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="oBricks.cpp">
+    <ClCompile Include="oDebris.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -836,7 +836,7 @@
     <ClInclude Include="Figure.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="oBricks.h">
+    <ClInclude Include="oDebris.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

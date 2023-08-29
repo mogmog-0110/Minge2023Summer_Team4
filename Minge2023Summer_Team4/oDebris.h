@@ -1,13 +1,13 @@
 ﻿#pragma once
 #include "oGameObject.h"
-class Bricks :
+class Debris :
     public GameObject
 {
 private:
 protected:
 public:
-	Bricks();
-	~Bricks();
+	Debris();
+	~Debris();
 	void draw(Vec2 offset) const;
 };
 

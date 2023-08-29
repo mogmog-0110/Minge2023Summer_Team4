@@ -1,13 +1,13 @@
 ﻿#include "stdafx.h"
-#include "oBricks.h"
+#include "oDebris.h"
 
-Bricks::Bricks()
+Debris::Debris()
 {
 	//これはテスト用です
 	hitbox = Circle{ 200,200,50 };
 }
 
-void Bricks::draw(Vec2 offset) const
+void Debris::draw(Vec2 offset) const
 {
 
 }
