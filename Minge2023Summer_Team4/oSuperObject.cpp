@@ -1,4 +1,4 @@
-﻿#include "pSuperObject.h"
+﻿#include "oSuperObject.h"
 
 SuperObject::SuperObject()
 {
@@ -14,5 +14,5 @@ void SuperObject::update()
 
 void SuperObject::draw(Vec2 offset) const
 {
-	texture.drawAt(offset);
+	this->texture.drawAt(offset);
 }

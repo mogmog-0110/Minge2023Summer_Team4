@@ -1,5 +1,4 @@
 ﻿#include"pGame.h"
-#include "oMouseCursor.h"
 
 Game::Game(const InitData& init)
 	:IScene(init)
@@ -8,9 +7,18 @@ Game::Game(const InitData& init)
 	
 	// 背景の色を設定 | Set background color
 	Scene::SetBackground(ColorF{ 0.8, 0.9, 1.0 });
+	
 
 	Print << U"Push [A] key";
+
+	MouseCursor cursor;
 }
+
+Game::~Game()
+{
+}
+
+
 
 void Game::update()
 {
@@ -27,8 +35,11 @@ void Game::update()
 
 void Game::draw() const
 {
-	// マウスカーソルを描画 | Draw mouse cursor
-	mouseCursor.draw(Cursor::Pos());
+
+	//従来のマウスカーソルを非表示に
+	Cursor::RequestStyle(CursorStyle::Hidden);
+
+	cursor.draw();
 }
 
 void Game::debug()

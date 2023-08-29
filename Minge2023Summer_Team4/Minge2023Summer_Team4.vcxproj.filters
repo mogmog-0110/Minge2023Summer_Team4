@@ -159,7 +159,7 @@
     <ClCompile Include="pObjectAppearanceManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="pSuperObject.cpp">
+    <ClCompile Include="oSuperObject.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="oMouseCursor.cpp">
@@ -238,6 +238,9 @@
     </Image>
     <Image Include="App\example\obj\siv3d-kun-eye.png">
       <Filter>Resource Files\example\obj</Filter>
+    </Image>
+    <Image Include="Image\Cursor.png">
+      <Filter>Resource Files</Filter>
     </Image>
   </ItemGroup>
   <ItemGroup>
@@ -815,10 +818,10 @@
     <ClInclude Include="pObjectAppearanceManager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="pSuperObject.h">
+    <ClInclude Include="oMouseCursor.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="oMouseCursor.h">
+    <ClInclude Include="oSuperObject.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
