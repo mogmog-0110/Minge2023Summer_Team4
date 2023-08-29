@@ -15,3 +15,10 @@ struct GameData
 };
 
 using App = SceneManager<SceneList, GameData>;
+
+enum eObjectType {
+	player,
+	enemy,
+	bullet,
+	none,
+};

@@ -165,6 +165,9 @@
     <ClCompile Include="oMouseCursor.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="oGameObject.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Image Include="App\icon.ico">
@@ -822,6 +825,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="oSuperObject.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="oGameObject.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

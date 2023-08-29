@@ -116,6 +116,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp" />
+    <ClCompile Include="oGameObject.cpp" />
     <ClCompile Include="oMouseCursor.cpp" />
     <ClCompile Include="oSuperObject.cpp" />
     <ClCompile Include="pGame.cpp" />
@@ -324,6 +325,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Define.h" />
+    <ClInclude Include="oGameObject.h" />
     <ClInclude Include="oMouseCursor.h" />
     <ClInclude Include="oSuperObject.h" />
     <ClInclude Include="pGame.h" />
