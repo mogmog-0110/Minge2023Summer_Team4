@@ -17,5 +17,5 @@ void ObjectManager::update()
 
 void ObjectManager::draw() const
 {
-	this->player.draw();
+	this->player.draw({0,0},true);
 }

@@ -7,7 +7,7 @@ Player::Player()
 	hp = 100;
 	damage = 100;
 	pos = Vec2(Scene::Center());
-	hitbox = Circle{ pos,50 };
+	hitbox = Circle{ pos,30 };
 }
 
 Player::~Player()
@@ -39,13 +39,10 @@ void Player::move()
 	}
 
 	pos += V2move.setLength(1) * speed * deltaTime;
+	hitbox = Circle{ pos,30 };
 }
 
-void Player::draw() const
+void Player::drawObject(Vec2 offset) const
 {
-	this->texture.scaled(0.5).drawAt(pos);
-}
-
-void Player::draw(Vec2 offset) const
-{
+	this->texture.scaled(0.5).drawAt(pos + offset);
 }

@@ -16,7 +16,6 @@ public:
 
 	void move() override;
 
-	void draw() const;
-	void draw(Vec2 offset) const;
+	void drawObject(Vec2 offset) const override;
 };
 

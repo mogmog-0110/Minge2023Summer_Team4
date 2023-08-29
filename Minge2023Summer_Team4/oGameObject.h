@@ -25,7 +25,9 @@ public:
 	~GameObject();
 
 	void update();
-	void draw(Vec2 offset) const;
+	void draw(Vec2 offset, bool isHitboxDraw) const;
+	virtual void drawObject(Vec2 offset) const;
+	void drawHitbox(Vec2 offset) const;
 
 	bool isCollisional();
 	void onCollisionResponse(int damage);

@@ -10,7 +10,7 @@ Debris::~Debris()
 {
 }
 
-void Debris::draw(Vec2 offset) const
+void Debris::drawObject(Vec2 offset) const
 {
 
 }
