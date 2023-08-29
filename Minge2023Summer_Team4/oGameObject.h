@@ -1,6 +1,7 @@
 ﻿#pragma once
 #include "Define.h"
 #include "oSuperObject.h"
+#include "Figure.h"
 
 class GameObject :
     public SuperObject
@@ -12,6 +13,7 @@ protected:
 	int hp;
 	int damage;
 	Vec2 pos;
+	Figure hitbox;
 
 	eObjectType myObjectType;
 
@@ -23,7 +25,7 @@ public:
 	~GameObject();
 
 	void update();
-	void draw() const;
+	void draw(Vec2 offset) const;
 
 	bool isCollisional();
 	void onCollisionResponse(int damage);

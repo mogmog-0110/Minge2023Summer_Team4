@@ -17,7 +17,7 @@ void GameObject::update()
 {
 }
 
-void GameObject::draw() const
+void GameObject::draw(Vec2 offset) const
 {
 }
 

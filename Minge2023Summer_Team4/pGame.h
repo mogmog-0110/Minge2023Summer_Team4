@@ -1,5 +1,6 @@
 ﻿#pragma once
 #include"Define.h"
+#include "Figure.h"
 #include "pObjectManager.h"
 #include "oMouseCursor.h"
 

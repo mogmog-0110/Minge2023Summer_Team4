@@ -1,5 +1,6 @@
 ﻿#pragma once
 #include "Define.h"
+#include "Figure.h"
 #include "oPlayer.h"
 
 class ObjectManager
