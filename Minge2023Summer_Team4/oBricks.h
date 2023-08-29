@@ -6,7 +6,8 @@ class Bricks :
 private:
 protected:
 public:
-	void move() override;
-
+	Bricks();
+	~Bricks();
+	void draw(Vec2 offset) const;
 };
 
