@@ -13,7 +13,6 @@ protected:
 	int hp;
 	int damage;
 	Vec2 pos;
-
 	Figure hitbox;
 
 	eObjectType myObjectType;

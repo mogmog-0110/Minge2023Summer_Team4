@@ -9,3 +9,13 @@ ObjectManager::~ObjectManager()
 {
 
 }
+
+void ObjectManager::update()
+{
+	this->player.move();
+}
+
+void ObjectManager::draw() const
+{
+	this->player.draw();
+}
