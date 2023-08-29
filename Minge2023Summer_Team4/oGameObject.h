@@ -11,6 +11,7 @@ protected:
 
 	int hp;
 	int damage;
+	Vec2 pos;
 
 	eObjectType myObjectType;
 

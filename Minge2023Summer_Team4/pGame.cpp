@@ -9,7 +9,7 @@ Game::Game(const InitData& init)
 	Scene::SetBackground(ColorF{ 0.8, 0.9, 1.0 });
 	
 
-	Print << U"Push [A] key";
+	Print << U"Push [Q] key";
 
 	MouseCursor cursor;
 }
@@ -23,11 +23,13 @@ Game::~Game()
 void Game::update()
 {
 
-	if (KeyA.down())
+	if (KeyQ.down())
 	{
 		//タイトルシーンに遷移する
 		changeScene(SceneList::Result);
 	}
+
+	objectManager.update();
 
 	debug();
 
@@ -39,6 +41,7 @@ void Game::draw() const
 	//従来のマウスカーソルを非表示に
 	Cursor::RequestStyle(CursorStyle::Hidden);
 
+	objectManager.draw();
 	cursor.draw();
 }
 
