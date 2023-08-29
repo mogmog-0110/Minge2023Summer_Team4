@@ -3,8 +3,7 @@
 
 Debris::Debris()
 {
-	//これはテスト用です
-	//hitbox = Circle{ 200,200,50 };
+	
 }
 
 Debris::~Debris()

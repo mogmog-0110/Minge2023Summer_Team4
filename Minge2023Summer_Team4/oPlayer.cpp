@@ -7,6 +7,7 @@ Player::Player()
 	hp = 100;
 	damage = 100;
 	pos = Vec2(Scene::Center());
+	hitbox = Circle{ pos,50 };
 }
 
 Player::~Player()

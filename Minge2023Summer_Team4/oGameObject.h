@@ -12,7 +12,7 @@ protected:
 
 	int hp;
 	int damage;
-	Vec2 pos;
+	Vec2 pos = {0,0};
 	Figure hitbox;
 
 	eObjectType myObjectType;
