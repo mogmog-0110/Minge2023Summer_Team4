@@ -8,6 +8,6 @@ protected:
 public:
 	Debris();
 	~Debris();
-	void draw(Vec2 offset) const;
+	void drawObject(Vec2 offset) const;
 };
 

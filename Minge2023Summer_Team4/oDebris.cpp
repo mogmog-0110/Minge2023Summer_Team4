@@ -3,15 +3,15 @@
 
 Debris::Debris()
 {
-	//これはテスト用です
-	//hitbox = Circle{ 200,200,50 };
+	//for test
+	pos = Vec2{ 200,200 };
 }
 
 Debris::~Debris()
 {
 }
 
-void Debris::draw(Vec2 offset) const
+void Debris::drawObject(Vec2 offset) const
 {
 
 }

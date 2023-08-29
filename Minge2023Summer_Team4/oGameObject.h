@@ -12,7 +12,7 @@ protected:
 
 	int hp;
 	int damage;
-	Vec2 pos;
+	Vec2 pos = {0,0};
 	Figure hitbox;
 
 	eObjectType myObjectType;
@@ -25,7 +25,9 @@ public:
 	~GameObject();
 
 	void update();
-	void draw(Vec2 offset) const;
+	void draw(Vec2 offset, bool isHitboxDraw) const;
+	virtual void drawObject(Vec2 offset) const;
+	void drawHitbox(Vec2 offset) const;
 
 	bool isCollisional();
 	void onCollisionResponse(int damage);
