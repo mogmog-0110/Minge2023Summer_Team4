@@ -1,6 +1,7 @@
 ﻿#pragma once
 #include "Define.h"
 #include "oSuperObject.h"
+#include "Figure.h"
 
 class GameObject :
     public SuperObject
@@ -11,6 +12,8 @@ protected:
 
 	int hp;
 	int damage;
+
+	Figure hitbox;
 
 	eObjectType myObjectType;
 

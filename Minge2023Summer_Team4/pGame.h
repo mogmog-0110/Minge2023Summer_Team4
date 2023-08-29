@@ -1,6 +1,7 @@
 ﻿#pragma once
 #include"Define.h"
 #include "oMouseCursor.h"
+#include "Figure.h"
 
 class Game :public App::Scene {
 private:
