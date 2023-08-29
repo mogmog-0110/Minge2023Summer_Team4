@@ -168,6 +168,9 @@
     <ClCompile Include="oGameObject.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="oDebris.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Image Include="App\icon.ico">
@@ -828,6 +831,12 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="oGameObject.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Figure.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="oDebris.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
