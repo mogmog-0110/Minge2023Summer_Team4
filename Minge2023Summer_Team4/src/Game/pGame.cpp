@@ -42,8 +42,8 @@ void Game::draw() const
 	Cursor::RequestStyle(CursorStyle::Hidden);
 
 	objectManager.draw();
-	cursor.draw();
 	frameTex.draw();
+	cursor.draw();
 }
 
 void Game::debug()
