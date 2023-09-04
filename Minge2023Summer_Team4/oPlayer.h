@@ -16,6 +16,6 @@ public:
 
 	void move() override;
 
-	void drawObject(Vec2 offset) const override;
+	void draw(Vec2 offset, bool isHitboxDraw) const override;
 };
 

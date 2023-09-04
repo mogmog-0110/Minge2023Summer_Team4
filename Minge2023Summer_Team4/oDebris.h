@@ -8,6 +8,6 @@ protected:
 public:
 	Debris();
 	~Debris();
-	void drawObject(Vec2 offset) const;
+	//void draw(Vec2 offset, bool isHitboxDraw) const;
 };
 

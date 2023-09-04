@@ -11,7 +11,4 @@ Debris::~Debris()
 {
 }
 
-void Debris::drawObject(Vec2 offset) const
-{
 
-}
