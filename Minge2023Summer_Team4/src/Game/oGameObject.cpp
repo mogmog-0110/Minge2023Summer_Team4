@@ -1,5 +1,4 @@
-﻿#include "stdafx.h"
-#include "oGameObject.h"
+﻿#include "oGameObject.h"
 
 GameObject::GameObject()
 {
