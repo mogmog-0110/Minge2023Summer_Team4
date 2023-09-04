@@ -9,7 +9,7 @@ private:
 	ObjectManager objectManager;
 	MouseCursor cursor;
 
-	Texture frameTex{ U"../Image/frame.png" };
+	Texture frameTex{ U"Image/frame.png" };
 public:
 	Game(const InitData& init);
 	~Game();
