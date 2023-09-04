@@ -43,6 +43,7 @@ void Game::draw() const
 
 	objectManager.draw();
 	cursor.draw();
+	Texture{ U"../Image/frame.png" }.draw();
 }
 
 void Game::debug()
