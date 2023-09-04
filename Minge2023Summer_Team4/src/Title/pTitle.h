@@ -1,5 +1,5 @@
 ﻿#pragma once
-#include"Define.h"
+#include"../Define.h"
 
 class Title :public App::Scene {
 private:

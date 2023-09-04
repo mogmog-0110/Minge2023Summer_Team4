@@ -1,7 +1,7 @@
 ﻿# include "Define.h" // OpenSiv3D v0.6.11
-#include "pGame.h"
-#include "pTitle.h"
-#include "pResult.h"
+#include "Game/pGame.h"
+#include "Title/pTitle.h"
+#include "Result/pResult.h"
 
 void Main()
 {
