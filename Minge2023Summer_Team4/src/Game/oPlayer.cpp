@@ -1,5 +1,4 @@
-﻿#include "stdafx.h"
-#include "oPlayer.h"
+﻿#include "oPlayer.h"
 
 Player::Player()
 {

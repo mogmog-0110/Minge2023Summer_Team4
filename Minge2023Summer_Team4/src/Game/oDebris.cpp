@@ -1,5 +1,4 @@
-﻿#include "stdafx.h"
-#include "oDebris.h"
+﻿#include "oDebris.h"
 
 Debris::Debris()
 {

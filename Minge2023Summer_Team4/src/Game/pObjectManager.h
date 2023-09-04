@@ -1,6 +1,6 @@
 ﻿#pragma once
-#include "Define.h"
-#include "Figure.h"
+#include "../Define.h"
+#include "../Figure.h"
 #include "oPlayer.h"
 #include "oDebris.h"
 

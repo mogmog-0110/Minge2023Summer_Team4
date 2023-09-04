@@ -1,11 +1,11 @@
 ﻿#pragma once
-#include"Define.h"
+#include"../Define.h"
 
-class Title :public App::Scene {
+class Result :public App::Scene {
 private:
 
 public:
-	Title(const InitData& init);
+	Result(const InitData& init);
 
 	void update() override;
 	void draw() const override;
