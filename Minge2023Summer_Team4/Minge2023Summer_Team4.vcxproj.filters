@@ -171,6 +171,9 @@
     <ClCompile Include="oDebris.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="oPlayer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Image Include="App\icon.ico">
@@ -246,6 +249,9 @@
       <Filter>Resource Files\example\obj</Filter>
     </Image>
     <Image Include="Image\Cursor.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Image\frame.png">
       <Filter>Resource Files</Filter>
     </Image>
   </ItemGroup>
@@ -837,6 +843,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="oDebris.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="oPlayer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

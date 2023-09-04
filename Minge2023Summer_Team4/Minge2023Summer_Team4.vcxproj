@@ -157,6 +157,7 @@
     <Image Include="App\example\windmill.png" />
     <Image Include="App\icon.ico" />
     <Image Include="Image\Cursor.png" />
+    <Image Include="Image\frame.png" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="App\Resource.rc" />

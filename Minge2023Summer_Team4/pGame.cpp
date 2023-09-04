@@ -43,6 +43,7 @@ void Game::draw() const
 
 	objectManager.draw();
 	cursor.draw();
+	frameTex.draw();
 }
 
 void Game::debug()

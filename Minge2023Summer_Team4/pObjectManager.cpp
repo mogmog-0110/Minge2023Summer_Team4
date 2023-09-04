@@ -13,9 +13,11 @@ ObjectManager::~ObjectManager()
 void ObjectManager::update()
 {
 	this->player.move();
+	this->testdebris.update();
 }
 
 void ObjectManager::draw() const
 {
-	this->player.draw();
+	this->testdebris.draw({ 0,0 }, true);
+	this->player.draw({0,0},true);
 }
