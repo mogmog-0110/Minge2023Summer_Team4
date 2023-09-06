@@ -21,7 +21,7 @@ protected:
 
 	eObjectType myObjectType;
 
-	virtual void move();
+	
 	void drawHitbox(Vec2 offset) const;
 
 
@@ -31,6 +31,9 @@ public:
 	~GameObject();
 
 	void update();
+	void updateCommon();
+	virtual void move();
+
 	virtual void draw(Vec2 offset, bool isHitboxDraw) const;
 	
 	bool isCollisional();

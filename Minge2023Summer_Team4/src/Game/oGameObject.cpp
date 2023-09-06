@@ -2,7 +2,7 @@
 
 GameObject::GameObject()
 {
-	hitbox = Circle{ pos,50 };
+	
 }
 
 GameObject::~GameObject()
@@ -11,11 +11,19 @@ GameObject::~GameObject()
 
 void GameObject::update()
 {
-	hitbox = Circle{ pos,50 };
+	updateCommon();
+	move();
+}
+
+void GameObject::updateCommon()
+{
+
 }
 
 void GameObject::move()
 {
+	pos += (Spd * Scene::DeltaTime());// +(0.5 * acc * Scene::DeltaTime() * Scene::DeltaTime())
+	hitbox.moveBy(Spd * Scene::DeltaTime());
 }
 
 
