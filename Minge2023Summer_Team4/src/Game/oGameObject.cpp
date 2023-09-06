@@ -12,6 +12,7 @@ GameObject::~GameObject()
 void GameObject::update()
 {
 	hitbox = Circle{ pos,50 };
+
 }
 
 void GameObject::move()
@@ -30,7 +31,7 @@ void GameObject::draw(Vec2 offset,bool isHitboxDraw) const
 void GameObject::drawHitbox(Vec2 offset) const
 {
 	//hitbox.draw({ Palette::Tomato, 0.5});
-	if (btest==false) hitbox.draw({ Palette::Tomato, 0.5 });
+	if (collisionalTimer.isRunning() == false) hitbox.draw({Palette::Tomato, 0.5});
 	else hitbox.draw({ Palette::Royalblue, 0.5 });
 }
 
@@ -44,12 +45,12 @@ int GameObject::GetDamage() {
 
 bool GameObject::isCollisional()
 {
-	return true;
+	return !collisionalTimer.isRunning();
 }
 
 void GameObject::onCollisionResponse(int damage)
 {
-	btest = true;
+	collisionalTimer.restart();
 }
 
 void GameObject::calcDamage(int damage)

@@ -8,6 +8,7 @@ class GameObject :
 {
 private:
 	bool btest = false;
+	Timer collisionalTimer { 1s, StartImmediately::No };
 
 protected:
 
