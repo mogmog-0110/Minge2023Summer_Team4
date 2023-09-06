@@ -7,13 +7,13 @@ class GameObject :
     public SuperObject
 {
 private:
-	bool btest = false;
-	Timer collisionalTimer { 1s, StartImmediately::No };
+	Timer collisionalTimer;
+	const Font debugfont{ 15 };
 
 protected:
 
-	int hp;
-	int damage;
+	int hp = 0;
+	int damage = 1;
 
 	Vec2 pos = { 0,0 };
 	Vec2 Spd = { 0,0 };
