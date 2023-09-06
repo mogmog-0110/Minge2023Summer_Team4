@@ -12,7 +12,7 @@ ObjectManager::~ObjectManager()
 
 void ObjectManager::update()
 {
-	this->player.move();
+	this->player.update();
 	this->testdebris.update();
 }
 

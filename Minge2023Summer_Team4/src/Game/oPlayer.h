@@ -14,6 +14,7 @@ public:
 	Player();
 	~Player();
 
+	void update() override;
 	void move() override;
 
 	void draw(Vec2 offset, bool isHitboxDraw) const override;
