@@ -30,7 +30,7 @@ void Game::update()
 	}
 
 	objectManager.update();
-
+	objectManager.collision();
 	debug();
 
 }

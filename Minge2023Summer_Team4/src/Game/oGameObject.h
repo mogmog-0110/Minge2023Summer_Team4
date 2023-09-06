@@ -7,6 +7,7 @@ class GameObject :
     public SuperObject
 {
 private:
+	bool btest = false;
 
 protected:
 
@@ -32,7 +33,9 @@ public:
 
 	void update();
 	virtual void draw(Vec2 offset, bool isHitboxDraw) const;
-	
+
+	Figure GetHitbox();
+	int GetDamage();
 	bool isCollisional();
 	void onCollisionResponse(int damage);
 	void calcDamage(int damage);

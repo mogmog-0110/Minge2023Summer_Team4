@@ -29,16 +29,27 @@ void GameObject::draw(Vec2 offset,bool isHitboxDraw) const
 
 void GameObject::drawHitbox(Vec2 offset) const
 {
-	hitbox.draw({ Palette::Tomato, 0.5});
+	//hitbox.draw({ Palette::Tomato, 0.5});
+	if (btest==false) hitbox.draw({ Palette::Tomato, 0.5 });
+	else hitbox.draw({ Palette::Royalblue, 0.5 });
+}
+
+Figure GameObject::GetHitbox() {
+	return hitbox;
+}
+
+int GameObject::GetDamage() {
+	return damage;
 }
 
 bool GameObject::isCollisional()
 {
-	return false;
+	return true;
 }
 
 void GameObject::onCollisionResponse(int damage)
 {
+	btest = true;
 }
 
 void GameObject::calcDamage(int damage)
