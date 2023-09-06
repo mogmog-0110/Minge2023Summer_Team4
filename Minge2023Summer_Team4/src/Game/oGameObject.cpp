@@ -2,9 +2,9 @@
 
 GameObject::GameObject()
 {
-	pos = Vec2{0,0 };
+	pos = Vec2{0,0};
 	hitbox = Circle{ pos,50 };
-	Spd = Vec2{ 0,0 };
+	Spd = Vec2{0,0};
 }
 
 GameObject::GameObject(Vec2 pos_, Vec2 Spd_)

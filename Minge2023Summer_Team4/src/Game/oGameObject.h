@@ -13,9 +13,9 @@ protected:
 	int hp;
 	int damage;
 
-	Vec2 pos = { 0,0 };
-	Vec2 Spd = { 0,0 };
-	Vec2 Acc = { 0,0 };
+	Vec2 pos;
+	Vec2 Spd;
+	Vec2 Acc;
 
 	Figure hitbox;
 
