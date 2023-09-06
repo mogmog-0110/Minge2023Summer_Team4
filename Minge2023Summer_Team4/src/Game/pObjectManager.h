@@ -8,7 +8,7 @@ class ObjectManager
 {
 private:
 	Player player;
-	Debris testdebris;
+	Debris testdebris{ { 200,200 }, { 100,50 } };
 
 public:
 	ObjectManager();
