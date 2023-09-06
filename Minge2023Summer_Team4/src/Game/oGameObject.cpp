@@ -55,6 +55,7 @@ bool GameObject::isCollisional()
 void GameObject::onCollisionResponse(int damage)
 {
 	collisionalTimer.restart();
+	hp -= damage;
 }
 
 void GameObject::calcDamage(int damage)
