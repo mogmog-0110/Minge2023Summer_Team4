@@ -28,6 +28,8 @@ protected:
 public:
 
 	GameObject();
+	GameObject(Vec2 pos_, Vec2 Spd_);
+
 	~GameObject();
 
 	void update();
