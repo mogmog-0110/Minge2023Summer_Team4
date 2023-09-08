@@ -13,8 +13,7 @@ GameObject::GameObject(Vec2 pos_, Vec2 Spd_)
 	pos = pos_;
 	hitbox = Circle{ pos,50 };
 	Spd = Spd_;
-  
-  collisionalTimer = Timer{ 1s, StartImmediately::No };
+	collisionalTimer = Timer{ 1s, StartImmediately::No };
 }
 
 GameObject::~GameObject()
@@ -49,8 +48,8 @@ void GameObject::draw(Vec2 offset,bool isHitboxDraw) const
 void GameObject::drawHitbox(Vec2 offset) const
 {
 	//hitbox.draw({ Palette::Tomato, 0.5});
-	if (collisionalTimer.isRunning() == false) hitbox.draw({Palette::Tomato, 0.5});
-	else hitbox.draw({ Palette::Royalblue, 0.5 });
+	if (collisionalTimer.isRunning() == false) hitbox.movedBy(offset).draw({Palette::Tomato, 0.5});
+	else hitbox.movedBy(offset).draw({Palette::Royalblue, 0.5});
 
 	//ついでにデバッグ用
 	debugfont(Format(hp)).drawAt(pos + offset + Vec2{0,30}, {Palette::Navy,0.5});
