@@ -1,19 +1,15 @@
 ﻿#include "oGameObject.h"
 
 GameObject::GameObject()
+	:myObjectType(eObjectType::none), hp(1), damage(1), pos({ 0,0 }),
+	Spd({ 0,0 }), Acc({ 0,0 }), hitbox(Circle{ pos,50 }), collisionalTimer(Timer{ 1s, StartImmediately::No })
 {
-	pos = Vec2{0,0};
-	hitbox = Circle{ pos,50 };
-	Spd = Vec2{0,0};
-	collisionalTimer = Timer{ 1s, StartImmediately::No };
 }
 
-GameObject::GameObject(Vec2 pos_, Vec2 Spd_)
+GameObject::GameObject(eObjectType myType_, int hp_, int damage_, Vec2 pos_, Vec2 Spd_, Vec2 Acc_ = {0,0})
+	:myObjectType(myType_), hp(hp_), damage(damage_), pos(pos_),
+	Spd(Spd_), Acc(Acc_), hitbox(Circle{pos,50}), collisionalTimer(Timer{1s, StartImmediately::No})
 {
-	pos = pos_;
-	hitbox = Circle{ pos,50 };
-	Spd = Spd_;
-	collisionalTimer = Timer{ 1s, StartImmediately::No };
 }
 
 GameObject::~GameObject()
@@ -32,7 +28,7 @@ void GameObject::updateCommon()
 
 void GameObject::move()
 {
-	pos += (Spd * Scene::DeltaTime());// +(0.5 * acc * Scene::DeltaTime() * Scene::DeltaTime())
+	pos += (Spd * Scene::DeltaTime()); //+ (0.5 * Acc * Scene::DeltaTime() * Scene::DeltaTime());
 	hitbox.moveBy(Spd * Scene::DeltaTime());
 }
 

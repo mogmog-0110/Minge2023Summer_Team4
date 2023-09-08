@@ -30,7 +30,7 @@ protected:
 public:
 
 	GameObject();
-	GameObject(Vec2 pos_, Vec2 Spd_);
+	GameObject(eObjectType, int hp_, int damage_, Vec2 pos_, Vec2 Spd_, Vec2 Acc_);
 
 	~GameObject();
 

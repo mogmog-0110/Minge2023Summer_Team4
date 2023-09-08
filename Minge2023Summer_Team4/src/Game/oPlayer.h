@@ -12,6 +12,7 @@ protected:
 
 public:
 	Player();
+	Player(int hp_, int damage_, Vec2 pos_, double speed_);
 	~Player();
 
 	void update() override;

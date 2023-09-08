@@ -21,4 +21,5 @@ enum eObjectType {
 	enemy,
 	bullet,
 	none,
+	debris,
 };

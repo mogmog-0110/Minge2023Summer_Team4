@@ -7,8 +7,8 @@
 class ObjectManager
 {
 private:
-	Player player;
-	Debris testdebris{ { 200,200 }, { 100,50 } };
+	Player player{ 1000,10,Scene::Center(),400 };
+	Debris testdebris{ eObjectType::debris,1000,10, { 200,200 }, { 50,25 },{-50,0} };
 
 public:
 	ObjectManager();

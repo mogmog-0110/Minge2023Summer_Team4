@@ -1,13 +1,24 @@
 ﻿#include "oPlayer.h"
+#include "../Define.h"
 
 Player::Player()
+	:speed(500)
 {
-	speed = 500;
 	hp = 100;
 	damage = 100;
 	pos = Vec2(Scene::Center());
 	hitbox = Circle{ pos,30 };
+
+	myObjectType = eObjectType::player;
+	
 }
+
+Player::Player(int hp_, int damage_, Vec2 pos_, double speed_)
+	:speed(speed_)
+{
+	GameObject(eObjectType::player, hp_, damage_, pos_, { 0,0 }, { 0,0 });
+}
+
 
 Player::~Player()
 {
