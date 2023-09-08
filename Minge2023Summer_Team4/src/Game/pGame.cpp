@@ -42,7 +42,7 @@ void Game::draw() const
 	Cursor::RequestStyle(CursorStyle::Hidden);
 
 	objectManager.draw();
-	frameTex.draw();
+	TextureAsset(U"Frame").draw();
 	cursor.draw();
 }
 

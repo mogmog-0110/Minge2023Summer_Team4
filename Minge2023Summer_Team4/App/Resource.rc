@@ -116,10 +116,16 @@ Resource(engine/soundfont/GMGSx.sf2.zstdcmp)
 //////////////////////////////////////////////////////
 //
 //	Siv3D App Resources (Your application resources here)
+//  ここから下に使う画像等を読み込んで。
 //
 //////////////////////////////////////////////////////
 
+//Titleシーン
+Resource(Image/title.png)
 
+//Gameシーン
+Resource(Image/Cursor.png)
+Resource(Image/frame.png)
 
 /* examples 
 
