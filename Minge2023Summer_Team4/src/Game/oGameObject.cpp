@@ -2,8 +2,19 @@
 
 GameObject::GameObject()
 {
+	pos = Vec2{0,0};
 	hitbox = Circle{ pos,50 };
+	Spd = Vec2{0,0};
 	collisionalTimer = Timer{ 1s, StartImmediately::No };
+}
+
+GameObject::GameObject(Vec2 pos_, Vec2 Spd_)
+{
+	pos = pos_;
+	hitbox = Circle{ pos,50 };
+	Spd = Spd_;
+  
+  collisionalTimer = Timer{ 1s, StartImmediately::No };
 }
 
 GameObject::~GameObject()
@@ -12,12 +23,18 @@ GameObject::~GameObject()
 
 void GameObject::update()
 {
-	hitbox = Circle{ pos,50 };
+	updateCommon();
+	move();
+}
 
+void GameObject::updateCommon()
+{
 }
 
 void GameObject::move()
 {
+	pos += (Spd * Scene::DeltaTime());// +(0.5 * acc * Scene::DeltaTime() * Scene::DeltaTime())
+	hitbox.moveBy(Spd * Scene::DeltaTime());
 }
 
 

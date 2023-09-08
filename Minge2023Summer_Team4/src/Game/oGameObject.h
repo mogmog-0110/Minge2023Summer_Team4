@@ -15,24 +15,28 @@ protected:
 	int hp = 0;
 	int damage = 1;
 
-	Vec2 pos = { 0,0 };
-	Vec2 Spd = { 0,0 };
-	Vec2 Acc = { 0,0 };
+	Vec2 pos;
+	Vec2 Spd;
+	Vec2 Acc;
 
 	Figure hitbox;
 
 	eObjectType myObjectType;
 
-	virtual void move();
+	void updateCommon();
 	void drawHitbox(Vec2 offset) const;
 
 
 public:
 
 	GameObject();
+	GameObject(Vec2 pos_, Vec2 Spd_);
+
 	~GameObject();
 
 	void update();
+	virtual void move();
+
 	virtual void draw(Vec2 offset, bool isHitboxDraw) const;
 
 	Figure GetHitbox();

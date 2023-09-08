@@ -13,6 +13,13 @@ Player::~Player()
 {
 }
 
+void Player::update() {
+	
+	updateCommon();
+	move();
+	
+}
+
 void Player::move()
 {
 	Vec2 newPos(0, 0);
