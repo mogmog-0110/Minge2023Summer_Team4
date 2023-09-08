@@ -7,11 +7,13 @@ class GameObject :
     public SuperObject
 {
 private:
+	Timer collisionalTimer;
+	const Font debugfont{ 15 };
 
 protected:
 
-	int hp;
-	int damage;
+	int hp = 0;
+	int damage = 1;
 
 	Vec2 pos;
 	Vec2 Spd;
@@ -36,7 +38,9 @@ public:
 	virtual void move();
 
 	virtual void draw(Vec2 offset, bool isHitboxDraw) const;
-	
+
+	Figure GetHitbox();
+	int GetDamage();
 	bool isCollisional();
 	void onCollisionResponse(int damage);
 	void calcDamage(int damage);

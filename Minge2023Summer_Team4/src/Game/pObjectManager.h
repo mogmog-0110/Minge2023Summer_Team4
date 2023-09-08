@@ -15,5 +15,6 @@ public:
 	~ObjectManager();
 
 	void update();
+	void collision();
 	void draw() const;
 };

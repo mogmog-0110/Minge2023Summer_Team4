@@ -5,6 +5,7 @@ GameObject::GameObject()
 	pos = Vec2{0,0};
 	hitbox = Circle{ pos,50 };
 	Spd = Vec2{0,0};
+	collisionalTimer = Timer{ 1s, StartImmediately::No };
 }
 
 GameObject::GameObject(Vec2 pos_, Vec2 Spd_)
@@ -12,6 +13,7 @@ GameObject::GameObject(Vec2 pos_, Vec2 Spd_)
 	pos = pos_;
 	hitbox = Circle{ pos,50 };
 	Spd = Spd_;
+	collisionalTimer = Timer{ 1s, StartImmediately::No };
 }
 
 GameObject::~GameObject()
@@ -26,7 +28,6 @@ void GameObject::update()
 
 void GameObject::updateCommon()
 {
-
 }
 
 void GameObject::move()
@@ -46,16 +47,31 @@ void GameObject::draw(Vec2 offset,bool isHitboxDraw) const
 
 void GameObject::drawHitbox(Vec2 offset) const
 {
-	hitbox.draw({ Palette::Tomato, 0.5});
+	//hitbox.draw({ Palette::Tomato, 0.5});
+	if (collisionalTimer.isRunning() == false) hitbox.movedBy(offset).draw({Palette::Tomato, 0.5});
+	else hitbox.movedBy(offset).draw({Palette::Royalblue, 0.5});
+
+	//ついでにデバッグ用
+	debugfont(Format(hp)).drawAt(pos + offset + Vec2{0,30}, {Palette::Navy,0.5});
+}
+
+Figure GameObject::GetHitbox() {
+	return hitbox;
+}
+
+int GameObject::GetDamage() {
+	return damage;
 }
 
 bool GameObject::isCollisional()
 {
-	return false;
+	return !collisionalTimer.isRunning();
 }
 
 void GameObject::onCollisionResponse(int damage)
 {
+	collisionalTimer.restart();
+	hp -= damage;
 }
 
 void GameObject::calcDamage(int damage)
