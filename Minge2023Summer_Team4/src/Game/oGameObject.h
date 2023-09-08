@@ -30,7 +30,7 @@ protected:
 public:
 
 	GameObject();
-	GameObject(eObjectType, int hp_, int damage_, String textureStr, Figure hitbox_, Vec2 pos_, Vec2 Spd_, Vec2 Acc_);
+	GameObject(eObjectType, int hp_, int damage_, String textureStr, Figure hitbox_, Vec2 pos_, Vec2 Spd_, Vec2 Acc_ = { 0,0 });
 
 	~GameObject();
 
