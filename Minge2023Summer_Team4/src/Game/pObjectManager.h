@@ -7,14 +7,16 @@
 class ObjectManager
 {
 private:
-	Player player;
-	Debris testdebris{ { 200,200 }, { 100,50 } };
 
 public:
 	ObjectManager();
 	~ObjectManager();
 
+	Player* myPlayer;
+	Debris testdebris{ { 200,200 }, { 100,50 } };
+
+
 	void update();
 	void collision();
-	void draw() const;
+	void draw(Vec2 offset) const;
 };
