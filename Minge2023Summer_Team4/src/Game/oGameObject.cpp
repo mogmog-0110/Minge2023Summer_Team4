@@ -40,8 +40,8 @@ void GameObject::move()
 
 void GameObject::draw(Vec2 offset,bool isHitboxDraw) const
 {
-	this->texture.drawAt(offset);
-	if (isHitboxDraw) drawHitbox(offset);
+	this->texture.drawAt(-offset);
+	if (isHitboxDraw) drawHitbox(-offset);
 }
 
 
@@ -55,11 +55,11 @@ void GameObject::drawHitbox(Vec2 offset) const
 	debugfont(Format(hp)).drawAt(pos + offset + Vec2{0,30}, {Palette::Navy,0.5});
 }
 
-Figure GameObject::GetHitbox() {
+Figure GameObject::getHitbox() {
 	return hitbox;
 }
 
-int GameObject::GetDamage() {
+int GameObject::getDamage() {
 	return damage;
 }
 
@@ -76,4 +76,14 @@ void GameObject::onCollisionResponse(int damage)
 
 void GameObject::calcDamage(int damage)
 {
+}
+
+Vec2 GameObject::getPos() const
+{
+	return pos;
+}
+
+double GameObject::getSpeed() const
+{
+	return speed;
 }

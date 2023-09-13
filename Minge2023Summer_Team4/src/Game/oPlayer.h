@@ -6,9 +6,6 @@ class Player :
 {
 private:
 	const Texture texture{ U"💩"_emoji };
-	double speed;
-
-protected:
 
 public:
 	Player();

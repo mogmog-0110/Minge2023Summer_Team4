@@ -14,6 +14,7 @@ protected:
 
 	int hp = 0;
 	int damage = 1;
+	double speed;
 
 	Vec2 pos;
 	Vec2 Spd;
@@ -39,11 +40,14 @@ public:
 
 	virtual void draw(Vec2 offset, bool isHitboxDraw) const;
 
-	Figure GetHitbox();
-	int GetDamage();
 	bool isCollisional();
 	void onCollisionResponse(int damage);
 	void calcDamage(int damage);
 
+	//ゲッター関数
+	Vec2 getPos() const;
+	double getSpeed() const;
+	int getDamage();
+	Figure getHitbox();
 };
 

@@ -9,6 +9,16 @@ private:
 	ObjectManager objectManager;
 	MouseCursor cursor;
 
+	//プレイヤーから見た相対的な左上座標
+	Vec2 topLeft;
+
+	//カメラ座標
+	Vec2 cameraPos;
+
+	//フィールドサイズ
+	const int FIELD_WIDTH = 10000000000;
+	const int FIELD_HEIGHT =10000000000;
+
 public:
 	Game(const InitData& init);
 	~Game();
@@ -18,4 +28,6 @@ public:
 
 	void debug();
 
+	void scrollUpdate();
+	Vec2 convertToScreenPos(Vec2 pos);
 };
