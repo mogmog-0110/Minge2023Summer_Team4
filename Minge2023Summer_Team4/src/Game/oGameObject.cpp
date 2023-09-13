@@ -1,7 +1,7 @@
 ﻿#include "oGameObject.h"
 
 GameObject::GameObject()
-	:myObjectType(eObjectType::none), hp(1), damage(1), hitbox(Circle{ pos,50 }),
+	:myObjectType(eObjectType::none), hp(1), damage(1),  hitbox(Circle{pos,50}),
 	pos({ 0,0 }),Spd({ 0,0 }), Acc({ 0,0 }), collisionalTimer(Timer{ 0.5s, StartImmediately::No })
 {
 }
@@ -9,7 +9,8 @@ GameObject::GameObject()
 GameObject::GameObject(eObjectType myType_, int hp_, int damage_, String textureStr_,
 	Figure hitbox_, Vec2 pos_, Vec2 Spd_, Vec2 Acc_)
 	:myObjectType(myType_), hp(hp_), damage(damage_), hitbox(hitbox_.setCenter(pos_)),
-	pos(pos_),Spd(Spd_), Acc(Acc_), collisionalTimer(Timer{1s, StartImmediately::No})
+	pos(pos_),Spd(Spd_), Acc(Acc_), collisionalTimer(Timer{1s, StartImmediately::No}),
+	SuperObject(TextureAsset(textureStr_))
 {
 	
 }
@@ -17,6 +18,10 @@ GameObject::GameObject(eObjectType myType_, int hp_, int damage_, String texture
 GameObject::~GameObject()
 {
 }
+
+
+//====================================================
+//毎Tick実行するかんすう
 
 void GameObject::update()
 {
@@ -36,6 +41,9 @@ void GameObject::move()
 
 
 
+//====================================================
+//描画関連
+
 void GameObject::draw(Vec2 offset,bool isHitboxDraw) const
 {
 	this->texture.drawAt(offset);
@@ -53,6 +61,11 @@ void GameObject::drawHitbox(Vec2 offset) const
 	debugfont(Format(hp)).drawAt(pos + offset + Vec2{0,30}, {Palette::Navy,0.5});
 }
 
+
+
+//====================================================
+//外部からの変数取得
+
 Figure GameObject::GetHitbox() {
 	return hitbox;
 }
@@ -60,6 +73,11 @@ Figure GameObject::GetHitbox() {
 int GameObject::GetDamage() {
 	return damage;
 }
+
+
+
+//====================================================
+//接触関連
 
 bool GameObject::isCollisional()
 {

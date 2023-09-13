@@ -5,7 +5,7 @@ class Player :
     public GameObject
 {
 private:
-	const Texture texture{ U"💩"_emoji };
+	const Texture tempTexture{ U"💩"_emoji };
 	double speed;
 
 protected:

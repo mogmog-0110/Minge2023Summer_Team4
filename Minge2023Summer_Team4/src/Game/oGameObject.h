@@ -8,6 +8,8 @@ class GameObject :
 {
 private:
 	Timer collisionalTimer;
+	//String textureStr;
+
 	const Font debugfont{ 15 };
 
 protected:

@@ -4,6 +4,11 @@ SuperObject::SuperObject()
 {
 }
 
+SuperObject::SuperObject(Texture texture_)
+	:texture(texture_)
+{
+}
+
 SuperObject::~SuperObject()
 {
 }
