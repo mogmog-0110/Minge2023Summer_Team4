@@ -1,7 +1,7 @@
 ﻿#include"pGame.h"
 
 Game::Game(const InitData& init)
-	:IScene(init)
+	:IScene(init), objectManager(ObjectManager{objectAppearanceManager})
 {
 	Print << U"Game!";
 	
@@ -10,7 +10,6 @@ Game::Game(const InitData& init)
 
 	Print << U"Push [Q] key";
 
-	MouseCursor cursor;
 	topLeft = objectManager.myPlayer->getPos() - Scene::Center();
 }
 
@@ -22,6 +21,8 @@ Game::~Game()
 
 void Game::update()
 {
+
+	if (KeyP.down()) objectAppearanceManager.debugCount();
 
 	if (KeyQ.down())
 	{
@@ -51,6 +52,7 @@ void Game::draw() const
 void Game::debug()
 {
 	ClearPrint();
+	objectAppearanceManager.debug();
 
 	//マップスクロール用
 	for (int32 i = 0; i < 100; ++i)

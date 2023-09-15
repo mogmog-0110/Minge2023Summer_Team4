@@ -1,8 +1,9 @@
 ﻿#include "pObjectManager.h"
 
-ObjectManager::ObjectManager()
+ObjectManager::ObjectManager(ObjectAppearanceManager& OAM_) 
+  : OAM(OAM_)
 {
-	myPlayer = new Player();
+	myPlayer = new Player(OAM, 1000, 10, U"", Circle(30), Vec2(300,400), 400);
 }
 
 ObjectManager::~ObjectManager()

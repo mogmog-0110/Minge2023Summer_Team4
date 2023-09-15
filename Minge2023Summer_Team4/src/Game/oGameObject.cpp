@@ -1,24 +1,22 @@
 ﻿#include "oGameObject.h"
 
-GameObject::GameObject()
+GameObject::GameObject(ObjectAppearanceManager& OAM_, eObjectType myType_, int hp_, int damage_, String textureStr_,
+	Figure hitbox_, Vec2 pos_, Vec2 vel_, Vec2 acc_)
+	:OAM(OAM_),
+	myObjectType(myType_), hp(hp_), damage(damage_), hitbox(hitbox_.setCenter(pos_)),
+	pos(pos_),vel(vel_), acc(acc_), collisionalTimer(Timer{1s, StartImmediately::No}),
+	SuperObject(TextureAsset(textureStr_))
 {
-	pos = Vec2{0,0};
-	hitbox = Circle{ pos,50 };
-	Spd = Vec2{0,0};
-	collisionalTimer = Timer{ 1s, StartImmediately::No };
-}
-
-GameObject::GameObject(Vec2 pos_, Vec2 Spd_)
-{
-	pos = pos_;
-	hitbox = Circle{ pos,50 };
-	Spd = Spd_;
-	collisionalTimer = Timer{ 1s, StartImmediately::No };
+	
 }
 
 GameObject::~GameObject()
 {
 }
+
+
+//====================================================
+//毎Tick実行するかんすう
 
 void GameObject::update()
 {
@@ -32,11 +30,15 @@ void GameObject::updateCommon()
 
 void GameObject::move()
 {
-	pos += (Spd * Scene::DeltaTime());// +(0.5 * acc * Scene::DeltaTime() * Scene::DeltaTime())
-	hitbox.moveBy(Spd * Scene::DeltaTime());
+	vel += acc * Scene::DeltaTime();
+	pos += vel * Scene::DeltaTime(); //+ (0.5 * acc * Scene::DeltaTime() * Scene::DeltaTime());
+	hitbox.moveBy(vel * Scene::DeltaTime());
 }
 
 
+
+//====================================================
+//描画関連
 
 void GameObject::draw(Vec2 offset,bool isHitboxDraw) const
 {
@@ -55,6 +57,12 @@ void GameObject::drawHitbox(Vec2 offset) const
 	debugfont(Format(hp)).drawAt(pos + offset + Vec2{0,30}, {Palette::Navy,0.5});
 }
 
+
+
+//====================================================
+//外部からの変数取得
+
+
 Figure GameObject::getHitbox() {
 	return hitbox;
 }
@@ -62,6 +70,11 @@ Figure GameObject::getHitbox() {
 int GameObject::getDamage() {
 	return damage;
 }
+
+
+
+//====================================================
+//接触関連
 
 bool GameObject::isCollisional()
 {
@@ -72,6 +85,9 @@ void GameObject::onCollisionResponse(int damage)
 {
 	collisionalTimer.restart();
 	hp -= damage;
+
+	//for debug
+	OAM.debugCount();
 }
 
 void GameObject::calcDamage(int damage)

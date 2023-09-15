@@ -11,6 +11,7 @@ protected:
 public:
 
 	SuperObject();
+	SuperObject(Texture);
 	~SuperObject();
 
 	virtual void update();

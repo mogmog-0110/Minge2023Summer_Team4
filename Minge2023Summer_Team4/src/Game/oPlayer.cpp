@@ -1,13 +1,25 @@
 ﻿#include "oPlayer.h"
+#include "../Define.h"
 
+/*
 Player::Player()
+	:speed(500)
 {
-	speed = 500;
 	hp = 100;
 	damage = 100;
 	pos = Vec2(Scene::Center());
 	hitbox = Circle{ pos,30 };
+
+	myObjectType = eObjectType::player;
+
 }
+*/
+
+Player::Player(ObjectAppearanceManager& OAM_, int hp_, int damage_, String textureStr, Figure hitbox_, Vec2 pos_, double speed_)
+	:speed(speed_), GameObject(OAM_, eObjectType::player, hp_, damage_,textureStr,hitbox_, pos_, { 0,0 }, { 0,0 })
+{
+}
+
 
 Player::~Player()
 {
@@ -17,6 +29,9 @@ void Player::update() {
 	
 	updateCommon();
 	move();
+
+	//for debug
+	if (KeySpace.down()) OAM.debugCount();
 	
 }
 
@@ -50,6 +65,6 @@ void Player::move()
 
 void Player::draw(Vec2 offset, bool isHitboxDraw) const
 {
-	this->texture.scaled(0.5).drawAt(pos - offset);
+	this->tempTexture.scaled(0.5).drawAt(pos - offset);
 	if (isHitboxDraw) drawHitbox(-offset);
 }

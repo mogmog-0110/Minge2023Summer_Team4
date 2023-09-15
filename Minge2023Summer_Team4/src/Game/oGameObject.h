@@ -2,23 +2,29 @@
 #include "../Define.h"
 #include "../oSuperObject.h"
 #include "../Figure.h"
+#include "pObjectAppearanceManager.h"
+
 
 class GameObject :
     public SuperObject
 {
 private:
 	Timer collisionalTimer;
+	//String textureStr;
+
 	const Font debugfont{ 15 };
 
 protected:
 
-	int hp = 0;
+	ObjectAppearanceManager& OAM;
+
+	int hp = 1;
 	int damage = 1;
 	double speed;
 
 	Vec2 pos;
-	Vec2 Spd;
-	Vec2 Acc;
+	Vec2 vel;
+	Vec2 acc;
 
 	Figure hitbox;
 
@@ -30,8 +36,7 @@ protected:
 
 public:
 
-	GameObject();
-	GameObject(Vec2 pos_, Vec2 Spd_);
+	GameObject(ObjectAppearanceManager& OAM_, eObjectType, int hp_, int damage_, String textureStr, Figure hitbox_, Vec2 pos_, Vec2 vel_, Vec2 acc_ = { 0,0 });
 
 	~GameObject();
 
