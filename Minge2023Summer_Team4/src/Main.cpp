@@ -22,6 +22,14 @@ void Main()
 	// 画面サイズを変更
 	Window::Resize(1024, 768);
 
+	//画像の登録
+	//Titleシーン
+	TextureAsset::Register(U"Title", Resource(U"Image/title.png"));
+
+	//Gameシーン
+	TextureAsset::Register(U"Cursor", Resource(U"Image/Cursor.png"));
+	TextureAsset::Register(U"Frame", Resource(U"Image/frame.png"));
+
 	while (System::Update())
 	{
 		if (not manager.update())

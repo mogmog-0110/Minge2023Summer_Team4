@@ -26,7 +26,7 @@ void Title::update()
 
 void Title::draw() const
 {
-
+	TextureAsset(U"Title").draw();
 }
 
 void Title::debug()

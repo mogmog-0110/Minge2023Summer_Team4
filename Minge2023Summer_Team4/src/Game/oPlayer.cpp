@@ -65,6 +65,6 @@ void Player::move()
 
 void Player::draw(Vec2 offset, bool isHitboxDraw) const
 {
-	this->tempTexture.scaled(0.5).drawAt(pos + offset);
-	if (isHitboxDraw) drawHitbox(offset);
+	this->tempTexture.scaled(0.5).drawAt(pos - offset);
+	if (isHitboxDraw) drawHitbox(-offset);
 }

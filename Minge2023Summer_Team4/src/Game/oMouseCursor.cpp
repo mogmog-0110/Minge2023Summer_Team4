@@ -11,7 +11,7 @@ MouseCursor::~MouseCursor()
 void MouseCursor::draw() const
 {
 	// マウスカーソルを描画 | Draw mouse cursor
-	this->texture.scaled(0.5).drawAt(Cursor::Pos());
+	TextureAsset(U"Cursor").scaled(0.5).drawAt(Cursor::Pos());
 }
 
 

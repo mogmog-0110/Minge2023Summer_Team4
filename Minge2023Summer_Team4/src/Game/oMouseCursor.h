@@ -5,7 +5,7 @@
 class MouseCursor : public SuperObject
 {
 private:
-	const Texture texture{ U"Image/Cursor.png" };
+	
 public:
 	MouseCursor();
 	~MouseCursor();

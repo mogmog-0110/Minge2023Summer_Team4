@@ -1,30 +1,35 @@
 ﻿#include "pObjectManager.h"
 
+ObjectManager::ObjectManager(ObjectAppearanceManager& OAM_) 
+  : OAM(OAM_) {};
+{
+	myPlayer = new Player(OAM, 1000, 10, U"", Circle(30), Vec2(300,400), 400);
+}
 
 ObjectManager::~ObjectManager()
 {
-
+	delete myPlayer;
 }
 
 void ObjectManager::update()
 {
-	this->player.update();
+	this->myPlayer->update();
 	this->testdebris.update();
 }
 
 void ObjectManager::collision() {
-	if (this->player.isCollisional() == true) {
-		if (testdebris.isCollisional() && testdebris.GetHitbox().intersects(player.GetHitbox()))
+	if (this->myPlayer->isCollisional() == true) {
+		if (testdebris.isCollisional() && testdebris.getHitbox().intersects(myPlayer->getHitbox()))
 		{
-			player.onCollisionResponse(testdebris.GetDamage());
-			testdebris.onCollisionResponse(player.GetDamage());
+			myPlayer->onCollisionResponse(testdebris.getDamage());
+			testdebris.onCollisionResponse(myPlayer->getDamage());
 		}
 
 	}
 }
 
-void ObjectManager::draw() const
+void ObjectManager::draw(Vec2 offset) const
 {
-	this->testdebris.draw({ 0,0 }, true);
-	this->player.draw({0,0},true);
+	this->testdebris.draw(offset, true);
+	this->myPlayer->draw(offset, true);
 }
