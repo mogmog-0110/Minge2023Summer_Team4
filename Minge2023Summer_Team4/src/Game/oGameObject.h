@@ -22,8 +22,8 @@ protected:
 	int damage = 1;
 
 	Vec2 pos;
-	Vec2 Spd;
-	Vec2 Acc;
+	Vec2 vel;
+	Vec2 acc;
 
 	Figure hitbox;
 
@@ -35,7 +35,7 @@ protected:
 
 public:
 
-	GameObject(ObjectAppearanceManager& OAM_, eObjectType, int hp_, int damage_, String textureStr, Figure hitbox_, Vec2 pos_, Vec2 Spd_, Vec2 Acc_ = { 0,0 });
+	GameObject(ObjectAppearanceManager& OAM_, eObjectType, int hp_, int damage_, String textureStr, Figure hitbox_, Vec2 pos_, Vec2 vel_, Vec2 acc_ = { 0,0 });
 
 	~GameObject();
 

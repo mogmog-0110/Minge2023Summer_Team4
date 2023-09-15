@@ -1,9 +1,9 @@
 ﻿#include "oGameObject.h"
 
 GameObject::GameObject(ObjectAppearanceManager& OAM_, eObjectType myType_, int hp_, int damage_, String textureStr_,
-	Figure hitbox_, Vec2 pos_, Vec2 Spd_, Vec2 Acc_)
+	Figure hitbox_, Vec2 pos_, Vec2 vel_, Vec2 acc_)
 	:myObjectType(myType_), hp(hp_), damage(damage_), hitbox(hitbox_.setCenter(pos_)),
-	pos(pos_),Spd(Spd_), Acc(Acc_), collisionalTimer(Timer{1s, StartImmediately::No}),
+	pos(pos_),vel(vel_), acc(acc_), collisionalTimer(Timer{1s, StartImmediately::No}),
 	SuperObject(TextureAsset(textureStr_))
 {
 	
@@ -29,9 +29,9 @@ void GameObject::updateCommon()
 
 void GameObject::move()
 {
-	Spd += Acc * Scene::DeltaTime();
-	pos += Spd * Scene::DeltaTime(); //+ (0.5 * Acc * Scene::DeltaTime() * Scene::DeltaTime());
-	hitbox.moveBy(Spd * Scene::DeltaTime());
+	vel += acc * Scene::DeltaTime();
+	pos += vel * Scene::DeltaTime(); //+ (0.5 * acc * Scene::DeltaTime() * Scene::DeltaTime());
+	hitbox.moveBy(vel * Scene::DeltaTime());
 }
 
 
