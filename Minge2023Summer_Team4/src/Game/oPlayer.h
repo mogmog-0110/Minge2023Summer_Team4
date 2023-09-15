@@ -1,5 +1,7 @@
 ﻿#pragma once
 #include "oGameObject.h"
+#include "pObjectAppearanceManager.h"
+
 
 class Player :
     public GameObject
@@ -11,8 +13,7 @@ private:
 protected:
 
 public:
-	Player();
-	Player(int hp_, int damage_, String textureStr, Figure hitbox_, Vec2 pos_, double speed_);
+	Player(ObjectAppearanceManager& OAM_,int hp_, int damage_, String textureStr, Figure hitbox_, Vec2 pos_, double speed_);
 	~Player();
 
 	void update() override;

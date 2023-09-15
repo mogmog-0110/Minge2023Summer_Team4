@@ -2,6 +2,8 @@
 #include "../Define.h"
 #include "../oSuperObject.h"
 #include "../Figure.h"
+#include "pObjectAppearanceManager.h"
+
 
 class GameObject :
     public SuperObject
@@ -13,6 +15,8 @@ private:
 	const Font debugfont{ 15 };
 
 protected:
+
+	ObjectAppearanceManager OAM;
 
 	int hp = 1;
 	int damage = 1;
@@ -31,8 +35,7 @@ protected:
 
 public:
 
-	GameObject();
-	GameObject(eObjectType, int hp_, int damage_, String textureStr, Figure hitbox_, Vec2 pos_, Vec2 Spd_, Vec2 Acc_ = { 0,0 });
+	GameObject(ObjectAppearanceManager& OAM_, eObjectType, int hp_, int damage_, String textureStr, Figure hitbox_, Vec2 pos_, Vec2 Spd_, Vec2 Acc_ = { 0,0 });
 
 	~GameObject();
 

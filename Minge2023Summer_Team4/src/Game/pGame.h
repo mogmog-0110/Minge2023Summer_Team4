@@ -6,7 +6,8 @@
 
 class Game :public App::Scene {
 private:
-	ObjectManager objectManager;
+	ObjectAppearanceManager objectAppearanceManager;
+	ObjectManager objectManager{ objectAppearanceManager };
 	MouseCursor cursor;
 
 	Texture frameTex{ U"Image/frame.png" };
