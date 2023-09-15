@@ -6,7 +6,7 @@
 
 class Game :public App::Scene {
 private:
-	ObjectAppearanceManager objectAppearanceManager;
+	ObjectAppearanceManager *objectAppearanceManager;
 	ObjectManager objectManager;
 	MouseCursor cursor;
 

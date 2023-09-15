@@ -8,10 +8,10 @@
 class ObjectManager
 {
 private:
-  ObjectAppearanceManager OAM;
+  ObjectAppearanceManager *OAM;
 
 public:
-	ObjectManager(ObjectAppearanceManager& OAM_);
+	ObjectManager(ObjectAppearanceManager *OAM_);
 	~ObjectManager();
 
 	Player* myPlayer;
