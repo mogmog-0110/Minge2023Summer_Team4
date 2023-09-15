@@ -29,6 +29,9 @@ void Player::update() {
 	
 	updateCommon();
 	move();
+
+	//for debug
+	if (KeySpace.down()) OAM.debug();
 	
 }
 

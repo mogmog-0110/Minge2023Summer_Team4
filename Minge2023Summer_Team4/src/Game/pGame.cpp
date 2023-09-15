@@ -48,6 +48,7 @@ void Game::draw() const
 
 void Game::debug()
 {
-
+	ClearPrint();
+	objectAppearanceManager.debug();
 
 }
