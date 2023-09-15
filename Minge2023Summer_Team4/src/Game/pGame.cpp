@@ -1,7 +1,7 @@
 ﻿#include"pGame.h"
 
 Game::Game(const InitData& init)
-	:IScene(init)
+	:IScene(init), objectManager(ObjectManager{objectAppearanceManager})
 {
 	Print << U"Game!";
 	
@@ -11,7 +11,6 @@ Game::Game(const InitData& init)
 
 	Print << U"Push [Q] key";
 
-	MouseCursor cursor;
 }
 
 Game::~Game()
@@ -22,6 +21,8 @@ Game::~Game()
 
 void Game::update()
 {
+
+	if (KeyP.down()) objectAppearanceManager.debugCount();
 
 	if (KeyQ.down())
 	{

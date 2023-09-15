@@ -11,7 +11,7 @@ ObjectAppearanceManager::~ObjectAppearanceManager()
 
 // 初期デバッグ用
 void ObjectAppearanceManager::debugCount() {
-	debugNum++;
+ 	debugNum++;
 }
 
 

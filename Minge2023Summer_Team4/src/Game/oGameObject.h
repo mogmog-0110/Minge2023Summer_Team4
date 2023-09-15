@@ -16,7 +16,7 @@ private:
 
 protected:
 
-	ObjectAppearanceManager &OAM;
+	ObjectAppearanceManager& OAM;
 
 	int hp = 1;
 	int damage = 1;

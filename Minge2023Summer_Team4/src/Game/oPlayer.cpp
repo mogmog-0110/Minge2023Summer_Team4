@@ -31,7 +31,7 @@ void Player::update() {
 	move();
 
 	//for debug
-	if (KeySpace.down()) OAM.debug();
+	if (KeySpace.down()) OAM.debugCount();
 	
 }
 
