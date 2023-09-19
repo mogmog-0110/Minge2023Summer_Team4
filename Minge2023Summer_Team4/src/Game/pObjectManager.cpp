@@ -59,7 +59,9 @@ void ObjectManager::collision() {
 
 		for (size_t i = 0; i < myBullets.size(); i++)
 		{
-			if (myBullets[i].isCollisional() && myBullets[i].getHitbox().intersects(myPlayer->getHitbox()))
+			if (myBullets[i].isCollisional() &&
+				myBullets[i].getHitbox().intersects(myPlayer->getHitbox()) &&
+				myBullets[i].isPlayerBullet() == false)
 			{
 				myPlayer->onCollisionResponse(myBullets[i].getDamage());
 				myBullets[i].onCollisionResponse(myPlayer->getDamage());
