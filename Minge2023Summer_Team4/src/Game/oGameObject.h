@@ -2,7 +2,6 @@
 #include "../Define.h"
 #include "../oSuperObject.h"
 #include "../Figure.h"
-#include "pObjectAppearanceManager.h"
 
 
 class GameObject :
@@ -16,7 +15,6 @@ private:
 
 protected:
 
-	ObjectAppearanceManager& OAM;
 
 	int hp = 1;
 	int damage = 1;
@@ -36,7 +34,7 @@ protected:
 
 public:
 
-	GameObject(ObjectAppearanceManager& OAM_, eObjectType, int hp_, int damage_, String textureStr, Figure hitbox_, Vec2 pos_, Vec2 vel_, Vec2 acc_ = { 0,0 });
+	GameObject(eObjectType, int hp_, int damage_, String textureStr, Figure hitbox_, Vec2 pos_, Vec2 vel_, Vec2 acc_ = { 0,0 });
 
 	~GameObject();
 

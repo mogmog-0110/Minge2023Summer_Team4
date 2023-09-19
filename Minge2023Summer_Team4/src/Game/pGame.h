@@ -2,12 +2,14 @@
 #include"../Define.h"
 #include "../Figure.h"
 #include "pObjectManager.h"
+#include "pEventManager.h"
 #include "oMouseCursor.h"
 
 class Game :public App::Scene {
 private:
-	ObjectAppearanceManager objectAppearanceManager;
+	ObjectAppearanceManager *objectAppearanceManager;
 	ObjectManager objectManager;
+	EventManager *myEventManager;
 	MouseCursor cursor;
 
 	//プレイヤーから見た相対的な左上座標

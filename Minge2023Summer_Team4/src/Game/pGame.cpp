@@ -1,10 +1,10 @@
 ﻿#include"pGame.h"
 
 Game::Game(const InitData& init)
-	:IScene(init), objectManager(ObjectManager{objectAppearanceManager})
+	: IScene(init), objectAppearanceManager(new ObjectAppearanceManager()), myEventManager(new EventManager()), objectManager(objectAppearanceManager, myEventManager)
 {
 	Print << U"Game!";
-	
+
 	// 背景の色を設定 | Set background color
 	Scene::SetBackground(ColorF{ 0.8, 0.9, 1.0 });
 
@@ -13,8 +13,11 @@ Game::Game(const InitData& init)
 	topLeft = objectManager.myPlayer->getPos() - Scene::Center();
 }
 
+
 Game::~Game()
 {
+	delete objectAppearanceManager;
+	delete myEventManager;
 }
 
 
@@ -22,7 +25,7 @@ Game::~Game()
 void Game::update()
 {
 
-	if (KeyP.down()) objectAppearanceManager.debugCount();
+	if (KeyP.down()) myEventManager->debugCount();
 
 	if (KeyQ.down())
 	{
@@ -52,7 +55,7 @@ void Game::draw() const
 void Game::debug()
 {
 	ClearPrint();
-	objectAppearanceManager.debug();
+	myEventManager->debug();
 
 	//マップスクロール用
 	for (int32 i = 0; i < 100; ++i)
