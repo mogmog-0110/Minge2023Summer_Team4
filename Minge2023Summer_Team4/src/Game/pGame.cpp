@@ -55,7 +55,7 @@ void Game::draw() const
 void Game::debug()
 {
 	ClearPrint();
-	myEventManager->debug();
+	//myEventManager->debug();
 
 	//マップスクロール用
 	for (int32 i = 0; i < 100; ++i)
