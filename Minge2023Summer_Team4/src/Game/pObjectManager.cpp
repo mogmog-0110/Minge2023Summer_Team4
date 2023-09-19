@@ -77,6 +77,8 @@ void ObjectManager::collision() {
 			}
 		}
 	}
+
+	
 }
 
 

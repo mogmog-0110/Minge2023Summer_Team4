@@ -39,6 +39,7 @@ void Game::update()
 	scrollUpdate();
 	objectManager.update();
 	objectManager.collision();
+		
 	
 	objectAppearanceManager->update();
 	if (objectAppearanceManager->hasAnyQueue()) objectManager.getNewObject();
