@@ -23,3 +23,19 @@ enum eObjectType {
 	none,
 	debris,
 };
+
+/*
+
+struct ObjectCreateCommand
+{
+	eObjectType occ_myType = eObjectType::none;
+	int occ_hp = 1;
+	int occ_damage = 1;
+	String occ_textureStr = U"";
+	Figure occ_hitbox;
+	Vec2 occ_pos;
+	Vec2 occ_vel;
+	Vec2 occ_acc = { 0,0 };
+};
+
+*/

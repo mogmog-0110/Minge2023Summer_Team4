@@ -18,7 +18,7 @@ public:
 
 	Player* myPlayer;
 	Debris testdebris{2000, 100, U"", Circle(50), {200,200}, {0,0},{0,0}};
-
+	Array<Debris> myDebrises = {};
 
 	void update();
 	void collision();
