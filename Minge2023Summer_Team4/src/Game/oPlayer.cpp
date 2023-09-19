@@ -15,8 +15,8 @@ Player::Player()
 }
 */
 
-Player::Player(ObjectAppearanceManager *OAM_, int hp_, int damage_, String textureStr, Figure hitbox_, Vec2 pos_, double speed_)
-	:speed(speed_), GameObject(OAM_, eObjectType::player, hp_, damage_,textureStr,hitbox_, pos_, { 0,0 }, { 0,0 })
+Player::Player(int hp_, int damage_, String textureStr, Figure hitbox_, Vec2 pos_, double speed_)
+	:speed(speed_), GameObject(eObjectType::player, hp_, damage_,textureStr,hitbox_, pos_, { 0,0 }, { 0,0 })
 {
 }
 
@@ -30,8 +30,6 @@ void Player::update() {
 	updateCommon();
 	move();
 
-	//for debug
-	if (KeySpace.down()) OAM->debugCount();
 	
 }
 

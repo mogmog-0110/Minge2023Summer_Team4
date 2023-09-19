@@ -1,9 +1,8 @@
 ﻿#include "oGameObject.h"
 
-GameObject::GameObject(ObjectAppearanceManager *OAM_, eObjectType myType_, int hp_, int damage_, String textureStr_,
+GameObject::GameObject(eObjectType myType_, int hp_, int damage_, String textureStr_,
 	Figure hitbox_, Vec2 pos_, Vec2 vel_, Vec2 acc_)
-	:OAM(OAM_),
-	myObjectType(myType_), hp(hp_), damage(damage_), hitbox(hitbox_.setCenter(pos_)),
+	:myObjectType(myType_), hp(hp_), damage(damage_), hitbox(hitbox_.setCenter(pos_)),
 	pos(pos_),vel(vel_), acc(acc_), collisionalTimer(Timer{1s, StartImmediately::No}),
 	SuperObject(TextureAsset(textureStr_))
 {
@@ -86,8 +85,6 @@ void GameObject::onCollisionResponse(int damage)
 	collisionalTimer.restart();
 	hp -= damage;
 
-	//for debug
-	OAM->debugCount();
 }
 
 void GameObject::calcDamage(int damage)

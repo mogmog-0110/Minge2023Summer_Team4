@@ -17,7 +17,7 @@ public:
 	~ObjectManager();
 
 	Player* myPlayer;
-	Debris testdebris{OAM, 2000, 100, U"", Circle(50), {200,200}, {0,0},{0,0}};
+	Debris testdebris{2000, 100, U"", Circle(50), {200,200}, {0,0},{0,0}};
 
 
 	void update();

@@ -3,7 +3,7 @@
 ObjectManager::ObjectManager(ObjectAppearanceManager* OAM_, EventManager* EM_)
   : OAM(OAM_)
 {
-	myPlayer = new Player(OAM, 1000, 10, U"", Circle(30), Vec2(300,400), 400);
+	myPlayer = new Player(1000, 10, U"", Circle(30), Vec2(300,400), 400);
 }
 
 ObjectManager::~ObjectManager()
