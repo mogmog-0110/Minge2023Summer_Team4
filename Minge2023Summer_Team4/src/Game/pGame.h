@@ -18,7 +18,13 @@ private:
 
 	//フィールドサイズ
 	const int FIELD_WIDTH = 10000000000;
-	const int FIELD_HEIGHT =10000000000;
+	const int FIELD_HEIGHT = 10000000000;
+
+	// スクリーン画面の幅と高さ
+	const Size screenSize{ 1024, 768 };
+
+	// 実際のミニマップは256x256。
+	const Size miniMapScaleSize = { 128, 128 };
 
 public:
 	Game(const InitData& init);
@@ -31,4 +37,9 @@ public:
 
 	void scrollUpdate();
 	Vec2 convertToScreenPos(Vec2 pos);
+
+	void miniMapDraw();
+	Vec2 calculateMiniMapPos(Vec2 pos);
+	bool isInMiniMapRange(Vec2 pos);
+	double calculateOpacity(Vec2 playerPos, Vec2 objectPos);
 };

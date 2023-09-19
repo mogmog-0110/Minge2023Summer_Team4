@@ -59,6 +59,7 @@ void Game::debug()
 	{
 		Circle{ -topLeft, (50 + i * 50) }.drawFrame(2);
 	}
+	miniMapDraw();
 }
 
 void Game::scrollUpdate()
@@ -104,3 +105,44 @@ Vec2 Game::convertToScreenPos(Vec2 pos)
 	return screenPos;
 }
 
+void Game::miniMapDraw()
+{
+	//各オブジェクトのスクリーン座標の取得
+	Vec2 playerPos = objectManager.myPlayer->getPos() - topLeft;
+	Vec2 debriPos = objectManager.testdebris.getPos() - topLeft;
+
+	//描画処理
+	Rect{ 768, 0, 256, 256 }.draw(Palette::Gray);
+	Circle{ calculateMiniMapPos(playerPos), 5 }.draw(Palette::Blue);
+
+	if (isInMiniMapRange(debriPos))
+	{
+		Circle{ calculateMiniMapPos(debriPos), 5}.draw(ColorF(Palette::Red, calculateOpacity(playerPos, debriPos)));
+	}
+}
+
+Vec2 Game::calculateMiniMapPos(Vec2 screenPos)
+{
+	Vec2 miniMapPos;
+
+	// スクリーン座標をミニマップ座標に変換
+	miniMapPos = (screenPos * miniMapScaleSize) / screenSize + Vec2{768 + 64 , 0 + 64};
+	
+	return miniMapPos;
+}
+
+bool Game::isInMiniMapRange(Vec2 pos)
+{
+	Vec2 miniMapObjectPos = calculateMiniMapPos(pos);
+	int adjVal = 3;
+
+	return (miniMapObjectPos.x > 768 + adjVal && miniMapObjectPos.x < 1024 - adjVal && miniMapObjectPos.y > 0 + adjVal && miniMapObjectPos.y < 256 - adjVal);
+}
+
+double Game::calculateOpacity(Vec2 playerPos, Vec2 objectPos)
+{
+	double distance = playerPos.distanceFrom(objectPos);
+	const double maxDistance = 1024;
+	double opacity = 1.0 - (distance / maxDistance);
+	return Clamp(opacity, 0.0, 1.0); // 透明度を0から1の範囲にクランプ
+}
