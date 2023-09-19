@@ -40,8 +40,8 @@ public:
 	void scrollUpdate();
 	Vec2 convertToScreenPos(Vec2 pos);
 
-	void miniMapDraw();
-	Vec2 calculateMiniMapPos(Vec2 pos);
-	bool isInMiniMapRange(Vec2 pos);
-	double calculateOpacity(Vec2 playerPos, Vec2 objectPos);
+	void miniMapDraw() const;
+	Vec2 calculateMiniMapPos(Vec2 pos) const;
+	bool isInMiniMapRange(Vec2 pos) const;
+	double calculateOpacity(Vec2 playerPos, Vec2 objectPos) const;
 };
