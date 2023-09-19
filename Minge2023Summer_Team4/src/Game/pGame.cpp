@@ -22,6 +22,9 @@ Game::~Game()
 
 
 
+//====================================================
+//毎Tick実行するかんすう
+
 void Game::update()
 {
 
@@ -36,8 +39,11 @@ void Game::update()
 	scrollUpdate();
 	objectManager.update();
 	objectManager.collision();
+		
+	
+	objectAppearanceManager->update();
+	if (objectAppearanceManager->hasAnyQueue()) objectManager.getNewObject();
 	debug();
-
 }
 
 void Game::draw() const
@@ -50,21 +56,31 @@ void Game::draw() const
 	//TextureAsset(U"Frame").draw();
 	cursor.draw();
 	objectManager.draw(topLeft);
+
+	miniMapDraw();
+
 }
 
 void Game::debug()
 {
-	ClearPrint();
-	myEventManager->debug();
+	//ClearPrint();
+	//myEventManager->debug();
 
 	//マップスクロール用
 	for (int32 i = 0; i < 100; ++i)
 	{
 		Circle{ -topLeft, (50 + i * 50) }.drawFrame(2);
 	}
-	miniMapDraw();
 }
 
+
+
+
+
+
+
+//====================================================
+//スクロール関係のコード。毎Tick実行する
 void Game::scrollUpdate()
 {
 	//カメラ座標と左上座標の更新
@@ -108,7 +124,13 @@ Vec2 Game::convertToScreenPos(Vec2 pos)
 	return screenPos;
 }
 
-void Game::miniMapDraw()
+
+
+
+//====================================================
+//ミニマップ関連のコード
+
+void Game::miniMapDraw() const
 {
 	//各オブジェクトのスクリーン座標の取得
 	Vec2 playerPos = objectManager.myPlayer->getPos() - topLeft;
@@ -124,17 +146,17 @@ void Game::miniMapDraw()
 	}
 }
 
-Vec2 Game::calculateMiniMapPos(Vec2 screenPos)
+Vec2 Game::calculateMiniMapPos(Vec2 screenPos) const
 {
 	Vec2 miniMapPos;
 
-	// スクリーン座標をミニマップ座標に変換
+	// スクリーン座標をミニ マップ座標に変換
 	miniMapPos = (screenPos * miniMapScaleSize) / screenSize + Vec2{768 + 64 , 0 + 64};
 	
 	return miniMapPos;
 }
 
-bool Game::isInMiniMapRange(Vec2 pos)
+bool Game::isInMiniMapRange(Vec2 pos) const
 {
 	Vec2 miniMapObjectPos = calculateMiniMapPos(pos);
 	int adjVal = 3;
@@ -142,7 +164,7 @@ bool Game::isInMiniMapRange(Vec2 pos)
 	return (miniMapObjectPos.x > 768 + adjVal && miniMapObjectPos.x < 1024 - adjVal && miniMapObjectPos.y > 0 + adjVal && miniMapObjectPos.y < 256 - adjVal);
 }
 
-double Game::calculateOpacity(Vec2 playerPos, Vec2 objectPos)
+double Game::calculateOpacity(Vec2 playerPos, Vec2 objectPos) const
 {
 	double distance = playerPos.distanceFrom(objectPos);
 	const double maxDistance = 1024;

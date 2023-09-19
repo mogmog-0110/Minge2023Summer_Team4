@@ -312,7 +312,9 @@
   <ItemGroup>
     <ClInclude Include="src\Define.h" />
     <ClInclude Include="src\Figure.h" />
+    <ClInclude Include="src\Game\oBullet.h" />
     <ClInclude Include="src\Game\oDebris.h" />
+    <ClInclude Include="src\Game\oEnemy.h" />
     <ClInclude Include="src\Game\oGameObject.h" />
     <ClInclude Include="src\Game\oMouseCursor.h" />
     <ClInclude Include="src\Game\oPlayer.h" />
@@ -408,7 +410,9 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\Game\oBullet.cpp" />
     <ClCompile Include="src\Game\oDebris.cpp" />
+    <ClCompile Include="src\Game\oEnemy.cpp" />
     <ClCompile Include="src\Game\oGameObject.cpp" />
     <ClCompile Include="src\Game\oMouseCursor.cpp" />
     <ClCompile Include="src\Game\oPlayer.cpp" />
