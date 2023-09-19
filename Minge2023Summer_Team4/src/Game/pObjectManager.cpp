@@ -5,7 +5,7 @@ ObjectManager::ObjectManager(ObjectAppearanceManager* OAM_, EventManager* EM_)
 {
 	myPlayer = new Player(1000, 10, U"", Circle(30), Vec2(300,400), 400);
 	
-	myDebrises.push_back(Debris{ 2000, 100, U"", Circle(50), {200,200}, {0,0},{0,0} });
+	myDebrises.push_back(Debris{ 2000, 100, U"", Circle(50), {500,0}, {0,0},{0,0} });
 	myDebrises.push_back(Debris{ 2000, 100, U"", Circle(50), {400,400}, {0,0},{0,0} });
 
 	

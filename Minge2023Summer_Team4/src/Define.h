@@ -1,5 +1,6 @@
 ﻿#pragma once
 # include <Siv3D.hpp> // OpenSiv3D v0.6.11
+# include "Figure.h"
 
 // シーンの名前
 enum class SceneList {
@@ -24,18 +25,19 @@ enum eObjectType {
 	debris,
 };
 
-/*
+
 
 struct ObjectCreateCommand
 {
-	eObjectType occ_myType = eObjectType::none;
-	int occ_hp = 1;
-	int occ_damage = 1;
-	String occ_textureStr = U"";
+	eObjectType occ_myType;
+	int occ_hp;
+	int occ_damage;
+	String occ_textureStr;
 	Figure occ_hitbox;
 	Vec2 occ_pos;
 	Vec2 occ_vel;
-	Vec2 occ_acc = { 0,0 };
-};
+	Vec2 occ_acc;
 
-*/
+
+	ObjectCreateCommand(eObjectType occ_myType_) :occ_myType(occ_myType_) {};
+};
