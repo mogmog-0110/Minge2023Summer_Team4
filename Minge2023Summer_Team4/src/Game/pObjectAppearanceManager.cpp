@@ -9,6 +9,7 @@ ObjectAppearanceManager::~ObjectAppearanceManager()
 }
 
 
+/*
 void ObjectAppearanceManager::createNewObject(eObjectType myType_, int hp_, int damage_, String textureStr_,
 	Figure hitbox_, Vec2 pos_, Vec2 vel_, Vec2 acc_)
 {
@@ -36,6 +37,7 @@ void ObjectAppearanceManager::carryOutNewObject(Array<Debris>& myDebrises_) {
 	myDebrises_.append(objectDebrisQueue);
 }
 
+*/
 
 
 // 初期デバッグ用
