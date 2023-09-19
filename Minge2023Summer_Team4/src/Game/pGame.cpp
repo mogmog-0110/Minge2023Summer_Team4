@@ -22,6 +22,9 @@ Game::~Game()
 
 
 
+//====================================================
+//毎Tick実行するかんすう
+
 void Game::update()
 {
 
@@ -36,8 +39,10 @@ void Game::update()
 	scrollUpdate();
 	objectManager.update();
 	objectManager.collision();
+	
+	objectAppearanceManager->update();
+	if (objectAppearanceManager->hasAnyQueue()) objectManager.getNewObject();
 	debug();
-
 }
 
 void Game::draw() const
@@ -57,7 +62,7 @@ void Game::draw() const
 
 void Game::debug()
 {
-	ClearPrint();
+	//ClearPrint();
 	//myEventManager->debug();
 
 	//マップスクロール用
@@ -67,6 +72,14 @@ void Game::debug()
 	}
 }
 
+
+
+
+
+
+
+//====================================================
+//スクロール関係のコード。毎Tick実行する
 void Game::scrollUpdate()
 {
 	//カメラ座標と左上座標の更新
@@ -109,6 +122,12 @@ Vec2 Game::convertToScreenPos(Vec2 pos)
 
 	return screenPos;
 }
+
+
+
+
+//====================================================
+//ミニマップ関連のコード
 
 void Game::miniMapDraw() const
 {

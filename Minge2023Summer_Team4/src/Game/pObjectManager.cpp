@@ -79,6 +79,12 @@ void ObjectManager::collision() {
 	}
 }
 
+
+void ObjectManager::getNewObject() {
+	OAM->carryOutNewObject(myDebrises, myBullets, myEnemies);
+}
+
+
 void ObjectManager::draw(Vec2 offset) const
 {
 	this->testdebris.draw(offset, true);

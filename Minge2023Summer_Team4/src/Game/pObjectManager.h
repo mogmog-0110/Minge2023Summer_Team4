@@ -26,5 +26,6 @@ public:
 
 	void update();
 	void collision();
+	void getNewObject();
 	void draw(Vec2 offset) const;
 };
