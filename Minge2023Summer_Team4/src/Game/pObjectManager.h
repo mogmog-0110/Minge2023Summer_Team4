@@ -5,7 +5,8 @@
 #include "pEventManager.h"
 #include "oPlayer.h"
 #include "oDebris.h"
-
+#include "oBullet.h"
+#include "oEnemy.h"
 
 class ObjectManager
 {
@@ -20,6 +21,8 @@ public:
 	Player* myPlayer;
 	Debris testdebris{2000, 100, U"", Circle(50), {200,200}, {0,0},{0,0}};
 	Array<Debris> myDebrises = {};
+	Array<Bullet> myBullets = {};
+	Array<Enemy> myEnemies = {};
 
 	void update();
 	void collision();
