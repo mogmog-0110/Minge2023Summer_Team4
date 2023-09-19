@@ -1,7 +1,7 @@
 ﻿#include"pGame.h"
 
 Game::Game(const InitData& init)
-	: IScene(init), objectAppearanceManager(new ObjectAppearanceManager()),myEventManager(new EventManager()), objectManager(objectAppearanceManager)
+	: IScene(init), objectAppearanceManager(new ObjectAppearanceManager()), myEventManager(new EventManager()), objectManager(objectAppearanceManager, myEventManager)
 {
 	Print << U"Game!";
 

@@ -1,6 +1,6 @@
 ﻿#include "pObjectManager.h"
 
-ObjectManager::ObjectManager(ObjectAppearanceManager* OAM_) 
+ObjectManager::ObjectManager(ObjectAppearanceManager* OAM_, EventManager* EM_)
   : OAM(OAM_)
 {
 	myPlayer = new Player(OAM, 1000, 10, U"", Circle(30), Vec2(300,400), 400);

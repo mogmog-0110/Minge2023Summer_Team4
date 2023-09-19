@@ -2,16 +2,18 @@
 #include "../Define.h"
 #include "../Figure.h"
 #include "pObjectAppearanceManager.h"
+#include "pEventManager.h"
 #include "oPlayer.h"
 #include "oDebris.h"
 
 class ObjectManager
 {
 private:
-  ObjectAppearanceManager *OAM;
+	ObjectAppearanceManager* OAM;
+	EventManager* EM;
 
 public:
-	ObjectManager(ObjectAppearanceManager *OAM_);
+	ObjectManager(ObjectAppearanceManager *OAM_, EventManager *EM_);
 	~ObjectManager();
 
 	Player* myPlayer;
