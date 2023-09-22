@@ -18,7 +18,7 @@ GameObject::~GameObject()
 //毎Tick実行するかんすう
 
 void GameObject::update()
-{
+{										
 	updateCommon();
 	move();
 }

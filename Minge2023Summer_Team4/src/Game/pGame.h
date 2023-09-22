@@ -28,6 +28,9 @@ private:
 	// 実際のミニマップは256x256。
 	const Size miniMapScaleSize = { 128, 128 };
 
+	// 仮のフレーム素材
+	const Texture textureFrame{ U"Image/frame_001.png" };
+
 public:
 	Game(const InitData& init);
 	~Game();
