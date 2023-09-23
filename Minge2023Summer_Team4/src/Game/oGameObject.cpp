@@ -100,3 +100,9 @@ double GameObject::getSpeed() const
 {
 	return speed;
 }
+
+
+
+bool GameObject::isDead() {
+	return pos.y > 10000 || hp < 0;
+}

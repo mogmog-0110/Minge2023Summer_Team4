@@ -47,6 +47,8 @@ public:
 	void onCollisionResponse(int damage);
 	void calcDamage(int damage);
 
+	bool isDead();
+
 	//ゲッター関数
 	Vec2 getPos() const;
 	double getSpeed() const;
