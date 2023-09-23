@@ -21,23 +21,23 @@ enum eObjectType {
 	ePlayer,
 	eEnemy,
 	eBullet,
-	eNone,
 	eDebris,
+	eNone,
 };
 
 
-
-struct ObjectCreateCommand
-{
-	eObjectType occ_myType;
-	int occ_hp;
-	int occ_damage;
-	String occ_textureStr;
-	Figure occ_hitbox;
-	Vec2 occ_pos;
-	Vec2 occ_vel;
-	Vec2 occ_acc;
-
-
-	ObjectCreateCommand(eObjectType occ_myType_) :occ_myType(occ_myType_) {};
-};
+// 使い方わからん by Shiggy
+//struct ObjectCreateCommand
+//{
+//	eObjectType occ_myType;
+//	int occ_hp;
+//	int occ_damage;
+//	String occ_textureStr;
+//	Figure occ_hitbox;
+//	Vec2 occ_pos;
+//	Vec2 occ_vel;
+//	Vec2 occ_acc;
+//
+//
+//	ObjectCreateCommand(eObjectType occ_myType_) :occ_myType(occ_myType_) {};
+//};

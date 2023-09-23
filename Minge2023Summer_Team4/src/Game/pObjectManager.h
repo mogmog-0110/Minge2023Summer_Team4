@@ -11,21 +11,22 @@
 class ObjectManager
 {
 private:
-	ObjectAppearanceManager* OAM;
 	EventManager* EM;
 
+	//各オブジェクトの配列
+	Array<Debris> myDebrises;
+	Array<Bullet> myBullets;
+	Array<Enemy> myEnemies;
+
+
 public:
-	ObjectManager(ObjectAppearanceManager *OAM_, EventManager *EM_);
+	ObjectManager(EventManager *EM_);
 	~ObjectManager();
 
 	Player* myPlayer;
 	Debris testdebris{2000, 100, U"", Circle(50), {200,200}, {0,0},{0,0}};
-	Array<Debris> myDebrises = {};
-	Array<Bullet> myBullets = {};
-	Array<Enemy> myEnemies = {};
-
+	
 	void update();
 	void collision();
-	void getNewObject();
 	void draw(Vec2 offset) const;
 };
