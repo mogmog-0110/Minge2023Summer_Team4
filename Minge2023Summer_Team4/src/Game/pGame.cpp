@@ -1,7 +1,7 @@
 ﻿#include"pGame.h"
 
 Game::Game(const InitData& init)
-	: IScene(init), objectAppearanceManager(new ObjectAppearanceManager()), myEventManager(new EventManager()), objectManager(objectAppearanceManager, myEventManager)
+	: IScene(init), myEventManager(new EventManager()), objectManager(myEventManager)
 {
 	Print << U"Game!";
 
@@ -16,7 +16,6 @@ Game::Game(const InitData& init)
 
 Game::~Game()
 {
-	delete objectAppearanceManager;
 	delete myEventManager;
 }
 
@@ -40,9 +39,6 @@ void Game::update()
 	objectManager.update();
 	objectManager.collision();
 		
-	
-	objectAppearanceManager->update();
-	if (objectAppearanceManager->hasAnyQueue()) objectManager.getNewObject();
 	debug();
 }
 

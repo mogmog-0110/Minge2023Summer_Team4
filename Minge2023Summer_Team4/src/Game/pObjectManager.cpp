@@ -1,27 +1,29 @@
 ﻿#include "pObjectManager.h"
 
-ObjectManager::ObjectManager(ObjectAppearanceManager* OAM_, EventManager* EM_)
-  : OAM(OAM_)
+ObjectManager::ObjectManager(EventManager* EM_)
 {
-	myPlayer = new Player(1000, 10, U"", Circle(30), Vec2(300,400), 400);
-	
+	Player::create(1000, 10, U"", Circle(30), Vec2(300,400), 400);
+	myPlayer = Player::getInstance();
+
+	/*
 	myDebrises.push_back(Debris{ 2000, 100, U"", Circle(50), {500,0}, {0,0},{0,0} });
 	myDebrises.push_back(Debris{ 2000, 100, U"", Circle(50), {400,400}, {0,0},{0,0} });
 
 	myEnemies.push_back(Enemy{ 1000,10,U"",Rect(50),{-100,-100},{0,0},{0,0} });
 
-	myBullets.push_back(Bullet{ false, 1,200,U"",Circle(20),{0,200},{0,200},{0,0} });
+	myBullets.push_back(Bullet{ false, 1,200,U"",Circle(20),{0,200},{0,200},{0,0} });*/
 }
 
 ObjectManager::~ObjectManager()
 {
-	delete myPlayer;
+	
 }
 
 void ObjectManager::update()
 {
 	this->myPlayer->update();
 	this->testdebris.update();
+
 	//以下　新型
 	for (size_t i = 0; i < myDebrises.size(); i++)
 	{
@@ -77,13 +79,6 @@ void ObjectManager::collision() {
 			}
 		}
 	}
-
-	
-}
-
-
-void ObjectManager::getNewObject() {
-	OAM->carryOutNewObject(myDebrises, myBullets, myEnemies);
 }
 
 
