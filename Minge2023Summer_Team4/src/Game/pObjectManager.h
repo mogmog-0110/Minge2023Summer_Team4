@@ -1,26 +1,27 @@
-﻿#pragma once
-#include "../Define.h"
-#include "../Figure.h"
-#include "pObjectAppearanceManager.h"
-#include "pEventManager.h"
-#include "oPlayer.h"
-#include "oDebris.h"
-#include "oBullet.h"
-#include "oEnemy.h"
+﻿# pragma once
+# include "../Define.h"
+# include "../Figure.h"
+# include "pObjectAppearanceManager.h"
+# include "pEventManager.h"
+# include "oPlayer.h"
+# include "oDebris.h"
+# include "oBullet.h"
+# include "oEnemy.h"
+
+class ObjectAppearanceManager;
 
 class ObjectManager
 {
 private:
-	EventManager* EM;
 
 	//各オブジェクトの配列
-	Array<Debris> myDebrises;
-	Array<Bullet> myBullets;
-	Array<Enemy> myEnemies;
+	Array<Debris*> myDebrises;
+	Array<Bullet*> myBullets;
+	Array<Enemy*> myEnemies;
 
 
 public:
-	ObjectManager(EventManager *EM_);
+	ObjectManager();
 	~ObjectManager();
 
 	Player* myPlayer;
@@ -29,4 +30,7 @@ public:
 	void update();
 	void collision();
 	void draw(Vec2 offset) const;
+
+	void createEnemy();
+	void createDebris();
 };
