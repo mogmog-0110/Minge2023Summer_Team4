@@ -2,7 +2,8 @@
 
 ObjectManager::ObjectManager(EventManager* EM_)
 {
-	myPlayer = new Player(1000, 10, U"", Circle(30), Vec2(300,400), 400);
+	Player::create(1000, 10, U"", Circle(30), Vec2(300,400), 400);
+	myPlayer = Player::getInstance();
 
 	/*
 	myDebrises.push_back(Debris{ 2000, 100, U"", Circle(50), {500,0}, {0,0},{0,0} });
@@ -15,7 +16,7 @@ ObjectManager::ObjectManager(EventManager* EM_)
 
 ObjectManager::~ObjectManager()
 {
-	delete myPlayer;
+	
 }
 
 void ObjectManager::update()

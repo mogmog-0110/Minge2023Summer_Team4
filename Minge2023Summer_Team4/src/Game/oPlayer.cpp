@@ -1,5 +1,7 @@
 ﻿#include "oPlayer.h"
-#include "../Define.h"
+
+// 静的メンバー変数の初期化
+Player* Player::instance = nullptr;
 
 /*
 Player::Player()
@@ -20,9 +22,23 @@ Player::Player(int hp_, int damage_, String textureStr, Figure hitbox_, Vec2 pos
 {
 }
 
-
 Player::~Player()
 {
+}
+
+
+
+Player* Player::getInstance()
+{
+	return instance;
+}
+
+void Player::create(int hp_, int damage_, String textureStr, Figure hitbox_, Vec2 pos_, double speed_)
+{
+	if (instance == nullptr)
+	{
+		instance = new Player(hp_, damage_, textureStr, hitbox_, pos_, speed_);
+	}
 }
 
 void Player::update() {

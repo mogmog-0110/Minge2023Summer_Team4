@@ -8,10 +8,10 @@ ObjectAppearanceManager::~ObjectAppearanceManager()
 {
 }
 
-Vec2 ObjectAppearanceManager::generateRamdomPos(Player* myPlayer)
+Vec2 ObjectAppearanceManager::generateRamdomPos()
 {
 	// プレイヤーの座標を取得
-	Player* myPlayer->getPos();
+
 	return Vec2{ 0, 0 };
 }
 
