@@ -16,7 +16,8 @@ private:
 
 	//各オブジェクトの配列
 	Array<Debris*> myDebrises;
-	Array<Bullet*> myBullets;
+	Array<Bullet*> myPlayerBullets;
+	Array<Bullet*> myEnemyBullets;
 	Array<Enemy*> myEnemies;
 
 

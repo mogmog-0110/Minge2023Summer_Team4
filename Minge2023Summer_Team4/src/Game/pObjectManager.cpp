@@ -8,13 +8,6 @@ ObjectManager::ObjectManager()
 	createEnemy();
 	createDebris();
 
-	/*
-	myDebrises.push_back(Debris{ 2000, 100, U"", Circle(50), {500,0}, {0,0},{0,0} });
-	myDebrises.push_back(Debris{ 2000, 100, U"", Circle(50), {400,400}, {0,0},{0,0} });
-
-	myEnemies.push_back(Enemy{ 1000,10,U"",Rect(50),{-100,-100},{0,0},{0,0} });
-
-	myBullets.push_back(Bullet{ false, 1,200,U"",Circle(20),{0,200},{0,200},{0,0} });*/
 }
 
 
@@ -33,9 +26,13 @@ void ObjectManager::update()
 	{
 		myDebrises[i]->update();
 	}
-	for (size_t i = 0; i < myBullets.size(); i++)
+	for (size_t i = 0; i < myPlayerBullets.size(); i++)
 	{
-		myBullets[i]->update();
+		myPlayerBullets[i]->update();
+	}
+	for (size_t i = 0; i < myEnemyBullets.size(); i++)
+	{
+		myEnemyBullets[i]->update();
 	}
 	for (size_t i = 0; i < myEnemies.size(); i++)
 	{
@@ -46,14 +43,15 @@ void ObjectManager::update()
 }
 
 void ObjectManager::collision() {
+
 	if (this->myPlayer->isCollisional() == true) {
+
 		if (testdebris.isCollisional() && testdebris.getHitbox().intersects(myPlayer->getHitbox()))
 		{
 			myPlayer->onCollisionResponse(testdebris.getDamage());
 			testdebris.onCollisionResponse(myPlayer->getDamage());
 		}
 		
-		//以下　新型
 		for (size_t i = 0; i < myDebrises.size(); i++)
 		{
 			if (myDebrises[i]->isCollisional() && myDebrises[i]->getHitbox().intersects(myPlayer->getHitbox()))
@@ -63,14 +61,25 @@ void ObjectManager::collision() {
 			}
 		}
 
-		for (size_t i = 0; i < myBullets.size(); i++)
+		for (size_t i = 0; i < myPlayerBullets.size(); i++)
 		{
-			if (myBullets[i]->isCollisional() &&
-				myBullets[i]->getHitbox().intersects(myPlayer->getHitbox()) &&
-				myBullets[i]->isPlayerBullet() == false)
+		/*	if (myPlayerBullets[i]->isCollisional() &&
+				myPlayerBullets[i]->getHitbox().intersects(myPlayer->getHitbox()) &&
+				myPlayerBullets[i]->isPlayerBullet() == false)
 			{
-				myPlayer->onCollisionResponse(myBullets[i]->getDamage());
-				myBullets[i]->onCollisionResponse(myPlayer->getDamage());
+				myPlayer->onCollisionResponse(myPlayerBullets[i]->getDamage());
+				myPlayerBullets[i]->onCollisionResponse(myPlayer->getDamage());
+			}*/
+		}
+
+		for (size_t i = 0; i < myEnemyBullets.size(); i++)
+		{
+			if (myEnemyBullets[i]->isCollisional() &&
+				myEnemyBullets[i]->getHitbox().intersects(myPlayer->getHitbox()) &&
+				myEnemyBullets[i]->isPlayerBullet() == false)
+			{
+				myPlayer->onCollisionResponse(myEnemyBullets[i]->getDamage());
+				myEnemyBullets[i]->onCollisionResponse(myPlayer->getDamage());
 			}
 		}
 
@@ -83,6 +92,101 @@ void ObjectManager::collision() {
 			}
 		}
 	}
+
+	for (size_t j = 0; j < myDebrises.size(); j++)
+	{
+		if (this->myDebrises[j]->isCollisional() == true) {
+
+			for (size_t i = 0; i < myDebrises.size(); i++)
+			{
+				if (i == j) continue;
+				if (myDebrises[i]->isCollisional() &&
+					myDebrises[i]->getHitbox().intersects(myDebrises[j]->getHitbox()) )
+				{
+					myDebrises[j]->onCollisionResponse(myDebrises[i]->getDamage());
+					myDebrises[i]->onCollisionResponse(myDebrises[j]->getDamage());
+				}
+
+			}
+
+
+			for (size_t i = 0; i < myPlayerBullets.size(); i++)
+			{
+				/*	if (myPlayerBullets[i]->isCollisional() &&
+						myPlayerBullets[i]->getHitbox().intersects(myDebrises[j]->getHitbox()) &&
+						myPlayerBullets[i]->isPlayerBullet() == false)
+					{
+						myDebrises[j]->onCollisionResponse(myPlayerBullets[i]->getDamage());
+						myPlayerBullets[i]->onCollisionResponse(myDebrises[j]->getDamage());
+					}*/
+			}
+
+			for (size_t i = 0; i < myEnemyBullets.size(); i++)
+			{
+				if (myEnemyBullets[i]->isCollisional() &&
+					myEnemyBullets[i]->getHitbox().intersects(myDebrises[j]->getHitbox()) &&
+					myEnemyBullets[i]->isPlayerBullet() == false)
+				{
+					myDebrises[j]->onCollisionResponse(myEnemyBullets[i]->getDamage());
+					myEnemyBullets[i]->onCollisionResponse(myDebrises[j]->getDamage());
+				}
+			}
+
+			for (size_t i = 0; i < myEnemies.size(); i++)
+			{
+				/*
+				* if (myEnemies[i]->isCollisional() && myEnemies[i]->getHitbox().intersects(myDebrises[j]->getHitbox()))
+				{
+					myDebrises[j]->onCollisionResponse(myEnemies[i]->getDamage());
+					myEnemies[i]->onCollisionResponse(myDebrises[j]->getDamage());
+				}
+				*/
+			}
+
+		}
+	}
+
+	for (size_t j = 0; j < myPlayerBullets.size(); j++) {
+		if (this->myPlayerBullets[j]->isCollisional() == true) {
+
+			for (size_t i = 0; i < myPlayerBullets.size(); i++)
+			{
+				if (i == j) continue;
+				/*	if (myPlayerBullets[i]->isCollisional() &&
+						myPlayerBullets[i]->getHitbox().intersects(myPlayerBullets[j]->getHitbox()) &&
+						myPlayerBullets[i]->isPlayerBullet() == false)
+					{
+						myPlayerBullets[j]->onCollisionResponse(myPlayerBullets[i]->getDamage());
+						myPlayerBullets[i]->onCollisionResponse(myPlayerBullets[j]->getDamage());
+					}*/
+			}
+
+			for (size_t i = 0; i < myEnemyBullets.size(); i++)
+			{
+				if (myEnemyBullets[i]->isCollisional() &&
+					myEnemyBullets[i]->getHitbox().intersects(myPlayerBullets[j]->getHitbox()) &&
+					myEnemyBullets[i]->isPlayerBullet() == false)
+				{
+					myPlayerBullets[j]->onCollisionResponse(myEnemyBullets[i]->getDamage());
+					myEnemyBullets[i]->onCollisionResponse(myPlayerBullets[j]->getDamage());
+				}
+			}
+
+			for (size_t i = 0; i < myEnemies.size(); i++)
+			{
+				
+				if (myEnemies[i]->isCollisional() && myEnemies[i]->getHitbox().intersects(myPlayerBullets[j]->getHitbox()))
+				{
+					myPlayerBullets[j]->onCollisionResponse(myEnemies[i]->getDamage());
+					myEnemies[i]->onCollisionResponse(myPlayerBullets[j]->getDamage());
+				}
+				
+			}
+
+		}
+	}
+
+
 }
 
 
@@ -91,7 +195,8 @@ void ObjectManager::draw(Vec2 offset) const
 	this->testdebris.draw(offset, true);
 	//以下　新型
 	for (size_t i = 0; i < myDebrises.size(); i++) myDebrises[i]->draw(offset, true);
-	for (size_t i = 0; i < myBullets.size(); i++) myBullets[i]->draw(offset, true);
+	for (size_t i = 0; i < myPlayerBullets.size(); i++) myPlayerBullets[i]->draw(offset, true);
+	for (size_t i = 0; i < myEnemyBullets.size(); i++) myEnemyBullets[i]->draw(offset, true);
 	for (size_t i = 0; i < myEnemies.size(); i++) myEnemies[i]->draw(offset, true);
 	
 
