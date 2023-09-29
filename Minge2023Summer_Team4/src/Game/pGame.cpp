@@ -55,6 +55,9 @@ void Game::draw() const
 
 	miniMapDraw();
 
+	//仮フレーム
+	textureFrame.draw();
+
 }
 
 void Game::debug()
@@ -133,7 +136,8 @@ void Game::miniMapDraw() const
 	Vec2 debriPos = objectManager.testdebris.getPos() - topLeft;
 
 	//描画処理
-	Rect{ 768, 0, 256, 256 }.draw(Palette::Gray);
+	//Rect{ 768, 0, 256, 256 }.draw(Palette::Gray);
+	Circle{ 896, 128, 128 }.draw(Palette::Gray);
 	Circle{ calculateMiniMapPos(playerPos), 5 }.draw(Palette::Blue);
 
 	if (isInMiniMapRange(debriPos))
