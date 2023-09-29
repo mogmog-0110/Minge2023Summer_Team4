@@ -40,7 +40,7 @@ T* ObjectAppearanceManager::createNewObject(
 	case eEnemy:
 		return new T(1000, 10, U"", hitbox_, ObjectAppearanceManager::generateRandomPos(), { 0,0 }, { 0,0 });
 	case eBullet:
-		return new T(1000, 10, U"", hitbox_, { 0, 200 }, { 0,200 }, { 0,0 });
+		return new T(1000, 10, U"", hitbox_, pos_, vel_, acc_);
 	case eDebris:
 		return new T(1000, 10, U"", hitbox_, ObjectAppearanceManager::generateRandomPos(), { 0,0 }, { 0,0 });
 	}
