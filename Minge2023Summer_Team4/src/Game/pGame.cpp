@@ -1,7 +1,7 @@
 ﻿#include"pGame.h"
 
 Game::Game(const InitData& init)
-	: IScene(init), myEventManager(new EventManager()), objectManager(myEventManager)
+	: IScene(init), objectManager()
 {
 	Print << U"Game!";
 
@@ -16,7 +16,7 @@ Game::Game(const InitData& init)
 
 Game::~Game()
 {
-	delete myEventManager;
+
 }
 
 
@@ -26,9 +26,6 @@ Game::~Game()
 
 void Game::update()
 {
-
-	if (KeyP.down()) myEventManager->debugCount();
-
 	if (KeyQ.down())
 	{
 		//タイトルシーンに遷移する

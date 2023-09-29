@@ -8,23 +8,31 @@ ObjectAppearanceManager::~ObjectAppearanceManager()
 {
 }
 
-Vec2 ObjectAppearanceManager::generateRamdomPos()
+Vec2 ObjectAppearanceManager::generateRandomPos()
 {
 	// プレイヤーの座標を取得
+	Player* myPlayer = Player::getInstance();
+	Vec2 playerPos = myPlayer->getPos();
 
-	return Vec2{ 0, 0 };
+	// プレイヤーを中心とした一定の湧き範囲の設定
+	Circle circleA{ playerPos, 2000 };
+
+	//ただしこの円内では湧かない
+	Circle circleB{ playerPos, 700 };
+
+	Vec2 randomPos;
+	while (true)
+	{
+		// 湧き範囲内のランダムな座標を取得
+		randomPos = RandomVec2(circleA);
+
+		//プレイヤーから一定の距離離れていればおけ
+
+		if (!(circleB.intersects(randomPos)))
+		{
+			break;
+		}
+	}
+
+	return randomPos;
 }
-
-//template <typename T>
-//T ObjectAppearanceManager::createNewObject(eObjectType myType_, int hp_, int damage_, String textureStr_, Figure hitbox_, Vec2 pos_, Vec2 vel_, Vec2 acc_)
-//{
-//	switch (myType_)
-//	{
-//	case ePlayer:
-//		
-//	case eEnemy:
-//	case eBullet:
-//	case eDebris:
-//	case eNone:
-//	}
-//}
