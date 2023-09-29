@@ -45,7 +45,6 @@ void Game::draw() const
 	//従来のマウスカーソルを非表示に
 	Cursor::RequestStyle(CursorStyle::Hidden);
 
-	//objectManager.draw();
 	//TextureAsset(U"Frame").draw();
 	cursor.draw();
 	objectManager.draw(topLeft);
@@ -60,7 +59,6 @@ void Game::draw() const
 void Game::debug()
 {
 	//ClearPrint();
-	//myEventManager->debug();
 
 	//マップスクロール用
 	for (int32 i = 0; i < 100; ++i)
@@ -128,18 +126,35 @@ Vec2 Game::convertToScreenPos(Vec2 pos)
 
 void Game::miniMapDraw() const
 {
-	//各オブジェクトのスクリーン座標の取得
-	Vec2 playerPos = objectManager.myPlayer->getPos() - topLeft;
-	Vec2 debriPos = objectManager.testdebris.getPos() - topLeft;
-
-	//描画処理
-	//Rect{ 768, 0, 256, 256 }.draw(Palette::Gray);
+	// マップの描写
 	Circle{ 896, 128, 128 }.draw(Palette::Gray);
+
+	//プレイヤーの描写
+	Vec2 playerPos = objectManager.myPlayer->getPos() - topLeft;
 	Circle{ calculateMiniMapPos(playerPos), 5 }.draw(Palette::Blue);
 
-	if (isInMiniMapRange(debriPos))
+	// 敵機の描写
+	Vec2 enemyPos;
+	for (size_t i = 0; i < objectManager.myEnemies.size(); i++)
 	{
-		Circle{ calculateMiniMapPos(debriPos), 5}.draw(ColorF(Palette::Red, calculateOpacity(playerPos, debriPos)));
+		enemyPos = objectManager.myEnemies[i]->getPos() - topLeft;
+		if (isInMiniMapRange(enemyPos))
+		{
+			Circle{ calculateMiniMapPos(enemyPos), 5 }.draw(ColorF(Palette::Red, calculateOpacity(playerPos, enemyPos)));
+		}
+
+	}
+
+	// デブリの描写
+	Vec2 debriPos;
+	for (size_t i = 0; i < objectManager.myDebrises.size(); i++)
+	{
+		debriPos = objectManager.myDebrises[i]->getPos() - topLeft;
+		if (isInMiniMapRange(debriPos))
+		{
+			Circle{ calculateMiniMapPos(debriPos), 5 }.draw(ColorF(Palette::Orange, calculateOpacity(playerPos, debriPos)));
+		}
+
 	}
 }
 
