@@ -17,6 +17,7 @@ ObjectManager::ObjectManager()
 	myBullets.push_back(Bullet{ false, 1,200,U"",Circle(20),{0,200},{0,200},{0,0} });*/
 }
 
+
 ObjectManager::~ObjectManager()
 {
 	
@@ -93,6 +94,7 @@ void ObjectManager::draw(Vec2 offset) const
 	for (size_t i = 0; i < myBullets.size(); i++) myBullets[i]->draw(offset, true);
 	for (size_t i = 0; i < myEnemies.size(); i++) myEnemies[i]->draw(offset, true);
 	
+
 
 	this->myPlayer->draw(offset, true);
 }
