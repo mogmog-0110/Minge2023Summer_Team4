@@ -14,13 +14,14 @@ class ObjectManager
 {
 private:
 
+
+public:
+
 	//各オブジェクトの配列
 	Array<Debris*> myDebrises;
 	Array<Bullet*> myBullets;
 	Array<Enemy*> myEnemies;
 
-
-public:
 	ObjectManager();
 	~ObjectManager();
 
