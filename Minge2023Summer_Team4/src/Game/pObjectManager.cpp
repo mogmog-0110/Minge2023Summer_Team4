@@ -109,7 +109,6 @@ void ObjectManager::collision() {
 
 			}
 
-
 			for (size_t i = 0; i < myPlayerBullets.size(); i++)
 			{
 				/*	if (myPlayerBullets[i]->isCollisional() &&
@@ -152,13 +151,6 @@ void ObjectManager::collision() {
 			for (size_t i = 0; i < myPlayerBullets.size(); i++)
 			{
 				if (i == j) continue;
-				/*	if (myPlayerBullets[i]->isCollisional() &&
-						myPlayerBullets[i]->getHitbox().intersects(myPlayerBullets[j]->getHitbox()) &&
-						myPlayerBullets[i]->isPlayerBullet() == false)
-					{
-						myPlayerBullets[j]->onCollisionResponse(myPlayerBullets[i]->getDamage());
-						myPlayerBullets[i]->onCollisionResponse(myPlayerBullets[j]->getDamage());
-					}*/
 			}
 
 			for (size_t i = 0; i < myEnemyBullets.size(); i++)
@@ -185,6 +177,33 @@ void ObjectManager::collision() {
 
 		}
 	}
+
+	/*
+	for (size_t j = 0; j < myEnemyBullets.size(); j++) {
+
+		if (this->myEnemyBullets[j]->isCollisional() == true) {
+
+			for (size_t i = 0; i < myEnemyBullets.size(); i++)
+			{
+				if (i == j) continue;
+			}
+
+			for (size_t i = 0; i < myEnemies.size(); i++)
+			{
+
+			}
+		}
+	}
+
+	for (size_t j = 0; j < myEnemies.size(); j++)
+	{
+		for (size_t i = 0; i < myEnemies.size(); i++)
+		{
+
+		}
+	}
+	*/
+
 
 
 }
