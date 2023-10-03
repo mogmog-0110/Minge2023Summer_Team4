@@ -1,7 +1,9 @@
 ﻿#pragma once
 #include "oGameObject.h"
 #include "../Define.h"
+#include "oPlayer.h"
 
+class Player;
 
 class Enemy :
     public GameObject
@@ -23,5 +25,7 @@ public:
 	};
 
 	~Enemy();
+
+	void move() override;
 };
 

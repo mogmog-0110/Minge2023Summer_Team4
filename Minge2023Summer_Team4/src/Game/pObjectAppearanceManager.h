@@ -46,11 +46,11 @@ T* ObjectAppearanceManager::createNewObject(
 	switch (myType_)
 	{
 	case eEnemy:
-		return new T(1000, 10, U"", hitbox_, ObjectAppearanceManager::generateRandomPos(), { 0,0 }, { 0,0 });
+		return new T(hp_, damage_, textureStr_, hitbox_, ObjectAppearanceManager::generateRandomPos(), vel_, acc_);
 	case eBullet:
 		return new T(1000, 10, U"", hitbox_, pos_, vel_, acc_);
 	case eDebris:
-		return new T(1000, 10, U"", hitbox_, ObjectAppearanceManager::generateRandomPos(), { 0,0 }, { 0,0 });
+		return new T(hp_, damage_, textureStr_, hitbox_, ObjectAppearanceManager::generateRandomPos(), vel_, acc_);
 	}
 
 	// ここで適切なポインタを返さない場合、コンパイルエラーが発生。
