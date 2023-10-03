@@ -50,3 +50,16 @@ Figure hitbox_, Vec2 pos_, Vec2 vel_, Vec2 acc_, bool isPlayerBullet_)
 	// ここで適切なポインタを返さない場合、コンパイルエラーが発生。
 	return nullptr;
 }
+
+Bullet* createNewObject(ObjectInitData OID)
+{
+	switch (OID.myType)
+	{
+	case eBullet:
+		return new Bullet(OID.isPlayerBullet_, OID.hp, OID.damage, OID.textureStr, OID.hitbox,  OID.pos, OID.vel, OID.acc);
+	}
+
+	// ここで適切なポインタを返さない場合、コンパイルエラーが発生。
+	return nullptr;
+}
+

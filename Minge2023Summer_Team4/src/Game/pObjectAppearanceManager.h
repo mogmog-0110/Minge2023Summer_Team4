@@ -26,9 +26,13 @@ public:
 	(eObjectType myType_, int hp_, int damage_, String textureStr_,
 		Figure hitbox_, Vec2 pos_, Vec2 vel_, Vec2 acc_);
 
+
+
 	static Bullet* createNewObject
 	(eObjectType myType_, int hp_, int damage_, String textureStr_,
 	Figure hitbox_, Vec2 pos_, Vec2 vel_, Vec2 acc_, bool isPlayerBullet_);
+
+	static Bullet* createNewObject(ObjectInitData);
 
 	static Vec2 generateRandomPos();
 };
