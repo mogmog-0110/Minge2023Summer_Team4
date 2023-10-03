@@ -22,6 +22,6 @@ public:
 	bool isPlayerBullet() { return bPlayerBullet; };
 
 
-	//bool isCollisional(eObjectType eType = eNone);
+	bool isCollisional(eObjectType eType = eNone);
 };
 
