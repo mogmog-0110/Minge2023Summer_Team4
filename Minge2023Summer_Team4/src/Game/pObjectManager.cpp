@@ -221,6 +221,19 @@ void ObjectManager::collision() {
 	}
 
 	i = 0;
+	for (auto itDebris = myDebrises.begin(); itDebris != myDebrises.end();)
+	{
+		if (myDebrises[i]->isDead())
+		{
+			myDebrises.erase(itDebris);
+			break;
+		}
+		++itDebris;
+		++i;
+	}
+
+
+	i = 0;
 	for (auto itEnemy = myEnemies.begin(); itEnemy != myEnemies.end();)
 	{
 		if (myEnemies[i]->isDead())
@@ -273,7 +286,7 @@ void ObjectManager::createDebris()
 
 void ObjectManager::createBullet(bool isPlayerBullet, Vec2 pos_, Vec2 vel_, Vec2 acc_)
 {
-	Bullet* newBullet = ObjectAppearanceManager::createNewObject(eBullet, 1, 5, U"", Circle{ 10 }, pos_, vel_, acc_, isPlayerBullet);
+	Bullet* newBullet = ObjectAppearanceManager::createNewObject(eBullet, 1, 100, U"", Circle{ 10 }, pos_, vel_, acc_, isPlayerBullet);
 
 	if (isPlayerBullet == true) myPlayerBullets << newBullet;
 	else myEnemyBullets << newBullet;
