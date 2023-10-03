@@ -39,9 +39,12 @@ void ObjectManager::update()
 		myEnemies[i]->update();
 	}
 
-	
+	if (DebugBulletTimer.isRunning() == false && KeySpace.pressed()) {
+		Vec2 elementVector = (Cursor::PosF() - Scene::CenterF()).setLength(1);
 
-
+		createBullet(true, myPlayer->getPos() + elementVector.setLength(50), elementVector.setLength(600), {0,0});
+		DebugBulletTimer.restart();
+	}
 }
 
 void ObjectManager::collision() {
