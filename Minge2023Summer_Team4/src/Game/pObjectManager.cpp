@@ -211,7 +211,7 @@ void ObjectManager::collision() {
 	int i = 0;
 	for (auto itBullet = myPlayerBullets.begin(); itBullet != myPlayerBullets.end();)
 	{
-		if (myPlayerBullets[i]->isDead())
+		if (myPlayerBullets[i]->isDead(myPlayer->getPos()))
 		{
 			myPlayerBullets.erase(itBullet);
 			break;

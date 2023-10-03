@@ -28,5 +28,6 @@ public:
 	//void changeIsPlayerBullet(bool b) { bPlayerBullet = b; };
 	bool isPlayerBullet() { return bPlayerBullet; };
 
+	bool isDead(Vec2 playerPos_);
 };
 
