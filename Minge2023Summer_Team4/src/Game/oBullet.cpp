@@ -47,8 +47,5 @@ bool Bullet::isCollisional(eObjectType eType) {
 			return false;
 			break;
 		}
-	}
-
-
-	
+	}	
 }
