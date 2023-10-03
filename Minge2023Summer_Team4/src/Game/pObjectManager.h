@@ -13,7 +13,7 @@ class ObjectAppearanceManager;
 class ObjectManager
 {
 private:
-
+	Timer DebugBulletTimer{ 0.2s, StartImmediately::Yes };
 
 public:
 
@@ -33,6 +33,10 @@ public:
 	void collision();
 	void draw(Vec2 offset) const;
 
+
+
 	void createEnemy();
 	void createDebris();
+	void createBullet(bool, Vec2, Vec2, Vec2);
+	void createBullet(ObjectInitData);
 };

@@ -20,6 +20,7 @@ Player::Player()
 Player::Player(int hp_, int damage_, String textureStr, Figure hitbox_, Vec2 pos_, double speed_)
 	:speed(speed_), GameObject(eObjectType::ePlayer, hp_, damage_,textureStr,hitbox_, pos_, { 0,0 }, { 0,0 })
 {
+	changeCoolTime(1s);
 }
 
 Player::~Player()

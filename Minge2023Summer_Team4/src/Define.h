@@ -27,17 +27,18 @@ enum eObjectType {
 
 
 // 使い方わからん by Shiggy
-//struct ObjectCreateCommand
-//{
-//	eObjectType occ_myType;
-//	int occ_hp;
-//	int occ_damage;
-//	String occ_textureStr;
-//	Figure occ_hitbox;
-//	Vec2 occ_pos;
-//	Vec2 occ_vel;
-//	Vec2 occ_acc;
-//
-//
-//	ObjectCreateCommand(eObjectType occ_myType_) :occ_myType(occ_myType_) {};
-//};
+struct ObjectInitData
+{
+	eObjectType myType = eNone;
+	int hp = 1;
+	int damage = 1;
+	String textureStr = U"";
+	Figure hitbox = Circle(20);
+	Vec2 pos = Vec2{ 0,0 };
+	Vec2 vel = Vec2{ 0,0 };
+	Vec2 acc = Vec2{ 0,0 };
+
+	bool isPlayerBullet_ = false;
+
+	ObjectInitData(eObjectType myType_) :myType(myType_) {};
+};

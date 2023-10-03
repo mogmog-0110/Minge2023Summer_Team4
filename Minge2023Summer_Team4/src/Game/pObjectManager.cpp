@@ -40,6 +40,12 @@ void ObjectManager::update()
 		myEnemies[i]->update();
 	}
 
+	if (DebugBulletTimer.isRunning() == false && KeySpace.pressed()) {
+		Vec2 elementVector = (Cursor::PosF() - Scene::CenterF()).setLength(1);
+
+		createBullet(true, myPlayer->getPos() + elementVector.setLength(50), elementVector.setLength(600), {0,0});
+		DebugBulletTimer.restart();
+	}
 }
 
 void ObjectManager::collision() {
@@ -111,13 +117,12 @@ void ObjectManager::collision() {
 
 			for (size_t i = 0; i < myPlayerBullets.size(); i++)
 			{
-				/*	if (myPlayerBullets[i]->isCollisional() &&
-						myPlayerBullets[i]->getHitbox().intersects(myDebrises[j]->getHitbox()) &&
-						myPlayerBullets[i]->isPlayerBullet() == false)
+					if (myPlayerBullets[i]->isCollisional() &&
+						myPlayerBullets[i]->getHitbox().intersects(myDebrises[j]->getHitbox()))
 					{
 						myDebrises[j]->onCollisionResponse(myPlayerBullets[i]->getDamage());
 						myPlayerBullets[i]->onCollisionResponse(myDebrises[j]->getDamage());
-					}*/
+					}
 			}
 
 			for (size_t i = 0; i < myEnemyBullets.size(); i++)
@@ -157,7 +162,7 @@ void ObjectManager::collision() {
 			{
 				if (myEnemyBullets[i]->isCollisional() &&
 					myEnemyBullets[i]->getHitbox().intersects(myPlayerBullets[j]->getHitbox()) &&
-					myEnemyBullets[i]->isPlayerBullet() == false)
+					myEnemyBullets[i]->isPlayerBullet() == true)
 				{
 					myPlayerBullets[j]->onCollisionResponse(myEnemyBullets[i]->getDamage());
 					myEnemyBullets[i]->onCollisionResponse(myPlayerBullets[j]->getDamage());
@@ -204,7 +209,44 @@ void ObjectManager::collision() {
 	}
 	*/
 
+	int i = 0;
+	for (auto itBullet = myPlayerBullets.begin(); itBullet != myPlayerBullets.end();)
+	{
+		if (myPlayerBullets[i]->isDead(myPlayer->getPos()))
+		{
+			myPlayerBullets.erase(itBullet);
+			break;
+		}
+		++itBullet;
+		++i;
+	}
 
+	i = 0;
+	for (auto itDebris = myDebrises.begin(); itDebris != myDebrises.end();)
+	{
+		if (myDebrises[i]->isDead())
+		{
+			myDebrises.erase(itDebris);
+			break;
+		}
+		++itDebris;
+		++i;
+	}
+
+
+	i = 0;
+	for (auto itEnemy = myEnemies.begin(); itEnemy != myEnemies.end();)
+	{
+		if (myEnemies[i]->isDead())
+		{
+			myEnemies.erase(itEnemy);
+			break;
+		}
+		++itEnemy;
+		++i;
+	}
+
+	
 
 }
 
@@ -241,4 +283,22 @@ void ObjectManager::createDebris()
 		Debris* newDebris = ObjectAppearanceManager::createNewObject<Debris>(eDebris, 1000, 10, U"", Circle(50), { -100,-100 }, { 0,0 }, { 0,0 });
 		myDebrises << newDebris;
 	}
+}
+
+void ObjectManager::createBullet(bool isPlayerBullet, Vec2 pos_, Vec2 vel_, Vec2 acc_)
+{
+	Bullet* newBullet = ObjectAppearanceManager::createNewObject(eBullet, 1, 100, U"", Circle{ 10 }, pos_, vel_, acc_, isPlayerBullet);
+
+	if (isPlayerBullet == true) myPlayerBullets << newBullet;
+	else myEnemyBullets << newBullet;
+
+}
+
+void ObjectManager::createBullet(ObjectInitData OID)
+{
+	Bullet* newBullet = ObjectAppearanceManager::createNewObject(OID);
+
+	if (OID.isPlayerBullet_ == true) myPlayerBullets << newBullet;
+	else myEnemyBullets << newBullet;
+
 }

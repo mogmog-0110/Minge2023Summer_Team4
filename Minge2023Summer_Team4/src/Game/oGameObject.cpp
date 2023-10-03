@@ -91,6 +91,15 @@ void GameObject::calcDamage(int damage)
 {
 }
 
+void GameObject::changeCoolTime(Duration cooltime) 
+{
+	collisionalTimer.set(cooltime);
+}
+
+//====================================================
+//君は完璧で最強のゲッター関数
+
+
 Vec2 GameObject::getPos() const
 {
 	return pos;
@@ -103,6 +112,7 @@ double GameObject::getSpeed() const
 
 
 
-bool GameObject::isDead() {
-	return pos.y > 10000 || hp < 0;
+bool GameObject::isDead(Vec2 playerPos_) {
+	if (hp <= 0) return true;
+	else return false;
 }

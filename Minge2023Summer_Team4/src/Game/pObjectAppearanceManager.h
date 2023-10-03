@@ -26,6 +26,14 @@ public:
 	(eObjectType myType_, int hp_, int damage_, String textureStr_,
 		Figure hitbox_, Vec2 pos_, Vec2 vel_, Vec2 acc_);
 
+
+
+	static Bullet* createNewObject
+	(eObjectType myType_, int hp_, int damage_, String textureStr_,
+	Figure hitbox_, Vec2 pos_, Vec2 vel_, Vec2 acc_, bool isPlayerBullet_);
+
+	static Bullet* createNewObject(ObjectInitData);
+
 	static Vec2 generateRandomPos();
 };
 
@@ -40,7 +48,7 @@ T* ObjectAppearanceManager::createNewObject(
 	case eEnemy:
 		return new T(hp_, damage_, textureStr_, hitbox_, ObjectAppearanceManager::generateRandomPos(), vel_, acc_);
 	case eBullet:
-		return new T(1000, 10, U"", hitbox_, { 0, 200 }, { 0,200 }, { 0,0 });
+		return new T(1000, 10, U"", hitbox_, pos_, vel_, acc_);
 	case eDebris:
 		return new T(hp_, damage_, textureStr_, hitbox_, ObjectAppearanceManager::generateRandomPos(), vel_, acc_);
 	}
@@ -48,3 +56,4 @@ T* ObjectAppearanceManager::createNewObject(
 	// ここで適切なポインタを返さない場合、コンパイルエラーが発生。
 	return nullptr;
 }
+
