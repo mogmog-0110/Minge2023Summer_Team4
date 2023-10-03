@@ -43,7 +43,7 @@ public:
 
 	virtual void draw(Vec2 offset, bool isHitboxDraw) const;
 
-	bool isCollisional();
+	bool isCollisional(eObjectType eType = eNone);
 	void onCollisionResponse(int damage);
 	void calcDamage(int damage);
 

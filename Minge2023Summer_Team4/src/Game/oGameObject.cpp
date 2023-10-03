@@ -75,10 +75,12 @@ int GameObject::getDamage() {
 //====================================================
 //接触関連
 
-bool GameObject::isCollisional()
+bool GameObject::isCollisional(eObjectType eType)
 {
 	return !collisionalTimer.isRunning();
 }
+
+
 
 void GameObject::onCollisionResponse(int damage)
 {

@@ -34,5 +34,7 @@ public:
 	void move() override;
 
 	void draw(Vec2 offset, bool isHitboxDraw) const override;
+
+	//bool isCollisional(eObjectType) override;
 };
 

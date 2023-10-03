@@ -20,6 +20,8 @@ public:
 	~Bullet();
 
 	bool isPlayerBullet() { return bPlayerBullet; };
-	
+
+
+	//bool isCollisional(eObjectType eType = eNone);
 };
 

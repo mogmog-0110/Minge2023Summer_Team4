@@ -17,5 +17,8 @@ public:
 		: GameObject(eObjectType::eDebris, hp_, damage_, textureStr,hitbox_,pos_, vel_, acc_) {};
 
 	~Debris();
+
+	bool isCollisional(eObjectType eType = eNone);
+
 };
 

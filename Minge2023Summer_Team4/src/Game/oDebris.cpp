@@ -4,3 +4,8 @@ Debris::~Debris()
 {
 }
 
+bool Debris::isCollisional(eObjectType eType) {
+
+	return GameObject::isCollisional();
+
+}
