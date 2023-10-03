@@ -46,6 +46,7 @@ public:
 	bool isCollisional();
 	void onCollisionResponse(int damage);
 	void calcDamage(int damage);
+	void changeCoolTime(Duration);
 
 	bool isDead();
 

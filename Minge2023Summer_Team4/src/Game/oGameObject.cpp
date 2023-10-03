@@ -91,6 +91,15 @@ void GameObject::calcDamage(int damage)
 {
 }
 
+void GameObject::changeCoolTime(Duration cooltime) 
+{
+	collisionalTimer.set(cooltime);
+}
+
+//====================================================
+//君は完璧で最強のゲッター関数
+
+
 Vec2 GameObject::getPos() const
 {
 	return pos;
