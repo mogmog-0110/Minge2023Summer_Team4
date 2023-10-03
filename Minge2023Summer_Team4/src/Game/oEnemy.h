@@ -1,7 +1,9 @@
 ﻿#pragma once
 #include "oGameObject.h"
 #include "../Define.h"
+#include "oPlayer.h"
 
+class Player;
 
 class Enemy :
     public GameObject
@@ -17,5 +19,7 @@ public:
 		: GameObject(eObjectType::eEnemy, hp_, damage_, textureStr,hitbox_,pos_, vel_, acc_) {};
 
 	~Enemy();
+
+	void move() override;
 };
 

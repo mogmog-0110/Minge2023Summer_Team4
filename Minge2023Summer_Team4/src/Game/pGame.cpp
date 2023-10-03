@@ -52,7 +52,7 @@ void Game::draw() const
 	miniMapDraw();
 
 	//仮フレーム
-	textureFrame.draw();
+	// textureFrame.draw();
 
 }
 

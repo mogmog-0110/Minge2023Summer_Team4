@@ -5,8 +5,6 @@ ObjectManager::ObjectManager()
 {
 	Player::create(1000, 10, U"", Circle(30), Vec2(300,400), 400);
 	myPlayer = Player::getInstance();
-	createEnemy();
-	createDebris();
 
 }
 
@@ -19,7 +17,10 @@ ObjectManager::~ObjectManager()
 void ObjectManager::update()
 {
 	this->myPlayer->update();
-	this->testdebris.update();
+	//this->testdebris.update();
+
+	createEnemy();
+	createDebris();
 
 	//以下　新型
 	for (size_t i = 0; i < myDebrises.size(); i++)
@@ -38,7 +39,6 @@ void ObjectManager::update()
 	{
 		myEnemies[i]->update();
 	}
-
 
 }
 
@@ -228,7 +228,7 @@ void ObjectManager::createEnemy()
 	//　敵は100体まで自動補充
 	while(myEnemies.size() < 100)
 	{
-		Enemy* newEnemy = ObjectAppearanceManager::createNewObject<Enemy>(eEnemy, 1000, 10, U"", Rect(50), { -100,-100 }, { 0,0 }, { 0,0 });
+		Enemy* newEnemy = ObjectAppearanceManager::createNewObject<Enemy>(eEnemy, 1000, 10, U"", Rect(50), { -100,-100 }, { 150 ,150 }, { 1 , 1 });
 		myEnemies << newEnemy;
 	}
 }

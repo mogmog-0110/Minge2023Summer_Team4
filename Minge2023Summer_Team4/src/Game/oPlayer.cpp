@@ -45,13 +45,11 @@ void Player::update() {
 	
 	updateCommon();
 	move();
-
 	
 }
 
 void Player::move()
 {
-	Vec2 newPos(0, 0);
 	const double deltaTime = Scene::DeltaTime();
 
 	Vec2 V2move = { 0,0 };
