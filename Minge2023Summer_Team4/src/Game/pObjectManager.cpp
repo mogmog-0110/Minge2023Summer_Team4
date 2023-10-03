@@ -208,15 +208,31 @@ void ObjectManager::collision() {
 	}
 	*/
 
-
-	for (size_t i = 0; i < myPlayerBullets.size(); i++)
+	int i = 0;
+	for (auto itBullet = myPlayerBullets.begin(); itBullet != myPlayerBullets.end();)
 	{
 		if (myPlayerBullets[i]->isDead())
 		{
-			//死亡処理
-			
+			myPlayerBullets.erase(itBullet);
+			break;
 		}
+		++itBullet;
+		++i;
 	}
+
+	i = 0;
+	for (auto itEnemy = myEnemies.begin(); itEnemy != myEnemies.end();)
+	{
+		if (myEnemies[i]->isDead())
+		{
+			myEnemies.erase(itEnemy);
+			break;
+		}
+		++itEnemy;
+		++i;
+	}
+
+	
 
 }
 
