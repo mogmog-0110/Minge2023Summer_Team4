@@ -17,5 +17,8 @@ public:
 		: GameObject(eObjectType::eEnemy, hp_, damage_, textureStr,hitbox_,pos_, vel_, acc_) {};
 
 	~Enemy();
+
+	bool isCollisional(eObjectType eType = eNone);
+
 };
 

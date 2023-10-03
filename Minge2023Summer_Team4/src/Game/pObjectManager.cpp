@@ -46,7 +46,7 @@ void ObjectManager::collision() {
 
 	if (this->myPlayer->isCollisional() == true) {
 
-		if (testdebris.isCollisional() && testdebris.getHitbox().intersects(myPlayer->getHitbox()))
+		if (testdebris.isCollisional(ePlayer) && testdebris.getHitbox().intersects(myPlayer->getHitbox()))
 		{
 			myPlayer->onCollisionResponse(testdebris.getDamage());
 			testdebris.onCollisionResponse(myPlayer->getDamage());
