@@ -209,6 +209,14 @@ void ObjectManager::collision() {
 	*/
 
 
+	for (size_t i = 0; i < myPlayerBullets.size(); i++)
+	{
+		if (myPlayerBullets[i]->isDead())
+		{
+			//死亡処理
+			
+		}
+	}
 
 }
 
