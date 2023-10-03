@@ -46,8 +46,9 @@ public:
 	bool isCollisional();
 	void onCollisionResponse(int damage);
 	void calcDamage(int damage);
+	void changeCoolTime(Duration);
 
-	bool isDead();
+	bool isDead(Vec2 playerPos_ = {0,0});
 
 	//ゲッター関数
 	Vec2 getPos() const;
