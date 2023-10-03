@@ -151,13 +151,18 @@ void ObjectManager::collision() {
 			for (size_t i = 0; i < myPlayerBullets.size(); i++)
 			{
 				if (i == j) continue;
+				if (myPlayerBullets[i]->isCollisional(eBullet) && myPlayerBullets[j]->isCollisional(eBullet) &&
+					myPlayerBullets[i]->getHitbox().intersects(myPlayerBullets[j]->getHitbox()))
+				{
+					myPlayerBullets[j]->onCollisionResponse(myPlayerBullets[i]->getDamage());
+					myPlayerBullets[i]->onCollisionResponse(myPlayerBullets[j]->getDamage());
+				}
 			}
 
 			for (size_t i = 0; i < myEnemyBullets.size(); i++)
 			{
-				if (myEnemyBullets[i]->isCollisional() &&
-					myEnemyBullets[i]->getHitbox().intersects(myPlayerBullets[j]->getHitbox()) &&
-					myEnemyBullets[i]->isPlayerBullet() == false)
+				if (myEnemyBullets[i]->isCollisional(eBullet) && myPlayerBullets[j]->isCollisional(eBullet) &&
+					myEnemyBullets[i]->getHitbox().intersects(myPlayerBullets[j]->getHitbox()))
 				{
 					myPlayerBullets[j]->onCollisionResponse(myEnemyBullets[i]->getDamage());
 					myEnemyBullets[i]->onCollisionResponse(myPlayerBullets[j]->getDamage());
@@ -167,7 +172,8 @@ void ObjectManager::collision() {
 			for (size_t i = 0; i < myEnemies.size(); i++)
 			{
 				
-				if (myEnemies[i]->isCollisional() && myEnemies[i]->getHitbox().intersects(myPlayerBullets[j]->getHitbox()))
+				if (myEnemies[i]->isCollisional(eBullet) && myPlayerBullets[j]->isCollisional(eEnemy) &&
+					myEnemies[i]->getHitbox().intersects(myPlayerBullets[j]->getHitbox()))
 				{
 					myPlayerBullets[j]->onCollisionResponse(myEnemies[i]->getDamage());
 					myEnemies[i]->onCollisionResponse(myPlayerBullets[j]->getDamage());
@@ -178,7 +184,7 @@ void ObjectManager::collision() {
 		}
 	}
 
-	/*
+	
 	for (size_t j = 0; j < myEnemyBullets.size(); j++) {
 
 		if (this->myEnemyBullets[j]->isCollisional() == true) {
@@ -186,11 +192,23 @@ void ObjectManager::collision() {
 			for (size_t i = 0; i < myEnemyBullets.size(); i++)
 			{
 				if (i == j) continue;
+				if (myEnemyBullets[i]->isCollisional(eBullet) && myEnemyBullets[j]->isCollisional(eBullet) &&
+					myEnemyBullets[i]->getHitbox().intersects(myEnemyBullets[j]->getHitbox()))
+				{
+					myEnemyBullets[j]->onCollisionResponse(myEnemyBullets[i]->getDamage());
+					myEnemyBullets[i]->onCollisionResponse(myEnemyBullets[j]->getDamage());
+				}
 			}
+
 
 			for (size_t i = 0; i < myEnemies.size(); i++)
 			{
-
+				if (myEnemies[i]->isCollisional(eBullet) && myEnemyBullets[j]->isCollisional(eEnemy) &&
+					myEnemies[i]->getHitbox().intersects(myEnemyBullets[j]->getHitbox()))
+				{
+					myEnemyBullets[j]->onCollisionResponse(myEnemies[i]->getDamage());
+					myEnemies[i]->onCollisionResponse(myEnemyBullets[j]->getDamage());
+				}
 			}
 		}
 	}
@@ -199,10 +217,16 @@ void ObjectManager::collision() {
 	{
 		for (size_t i = 0; i < myEnemies.size(); i++)
 		{
-
+			if (i == j) continue;
+			if (myEnemies[i]->isCollisional(eEnemy) && myEnemies[j]->isCollisional(eEnemy) &&
+				myEnemies[i]->getHitbox().intersects(myEnemies[j]->getHitbox()))
+			{
+				myEnemies[j]->onCollisionResponse(myEnemies[i]->getDamage());
+				myEnemies[i]->onCollisionResponse(myEnemies[j]->getDamage());
+			}
 		}
 	}
-	*/
+	
 
 
 
