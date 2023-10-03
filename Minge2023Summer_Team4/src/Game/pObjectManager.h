@@ -37,5 +37,6 @@ public:
 
 	void createEnemy();
 	void createDebris();
-	void createBullet(bool,Vec2,Vec2,Vec2);
+	void createBullet(bool, Vec2, Vec2, Vec2);
+	void createBullet(ObjectInitData);
 };

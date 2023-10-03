@@ -116,13 +116,12 @@ void ObjectManager::collision() {
 
 			for (size_t i = 0; i < myPlayerBullets.size(); i++)
 			{
-				/*	if (myPlayerBullets[i]->isCollisional() &&
-						myPlayerBullets[i]->getHitbox().intersects(myDebrises[j]->getHitbox()) &&
-						myPlayerBullets[i]->isPlayerBullet() == false)
+					if (myPlayerBullets[i]->isCollisional() &&
+						myPlayerBullets[i]->getHitbox().intersects(myDebrises[j]->getHitbox()))
 					{
 						myDebrises[j]->onCollisionResponse(myPlayerBullets[i]->getDamage());
 						myPlayerBullets[i]->onCollisionResponse(myDebrises[j]->getDamage());
-					}*/
+					}
 			}
 
 			for (size_t i = 0; i < myEnemyBullets.size(); i++)
@@ -162,7 +161,7 @@ void ObjectManager::collision() {
 			{
 				if (myEnemyBullets[i]->isCollisional() &&
 					myEnemyBullets[i]->getHitbox().intersects(myPlayerBullets[j]->getHitbox()) &&
-					myEnemyBullets[i]->isPlayerBullet() == false)
+					myEnemyBullets[i]->isPlayerBullet() == true)
 				{
 					myPlayerBullets[j]->onCollisionResponse(myEnemyBullets[i]->getDamage());
 					myEnemyBullets[i]->onCollisionResponse(myPlayerBullets[j]->getDamage());
@@ -252,9 +251,16 @@ void ObjectManager::createBullet(bool isPlayerBullet, Vec2 pos_, Vec2 vel_, Vec2
 {
 	Bullet* newBullet = ObjectAppearanceManager::createNewObject(eBullet, 1, 5, U"", Circle{ 10 }, pos_, vel_, acc_, isPlayerBullet);
 
-	//newBullet->changeIsPlayerBullet(isPlayerBullet);
 	if (isPlayerBullet == true) myPlayerBullets << newBullet;
 	else myEnemyBullets << newBullet;
 
 }
 
+void ObjectManager::createBullet(ObjectInitData OID)
+{
+	Bullet* newBullet = ObjectAppearanceManager::createNewObject(OID);
+
+	if (OID.isPlayerBullet_ == true) myPlayerBullets << newBullet;
+	else myEnemyBullets << newBullet;
+
+}

@@ -44,14 +44,14 @@ Figure hitbox_, Vec2 pos_, Vec2 vel_, Vec2 acc_, bool isPlayerBullet_)
 	switch (myType_)
 	{
 	case eBullet:
-		return new Bullet(isPlayerBullet_, 1000, 10, U"", hitbox_, pos_, vel_, acc_);
+		return new Bullet(isPlayerBullet_, hp_, damage_, textureStr_, hitbox_, pos_, vel_, acc_);
 	}
 
 	// ここで適切なポインタを返さない場合、コンパイルエラーが発生。
 	return nullptr;
 }
 
-Bullet* createNewObject(ObjectInitData OID)
+Bullet* ObjectAppearanceManager::createNewObject(ObjectInitData OID)
 {
 	switch (OID.myType)
 	{

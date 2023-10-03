@@ -19,7 +19,7 @@ public:
 
 	~Bullet();
 
-	void changeIsPlayerBullet(bool b) { bPlayerBullet = b; };
+	//void changeIsPlayerBullet(bool b) { bPlayerBullet = b; };
 	bool isPlayerBullet() { return bPlayerBullet; };
 
 };
