@@ -39,6 +39,8 @@ void ObjectManager::update()
 		myEnemies[i]->update();
 	}
 
+	
+
 
 }
 
@@ -245,9 +247,9 @@ void ObjectManager::createDebris()
 
 void ObjectManager::createBullet(bool isPlayerBullet, Vec2 pos_, Vec2 vel_, Vec2 acc_)
 {
-	Bullet* newBullet = ObjectAppearanceManager::createNewObject<Bullet>(eBullet, 1, 5, U"", Circle{ 10 }, pos_, vel_, acc_);
+	Bullet* newBullet = ObjectAppearanceManager::createNewObject(eBullet, 1, 5, U"", Circle{ 10 }, pos_, vel_, acc_, isPlayerBullet);
 
-	newBullet->changeIsPlayerBullet(isPlayerBullet);
+	//newBullet->changeIsPlayerBullet(isPlayerBullet);
 	if (isPlayerBullet == true) myPlayerBullets << newBullet;
 	else myEnemyBullets << newBullet;
 

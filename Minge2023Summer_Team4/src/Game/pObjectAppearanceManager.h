@@ -26,6 +26,10 @@ public:
 	(eObjectType myType_, int hp_, int damage_, String textureStr_,
 		Figure hitbox_, Vec2 pos_, Vec2 vel_, Vec2 acc_);
 
+	static Bullet* createNewObject
+	(eObjectType myType_, int hp_, int damage_, String textureStr_,
+	Figure hitbox_, Vec2 pos_, Vec2 vel_, Vec2 acc_, bool isPlayerBullet_);
+
 	static Vec2 generateRandomPos();
 };
 
@@ -48,3 +52,4 @@ T* ObjectAppearanceManager::createNewObject(
 	// ここで適切なポインタを返さない場合、コンパイルエラーが発生。
 	return nullptr;
 }
+

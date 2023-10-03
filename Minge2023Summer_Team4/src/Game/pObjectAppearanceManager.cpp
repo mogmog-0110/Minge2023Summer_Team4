@@ -36,3 +36,17 @@ Vec2 ObjectAppearanceManager::generateRandomPos()
 
 	return randomPos;
 }
+
+Bullet* ObjectAppearanceManager::createNewObject
+(eObjectType myType_, int hp_, int damage_, String textureStr_,
+Figure hitbox_, Vec2 pos_, Vec2 vel_, Vec2 acc_, bool isPlayerBullet_)
+{
+	switch (myType_)
+	{
+	case eBullet:
+		return new Bullet(isPlayerBullet_, 1000, 10, U"", hitbox_, pos_, vel_, acc_);
+	}
+
+	// ここで適切なポインタを返さない場合、コンパイルエラーが発生。
+	return nullptr;
+}
