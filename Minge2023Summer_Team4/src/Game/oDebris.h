@@ -21,6 +21,8 @@ public:
 		: GameObject(eObjectType::eDebris, hp_, damage_, textureStr,hitbox_,pos_, vel_, acc_)
 	{
 		changeCoolTime(0.1s);
+
+		repullDecayRate = 0.5;
 	};
 
 	~Debris();

@@ -276,18 +276,25 @@ void ObjectManager::draw(Vec2 offset) const
 
 void ObjectManager::createEnemy()
 {
-	//　敵は100体まで自動補充
-	while(myEnemies.size() < 10)
+	static Timer respownTimer{ 30s,StartImmediately::No };
+	if (respownTimer.isRunning() == false)
 	{
-		Enemy* newEnemy = ObjectAppearanceManager::createNewObject<Enemy>(eEnemy, 1000, 100, U"", Rect(50), { 0,0 }, { 150 ,0 }, { 1 , 1 });
-		myEnemies << newEnemy;
+		respownTimer.restart();
+
+		int i = 0;
+		while (i < 10)
+		{
+			Enemy* newEnemy = ObjectAppearanceManager::createNewObject<Enemy>(eEnemy, 1000, 100, U"", Rect(50), { 0,0 }, { 150 ,0 }, { 1 , 1 });
+			myEnemies << newEnemy;
+			i++;
+		}
 	}
 }
 
 void ObjectManager::createDebris()
 {
 	static Timer maxUpTimer{ 10s,StartImmediately::Yes };
-	static Timer respownTimer{ 1s,StartImmediately::Yes };
+	static Timer respownTimer{ 1s,StartImmediately::No };
 	static int maxUpCount = 0;
 
 	if (maxUpTimer.isRunning() == false)
