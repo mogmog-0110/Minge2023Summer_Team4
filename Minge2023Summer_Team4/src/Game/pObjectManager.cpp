@@ -276,7 +276,7 @@ void ObjectManager::draw(Vec2 offset) const
 
 void ObjectManager::createEnemy()
 {
-	static Timer respownTimer{ 30s,StartImmediately::No };
+	static Timer respownTimer{ 15s,StartImmediately::No };
 	if (respownTimer.isRunning() == false)
 	{
 		respownTimer.restart();
@@ -284,7 +284,7 @@ void ObjectManager::createEnemy()
 		int i = 0;
 		while (i < 10)
 		{
-			Enemy* newEnemy = ObjectAppearanceManager::createNewObject<Enemy>(eEnemy, 1000, 100, U"", Rect(50), { 0,0 }, { 150 ,0 }, { 1 , 1 });
+			Enemy* newEnemy = ObjectAppearanceManager::createNewObject<Enemy>(eEnemy, 300, 100, U"", Rect(50), { 0,0 }, { 150 ,0 }, { 1 , 1 });
 			myEnemies << newEnemy;
 			i++;
 		}

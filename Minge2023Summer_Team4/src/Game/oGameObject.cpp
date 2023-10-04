@@ -55,6 +55,9 @@ void GameObject::drawHitbox(Vec2 offset) const
 	if (collisionalTimer.isRunning() == false) hitbox.movedBy(offset).draw({Palette::Tomato, 0.5});
 	else hitbox.movedBy(offset).draw({Palette::Royalblue, 0.5});
 
+
+	hitbox.movedBy(offset).draw({ Palette::Coral , 0.9 });
+
 	//ついでにデバッグ用
 	debugfont(Format(hp)).drawAt(pos + offset + Vec2{0,30}, {Palette::Navy,0.5});
 }
