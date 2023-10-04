@@ -271,21 +271,38 @@ void ObjectManager::draw(Vec2 offset) const
 void ObjectManager::createEnemy()
 {
 	//　敵は100体まで自動補充
-	while(myEnemies.size() < 100)
+	while(myEnemies.size() < 10)
 	{
-		Enemy* newEnemy = ObjectAppearanceManager::createNewObject<Enemy>(eEnemy, 1000, 10, U"", Rect(50), { 0,0 }, { 50 ,0 }, { 1 , 1 });
+		Enemy* newEnemy = ObjectAppearanceManager::createNewObject<Enemy>(eEnemy, 1000, 100, U"", Rect(50), { 0,0 }, { 150 ,0 }, { 1 , 1 });
 		myEnemies << newEnemy;
 	}
 }
 
 void ObjectManager::createDebris()
 {
-	//　デブリは100体まで自動補充
-	while (myDebrises.size() < 100)
+	static Timer maxUpTimer{ 10s,StartImmediately::Yes };
+	static Timer respownTimer{ 1s,StartImmediately::Yes };
+	static int maxUpCount = 0;
+
+	if (maxUpTimer.isRunning() == false)
 	{
-		Debris* newDebris = ObjectAppearanceManager::createNewObject<Debris>(eDebris, 1000, 10, U"", Circle(50), { -100,-100 }, { 0,0 }, { 0,0 });
-		myDebrises << newDebris;
+		if (maxUpCount % 5 == 0) Print << maxUpCount + 100;
+		maxUpTimer.restart();
+		maxUpCount++;
 	}
+
+	if (respownTimer.isRunning() == false)
+	{
+		respownTimer.restart();
+		//　デブリは100体まで自動補充
+		while (myDebrises.size() < 150 + maxUpCount)
+		{
+			Debris* newDebris = ObjectAppearanceManager::createNewObject<Debris>(eDebris, 1000, 20, U"", Circle(50), { 0,0 }, RandomVec2(300), { 0,0 });
+			myDebrises << newDebris;
+		}
+	}
+
+	
 }
 
 void ObjectManager::createBullet(bool isPlayerBullet, Vec2 pos_, Vec2 vel_, Vec2 acc_)
