@@ -25,7 +25,7 @@ protected:
 	Vec2 acc;
 
 	Vec2 velRepull = {0,0};
-	double repullDecayRate = 0.2;
+	double repullDecayRate = 0.5;
 
 	Figure hitbox;
 

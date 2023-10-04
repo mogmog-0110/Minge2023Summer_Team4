@@ -138,13 +138,13 @@ void ObjectManager::collision() {
 
 			for (size_t i = 0; i < myEnemies.size(); i++)
 			{
-				/*
-				* if (myEnemies[i]->isCollisional() && myEnemies[i]->getHitbox().intersects(myDebrises[j]->getHitbox()))
+				
+				if (myEnemies[i]->isCollisional() && myEnemies[i]->getHitbox().intersects(myDebrises[j]->getHitbox()))
 				{
-					myDebrises[j]->onCollisionResponse(myEnemies[i]->getDamage());
-					myEnemies[i]->onCollisionResponse(myDebrises[j]->getDamage());
+					myDebrises[j]->onCollisionResponse(myEnemies[i]->getPos());
+					myEnemies[i]->onCollisionResponse(myDebrises[j]->getPos());
 				}
-				*/
+				
 			}
 
 		}
@@ -199,15 +199,21 @@ void ObjectManager::collision() {
 			}
 		}
 	}
-
+	*/
 	for (size_t j = 0; j < myEnemies.size(); j++)
 	{
 		for (size_t i = 0; i < myEnemies.size(); i++)
 		{
-
+			if (i == j) continue;
+			if (myEnemies[i]->isCollisional() &&
+				myEnemies[i]->getHitbox().intersects(myEnemies[j]->getHitbox()))
+			{
+				myEnemies[j]->onCollisionResponse(myEnemies[i]->getPos());
+				myEnemies[i]->onCollisionResponse(myEnemies[j]->getPos());
+			}
 		}
 	}
-	*/
+	
 
 	int i = 0;
 	for (auto itBullet = myPlayerBullets.begin(); itBullet != myPlayerBullets.end();)
@@ -225,7 +231,7 @@ void ObjectManager::collision() {
 	i = 0;
 	for (auto itDebris = myDebrises.begin(); itDebris != myDebrises.end();)
 	{
-		if (myDebrises[i]->isDead())
+		if (myDebrises[i]->isDead(myPlayer->getPos()))
 		{
 			delete myDebrises[i];
 			myDebrises.erase(itDebris);
@@ -297,7 +303,7 @@ void ObjectManager::createDebris()
 		//　デブリは100体まで自動補充
 		while (myDebrises.size() < 150 + maxUpCount)
 		{
-			Debris* newDebris = ObjectAppearanceManager::createNewObject<Debris>(eDebris, 1000, 20, U"", Circle(50), { 0,0 }, RandomVec2(300), { 0,0 });
+			Debris* newDebris = ObjectAppearanceManager::createNewObject<Debris>(eDebris, 200, 20, U"", Circle(50), { 0,0 }, RandomVec2(300), { 0,0 });
 			myDebrises << newDebris;
 		}
 	}
