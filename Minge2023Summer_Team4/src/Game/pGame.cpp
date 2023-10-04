@@ -51,6 +51,7 @@ void Game::draw() const
 
 	miniMapDraw();
 
+	RectF{ 20,10,(Scene::Width() - 40) * (double(objectManager.myPlayer->getHP()) / 1000) ,50 }.draw(Palette::Aqua);
 	//仮フレーム
 	//textureFrame.draw();
 
@@ -59,6 +60,8 @@ void Game::draw() const
 void Game::debug()
 {
 	//ClearPrint();
+	
+	
 
 	//マップスクロール用
 	for (int32 i = 0; i < 100; ++i)

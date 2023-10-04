@@ -123,6 +123,11 @@ double GameObject::getSpeed() const
 }
 
 
+int GameObject::getHP() 
+{
+	return hp;
+}
+
 
 bool GameObject::isDead(Vec2 playerPos_) {
 	if (hp <= 0) return true;

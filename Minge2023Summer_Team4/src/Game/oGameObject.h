@@ -55,6 +55,7 @@ public:
 	bool isDead(Vec2 playerPos_ = {0,0});
 
 	//ゲッター関数
+	int getHP();
 	Vec2 getPos() const;
 	double getSpeed() const;
 	int getDamage();
