@@ -25,13 +25,16 @@ void GameObject::update()
 
 void GameObject::updateCommon()
 {
+
 }
 
 void GameObject::move()
 {
 	vel += acc * Scene::DeltaTime();
-	pos += vel * Scene::DeltaTime(); //+ (0.5 * acc * Scene::DeltaTime() * Scene::DeltaTime());
-	hitbox.moveBy(vel * Scene::DeltaTime());
+	pos += (vel + velRepull) * Scene::DeltaTime(); //+ (0.5 * acc * Scene::DeltaTime() * Scene::DeltaTime());
+	hitbox.moveBy((vel + velRepull)* Scene::DeltaTime());
+
+	//if (velRepull.length() > 50) velRepull.setLength(velRepull.length() * (1 - repullDecayRate * Scene::DeltaTime()));
 }
 
 
@@ -84,7 +87,13 @@ void GameObject::onCollisionResponse(int damage)
 {
 	collisionalTimer.restart();
 	hp -= damage;
+}
 
+void GameObject::onCollisionResponse(Vec2 RepullPos)
+{
+	collisionalTimer.restart();
+	velRepull = (pos - RepullPos).setLength(300);
+	
 }
 
 void GameObject::calcDamage(int damage)
