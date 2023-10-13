@@ -43,6 +43,7 @@ Figure hitbox_, Vec2 pos_, Vec2 vel_, Vec2 acc_, bool isPlayerBullet_)
 {
 	switch (myType_)
 	{
+
 	case eBullet:
 		return new Bullet(isPlayerBullet_, hp_, damage_, textureStr_, hitbox_, pos_, vel_, acc_);
 	}

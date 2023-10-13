@@ -46,7 +46,7 @@ T* ObjectAppearanceManager::createNewObject(
 	switch (myType_)
 	{
 	case eEnemy:
-		return new T(hp_, damage_, textureStr_, hitbox_, ObjectAppearanceManager::generateRandomPos(), vel_, acc_);
+		return new T(hp_, damage_, textureStr_, hitbox_, pos_, vel_, acc_);
 	case eBullet:
 		return new T(1000, 10, U"", hitbox_, pos_, vel_, acc_);
 	case eDebris:

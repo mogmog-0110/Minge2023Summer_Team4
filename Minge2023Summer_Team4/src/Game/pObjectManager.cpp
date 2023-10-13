@@ -5,7 +5,6 @@ ObjectManager::ObjectManager()
 {
 	Player::create(1000, 10, U"", Circle(30), Vec2(300,400), 400);
 	myPlayer = Player::getInstance();
-
 }
 
 
@@ -19,7 +18,9 @@ void ObjectManager::update()
 	this->myPlayer->update();
 	//this->testdebris.update();
 
-	createEnemy();
+	// createEnemy();
+	createEnemyFromCSV();
+
 	createDebris();
 
 	//以下　新型
@@ -284,6 +285,39 @@ void ObjectManager::createEnemy()
 	}
 }
 
+void ObjectManager::createEnemyFromCSV()
+{
+	// 蓄積時間
+	extern double accumulatedTime;
+
+	int key = static_cast<int>(accumulatedTime);
+	if (waveInfo.contains(key))
+	{
+		String enemyName = waveInfo[key].enemyName;
+		Vec2 spawnPos = { waveInfo[key].spawnLocation.x + Random(200), waveInfo[key].spawnLocation.y + Random(200) };
+		double statusMultiplier = waveInfo[key].statusMultiplier;
+		int enemyCount = waveInfo[key].enemyCount;
+
+		// waveInfoのenemyNameと一致する敵データにアクセスするための添字を検索。
+		int index;
+		for (index = 0; enemyInfo[index].enemyName == enemyName; ++index){}
+		EnemyData eI = enemyInfo[index];
+
+		int hp = eI.hp * statusMultiplier;
+		int damage = eI.damage * statusMultiplier;
+		String textureName = eI.textureName;
+		Figure hitbox = Rect(50);
+		double speed = eI.speed * statusMultiplier;
+
+		for (int i = 0; i < enemyCount; ++i)
+		{
+			Enemy* newObject = ObjectAppearanceManager::createNewObject<Enemy>(eEnemy, hp, damage, textureName, hitbox, spawnPos, {speed, speed}, {1, 1});
+			myEnemies << newObject;
+		}
+		// waveInfo.erase(key);
+	}
+}
+
 void ObjectManager::createDebris()
 {
 	//　デブリは100体まで自動補充
@@ -310,4 +344,78 @@ void ObjectManager::createBullet(ObjectInitData OID)
 	if (OID.isPlayerBullet_ == true) myPlayerBullets << newBullet;
 	else myEnemyBullets << newBullet;
 
+}
+
+void ObjectManager::readWaveCSV(int currentWave)
+{
+
+	// CSVファイルの読み取り
+
+	String filename = U"wave" + Format(currentWave) + U".csv";
+	String filePath = U"../src/Game/csvFile/" + filename;
+
+	const CSV csv{filePath};
+
+	if (not csv) // もし読み込みに失敗したら
+	{
+		throw Error{ U"Failed to load" + filePath };
+	}
+
+	for (size_t row = 0; row < csv.rows(); ++row)
+	{
+		WaveData wI;
+		int hashKey = Parse<int>(csv[row][0]);
+
+		wI.spawnLocation = Parse<Vec2>(csv[row][1]);
+		wI.enemyName = csv[row][2];
+		wI.statusMultiplier = Parse<double>(csv[row][3]);
+		wI.enemyCount = Parse<int>(csv[row][4]);
+
+		waveInfo.emplace(hashKey, wI);
+	}
+}
+
+void ObjectManager::readEnemyCSV()
+{
+	// CSVファイルの読み取り
+	const CSV csv{ U"../src/Game/csvFile/enemy.csv"};
+
+	if (not csv) // もし読み込みに失敗したら
+	{
+		throw Error{ U"Failed to load `enemy.csv`" };
+	}
+
+	for (size_t row = 0; row < csv.rows(); ++row)
+	{
+		EnemyData eI;
+
+		eI.enemyName = csv[row][0];
+		eI.hp = Parse<int>(csv[row][1]);
+		eI.damage = Parse<int>(csv[row][2]);
+		eI.textureName = csv[row][3];
+
+		int size = Parse<int>(csv[row][5]);
+
+		// 一番愚直な方法
+		if (csv[row][4] == U"Rect")
+		{
+			eI.hitbox = Rect(size);
+		}
+		else if (csv[row][4] == U"Circle")
+		{
+			eI.hitbox = Circle(size);
+		}
+		
+		eI.speed = Parse<double>(csv[row][6]);
+
+		/*String hashKey = U"enemy1";
+		eI.hp = 1000;
+		eI.damage = 10;
+		eI.textureName = U"";
+		eI.hitbox = Rect(50);
+		eI.speed = 150;*/
+
+		enemyInfo.push_back(eI);
+		
+	}
 }
