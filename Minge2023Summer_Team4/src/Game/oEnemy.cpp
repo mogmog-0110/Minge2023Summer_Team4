@@ -14,7 +14,7 @@ void Enemy::move()
 	Vec2 elementVector = (pos - playerPos).setLength(1);
 
 	vel = elementVector.setLength(vel.length()) * (-1);
-	pos += vel * Scene::DeltaTime();
+	pos += (vel + velRepull) * Scene::DeltaTime();
 
 	hitbox.setCenter(pos);
 }

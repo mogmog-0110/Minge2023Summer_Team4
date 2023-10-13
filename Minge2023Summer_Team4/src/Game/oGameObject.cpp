@@ -25,6 +25,7 @@ void GameObject::update()
 
 void GameObject::updateCommon()
 {
+	if (velRepull.length() > 0.01) velRepull.setLength(velRepull.length() - repullDecaySpeed * Scene::DeltaTime());
 
 }
 
@@ -34,7 +35,6 @@ void GameObject::move()
 	pos += (vel + velRepull) * Scene::DeltaTime(); //+ (0.5 * acc * Scene::DeltaTime() * Scene::DeltaTime());
 	hitbox.moveBy((vel + velRepull)* Scene::DeltaTime());
 
-	//if (velRepull.length() > 50) velRepull.setLength(velRepull.length() * (1 - repullDecayRate * Scene::DeltaTime()));
 }
 
 
