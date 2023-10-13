@@ -91,7 +91,7 @@ void GameObject::onCollisionResponse(int damage)
 
 void GameObject::onCollisionResponse(Vec2 RepullPos)
 {
-	collisionalTimer.restart();
+	//collisionalTimer.restart();
 	velRepull = (pos - RepullPos).setLength(vel.length() == 0 ? 100 : vel.length());
 	
 }
