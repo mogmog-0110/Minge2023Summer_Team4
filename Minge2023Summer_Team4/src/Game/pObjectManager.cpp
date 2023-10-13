@@ -216,7 +216,7 @@ void ObjectManager::collision() {
 	}
 	
 
-	int i = 0;
+	/*int i = 0;
 	for (auto itBullet = myPlayerBullets.begin(); itBullet != myPlayerBullets.end();)
 	{
 		if (myPlayerBullets[i]->isDead(myPlayer->getPos()))
@@ -240,10 +240,10 @@ void ObjectManager::collision() {
 		}
 		++itDebris;
 		++i;
-	}
+	}*/
 
 
-	i = 0;
+	/*i = 0;
 	for (auto itEnemy = myEnemies.begin(); itEnemy != myEnemies.end();)
 	{
 		if (myEnemies[i]->isDead())
@@ -254,7 +254,36 @@ void ObjectManager::collision() {
 		}
 		++itEnemy;
 		++i;
+	}*/
+
+	for (auto it = myEnemies.begin(); it != myEnemies.end(); ) {
+		if ((*it)->isDead()) {
+			it = myEnemies.erase(it);
+		}
+		else {
+			++it;
+		}
 	}
+
+	for (auto it = myDebrises.begin(); it != myDebrises.end(); ) {
+		if ((*it)->isDead()) {
+			it = myDebrises.erase(it);
+		}
+		else {
+			++it;
+		}
+	}
+
+	for (auto it = myPlayerBullets.begin(); it != myPlayerBullets.end(); ) {
+		if ((*it)->isDead(myPlayer->getPos())) {
+			it = myPlayerBullets.erase(it);
+		}
+		else {
+			++it;
+		}
+	}
+
+
 
 	
 
