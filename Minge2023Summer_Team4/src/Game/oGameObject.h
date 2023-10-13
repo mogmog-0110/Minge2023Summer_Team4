@@ -24,6 +24,9 @@ protected:
 	Vec2 vel;
 	Vec2 acc;
 
+	Vec2 velRepull = {0,0};
+	double repullDecaySpeed = 100;
+
 	Figure hitbox;
 
 	eObjectType myObjectType;
@@ -45,6 +48,7 @@ public:
 
 	bool isCollisional();
 	void onCollisionResponse(int damage);
+	void onCollisionResponse(Vec2 RepullPos);
 	void calcDamage(int damage);
 	void changeCoolTime(Duration);
 
