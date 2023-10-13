@@ -28,6 +28,13 @@ private:
 	// 仮のフレーム素材
 	const Texture textureFrame{ U"Image/frame_001.png" };
 
+	// 現在のwave
+	int currentWave = 1;
+
+	// それぞれのwaveを出現させたか、クリア済みかどうかの判定するためのbool型二重配列(wave数の上限は6)
+	// const int maxWave = 6
+	Grid<bool> Waves = { {false, false}, {false, false}, {false, false}, {false, false}, {false, false}, {false, false} };
+
 public:
 	Game(const InitData& init);
 	~Game();
@@ -44,4 +51,7 @@ public:
 	Vec2 calculateMiniMapPos(Vec2 pos) const;
 	bool isInMiniMapRange(Vec2 pos) const;
 	double calculateOpacity(Vec2 playerPos, Vec2 objectPos) const;
+
+	void startNextWave();
+	void isWaveCleared();
 };

@@ -1,5 +1,8 @@
 ﻿#include"pGame.h"
 
+// 蓄積時間をグローバルで保持
+double accumulatedTime = 0;
+
 Game::Game(const InitData& init)
 	: IScene(init), objectManager()
 {
@@ -11,6 +14,8 @@ Game::Game(const InitData& init)
 	Print << U"Push [Q] key";
 
 	topLeft = objectManager.myPlayer->getPos() - Scene::Center();
+
+	objectManager.readEnemyCSV();
 }
 
 
@@ -32,9 +37,15 @@ void Game::update()
 		changeScene(SceneList::Result);
 	}
 
+	// 蓄積時間の計算
+	accumulatedTime += Scene::DeltaTime();
+
 	scrollUpdate();
 	objectManager.update();
 	objectManager.collision();
+
+	startNextWave();
+	Print << U"unti";
 		
 	debug();
 }
@@ -58,12 +69,29 @@ void Game::draw() const
 
 void Game::debug()
 {
-	//ClearPrint();
+	ClearPrint();
 
 	//マップスクロール用
 	for (int32 i = 0; i < 100; ++i)
 	{
 		Circle{ -topLeft, (50 + i * 50) }.drawFrame(2);
+	}
+
+	Print << accumulatedTime;
+	Print << currentWave; 
+
+	for (size_t t = 0; t < 6; ++t)
+	{
+		
+		Print << Waves[t][0];
+		Print << Waves[t][1];
+	}
+
+	for (size_t t = 0; t < objectManager.enemyInfo.size(); ++t)
+	{
+		Print << objectManager.enemyInfo[t].enemyName;
+		Print << objectManager.enemyInfo[t].hp;
+		
 	}
 }
 
@@ -182,4 +210,36 @@ double Game::calculateOpacity(Vec2 playerPos, Vec2 objectPos) const
 	const double maxDistance = 1024;
 	double opacity = 1.0 - (distance / maxDistance);
 	return Clamp(opacity, 0.0, 1.0); // 透明度を0から1の範囲にクランプ
+}
+
+void Game::startNextWave()
+{
+	// waveを既に出現させているかを判定
+	if (Waves[currentWave - 1][0] == false)
+	{
+		// waveファイルの選択→敵生成
+		objectManager.readWaveCSV(currentWave);
+
+		Waves[currentWave - 1][0] = true;
+	}
+
+	// waveがクリアしているかを判定
+	if (Waves[currentWave - 1][1] == true)
+	{
+		currentWave++;
+	}
+
+	isWaveCleared();
+}
+
+void Game::isWaveCleared()
+{
+	// 体力ゼロの敵を追加。こうしないと出現判定の前に殲滅判定が動いてしまう。（消える処理より殲滅判定のほうがはやいかも）
+	Enemy* newEnemy = ObjectAppearanceManager::createNewObject<Enemy>(eEnemy, 0, 10, U"", Rect(50), { -500,-500 }, { 0 , 0 }, { 1 , 1 });
+	objectManager.myEnemies << newEnemy;
+
+	if (objectManager.myEnemies.isEmpty())
+	{
+		Waves[currentWave - 1][1] = true;
+	}
 }

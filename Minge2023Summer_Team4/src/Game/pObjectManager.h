@@ -23,6 +23,16 @@ public:
 	Array<Bullet*> myEnemyBullets;
 	Array<Enemy*> myEnemies;
 
+	// csvファイルから読み取った情報を格納する構造体配列 よくわからんけどエラー出る
+	// Array<WaveInfo> waveInfo;
+
+	// 敵の出現時間をキーとしたハッシュテーブル(この方式じゃなくてもいい)
+	HashTable<int, WaveData> waveInfo;
+
+	// 敵の情報 EnemyDataの構造体配列(逆にこっちをハッシュにするとなぜかバグ)
+	Array<EnemyData> enemyInfo;
+
+
 	ObjectManager();
 	~ObjectManager();
 
@@ -34,9 +44,16 @@ public:
 	void draw(Vec2 offset) const;
 
 
-
+	// 敵生成に関するメンバ関数
 	void createEnemy();
+	void createEnemyFromCSV();
+
+
 	void createDebris();
 	void createBullet(bool, Vec2, Vec2, Vec2);
 	void createBullet(ObjectInitData);
+
+	void readWaveCSV(int currentWave);
+	void readEnemyCSV();
+
 };
