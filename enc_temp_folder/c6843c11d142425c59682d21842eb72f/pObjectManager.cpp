@@ -42,7 +42,7 @@ void ObjectManager::update()
 	}
 	
 
-	if (DebugBulletTimer.isRunning() == false && MouseL.pressed()) {
+	if (DebugBulletTimer.isRunning() == false && KeySpace.pressed()) {
 		Vec2 elementVector = (Cursor::PosF() - Scene::CenterF()).setLength(1);
 
 		createBullet(true, myPlayer->getPos() + elementVector.setLength(50), elementVector.setLength(600), {0,0});
@@ -217,7 +217,7 @@ void ObjectManager::collision() {
 	}
 	
 
-	/*int i = 0;
+	int i = 0;
 	for (auto itBullet = myPlayerBullets.begin(); itBullet != myPlayerBullets.end();)
 	{
 		if (myPlayerBullets[i]->isDead(myPlayer->getPos()))
@@ -241,10 +241,10 @@ void ObjectManager::collision() {
 		}
 		++itDebris;
 		++i;
-	}*/
+	}
 
 
-	/*i = 0;
+	i = 0;
 	for (auto itEnemy = myEnemies.begin(); itEnemy != myEnemies.end();)
 	{
 		if (myEnemies[i]->isDead())
@@ -255,36 +255,7 @@ void ObjectManager::collision() {
 		}
 		++itEnemy;
 		++i;
-	}*/
-
-	for (auto it = myEnemies.begin(); it != myEnemies.end(); ) {
-		if ((*it)->isDead()) {
-			it = myEnemies.erase(it);
-		}
-		else {
-			++it;
-		}
 	}
-
-	for (auto it = myDebrises.begin(); it != myDebrises.end(); ) {
-		if ((*it)->isDead()) {
-			it = myDebrises.erase(it);
-		}
-		else {
-			++it;
-		}
-	}
-
-	for (auto it = myPlayerBullets.begin(); it != myPlayerBullets.end(); ) {
-		if ((*it)->isDead(myPlayer->getPos())) {
-			it = myPlayerBullets.erase(it);
-		}
-		else {
-			++it;
-		}
-	}
-
-
 
 	
 
