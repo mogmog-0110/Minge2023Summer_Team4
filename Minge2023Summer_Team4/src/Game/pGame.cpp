@@ -4,7 +4,7 @@
 double accumulatedTime = 0;
 
 Game::Game(const InitData& init)
-	: IScene(init), objectManager()
+	: IScene(init), objectManager(), currentState(GameState::Loading), currentWave(0), accumulatedTime(0.0)
 {
 	Print << U"Game!";
 
@@ -15,7 +15,8 @@ Game::Game(const InitData& init)
 
 	topLeft = objectManager.myPlayer->getPos() - Scene::Center();
 
-	objectManager.readEnemyCSV();
+	// 敵データの読み込み
+	objectManager.enemyDatas = objectManager.loadEnemyData(U"../src/Game/csvFile/enemyTest.csv");
 }
 
 
@@ -31,24 +32,57 @@ Game::~Game()
 
 void Game::update()
 {
-	if (KeyQ.down())
+	switch (currentState)
 	{
-		//タイトルシーンに遷移する
+	case GameState::Loading:
+		if (!waveLoaded && objectManager.myEnemies.empty()) {
+			bool success = loadNextWave();
+			if (!success) {
+				currentState = GameState::Finished;
+			}
+			else {
+				currentState = GameState::Playing;
+				waveLoaded = true;
+			}
+		}
+		break;
+
+	case GameState::Playing:
+		accumulatedTime += Scene::DeltaTime();
+		if (KeyP.down()) {
+			currentState = GameState::Pausing;
+			break;
+		}
+
+		if (KeyQ.down()) {
+			changeScene(SceneList::Result);
+		}
+
+		if (waveDataIndex < waveDatas.size()) {
+			spawnEnemies();  // まだスポーンすべき敵が残っている場合は、敵をスポーンさせる
+		}
+		else if (objectManager.myEnemies.empty() && waveLoaded) {
+			waveLoaded = false;  // 次のウェーブを読み込む準備
+			currentState = GameState::Loading;
+		}
+
+		scrollUpdate();
+		objectManager.update();
+		objectManager.collision();
+		debug();
+		break;
+
+	case GameState::Pausing:
+		if (KeyP.down()) {
+			currentState = GameState::Playing;
+		}
+		break;
+
+	case GameState::Finished:
 		changeScene(SceneList::Result);
 	}
-
-	// 蓄積時間の計算
-	accumulatedTime += Scene::DeltaTime();
-
-	scrollUpdate();
-	objectManager.update();
-	objectManager.collision();
-
-	startNextWave();
-	Print << U"unti";
-		
-	debug();
 }
+
 
 void Game::draw() const
 {
@@ -76,30 +110,7 @@ void Game::debug()
 	{
 		Circle{ -topLeft, (50 + i * 50) }.drawFrame(2);
 	}
-
-	Print << accumulatedTime;
-	Print << currentWave; 
-
-	for (size_t t = 0; t < 6; ++t)
-	{
-		
-		Print << Waves[t][0];
-		Print << Waves[t][1];
-	}
-
-	for (size_t t = 0; t < objectManager.enemyInfo.size(); ++t)
-	{
-		Print << objectManager.enemyInfo[t].enemyName;
-		Print << objectManager.enemyInfo[t].hp;
-		
-	}
 }
-
-
-
-
-
-
 
 //====================================================
 //スクロール関係のコード。毎Tick実行する
@@ -212,34 +223,36 @@ double Game::calculateOpacity(Vec2 playerPos, Vec2 objectPos) const
 	return Clamp(opacity, 0.0, 1.0); // 透明度を0から1の範囲にクランプ
 }
 
-void Game::startNextWave()
+bool Game::loadNextWave()
 {
-	// waveを既に出現させているかを判定
-	if (Waves[currentWave - 1][0] == false)
-	{
-		// waveファイルの選択→敵生成
-		objectManager.readWaveCSV(currentWave);
+	currentWave++;
+	String fileName = Format(U"../src/Game/csvFile/wave", currentWave, U".csv");
 
-		Waves[currentWave - 1][0] = true;
+	if (!FileSystem::Exists(fileName)) {
+		return false;  // 次のウェーブのCSVファイルが存在しない
 	}
 
-	// waveがクリアしているかを判定
-	if (Waves[currentWave - 1][1] == true)
-	{
-		currentWave++;
-	}
-
-	isWaveCleared();
+	waveDatas.clear();  // 既存のwaveDatasをクリア
+	waveDatas = objectManager.loadWaveData(fileName);
+	waveDataIndex = 0;
+	return true;
 }
 
-void Game::isWaveCleared()
+void Game::spawnEnemies()
 {
-	// 体力ゼロの敵を追加。こうしないと出現判定の前に殲滅判定が動いてしまう。（消える処理より殲滅判定のほうがはやいかも）
-	Enemy* newEnemy = ObjectAppearanceManager::createNewObject<Enemy>(eEnemy, 0, 10, U"", Rect(50), { -500,-500 }, { 0 , 0 }, { 1 , 1 });
-	objectManager.myEnemies << newEnemy;
+	// ウェーブの敵がすべてスポーンしたかを確認
+	if (waveDataIndex >= waveDatas.size()) {
+		return;  // すべての敵がスポーンしたので、この関数から抜ける
+	}
 
-	if (objectManager.myEnemies.isEmpty())
-	{
-		Waves[currentWave - 1][1] = true;
+	if (accumulatedTime >= waveDatas[waveDataIndex].spawnTime) {
+		for (int i = 0; i < waveDatas[waveDataIndex].spawnCount; ++i) {
+			Enemy* enemy = objectManager.createEnemyFromData(waveDatas[waveDataIndex]);
+			objectManager.myEnemies.push_back(enemy);
+		}
+
+		waveDataIndex++;
+
+		accumulatedTime = 0.0; // accumulatedTimeリセット
 	}
 }

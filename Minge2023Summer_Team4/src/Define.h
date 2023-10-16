@@ -17,47 +17,38 @@ struct GameData
 
 using App = SceneManager<SceneList, GameData>;
 
+//　自分自身のオブジェクトタイプ
 enum eObjectType {
 	ePlayer,
 	eEnemy,
-	eBullet,
+	ePlayerBullet,
+	eEnemyBullet,
 	eDebris,
+	eItem,
 	eNone,
 };
 
-
-// 使い方わからん by Shiggy
-struct ObjectInitData
-{
-	eObjectType myType = eNone;
-	int hp = 1;
-	int damage = 1;
-	String textureStr = U"";
-	Figure hitbox = Circle(20);
-	Vec2 pos = Vec2{ 0,0 };
-	Vec2 vel = Vec2{ 0,0 };
-	Vec2 acc = Vec2{ 0,0 };
-
-	bool isPlayerBullet_ = false;
-
-	ObjectInitData(eObjectType myType_) :myType(myType_) {};
-};
-
-// ゲームの敵情報を格納する構造体
-struct EnemyData{
-	String enemyName;
+struct EnemyData {
+	String name;
 	int hp;
 	int damage;
-	String textureName;
+	String textureStr;
 	Figure hitbox;
 	double speed;
 };
 
-// ゲームのウェーブ情報を格納する構造体
 struct WaveData {
-	// int spawnTime;
-	Vec2 spawnLocation;
+	double spawnTime;
 	String enemyName;
-	double statusMultiplier;
-	int enemyCount;
+	Vec2 spawnPos;
+	double statusModifier; // 敵のステータスに掛けられる補正値
+	int spawnCount;   
+};
+
+// ゲームの状態を表す
+enum class GameState {
+	Loading,
+	Playing,
+	Pausing,
+	Finished
 };

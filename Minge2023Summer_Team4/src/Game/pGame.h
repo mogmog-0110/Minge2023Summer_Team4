@@ -28,12 +28,23 @@ private:
 	// 仮のフレーム素材
 	const Texture textureFrame{ U"Image/frame_001.png" };
 
-	// 現在のwave
-	int currentWave = 1;
+	GameState currentState;
 
-	// それぞれのwaveを出現させたか、クリア済みかどうかの判定するためのbool型二重配列(wave数の上限は6)
-	// const int maxWave = 6
-	Grid<bool> Waves = { {false, false}, {false, false}, {false, false}, {false, false}, {false, false}, {false, false} };
+	// 現在のウェーブ番号
+	int currentWave;
+
+	// 累積時間
+	double accumulatedTime; 
+
+	// 各ウェーブ情報を格納した配列
+	Array<WaveData> waveDatas;
+
+	// 上の配列にアクセスするための添字(インデックス)
+	int waveDataIndex;
+
+	// waveが読み込まれたどうか
+	bool waveLoaded = false;
+
 
 public:
 	Game(const InitData& init);
@@ -52,6 +63,7 @@ public:
 	bool isInMiniMapRange(Vec2 pos) const;
 	double calculateOpacity(Vec2 playerPos, Vec2 objectPos) const;
 
-	void startNextWave();
-	void isWaveCleared();
+	bool loadNextWave();
+	void spawnEnemies();
+
 };
