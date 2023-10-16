@@ -58,13 +58,16 @@ void Game::draw() const
 
 void Game::debug()
 {
-	//ClearPrint();
+	ClearPrint();
 
 	//マップスクロール用
 	for (int32 i = 0; i < 100; ++i)
 	{
 		Circle{ -topLeft, (50 + i * 50) }.drawFrame(2);
 	}
+
+	Print << objectManager.myEnemies.size();
+	Print << objectManager.myPlayer->getPos();
 }
 
 

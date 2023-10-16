@@ -8,18 +8,19 @@ class GameObject :
     public SuperObject
 {
 private:
+
 	Timer collisionalTimer;
-	//String textureStr;
 
 	const Font debugfont{ 15 };
 
 protected:
 
-
+	eObjectType objType;
 	int hp = 1;
 	int damage = 1;
 	double speed;
-
+	String textureStr;
+	Figure hitbox;
 	Vec2 pos;
 	Vec2 vel;
 	Vec2 acc;
@@ -27,17 +28,16 @@ protected:
 	Vec2 velRepull = {0,0};
 	double repullDecaySpeed = 100;
 
-	Figure hitbox;
-
-	eObjectType myObjectType;
-
 	void updateCommon();
 	void drawHitbox(Vec2 offset) const;
 
 
 public:
 
-	GameObject(eObjectType, int hp_, int damage_, String textureStr, Figure hitbox_, Vec2 pos_, Vec2 vel_, Vec2 acc_ = { 0,0 });
+	GameObject(eObjectType type, int hp_, int damage_, String textureStr_,
+			   Figure hitbox_, Vec2 pos_, Vec2 vel_, Vec2 acc_ = { 0,0 })
+		: objType(type), hp(hp_), damage(damage_), textureStr(textureStr_),
+		hitbox(hitbox_), pos(pos_), vel(vel_), acc(acc_) {}
 
 	~GameObject();
 
@@ -59,5 +59,6 @@ public:
 	double getSpeed() const;
 	int getDamage();
 	Figure getHitbox();
+	eObjectType getObjType() const;
 };
 

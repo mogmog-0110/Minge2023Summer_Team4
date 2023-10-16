@@ -1,16 +1,9 @@
 ﻿#include "oGameObject.h"
-
-GameObject::GameObject(eObjectType myType_, int hp_, int damage_, String textureStr_,
-	Figure hitbox_, Vec2 pos_, Vec2 vel_, Vec2 acc_)
-	:myObjectType(myType_), hp(hp_), damage(damage_), hitbox(hitbox_.setCenter(pos_)),
-	pos(pos_),vel(vel_), acc(acc_), collisionalTimer(Timer{1s, StartImmediately::No}),
-	SuperObject(TextureAsset(textureStr_))
-{
-	
-}
+#include "oPlayer.h"
 
 GameObject::~GameObject()
 {
+	
 }
 
 
@@ -31,9 +24,16 @@ void GameObject::updateCommon()
 
 void GameObject::move()
 {
-	vel += acc * Scene::DeltaTime();
-	pos += (vel + velRepull) * Scene::DeltaTime(); //+ (0.5 * acc * Scene::DeltaTime() * Scene::DeltaTime());
-	hitbox.moveBy((vel + velRepull)* Scene::DeltaTime());
+	// プレイヤーの座標の取得
+	Player* myPlayer = Player::getInstance();
+	Vec2 playerPos = myPlayer->getPos();
+
+	Vec2 elementVector = (pos - playerPos).setLength(1);
+
+	vel = elementVector.setLength(vel.length()) * (-1);
+	pos += (vel + velRepull) * Scene::DeltaTime();
+
+	hitbox.setCenter(pos);
 
 }
 
@@ -42,23 +42,23 @@ void GameObject::move()
 //====================================================
 //描画関連
 
-void GameObject::draw(Vec2 offset,bool isHitboxDraw) const
+void GameObject::draw(Vec2 offset, bool isHitboxDraw) const
 {
-	this->texture.drawAt(-offset);
+	this->texture.drawAt(-offset); // offsetを減算
 	if (isHitboxDraw) drawHitbox(-offset);
 }
 
 
 void GameObject::drawHitbox(Vec2 offset) const
 {
-	//hitbox.draw({ Palette::Tomato, 0.5});
-	if (collisionalTimer.isRunning() == false) hitbox.movedBy(offset).draw({Palette::Tomato, 0.5});
-	else hitbox.movedBy(offset).draw({Palette::Royalblue, 0.5});
+	if (collisionalTimer.isRunning() == false)
+		hitbox.movedBy(offset).draw({ Palette::Tomato, 0.5 });
+	else
+		hitbox.movedBy(offset).draw({ Palette::Royalblue, 0.5 });
 
 	//ついでにデバッグ用
-	debugfont(Format(hp)).drawAt(pos + offset + Vec2{0,30}, {Palette::Navy,0.5});
+	debugfont(Format(hp)).drawAt(this->pos + offset + Vec2{ 0,30 }, { Palette::Navy,0.5 });
 }
-
 
 
 //====================================================
@@ -105,6 +105,11 @@ void GameObject::changeCoolTime(Duration cooltime)
 	collisionalTimer.set(cooltime);
 }
 
+bool GameObject::isDead(Vec2 playerPos_) {
+	if (hp <= 0) return true;
+	else return false;
+}
+
 //====================================================
 //君は完璧で最強のゲッター関数
 
@@ -119,9 +124,7 @@ double GameObject::getSpeed() const
 	return speed;
 }
 
-
-
-bool GameObject::isDead(Vec2 playerPos_) {
-	if (hp <= 0) return true;
-	else return false;
+eObjectType GameObject::getObjType() const
+{
+	return objType;
 }

@@ -37,29 +37,26 @@ Vec2 ObjectAppearanceManager::generateRandomPos()
 	return randomPos;
 }
 
-Bullet* ObjectAppearanceManager::createNewObject
-(eObjectType myType_, int hp_, int damage_, String textureStr_,
-Figure hitbox_, Vec2 pos_, Vec2 vel_, Vec2 acc_, bool isPlayerBullet_)
+GameObject* ObjectAppearanceManager::createNewObject(
+	eObjectType myType,
+	int hp, int damage, String textureStr,
+	Figure hitbox, Vec2 pos, Vec2 vel, Vec2 acc
+)
 {
-	switch (myType_)
-	{
-	case eBullet:
-		return new Bullet(isPlayerBullet_, hp_, damage_, textureStr_, hitbox_, pos_, vel_, acc_);
+	switch (myType) {
+	case eEnemy:
+		return new Enemy(hp, damage, textureStr, hitbox, pos, vel, acc);
+	case eDebris:
+		return new Debris(hp, damage, textureStr, hitbox, pos, vel, acc);
+	case ePlayerBullet:
+		return new Bullet(ePlayerBullet, hp, damage, textureStr, hitbox, pos, vel, acc);
+	case eEnemyBullet:
+		return new Bullet(eEnemyBullet, hp, damage, textureStr, hitbox, pos, vel, acc);
+	case eItem:
+		// return new Item(eEnemyBullet, hp, damage, textureStr, hitbox, pos, vel, acc);
+	default:
+		// 不明なObjectTypeが指定された場合
+		return nullptr;
 	}
-
-	// ここで適切なポインタを返さない場合、コンパイルエラーが発生。
-	return nullptr;
-}
-
-Bullet* ObjectAppearanceManager::createNewObject(ObjectInitData OID)
-{
-	switch (OID.myType)
-	{
-	case eBullet:
-		return new Bullet(OID.isPlayerBullet_, OID.hp, OID.damage, OID.textureStr, OID.hitbox,  OID.pos, OID.vel, OID.acc);
-	}
-
-	// ここで適切なポインタを返さない場合、コンパイルエラーが発生。
-	return nullptr;
 }
 

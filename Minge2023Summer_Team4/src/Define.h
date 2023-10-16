@@ -17,28 +17,13 @@ struct GameData
 
 using App = SceneManager<SceneList, GameData>;
 
+//　自分自身のオブジェクトタイプ
 enum eObjectType {
 	ePlayer,
 	eEnemy,
-	eBullet,
+	ePlayerBullet,
+	eEnemyBullet,
 	eDebris,
+	eItem,
 	eNone,
-};
-
-
-// 使い方わからん by Shiggy
-struct ObjectInitData
-{
-	eObjectType myType = eNone;
-	int hp = 1;
-	int damage = 1;
-	String textureStr = U"";
-	Figure hitbox = Circle(20);
-	Vec2 pos = Vec2{ 0,0 };
-	Vec2 vel = Vec2{ 0,0 };
-	Vec2 acc = Vec2{ 0,0 };
-
-	bool isPlayerBullet_ = false;
-
-	ObjectInitData(eObjectType myType_) :myType(myType_) {};
 };
