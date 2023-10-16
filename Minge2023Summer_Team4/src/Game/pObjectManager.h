@@ -52,17 +52,13 @@ public:
 	void collision();
 	void draw(Vec2 offset) const;
 
-	void createEnemy();
 	void createDebris();
-	void createPlayerBullet(Vec2, Vec2, Vec2);
-
 
 	HashTable<String, EnemyData> loadEnemyData(const String& filename);
 	Array<WaveData> loadWaveData(const String& filename);
 
 	Enemy* createEnemyFromData(WaveData waveData);
 	static Figure parseFigure(const String&);
-	
 };
 
 // Collisionに関するテンプレート関数

@@ -28,7 +28,6 @@ private:
 	// 仮のフレーム素材
 	const Texture textureFrame{ U"Image/frame_001.png" };
 
-
 	GameState currentState;
 
 	// 現在のウェーブ番号
@@ -45,6 +44,7 @@ private:
 
 	// waveが読み込まれたどうか
 	bool waveLoaded = false;
+
 
 public:
 	Game(const InitData& init);
@@ -65,4 +65,5 @@ public:
 
 	bool loadNextWave();
 	void spawnEnemies();
+
 };

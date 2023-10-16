@@ -9,12 +9,10 @@ ObjectManager::ObjectManager()
 	createDebris();
 }
 
-
 ObjectManager::~ObjectManager()
 {
 	
 }
-
 
 void ObjectManager::update()
 {
@@ -166,7 +164,6 @@ Array<WaveData> ObjectManager::loadWaveData(const String& filepath)
 		wave.spawnCount = Parse<int>(csv[row][4]);
 		waveDatas.push_back(wave);
 	}
-
 		return waveDatas;
 }
 

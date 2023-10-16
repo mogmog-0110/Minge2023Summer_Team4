@@ -1,5 +1,8 @@
 ﻿#include"pGame.h"
 
+// 蓄積時間をグローバルで保持
+double accumulatedTime = 0;
+
 Game::Game(const InitData& init)
 	: IScene(init), objectManager(), currentState(GameState::Loading), currentWave(0), accumulatedTime(0.0)
 {
@@ -11,6 +14,7 @@ Game::Game(const InitData& init)
 	Print << U"Push [Q] key";
 
 	topLeft = objectManager.myPlayer->getPos() - Scene::Center();
+
 	// 敵データの読み込み
 	objectManager.enemyDatas = objectManager.loadEnemyData(U"../src/Game/csvFile/enemyTest.csv");
 }
@@ -106,16 +110,7 @@ void Game::debug()
 	{
 		Circle{ -topLeft, (50 + i * 50) }.drawFrame(2);
 	}
-
-	Print << objectManager.myEnemies.size();
-	Print << objectManager.myPlayer->getPos();
 }
-
-
-
-
-
-
 
 //====================================================
 //スクロール関係のコード。毎Tick実行する
@@ -242,6 +237,7 @@ bool Game::loadNextWave()
 	waveDataIndex = 0;
 	return true;
 }
+
 void Game::spawnEnemies()
 {
 	// ウェーブの敵がすべてスポーンしたかを確認
@@ -260,5 +256,3 @@ void Game::spawnEnemies()
 		accumulatedTime = 0.0; // accumulatedTimeリセット
 	}
 }
-
-

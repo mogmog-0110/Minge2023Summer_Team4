@@ -59,4 +59,3 @@ GameObject* ObjectAppearanceManager::createNewObject(
 		return nullptr;
 	}
 }
-

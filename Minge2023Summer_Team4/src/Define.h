@@ -52,3 +52,22 @@ enum class GameState {
 	Pausing,
 	Finished
 };
+
+// ゲームの敵情報を格納する構造体
+struct EnemyData{
+	String enemyName;
+	int hp;
+	int damage;
+	String textureName;
+	Figure hitbox;
+	double speed;
+};
+
+// ゲームのウェーブ情報を格納する構造体
+struct WaveData {
+	// int spawnTime;
+	Vec2 spawnLocation;
+	String enemyName;
+	double statusMultiplier;
+	int enemyCount;
+};
