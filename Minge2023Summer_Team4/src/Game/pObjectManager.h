@@ -13,7 +13,7 @@ class ObjectAppearanceManager;
 class ObjectManager
 {
 private:
-	Timer DebugBulletTimer{ 0.2s, StartImmediately::Yes };
+	Timer DebugBulletTimer{ 0.1s, StartImmediately::Yes };
 
 	template<typename T, typename U>
 	void checkCollision(T* obj1, U* obj2);
@@ -34,14 +34,17 @@ private:
 
 public:
 
-	//各オブジェクトの配列
+	// 各オブジェクトの配列
 	Array<Debris*> myDebrises;
 	Array<Bullet*> myPlayerBullets;
 	Array<Bullet*> myEnemyBullets;
 	Array<Enemy*> myEnemies;
 
-	ObjectManager();
+	// 敵の名前をキーとした敵情報を格納したハッシュテーブル
+	HashTable<String, EnemyData> enemyDatas;
+
 	~ObjectManager();
+	ObjectManager();
 
 	Player* myPlayer;
 	
@@ -52,6 +55,14 @@ public:
 	void createEnemy();
 	void createDebris();
 	void createPlayerBullet(Vec2, Vec2, Vec2);
+
+
+	HashTable<String, EnemyData> loadEnemyData(const String& filename);
+	Array<WaveData> loadWaveData(const String& filename);
+
+	Enemy* createEnemyFromData(WaveData waveData);
+	static Figure parseFigure(const String&);
+	
 };
 
 // Collisionに関するテンプレート関数

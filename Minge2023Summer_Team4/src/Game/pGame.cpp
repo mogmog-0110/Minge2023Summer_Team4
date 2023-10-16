@@ -1,7 +1,7 @@
 ﻿#include"pGame.h"
 
 Game::Game(const InitData& init)
-	: IScene(init), objectManager()
+	: IScene(init), objectManager(), currentState(GameState::Loading), currentWave(0), accumulatedTime(0.0)
 {
 	Print << U"Game!";
 
@@ -11,6 +11,8 @@ Game::Game(const InitData& init)
 	Print << U"Push [Q] key";
 
 	topLeft = objectManager.myPlayer->getPos() - Scene::Center();
+	// 敵データの読み込み
+	objectManager.enemyDatas = objectManager.loadEnemyData(U"../src/Game/csvFile/enemyTest.csv");
 }
 
 
@@ -26,18 +28,57 @@ Game::~Game()
 
 void Game::update()
 {
-	if (KeyQ.down())
+	switch (currentState)
 	{
-		//タイトルシーンに遷移する
+	case GameState::Loading:
+		if (!waveLoaded && objectManager.myEnemies.empty()) {
+			bool success = loadNextWave();
+			if (!success) {
+				currentState = GameState::Finished;
+			}
+			else {
+				currentState = GameState::Playing;
+				waveLoaded = true;
+			}
+		}
+		break;
+
+	case GameState::Playing:
+		accumulatedTime += Scene::DeltaTime();
+		if (KeyP.down()) {
+			currentState = GameState::Pausing;
+			break;
+		}
+
+		if (KeyQ.down()) {
+			changeScene(SceneList::Result);
+		}
+
+		if (waveDataIndex < waveDatas.size()) {
+			spawnEnemies();  // まだスポーンすべき敵が残っている場合は、敵をスポーンさせる
+		}
+		else if (objectManager.myEnemies.empty() && waveLoaded) {
+			waveLoaded = false;  // 次のウェーブを読み込む準備
+			currentState = GameState::Loading;
+		}
+
+		scrollUpdate();
+		objectManager.update();
+		objectManager.collision();
+		debug();
+		break;
+
+	case GameState::Pausing:
+		if (KeyP.down()) {
+			currentState = GameState::Playing;
+		}
+		break;
+
+	case GameState::Finished:
 		changeScene(SceneList::Result);
 	}
-
-	scrollUpdate();
-	objectManager.update();
-	objectManager.collision();
-		
-	debug();
 }
+
 
 void Game::draw() const
 {
@@ -186,3 +227,38 @@ double Game::calculateOpacity(Vec2 playerPos, Vec2 objectPos) const
 	double opacity = 1.0 - (distance / maxDistance);
 	return Clamp(opacity, 0.0, 1.0); // 透明度を0から1の範囲にクランプ
 }
+
+bool Game::loadNextWave()
+{
+	currentWave++;
+	String fileName = Format(U"../src/Game/csvFile/wave", currentWave, U".csv");
+
+	if (!FileSystem::Exists(fileName)) {
+		return false;  // 次のウェーブのCSVファイルが存在しない
+	}
+
+	waveDatas.clear();  // 既存のwaveDatasをクリア
+	waveDatas = objectManager.loadWaveData(fileName);
+	waveDataIndex = 0;
+	return true;
+}
+void Game::spawnEnemies()
+{
+	// ウェーブの敵がすべてスポーンしたかを確認
+	if (waveDataIndex >= waveDatas.size()) {
+		return;  // すべての敵がスポーンしたので、この関数から抜ける
+	}
+
+	if (accumulatedTime >= waveDatas[waveDataIndex].spawnTime) {
+		for (int i = 0; i < waveDatas[waveDataIndex].spawnCount; ++i) {
+			Enemy* enemy = objectManager.createEnemyFromData(waveDatas[waveDataIndex]);
+			objectManager.myEnemies.push_back(enemy);
+		}
+
+		waveDataIndex++;
+
+		accumulatedTime = 0.0; // accumulatedTimeリセット
+	}
+}
+
+

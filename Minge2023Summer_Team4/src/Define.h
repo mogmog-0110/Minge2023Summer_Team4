@@ -27,3 +27,28 @@ enum eObjectType {
 	eItem,
 	eNone,
 };
+
+struct EnemyData {
+	String name;
+	int hp;
+	int damage;
+	String textureStr;
+	Figure hitbox;
+	double speed;
+};
+
+struct WaveData {
+	double spawnTime;
+	String enemyName;
+	Vec2 spawnPos;
+	double statusModifier; // 敵のステータスに掛けられる補正値
+	int spawnCount;   
+};
+
+// ゲームの状態を表す
+enum class GameState {
+	Loading,
+	Playing,
+	Pausing,
+	Finished
+};

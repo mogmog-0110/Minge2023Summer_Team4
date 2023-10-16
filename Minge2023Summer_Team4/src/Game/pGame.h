@@ -28,6 +28,24 @@ private:
 	// 仮のフレーム素材
 	const Texture textureFrame{ U"Image/frame_001.png" };
 
+
+	GameState currentState;
+
+	// 現在のウェーブ番号
+	int currentWave;
+
+	// 累積時間
+	double accumulatedTime; 
+
+	// 各ウェーブ情報を格納した配列
+	Array<WaveData> waveDatas;
+
+	// 上の配列にアクセスするための添字(インデックス)
+	int waveDataIndex;
+
+	// waveが読み込まれたどうか
+	bool waveLoaded = false;
+
 public:
 	Game(const InitData& init);
 	~Game();
@@ -44,4 +62,7 @@ public:
 	Vec2 calculateMiniMapPos(Vec2 pos) const;
 	bool isInMiniMapRange(Vec2 pos) const;
 	double calculateOpacity(Vec2 playerPos, Vec2 objectPos) const;
+
+	bool loadNextWave();
+	void spawnEnemies();
 };
