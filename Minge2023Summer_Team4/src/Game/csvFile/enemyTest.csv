@@ -1,0 +1,4 @@
+EnemyName1,100,10,EnemyTexture1,Rect(50),2.0
+EnemyName2,150,20,EnemyTexture2,Circle(40),1.5
+EnemyName3,80,15,EnemyTexture3,Rect(60),2.5
+
