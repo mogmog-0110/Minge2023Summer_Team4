@@ -53,6 +53,8 @@ public:
 	void draw(Vec2 offset) const;
 
 	void createDebris();
+	void createEnemy();
+	void createPlayerBullet(Vec2, Vec2, Vec2);
 
 	HashTable<String, EnemyData> loadEnemyData(const String& filename);
 	Array<WaveData> loadWaveData(const String& filename);
