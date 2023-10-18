@@ -9,6 +9,7 @@
 # include "oEnemy.h"
 
 class ObjectAppearanceManager;
+class Player;
 
 class ObjectManager
 {
@@ -61,12 +62,14 @@ public:
 
 	Enemy* createEnemyFromData(WaveData waveData);
 	static Figure parseFigure(const String&);
+	void stopEnemies();
 };
 
 // Collisionに関するテンプレート関数
 template<typename T, typename U>
 void ObjectManager::checkCollision(T* obj1, U* obj2) {
 	if (obj1->isCollisional() && obj2->isCollisional() && obj1->getHitbox().intersects(obj2->getHitbox())) {
+
 		obj1->onCollisionResponse(obj2->getPos());  // 押し出しの応答をobj1に適用
 		obj2->onCollisionResponse(obj1->getPos());  // 押し出しの応答をobj2に適用
 
@@ -78,9 +81,11 @@ void ObjectManager::checkCollision(T* obj1, U* obj2) {
 	}
 }
 
+
 template<typename T, typename U>
 void ObjectManager::checkCollisions(T* obj, Array<U*>& objs) {
-	for (auto& obj2 : objs) {
+	for (auto& obj2 : objs)
+	{
 		checkCollision(obj, obj2);
 	}
 }

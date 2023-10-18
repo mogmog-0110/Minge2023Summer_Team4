@@ -50,5 +50,6 @@ enum class GameState {
 	Loading,
 	Playing,
 	Pausing,
+	Dead,
 	Finished
 };

@@ -10,9 +10,7 @@ ObjectAppearanceManager::~ObjectAppearanceManager()
 
 Vec2 ObjectAppearanceManager::generateRandomPos()
 {
-	// プレイヤーの座標を取得
-	Player* myPlayer = Player::getInstance();
-	Vec2 playerPos = myPlayer->getPos();
+	Vec2 playerPos = Player::getInstance()->getPos();
 
 	// プレイヤーを中心とした一定の湧き範囲の設定
 	Circle circleA{ playerPos, 2000 };

@@ -4,10 +4,13 @@
 #include "pObjectManager.h"
 #include "oMouseCursor.h"
 
+class Player;
+
 class Game :public App::Scene {
 private:
 	ObjectManager objectManager;
 	MouseCursor cursor;
+	Player* myPlayer;
 
 	//プレイヤーから見た相対的な左上座標
 	Vec2 topLeft;
