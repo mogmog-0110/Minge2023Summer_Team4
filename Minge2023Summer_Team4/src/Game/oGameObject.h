@@ -28,6 +28,8 @@ protected:
 	Vec2 velRepull = {0,0};
 	double repullDecaySpeed = 100;
 
+	bool isMoving = false;
+
 	void updateCommon();
 	void drawHitbox(Vec2 offset) const;
 
@@ -60,5 +62,10 @@ public:
 	int getDamage();
 	Figure getHitbox();
 	eObjectType getObjType() const;
+	int getHp() const;
+
+	//セッター関数
+	void setSpeed(double);
+	void setPos(Vec2);
 };
 

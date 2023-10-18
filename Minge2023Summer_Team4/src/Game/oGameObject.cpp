@@ -11,7 +11,7 @@ GameObject::~GameObject()
 //毎Tick実行するかんすう
 
 void GameObject::update()
-{										
+{
 	updateCommon();
 	move();
 }
@@ -33,10 +33,9 @@ void GameObject::move()
 	vel = elementVector.setLength(vel.length()) * (-1);
 	pos += (vel + velRepull) * Scene::DeltaTime();
 
-	hitbox.setCenter(pos);
+    setPos(pos);
 
 }
-
 
 
 //====================================================
@@ -93,7 +92,7 @@ void GameObject::onCollisionResponse(Vec2 RepullPos)
 {
 	//collisionalTimer.restart();
 	velRepull = (pos - RepullPos).setLength(vel.length() == 0 ? 100 : vel.length());
-	
+
 }
 
 void GameObject::calcDamage(int damage)
@@ -127,4 +126,20 @@ double GameObject::getSpeed() const
 eObjectType GameObject::getObjType() const
 {
 	return objType;
+}
+
+int GameObject::getHp() const
+{
+	return hp;
+}
+
+void GameObject::setSpeed(double speed)
+{
+	vel = { speed, speed };
+}
+
+void GameObject::setPos(Vec2 newPos)
+{
+	pos = newPos;
+	hitbox.setCenter(newPos);
 }

@@ -3,20 +3,21 @@
 
 ObjectManager::ObjectManager()
 {
-	Player::create(1000, 10, U"", Circle(30), Vec2(300,400), 400);
+	Player::create(100, 30, U"", Circle(30), Vec2(0, 0), 300);
 	myPlayer = Player::getInstance();
 	//createEnemy();
-	createDebris();
 }
 
 ObjectManager::~ObjectManager()
 {
-	
+	Player::destroy();
 }
 
 void ObjectManager::update()
 {
+	collision();
 	myPlayer->update();
+	createDebris();
 	updateObjList(myDebrises);
 	updateObjList(myPlayerBullets);
 	updateObjList(myEnemyBullets);
@@ -70,7 +71,7 @@ void ObjectManager::draw(Vec2 offset) const
 	for (size_t i = 0; i < myEnemyBullets.size(); i++) myEnemyBullets[i]->draw(offset, true);
 	for (size_t i = 0; i < myEnemies.size(); i++) myEnemies[i]->draw(offset, true);
 
-	this->myPlayer->draw(offset, true);
+	this->myPlayer->draw(offset, false);
 }
 
 void ObjectManager::createEnemy()
@@ -102,10 +103,14 @@ Enemy* ObjectManager::createEnemyFromData(WaveData waveData)
 
 void ObjectManager::createDebris()
 {
-	//　デブリは100体まで自動補充
+	//　デブリは100体まで
+
 	while (myDebrises.size() < 100)
 	{
-		GameObject* newDebris = ObjectAppearanceManager::createNewObject(eDebris, 1000, 10, U"", Circle(50), ObjectAppearanceManager::generateRandomPos(), { 0,0 }, { 0,0 });
+		int randomSize = Random(30, 100);
+		int hp = 1000;
+		if (randomSize <= 50) hp = 300;
+		GameObject* newDebris = ObjectAppearanceManager::createNewObject(eDebris, hp, 10, U"", Circle(randomSize), ObjectAppearanceManager::generateRandomPos(), {0,0}, {0,0});
 		if (newDebris) {
 			myDebrises << static_cast<Debris*>(newDebris);
 		}
@@ -179,5 +184,11 @@ Figure ObjectManager::parseFigure(const String& str)
 	}
 	else {
 		throw Error{ U"Unknown Figure Type: " + str };
+	}
+}
+
+void ObjectManager::stopEnemies() {
+	for (auto& enemy : myEnemies) {
+		enemy->setSpeed(0);  
 	}
 }

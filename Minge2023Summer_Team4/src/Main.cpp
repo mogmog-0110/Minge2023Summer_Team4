@@ -29,6 +29,7 @@ void Main()
 	//Gameシーン
 	TextureAsset::Register(U"Cursor", Resource(U"Image/Cursor.png"));
 	TextureAsset::Register(U"Frame", Resource(U"Image/frame.png"));
+	TextureAsset::Register(U"playerImage", Resource(U"Image/Player.png"));
 
 	while (System::Update())
 	{

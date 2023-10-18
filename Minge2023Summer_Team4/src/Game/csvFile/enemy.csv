@@ -1,2 +1,2 @@
-enemy1, 1000, 10, textureName1, Rect, 50, 100
-enemy2, 3000, 30, textureName2, Circle, 100, 150 
+enemy1, 1000, 10, textureName1, Circle, 50, 100
+enemy2, 3000, 30, textureName2, Circle, 100, 150

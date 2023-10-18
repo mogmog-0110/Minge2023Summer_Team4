@@ -22,7 +22,7 @@ Game::Game(const InitData& init)
 
 Game::~Game()
 {
-
+	
 }
 
 
@@ -35,6 +35,7 @@ void Game::update()
 	switch (currentState)
 	{
 	case GameState::Loading:
+		myPlayer = Player::getInstance();
 		if (!waveLoaded && objectManager.myEnemies.empty()) {
 			bool success = loadNextWave();
 			if (!success) {
@@ -66,15 +67,33 @@ void Game::update()
 			currentState = GameState::Loading;
 		}
 
+		if (Player::getInstance()->isDead())
+		{
+			currentState = GameState::Dead;
+		}
+
 		scrollUpdate();
 		objectManager.update();
-		objectManager.collision();
 		debug();
 		break;
 
 	case GameState::Pausing:
 		if (KeyP.down()) {
 			currentState = GameState::Playing;
+		}
+		break;
+
+	case GameState::Dead:
+		// キー入力を受け付けない
+		// 敵の動きを止める
+		objectManager.stopEnemies();
+		// 死亡アニメーションを流す
+		Player::getInstance()->playDeathAnimation();
+		Scene::SetBackground(Palette::Black);
+		if (Player::getInstance()->deathAnimationFinished()) {
+			if (KeyEnter.down()) {
+				changeScene(SceneList::Result); // アニメーション終了後にリザルトシーンへ遷移
+			}
 		}
 		break;
 
@@ -110,6 +129,9 @@ void Game::debug()
 	{
 		Circle{ -topLeft, (50 + i * 50) }.drawFrame(2);
 	}
+
+	Print << Player::getInstance()->getHitbox().getCircle();
+	Print << Player::getInstance()->getHp();
 }
 
 //====================================================
