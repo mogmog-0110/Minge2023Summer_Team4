@@ -822,6 +822,9 @@
     <ClInclude Include="src\Game\pObjectAppearanceManager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="src\Game\oItem.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -870,6 +873,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\Game\pObjectAppearanceManager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\oItem.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

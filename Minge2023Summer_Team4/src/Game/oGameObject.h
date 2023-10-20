@@ -25,6 +25,8 @@ protected:
 	Vec2 vel;
 	Vec2 acc;
 
+	Texture texture;
+
 	Vec2 velRepull = {0,0};
 	double repullDecaySpeed = 100;
 
@@ -67,5 +69,6 @@ public:
 	//セッター関数
 	void setSpeed(double);
 	void setPos(Vec2);
+	void setTexture(String);
 };
 

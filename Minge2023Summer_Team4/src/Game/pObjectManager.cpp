@@ -22,6 +22,7 @@ void ObjectManager::update()
 	updateObjList(myPlayerBullets);
 	updateObjList(myEnemyBullets);
 	updateObjList(myEnemies);
+	updateObjList(myItems);
 
 	if (!DebugBulletTimer.isRunning() && MouseL.pressed())
 	{
@@ -37,6 +38,7 @@ void ObjectManager::collision() {
 		checkCollisions(myPlayer, myDebrises);
 		checkCollisions(myPlayer, myEnemyBullets);
 		checkCollisions(myPlayer, myEnemies);
+		checkCollisions(myPlayer, myItems);
 	}
 
 	checkCollisionsBetweenArrays(myDebrises, myPlayerBullets);
@@ -51,12 +53,12 @@ void ObjectManager::collision() {
 		}
 	}
 
-	// デブリ同士の押し出しandダメージ処理
+	/* // デブリ同士の押し出しandダメージ処理
 	for (size_t i = 0; i < myDebrises.size(); ++i) {
 		for (size_t j = i + 1; j < myDebrises.size(); ++j) {
 			checkCollision(myDebrises[i], myDebrises[j]);
 		}
-	}
+	}*/
 
 	cleanUp(myPlayerBullets, myPlayer->getPos());
 	cleanUp(myDebrises);
@@ -70,6 +72,7 @@ void ObjectManager::draw(Vec2 offset) const
 	for (size_t i = 0; i < myPlayerBullets.size(); i++) myPlayerBullets[i]->draw(offset, true);
 	for (size_t i = 0; i < myEnemyBullets.size(); i++) myEnemyBullets[i]->draw(offset, true);
 	for (size_t i = 0; i < myEnemies.size(); i++) myEnemies[i]->draw(offset, true);
+	for (size_t i = 0; i < myItems.size(); i++) myItems[i]->draw(offset, true);
 
 	this->myPlayer->draw(offset, false);
 }
@@ -122,6 +125,64 @@ void ObjectManager::createPlayerBullet(Vec2 pos_, Vec2 vel_, Vec2 acc_)
 	GameObject* newPlayerBullet = ObjectAppearanceManager::createNewObject(ePlayerBullet, 1, 100, U"", Circle{ 10 }, pos_, vel_, acc_);
 	if (newPlayerBullet) {
 		myPlayerBullets << static_cast<Bullet*>(newPlayerBullet);
+	}
+}
+
+void ObjectManager::createItem(Vec2 pos)
+{
+	int randomNum = Random(50);
+
+	// 50分の1の抽選で特殊弾のドロップ
+	if(randomNum == 1)
+	{
+		randomNum = Random(1, 5);
+		// ItemTypeと対応
+		switch (randomNum)
+		{
+		case 1:
+			GameObject * newItem = ObjectAppearanceManager::createNewObject(eItem, 1, 0, U"NormalMagic", Circle{ 20 }, pos, { 0, 0 }, { 0, 0 });
+			if (newItem) {
+				Item* newItem = static_cast<Item*>(newItem);
+				newItem->setItemType(ItemType::NormalMagic);
+				myItems << newItem;
+			}
+		case 2:
+			GameObject * newItem = ObjectAppearanceManager::createNewObject(eItem, 1, 0, U"SpecialMagicA", Circle{ 20 }, pos, { 0, 0 }, { 0, 0 });
+			if (newItem) {
+				Item* newItem = static_cast<Item*>(newItem);
+				newItem->setItemType(ItemType::SpecialMagicA);
+				myItems << newItem;
+			}
+		case 3:
+			GameObject * newItem = ObjectAppearanceManager::createNewObject(eItem, 1, 0, U"SpecialMagicB", Circle{ 20 }, pos, { 0, 0 }, { 0, 0 });
+			if (newItem) {
+				Item* newItem = static_cast<Item*>(newItem);
+				newItem->setItemType(ItemType::SpecialMagicB);
+				myItems << newItem;
+			}
+		case 4:
+			GameObject * newItem = ObjectAppearanceManager::createNewObject(eItem, 1, 0, U"SpecialMagicC", Circle{ 20 }, pos, { 0, 0 }, { 0, 0 });
+			if (newItem) {
+				Item* newItem = static_cast<Item*>(newItem);
+				newItem->setItemType(ItemType::SpecialMagicC);
+				myItems << newItem;
+			}
+		case 5:
+			GameObject * newItem = ObjectAppearanceManager::createNewObject(eItem, 1, 0, U"SpecialMagicD", Circle{ 20 }, pos, { 0, 0 }, { 0, 0 });
+			if (newItem) {
+				Item* newItem = static_cast<Item*>(newItem);
+				newItem->setItemType(ItemType::SpecialMagicD);
+				myItems << newItem;
+			}
+		}
+
+	}
+	else
+	{
+		GameObject* newItem = ObjectAppearanceManager::createNewObject(eItem, 1, 0, U"ExpPoint", Circle{ 5 }, pos, { 0, 0 }, { 0, 0 });
+		if (newItem) {
+			myItems << static_cast<Item*>(newItem);
+		}
 	}
 }
 

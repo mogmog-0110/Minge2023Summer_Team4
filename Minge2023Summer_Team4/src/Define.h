@@ -53,3 +53,14 @@ enum class GameState {
 	Dead,
 	Finished
 };
+
+
+// アイテムの種類を表す
+enum class ItemType {
+	ExpPoint,
+	NormalMagic,
+	SpecialMagicA,
+	SpecialMagicB,
+	SpecialMagicC,
+	SpecialMagicD,
+};

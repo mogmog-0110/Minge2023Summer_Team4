@@ -7,6 +7,7 @@
 # include "oDebris.h"
 # include "oBullet.h"
 # include "oEnemy.h"
+# include "oItem.h"
 
 class ObjectAppearanceManager;
 class Player;
@@ -40,6 +41,8 @@ public:
 	Array<Bullet*> myPlayerBullets;
 	Array<Bullet*> myEnemyBullets;
 	Array<Enemy*> myEnemies;
+	Array<Item*> myItems;
+
 
 	// 敵の名前をキーとした敵情報を格納したハッシュテーブル
 	HashTable<String, EnemyData> enemyDatas;
@@ -56,6 +59,7 @@ public:
 	void createDebris();
 	void createEnemy();
 	void createPlayerBullet(Vec2, Vec2, Vec2);
+	void createItem(Vec2);
 
 	HashTable<String, EnemyData> loadEnemyData(const String& filename);
 	Array<WaveData> loadWaveData(const String& filename);

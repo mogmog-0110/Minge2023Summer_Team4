@@ -143,3 +143,8 @@ void GameObject::setPos(Vec2 newPos)
 	pos = newPos;
 	hitbox.setCenter(newPos);
 }
+
+void GameObject::setTexture(String textureStr)
+{
+	texture = Texture{ textureStr };
+}
