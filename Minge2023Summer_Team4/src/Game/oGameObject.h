@@ -33,6 +33,9 @@ protected:
 	void updateCommon();
 	void drawHitbox(Vec2 offset) const;
 
+	//アイテムが落ちるかどうかの設定。HPが0になる意外の特殊死亡ではfalseになる。なおアイテムがドロップしないオブジェクトタイプでは参照されない。
+	bool isItemDropable = true;
+
 
 public:
 
@@ -55,6 +58,8 @@ public:
 	void changeCoolTime(Duration);
 
 	bool isDead(Vec2 playerPos_ = {0,0});
+	bool isItemDrop();
+	//実質ゲッター関数
 
 	//ゲッター関数
 	Vec2 getPos() const;
