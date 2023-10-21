@@ -106,6 +106,7 @@ void ObjectManager::cleanUp(Array<T*>& objs, Vec2 playerPos) {
 	{
 		if ((*it)->isDead(playerPos))
 		{
+			if ((*it)->isItemDrop() && (*it)->getObjType() == eObjectType::eDebris);// アイテム処理
 			delete* it;
 			it = objs.erase(it);
 		}
@@ -121,6 +122,7 @@ template<typename T>
 void ObjectManager::cleanUp(Array<T*>& objs) {
 	for (auto it = objs.begin(); it != objs.end();) {
 		if ((*it)->isDead()) {
+			if ((*it)->isItemDrop() && (*it)->getObjType() == eObjectType::eEnemy);// アイテム処理
 			delete* it;
 			it = objs.erase(it);
 		}
