@@ -875,7 +875,7 @@
     <ClCompile Include="src\Game\pObjectAppearanceManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\oItem.cpp">
+    <ClCompile Include="src\Game\oItem.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

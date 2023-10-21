@@ -85,7 +85,6 @@ void ObjectManager::checkCollision(T* obj1, U* obj2) {
 	}
 }
 
-
 template<typename T, typename U>
 void ObjectManager::checkCollisions(T* obj, Array<U*>& objs) {
 	for (auto& obj2 : objs)

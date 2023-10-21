@@ -133,58 +133,79 @@ void ObjectManager::createItem(Vec2 pos)
 	int randomNum = Random(50);
 
 	// 50分の1の抽選で特殊弾のドロップ
-	if(randomNum == 1)
+	if (randomNum == 1)
 	{
 		randomNum = Random(1, 5);
 		// ItemTypeと対応
 		switch (randomNum)
 		{
 		case 1:
-			GameObject * newItem = ObjectAppearanceManager::createNewObject(eItem, 1, 0, U"NormalMagic", Circle{ 20 }, pos, { 0, 0 }, { 0, 0 });
-			if (newItem) {
-				Item* newItem = static_cast<Item*>(newItem);
+		{
+			GameObject* tempItem = ObjectAppearanceManager::createNewObject(eItem, 1, 0, U"NormalMagic", Circle{ 20 }, pos, { 0, 0 }, { 0, 0 });
+			if (tempItem) {
+				Item* newItem = static_cast<Item*>(tempItem);
 				newItem->setItemType(ItemType::NormalMagic);
 				myItems << newItem;
 			}
+		}
+		break;
+
 		case 2:
-			GameObject * newItem = ObjectAppearanceManager::createNewObject(eItem, 1, 0, U"SpecialMagicA", Circle{ 20 }, pos, { 0, 0 }, { 0, 0 });
-			if (newItem) {
-				Item* newItem = static_cast<Item*>(newItem);
+		{
+			GameObject* tempItem = ObjectAppearanceManager::createNewObject(eItem, 1, 0, U"SpecialMagicA", Circle{ 20 }, pos, { 0, 0 }, { 0, 0 });
+			if (tempItem) {
+				Item* newItem = static_cast<Item*>(tempItem);
 				newItem->setItemType(ItemType::SpecialMagicA);
 				myItems << newItem;
 			}
+		}
+		break;
+
 		case 3:
-			GameObject * newItem = ObjectAppearanceManager::createNewObject(eItem, 1, 0, U"SpecialMagicB", Circle{ 20 }, pos, { 0, 0 }, { 0, 0 });
-			if (newItem) {
-				Item* newItem = static_cast<Item*>(newItem);
+		{
+			GameObject* tempItem = ObjectAppearanceManager::createNewObject(eItem, 1, 0, U"SpecialMagicB", Circle{ 20 }, pos, { 0, 0 }, { 0, 0 });
+			if (tempItem) {
+				Item* newItem = static_cast<Item*>(tempItem);
 				newItem->setItemType(ItemType::SpecialMagicB);
 				myItems << newItem;
 			}
+		}
+		break;
+
 		case 4:
-			GameObject * newItem = ObjectAppearanceManager::createNewObject(eItem, 1, 0, U"SpecialMagicC", Circle{ 20 }, pos, { 0, 0 }, { 0, 0 });
-			if (newItem) {
-				Item* newItem = static_cast<Item*>(newItem);
+		{
+			GameObject* tempItem = ObjectAppearanceManager::createNewObject(eItem, 1, 0, U"SpecialMagicC", Circle{ 20 }, pos, { 0, 0 }, { 0, 0 });
+			if (tempItem) {
+				Item* newItem = static_cast<Item*>(tempItem);
 				newItem->setItemType(ItemType::SpecialMagicC);
 				myItems << newItem;
 			}
+		}
+		break;
+
 		case 5:
-			GameObject * newItem = ObjectAppearanceManager::createNewObject(eItem, 1, 0, U"SpecialMagicD", Circle{ 20 }, pos, { 0, 0 }, { 0, 0 });
-			if (newItem) {
-				Item* newItem = static_cast<Item*>(newItem);
+		{
+			GameObject* tempItem = ObjectAppearanceManager::createNewObject(eItem, 1, 0, U"SpecialMagicD", Circle{ 20 }, pos, { 0, 0 }, { 0, 0 });
+			if (tempItem) {
+				Item* newItem = static_cast<Item*>(tempItem);
 				newItem->setItemType(ItemType::SpecialMagicD);
 				myItems << newItem;
 			}
 		}
-
+		break;
+		}
 	}
 	else
 	{
-		GameObject* newItem = ObjectAppearanceManager::createNewObject(eItem, 1, 0, U"ExpPoint", Circle{ 5 }, pos, { 0, 0 }, { 0, 0 });
-		if (newItem) {
-			myItems << static_cast<Item*>(newItem);
+		GameObject* tempItem = ObjectAppearanceManager::createNewObject(eItem, 1, 0, U"ExpPoint", Circle{ 5 }, pos, { 0, 0 }, { 0, 0 });
+		if (tempItem) {
+			Item* newItem = static_cast<Item*>(tempItem);
+			newItem->setItemType(ItemType::NormalMagic);
+			myItems << newItem;
 		}
 	}
 }
+
 
 HashTable<String, EnemyData> ObjectManager::loadEnemyData(const String& filepath)
 {

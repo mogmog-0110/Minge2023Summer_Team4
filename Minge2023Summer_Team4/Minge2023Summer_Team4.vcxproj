@@ -415,6 +415,7 @@
     <ClCompile Include="src\Game\oDebris.cpp" />
     <ClCompile Include="src\Game\oEnemy.cpp" />
     <ClCompile Include="src\Game\oGameObject.cpp" />
+    <ClCompile Include="src\Game\oItem.cpp" />
     <ClCompile Include="src\Game\oMouseCursor.cpp" />
     <ClCompile Include="src\Game\oPlayer.cpp" />
     <ClCompile Include="src\Game\pEventManager.cpp" />
@@ -422,7 +423,6 @@
     <ClCompile Include="src\Game\pObjectAppearanceManager.cpp" />
     <ClCompile Include="src\Game\pObjectManager.cpp" />
     <ClCompile Include="src\Main.cpp" />
-    <ClCompile Include="src\oItem.cpp" />
     <ClCompile Include="src\oSuperObject.cpp" />
     <ClCompile Include="src\Result\pResult.cpp" />
     <ClCompile Include="src\Title\pTitle.cpp" />
