@@ -110,6 +110,10 @@ bool GameObject::isDead(Vec2 playerPos_) {
 	else return false;
 }
 
+bool GameObject::isItemDrop() {
+	return isItemDropable;
+}
+
 //====================================================
 //君は完璧で最強のゲッター関数
 

@@ -76,7 +76,7 @@ void ObjectManager::collision() {
 	}*/
 
 	cleanUp(myPlayerBullets, myPlayer->getPos());
-	cleanUp(myDebrises);
+	cleanUp(myDebrises, myPlayer->getPos());
 	cleanUp(myEnemies);
 }
 

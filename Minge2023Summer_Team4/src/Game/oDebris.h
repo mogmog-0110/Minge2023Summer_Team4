@@ -21,5 +21,6 @@ public:
 	~Debris();
 
 	void calcAndSetExp();
+	bool isDead(Vec2 playerPos_ = { 0,0 });
 };
 
