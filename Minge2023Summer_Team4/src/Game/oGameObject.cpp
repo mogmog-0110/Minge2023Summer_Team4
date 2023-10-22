@@ -1,4 +1,5 @@
-﻿#include "oGameObject.h"
+﻿
+#include "oGameObject.h"
 #include "oPlayer.h"
 
 GameObject::~GameObject()
@@ -43,7 +44,7 @@ void GameObject::move()
 
 void GameObject::draw(Vec2 offset, bool isHitboxDraw) const
 {
-	this->texture.drawAt(-offset); // offsetを減算
+	this->texture.drawAt(this->pos - offset); // offsetを減算
 	if (isHitboxDraw) drawHitbox(-offset);
 }
 
@@ -137,6 +138,11 @@ int GameObject::getHp() const
 	return hp;
 }
 
+int GameObject::getExp() const
+{
+	return expPoints;
+}
+
 void GameObject::setSpeed(double speed)
 {
 	vel = { speed, speed };
@@ -146,4 +152,15 @@ void GameObject::setPos(Vec2 newPos)
 {
 	pos = newPos;
 	hitbox.setCenter(newPos);
+}
+
+void GameObject::setTexture(String textureStr)
+{
+	texture = Texture{ textureStr };
+}
+
+void GameObject::setExp(int points)
+{
+	expPoints = points;
+
 }

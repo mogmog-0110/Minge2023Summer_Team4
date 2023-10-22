@@ -1,6 +1,9 @@
 ﻿#pragma once
-#include "oGameObject.h"
-#include "../Define.h"
+# include "oGameObject.h"
+# include "../Define.h"
+# include "oItem.h"
+
+class Item;
 
 class Player :
     public GameObject
@@ -46,6 +49,13 @@ private:
 	const double repelDistance = 10;
 	double speed;
 
+	int expPoints;
+	int level;
+	int nextLevelExp;
+
+	double attractionRadius = 100;
+	double attractionSpeed = 10;
+
 protected:
 
 public:
@@ -82,4 +92,22 @@ public:
 
 	void updateDirectionToMouse();
 
+	void onItemPickUp(Item*);
+
+	void gainExp(int);
+	void checkLevelUp();
+	void levelUp();
+	void applyItemEffect(Item*);
+
+	void attractItems(Array<Item*>& items);
+
+	//getter
+	double getAttractionRadius() const;
+	double getAttractionSpeed() const;
+	int getLevel() const;
+	int getNextlevelExp() const;
+
+	//setter
+	void setAttractionRadius(double);
+	void setAttractionSpeed(double);
 };

@@ -3,7 +3,8 @@
 
 ObjectManager::ObjectManager()
 {
-	Player::create(100, 30, U"", Circle(30), Vec2(0, 0), 300);
+	// 初期ステータスの決定
+	Player::create(50, 10, U"", Circle(30), Vec2(0, 0), 300);
 	myPlayer = Player::getInstance();
 	//createEnemy();
 }
@@ -17,11 +18,13 @@ void ObjectManager::update()
 {
 	collision();
 	myPlayer->update();
+	
 	createDebris();
 	updateObjList(myDebrises);
 	updateObjList(myPlayerBullets);
 	updateObjList(myEnemyBullets);
 	updateObjList(myEnemies);
+	updateObjList(myItems);
 
 	if (!DebugBulletTimer.isRunning() && MouseL.pressed())
 	{
@@ -29,6 +32,19 @@ void ObjectManager::update()
 		createPlayerBullet(myPlayer->getPos() + elementVector.setLength(50), elementVector.setLength(1000), { 1,1 });
 		DebugBulletTimer.restart();
 	}
+
+	// プレイヤーとアイテムの衝突をチェック
+	for (auto& item : myItems) {
+		if (myPlayer->getHitbox().intersects(item->getHitbox())) {
+			myPlayer->onItemPickUp(item);
+		}
+	}
+
+	myPlayer->attractItems(myItems);
+
+	// 不要になったアイテムをクリーンアップ
+	cleanUp(myItems);
+
 }
 
 
@@ -37,6 +53,7 @@ void ObjectManager::collision() {
 		checkCollisions(myPlayer, myDebrises);
 		checkCollisions(myPlayer, myEnemyBullets);
 		checkCollisions(myPlayer, myEnemies);
+		checkCollisions(myPlayer, myItems);
 	}
 
 	checkCollisionsBetweenArrays(myDebrises, myPlayerBullets);
@@ -51,12 +68,12 @@ void ObjectManager::collision() {
 		}
 	}
 
-	// デブリ同士の押し出しandダメージ処理
+	/* // デブリ同士の押し出しandダメージ処理
 	for (size_t i = 0; i < myDebrises.size(); ++i) {
 		for (size_t j = i + 1; j < myDebrises.size(); ++j) {
 			checkCollision(myDebrises[i], myDebrises[j]);
 		}
-	}
+	}*/
 
 	cleanUp(myPlayerBullets, myPlayer->getPos());
 	cleanUp(myDebrises, myPlayer->getPos());
@@ -70,6 +87,7 @@ void ObjectManager::draw(Vec2 offset) const
 	for (size_t i = 0; i < myPlayerBullets.size(); i++) myPlayerBullets[i]->draw(offset, true);
 	for (size_t i = 0; i < myEnemyBullets.size(); i++) myEnemyBullets[i]->draw(offset, true);
 	for (size_t i = 0; i < myEnemies.size(); i++) myEnemies[i]->draw(offset, true);
+	for (size_t i = 0; i < myItems.size(); i++) myItems[i]->draw(offset, true);
 
 	this->myPlayer->draw(offset, false);
 }
@@ -119,11 +137,98 @@ void ObjectManager::createDebris()
 
 void ObjectManager::createPlayerBullet(Vec2 pos_, Vec2 vel_, Vec2 acc_)
 {
-	GameObject* newPlayerBullet = ObjectAppearanceManager::createNewObject(ePlayerBullet, 1, 100, U"", Circle{ 10 }, pos_, vel_, acc_);
+	GameObject* newPlayerBullet = ObjectAppearanceManager::createNewObject(ePlayerBullet, 1, 10 + myPlayer->getDamage(), U"", Circle{10}, pos_, vel_, acc_);
 	if (newPlayerBullet) {
 		myPlayerBullets << static_cast<Bullet*>(newPlayerBullet);
 	}
 }
+
+void ObjectManager::createItem(Vec2 pos, int expPoints)
+{
+	int randomNum = Random(50);
+
+	// 50分の1の抽選で特殊弾のドロップ
+	if (randomNum == 1)
+	{
+		randomNum = Random(1, 5);
+		// ItemTypeと対応
+		switch (randomNum)
+		{
+		case 1:
+		{
+			GameObject* tempItem = ObjectAppearanceManager::createNewObject(eItem, 1, 0, U"NormalMagic", Circle{ 20 }, pos, { 0, 0 }, { 0, 0 });
+			if (tempItem) {
+				Item* newItem = static_cast<Item*>(tempItem);
+				newItem->setItemType(ItemType::NormalMagic);
+				newItem->setActive(true);
+				myItems << newItem;
+
+			}
+		}
+		break;
+
+		case 2:
+		{
+			GameObject* tempItem = ObjectAppearanceManager::createNewObject(eItem, 1, 0, U"SpecialMagicA", Circle{ 20 }, pos, { 0, 0 }, { 0, 0 });
+			if (tempItem) {
+				Item* newItem = static_cast<Item*>(tempItem);
+				newItem->setItemType(ItemType::SpecialMagicA);
+				newItem->setActive(true);
+				myItems << newItem;
+			}
+		}
+		break;
+
+		case 3:
+		{
+			GameObject* tempItem = ObjectAppearanceManager::createNewObject(eItem, 1, 0, U"SpecialMagicB", Circle{ 20 }, pos, { 0, 0 }, { 0, 0 });
+			if (tempItem) {
+				Item* newItem = static_cast<Item*>(tempItem);
+				newItem->setItemType(ItemType::SpecialMagicB);
+				newItem->setActive(true);
+				myItems << newItem;
+			}
+		}
+		break;
+
+		case 4:
+		{
+			GameObject* tempItem = ObjectAppearanceManager::createNewObject(eItem, 1, 0, U"SpecialMagicC", Circle{ 20 }, pos, { 0, 0 }, { 0, 0 });
+			if (tempItem) {
+				Item* newItem = static_cast<Item*>(tempItem);
+				newItem->setItemType(ItemType::SpecialMagicC);
+				newItem->setActive(true);
+				myItems << newItem;
+			}
+		}
+		break;
+
+		case 5:
+		{
+			GameObject* tempItem = ObjectAppearanceManager::createNewObject(eItem, 1, 0, U"SpecialMagicD", Circle{ 20 }, pos, { 0, 0 }, { 0, 0 });
+			if (tempItem) {
+				Item* newItem = static_cast<Item*>(tempItem);
+				newItem->setItemType(ItemType::SpecialMagicD);
+				newItem->setActive(true);
+				myItems << newItem;
+			}
+		}
+		break;
+		}
+	}
+	else
+	{
+		GameObject* tempItem = ObjectAppearanceManager::createNewObject(eItem, 1, 0, U"ExpPoint", Circle{ 5 }, pos, { 0, 0 }, { 0, 0 });
+		if (tempItem) {
+			Item* newItem = static_cast<Item*>(tempItem);
+			newItem->setItemType(ItemType::ExpPoint);
+			newItem->setExp(expPoints);
+			newItem->setActive(true);
+			myItems << newItem;
+		}
+	}
+}
+
 
 HashTable<String, EnemyData> ObjectManager::loadEnemyData(const String& filepath)
 {
@@ -190,5 +295,18 @@ Figure ObjectManager::parseFigure(const String& str)
 void ObjectManager::stopEnemies() {
 	for (auto& enemy : myEnemies) {
 		enemy->setSpeed(0);  
+	}
+}
+
+// アイテム用のcleanUP
+void ObjectManager::cleanUp(Array<Item*>& items) {
+	for (auto it = items.begin(); it != items.end();) {
+		if (!(*it)->getIsActive()) {
+			delete* it;
+			it = items.erase(it);
+		}
+		else {
+			++it;
+		}
 	}
 }

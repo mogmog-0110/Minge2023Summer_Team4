@@ -51,7 +51,7 @@ GameObject* ObjectAppearanceManager::createNewObject(
 	case eEnemyBullet:
 		return new Bullet(eEnemyBullet, hp, damage, textureStr, hitbox, pos, vel, acc);
 	case eItem:
-		// return new Item(eEnemyBullet, hp, damage, textureStr, hitbox, pos, vel, acc);
+		return new Item(1, 0, textureStr, hitbox, pos, {0, 0}, {0, 0});
 	default:
 		// 不明なObjectTypeが指定された場合
 		return nullptr;

@@ -6,6 +6,7 @@
 # include "oBullet.h"
 # include "oEnemy.h"
 # include "oPlayer.h"
+# include "oItem.h"
 
 class Player;
 

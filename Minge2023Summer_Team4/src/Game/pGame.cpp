@@ -130,8 +130,14 @@ void Game::debug()
 		Circle{ -topLeft, (50 + i * 50) }.drawFrame(2);
 	}
 
-	Print << Player::getInstance()->getHitbox().getCircle();
+	Print << U"経験値";
+	Print << Player::getInstance()->getExp();
+	Print << U"レベル";
+	Print << myPlayer->getInstance()->getLevel();
+	Print << U"プレイヤーのステータス";
 	Print << Player::getInstance()->getHp();
+	Print << Player::getInstance()->getDamage();
+	Print << Player::getInstance()->getSpeed();
 }
 
 //====================================================

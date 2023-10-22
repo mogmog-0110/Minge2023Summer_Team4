@@ -7,6 +7,7 @@
 # include "oDebris.h"
 # include "oBullet.h"
 # include "oEnemy.h"
+# include "oItem.h"
 
 class ObjectAppearanceManager;
 class Player;
@@ -29,6 +30,7 @@ private:
 	void cleanUp(Array<T*>& objs, Vec2 playerPos);
 	template<typename T>
 	void cleanUp(Array<T*>& objs);
+	void cleanUp(Array<Item*>& items);
 
 	template<typename T>
 	void updateObjList(Array<T*>& objectList);
@@ -40,6 +42,8 @@ public:
 	Array<Bullet*> myPlayerBullets;
 	Array<Bullet*> myEnemyBullets;
 	Array<Enemy*> myEnemies;
+	Array<Item*> myItems;
+
 
 	// 敵の名前をキーとした敵情報を格納したハッシュテーブル
 	HashTable<String, EnemyData> enemyDatas;
@@ -56,6 +60,7 @@ public:
 	void createDebris();
 	void createEnemy();
 	void createPlayerBullet(Vec2, Vec2, Vec2);
+	void createItem(Vec2, int);
 
 	HashTable<String, EnemyData> loadEnemyData(const String& filename);
 	Array<WaveData> loadWaveData(const String& filename);
@@ -80,7 +85,6 @@ void ObjectManager::checkCollision(T* obj1, U* obj2) {
 		}
 	}
 }
-
 
 template<typename T, typename U>
 void ObjectManager::checkCollisions(T* obj, Array<U*>& objs) {
@@ -122,7 +126,13 @@ template<typename T>
 void ObjectManager::cleanUp(Array<T*>& objs) {
 	for (auto it = objs.begin(); it != objs.end();) {
 		if ((*it)->isDead()) {
-			if ((*it)->isItemDrop() && (*it)->getObjType() == eObjectType::eEnemy);// アイテム処理
+			// オブジェクトの種類をチェック
+			if ((*it)->getObjType() == eObjectType::eEnemy || (*it)->getObjType() == eObjectType::eDebris) {
+				// 敵またはデブリの位置でアイテムを生成
+				Vec2 objPos = (*it)->getPos();
+				int expPoints = (*it)->getExp();
+				createItem(objPos, expPoints);
+     }
 			delete* it;
 			it = objs.erase(it);
 		}
