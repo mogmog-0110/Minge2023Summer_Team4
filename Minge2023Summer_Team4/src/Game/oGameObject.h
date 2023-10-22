@@ -25,6 +25,9 @@ protected:
 	Vec2 vel;
 	Vec2 acc;
 
+	// 経験値
+	int expPoints;
+
 	Texture texture;
 
 	Vec2 velRepull = {0,0};
@@ -41,7 +44,7 @@ public:
 	GameObject(eObjectType type, int hp_, int damage_, String textureStr_,
 			   Figure hitbox_, Vec2 pos_, Vec2 vel_, Vec2 acc_ = { 0,0 })
 		: objType(type), hp(hp_), damage(damage_), textureStr(textureStr_),
-		hitbox(hitbox_), pos(pos_), vel(vel_), acc(acc_) {}
+		hitbox(hitbox_), pos(pos_), vel(vel_), acc(acc_){}
 
 	~GameObject();
 
@@ -65,10 +68,12 @@ public:
 	Figure getHitbox();
 	eObjectType getObjType() const;
 	int getHp() const;
+	int getExp() const;
 
 	//セッター関数
 	void setSpeed(double);
 	void setPos(Vec2);
 	void setTexture(String);
+	void setExp(int);
 };
 

@@ -4,7 +4,7 @@
 Player* Player::instance = nullptr;
 
 Player::Player(int hp_, int damage_, String textureStr, Figure hitbox_, Vec2 pos_, double speed_)
-	:speed(speed_), GameObject(eObjectType::ePlayer, hp_, damage_,textureStr,hitbox_, pos_, { 0,0 }, { 0,0 })
+	:speed(speed_), GameObject(eObjectType::ePlayer, hp_, damage_,textureStr,hitbox_, pos_, { 0,0 }, { 0,0 }), expPoints(0), level(1), nextLevelExp(100)
 {
 	setupAnimations();
 	changeCoolTime(1s);
@@ -72,6 +72,7 @@ void Player::move() {
 
 	if (normalizedMoveDir.length() > 0)
 	{
+		Logger << speed;
 		pos += normalizedMoveDir * speed * deltaTime;
 		setPos(pos);
 		isMoving = true;
@@ -242,3 +243,121 @@ void Player::updateDirectionToMouse() {
 		currentDirection = U"up";
 	}
 }
+
+void Player::onItemPickUp(Item* item)
+{
+	// アイテムを取得した際の処理
+	applyItemEffect(item);
+
+	// アイテムを非アクティブに設定
+	item->setActive(false);
+}
+
+void Player::gainExp(int points)
+{
+	int expPoints = getExp();
+	expPoints += points;
+	setExp(expPoints);
+	checkLevelUp();
+
+	// 経験値を増加させた後の処理（レベルアップ処理等）をここに記述
+}
+
+// レベルアップの確認を行うメソッド
+void Player::checkLevelUp()
+{
+	while (getExp() >= nextLevelExp) {
+		expPoints -= nextLevelExp;
+		level++;
+		levelUp();
+	}
+}
+
+// レベルアップ時の処理を行うメソッド
+void Player::levelUp()
+{
+	nextLevelExp += (level * 50); // 次のレベルに必要な経験値を増加させる
+
+	// その他レベルアップ時の処理
+	switch (level % 4) {
+	case 0:
+		hp += 10; // 体力を10増加
+		
+		break;
+	case 1:
+		damage += 5; // ダメージを5増加
+		
+		break;
+	case 2:
+		speed += 10; // スピードを1増加
+		
+		break;
+	case 3:
+		attractionRadius += 10; // アイテム収集範囲を10増加
+		
+		break;
+	}
+
+	// その他レベルアップ時の処理
+}
+
+void Player::applyItemEffect(Item* item) {
+	if (item->getItemType() == ItemType::ExpPoint)
+	{
+		// アイテムが経験値を持っている場合、プレイヤーの経験値を増加させる
+		int expPoints = item->getExp();  // アイテムから経験値の量を取得
+		gainExp(expPoints);
+	}
+	// 他のアイテムタイプに応じた処理もここに追加
+}
+
+void Player::attractItems(Array<Item*>& items)
+{
+	for (Item* item : items) {
+		if (item->getItemType() == ItemType::ExpPoint) {
+			Vec2 direction = item->getPos() - pos; // アイテムへの方向ベクトル
+			double distance = direction.length();
+
+			if (distance < attractionRadius) {
+				// 吸い寄せの計算
+				Vec2 attraction = direction.normalized() * attractionSpeed; // attractionSpeedは吸い寄せる速度
+				item->setPos(item->getPos() - attraction);
+			}
+		}
+	}
+}
+
+//ゲット関数
+
+double Player::getAttractionRadius() const
+{
+	return this->attractionRadius;
+}
+
+double Player::getAttractionSpeed() const
+{
+	return this->attractionSpeed;
+}
+
+int Player::getLevel() const
+{
+	return this->level;
+}
+
+int Player::getNextlevelExp() const
+{
+	return this->nextLevelExp;
+}
+
+// セット関数
+
+void Player::setAttractionRadius(double radius)
+{
+	this->attractionRadius = radius;
+}
+
+void Player::setAttractionSpeed(double speed)
+{
+	this->attractionSpeed = speed;
+}
+

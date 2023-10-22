@@ -1,6 +1,7 @@
 ﻿#pragma once
 #include "oGameObject.h"
 #include "../Define.h"
+# include "oPlayer.h"
 
 
 class Bullet :
@@ -22,5 +23,7 @@ public:
 	void move() override;
 
 	bool isDead(Vec2 playerPos_);
+
+	void linkPlayerDamage();
 };
 

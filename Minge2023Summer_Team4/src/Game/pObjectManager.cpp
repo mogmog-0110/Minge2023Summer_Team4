@@ -3,7 +3,8 @@
 
 ObjectManager::ObjectManager()
 {
-	Player::create(100, 30, U"", Circle(30), Vec2(0, 0), 300);
+	// 初期ステータスの決定
+	Player::create(50, 10, U"", Circle(30), Vec2(0, 0), 300);
 	myPlayer = Player::getInstance();
 	//createEnemy();
 }
@@ -17,6 +18,7 @@ void ObjectManager::update()
 {
 	collision();
 	myPlayer->update();
+	
 	createDebris();
 	updateObjList(myDebrises);
 	updateObjList(myPlayerBullets);
@@ -30,6 +32,19 @@ void ObjectManager::update()
 		createPlayerBullet(myPlayer->getPos() + elementVector.setLength(50), elementVector.setLength(1000), { 1,1 });
 		DebugBulletTimer.restart();
 	}
+
+	// プレイヤーとアイテムの衝突をチェック
+	for (auto& item : myItems) {
+		if (myPlayer->getHitbox().intersects(item->getHitbox())) {
+			myPlayer->onItemPickUp(item);
+		}
+	}
+
+	myPlayer->attractItems(myItems);
+
+	// 不要になったアイテムをクリーンアップ
+	cleanUp(myItems);
+
 }
 
 
@@ -122,13 +137,13 @@ void ObjectManager::createDebris()
 
 void ObjectManager::createPlayerBullet(Vec2 pos_, Vec2 vel_, Vec2 acc_)
 {
-	GameObject* newPlayerBullet = ObjectAppearanceManager::createNewObject(ePlayerBullet, 1, 100, U"", Circle{ 10 }, pos_, vel_, acc_);
+	GameObject* newPlayerBullet = ObjectAppearanceManager::createNewObject(ePlayerBullet, 1, 10 + myPlayer->getDamage(), U"", Circle{10}, pos_, vel_, acc_);
 	if (newPlayerBullet) {
 		myPlayerBullets << static_cast<Bullet*>(newPlayerBullet);
 	}
 }
 
-void ObjectManager::createItem(Vec2 pos)
+void ObjectManager::createItem(Vec2 pos, int expPoints)
 {
 	int randomNum = Random(50);
 
@@ -145,7 +160,9 @@ void ObjectManager::createItem(Vec2 pos)
 			if (tempItem) {
 				Item* newItem = static_cast<Item*>(tempItem);
 				newItem->setItemType(ItemType::NormalMagic);
+				newItem->setActive(true);
 				myItems << newItem;
+
 			}
 		}
 		break;
@@ -156,6 +173,7 @@ void ObjectManager::createItem(Vec2 pos)
 			if (tempItem) {
 				Item* newItem = static_cast<Item*>(tempItem);
 				newItem->setItemType(ItemType::SpecialMagicA);
+				newItem->setActive(true);
 				myItems << newItem;
 			}
 		}
@@ -167,6 +185,7 @@ void ObjectManager::createItem(Vec2 pos)
 			if (tempItem) {
 				Item* newItem = static_cast<Item*>(tempItem);
 				newItem->setItemType(ItemType::SpecialMagicB);
+				newItem->setActive(true);
 				myItems << newItem;
 			}
 		}
@@ -178,6 +197,7 @@ void ObjectManager::createItem(Vec2 pos)
 			if (tempItem) {
 				Item* newItem = static_cast<Item*>(tempItem);
 				newItem->setItemType(ItemType::SpecialMagicC);
+				newItem->setActive(true);
 				myItems << newItem;
 			}
 		}
@@ -189,6 +209,7 @@ void ObjectManager::createItem(Vec2 pos)
 			if (tempItem) {
 				Item* newItem = static_cast<Item*>(tempItem);
 				newItem->setItemType(ItemType::SpecialMagicD);
+				newItem->setActive(true);
 				myItems << newItem;
 			}
 		}
@@ -200,7 +221,9 @@ void ObjectManager::createItem(Vec2 pos)
 		GameObject* tempItem = ObjectAppearanceManager::createNewObject(eItem, 1, 0, U"ExpPoint", Circle{ 5 }, pos, { 0, 0 }, { 0, 0 });
 		if (tempItem) {
 			Item* newItem = static_cast<Item*>(tempItem);
-			newItem->setItemType(ItemType::NormalMagic);
+			newItem->setItemType(ItemType::ExpPoint);
+			newItem->setExp(expPoints);
+			newItem->setActive(true);
 			myItems << newItem;
 		}
 	}
@@ -272,5 +295,18 @@ Figure ObjectManager::parseFigure(const String& str)
 void ObjectManager::stopEnemies() {
 	for (auto& enemy : myEnemies) {
 		enemy->setSpeed(0);  
+	}
+}
+
+// アイテム用のcleanUP
+void ObjectManager::cleanUp(Array<Item*>& items) {
+	for (auto it = items.begin(); it != items.end();) {
+		if (!(*it)->getIsActive()) {
+			delete* it;
+			it = items.erase(it);
+		}
+		else {
+			++it;
+		}
 	}
 }

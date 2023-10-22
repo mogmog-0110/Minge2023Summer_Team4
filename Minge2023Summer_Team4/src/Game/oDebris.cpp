@@ -4,3 +4,30 @@ Debris::~Debris()
 {
 }
 
+void Debris::calcAndSetExp()
+{
+	int expPoints;
+	int strength = hp + damage;
+
+	// 基本経験値に強さの一定割合を加える
+	expPoints = 10 + static_cast<int>(strength * 0.5);
+
+	// 強さが特定の閾値を超えた場合、ボーナス経験値を追加
+	if (strength > 20) {
+		expPoints += 5;
+	}
+	if (strength > 40) {
+		expPoints += 5;
+	}
+	if (strength > 60) {
+		expPoints += 5;
+	}
+	if (strength > 80) {
+		expPoints += 5;
+	}
+	if (strength > 100) {
+		expPoints += 5;
+	}
+
+	setExp(expPoints);
+}

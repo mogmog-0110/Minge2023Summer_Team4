@@ -16,11 +16,15 @@ public:
 		  Figure hitbox_, Vec2 pos_, Vec2 vel_, Vec2 acc_ = { 0,0 })
 		: GameObject(eEnemy, hp_, damage_, textureStr_, hitbox_, pos_, vel_, acc_)
 	{
+		calcAndSetExp();
 		changeCoolTime(0.1s);
 	};
 
 	~Enemy();
 
 	void move() override;
+
+	void calcAndSetExp();
+	int getStrength() const;
 };
 
