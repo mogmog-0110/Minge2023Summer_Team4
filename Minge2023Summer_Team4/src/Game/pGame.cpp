@@ -121,7 +121,7 @@ void Game::draw() const
 
 	if (!debugTimer.isRunning())
 	{
-		effect.add<ScoreEffect>(Cursor::Pos(), topLeft, accumulatedTime);
+		effect.add<ScoreEffect>(myPlayer->getPos(), topLeft, accumulatedTime);
 		debugTimer.restart();
 	}
 
