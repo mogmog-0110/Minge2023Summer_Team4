@@ -48,6 +48,7 @@ private:
 	// waveが読み込まれたどうか
 	bool waveLoaded = false;
 
+	Effect effect;
 
 public:
 	Game(const InitData& init);

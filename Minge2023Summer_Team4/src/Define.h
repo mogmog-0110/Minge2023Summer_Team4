@@ -64,3 +64,29 @@ enum class ItemType {
 	SpecialMagicC,
 	SpecialMagicD,
 };
+
+
+struct ScoreEffect : IEffect
+{
+	Vec2 m_pos;
+	const Vec2& m_offset;
+
+	int32 m_score;
+
+	Font font{ FontMethod::MSDF, 48, Typeface::Heavy };
+
+
+	ScoreEffect(const Vec2& pos, const Vec2& offset, int32 score)
+		: m_pos{ pos }
+		, m_score{ score }
+		, m_offset{offset} {}
+
+	bool update(double t) override
+	{
+		const HSV color{ (90 - m_score * 1.8), 1.0 - (t * 2.0) };
+
+		font(m_score).drawAt(m_pos.movedBy(0, t * -120), color);
+
+		return (t < 0.5);
+	}
+};

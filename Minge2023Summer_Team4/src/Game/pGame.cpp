@@ -75,6 +75,9 @@ void Game::update()
 		scrollUpdate();
 		objectManager.update();
 		debug();
+
+
+		
 		break;
 
 	case GameState::Pausing:
@@ -105,6 +108,7 @@ void Game::update()
 
 void Game::draw() const
 {
+	static Timer debugTimer{ 1s,StartImmediately::Yes };
 
 	//従来のマウスカーソルを非表示に
 	Cursor::RequestStyle(CursorStyle::Hidden);
@@ -114,6 +118,14 @@ void Game::draw() const
 	objectManager.draw(topLeft);
 
 	miniMapDraw();
+
+	if (!debugTimer.isRunning())
+	{
+		effect.add<ScoreEffect>(Cursor::Pos(), topLeft, accumulatedTime);
+		debugTimer.restart();
+	}
+
+	effect.update();
 
 	//仮フレーム
 	//textureFrame.draw();
