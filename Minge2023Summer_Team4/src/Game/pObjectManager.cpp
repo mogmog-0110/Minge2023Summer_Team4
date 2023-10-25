@@ -6,6 +6,7 @@ ObjectManager::ObjectManager()
 	// 初期ステータスの決定
 	Player::create(50, 10, U"", Circle(30), Vec2(0, 0), 300);
 	myPlayer = Player::getInstance();
+	myEffectManager = EffectManager::getInstance();
 	//createEnemy();
 }
 
