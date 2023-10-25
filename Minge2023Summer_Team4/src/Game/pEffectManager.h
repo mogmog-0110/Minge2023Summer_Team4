@@ -11,6 +11,9 @@ private:
 	EffectManager(const EffectManager&) = delete;
 	EffectManager& operator=(const EffectManager&) = delete;
 
+
+	Array<TextureRegion> splitImage(const Texture& texture, int cellWidth, int cellHeight);
+
 	// 唯一のインスタンスを格納する静的メンバー変数
 	static EffectManager* instance;
 
@@ -37,7 +40,7 @@ public:
 	const void draw();
 };
 
-
+//テスト用のダメージスコアエフェクト
 struct damageScoreEffect : IEffect
 {
 	Vec2 m_pos;
