@@ -310,6 +310,7 @@
     <Xml Include="App\example\xml\test.xml" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="EffectManager.h" />
     <ClInclude Include="src\Define.h" />
     <ClInclude Include="src\Figure.h" />
     <ClInclude Include="src\Game\oBullet.h" />
@@ -411,6 +412,7 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="EffectManager.cpp" />
     <ClCompile Include="src\Game\oBullet.cpp" />
     <ClCompile Include="src\Game\oDebris.cpp" />
     <ClCompile Include="src\Game\oEnemy.cpp" />
