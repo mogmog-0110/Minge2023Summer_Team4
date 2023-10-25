@@ -15,6 +15,9 @@ Game::Game(const InitData& init)
 
 	topLeft = objectManager.myPlayer->getPos() - Scene::Center();
 
+	EffectManager::create(topLeft);
+	myEffectManager = EffectManager::getInstance();
+
 	// 敵データの読み込み
 	objectManager.enemyDatas = objectManager.loadEnemyData(U"../src/Game/csvFile/enemyTest.csv");
 }

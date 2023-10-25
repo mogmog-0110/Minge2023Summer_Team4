@@ -1,10 +1,11 @@
-﻿#include "stdafx.h"
-#include "pEffectManager.h"
+﻿#include "pEffectManager.h"
 
 EffectManager* EffectManager::instance = nullptr;
 
-EffectManager::EffectManager()
+EffectManager::EffectManager(const Vec2& offset_)
+	:offset(offset_)
 {
+	
 }
 
 EffectManager::~EffectManager()
@@ -16,11 +17,11 @@ EffectManager* EffectManager::getInstance()
 	return instance;
 }
 
-void EffectManager::create()
+void EffectManager::create(const Vec2& offset_)
 {
 	if (instance == nullptr)
 	{
-		instance = new EffectManager();
+		instance = new EffectManager(offset_);
 	}
 }
 
