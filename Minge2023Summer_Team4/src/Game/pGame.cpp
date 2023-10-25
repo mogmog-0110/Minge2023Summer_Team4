@@ -115,6 +115,7 @@ void Game::draw() const
 	//TextureAsset(U"Frame").draw();
 	cursor.draw();
 	objectManager.draw(topLeft);
+	myEffectManager->draw();
 
 	miniMapDraw();
 
@@ -141,6 +142,9 @@ void Game::debug()
 	Print << Player::getInstance()->getHp();
 	Print << Player::getInstance()->getDamage();
 	Print << Player::getInstance()->getSpeed();
+
+
+	if (KeySpace.down()) myEffectManager->create_damageScoreEffect(myPlayer->getPos(), 10);
 }
 
 //====================================================

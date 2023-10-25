@@ -56,8 +56,8 @@ struct damageScoreEffect : IEffect
 	bool update(double t) override
 	{
 		
-		font(m_score).drawAt((m_pos - m_offset).movedBy(0, t * -20), Palette::Red);
+		font(m_score).drawAt((m_pos - m_offset).movedBy(0, t * -75), Palette::Orange);
 
-		return (t < 0.5);
+		return (t < 0.3);
 	}
 };
