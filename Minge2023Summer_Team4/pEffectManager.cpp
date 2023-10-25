@@ -29,3 +29,11 @@ void EffectManager::destroy()
 	delete instance;
 	instance = nullptr;
 }
+
+
+
+
+
+const void EffectManager::draw() {
+	myEffect.update();
+}

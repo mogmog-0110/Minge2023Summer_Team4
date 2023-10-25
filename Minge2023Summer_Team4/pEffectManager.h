@@ -14,6 +14,9 @@ private:
 	// 唯一のインスタンスを格納する静的メンバー変数
 	static EffectManager* instance;
 
+
+	Effect myEffect;
+
 public:
 
 	// 唯一のインスタンスを取得するための静的メソッド
@@ -26,5 +29,5 @@ public:
 	static void destroy();
 
 
-	void update();
+	const void draw();
 };
