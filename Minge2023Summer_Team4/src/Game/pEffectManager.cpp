@@ -32,6 +32,10 @@ void EffectManager::destroy()
 }
 
 
+void EffectManager::create_damageScoreEffect(Vec2 pos, int32 score) {
+
+	myEffect.add<damageScoreEffect>(pos, offset, score);
+}
 
 
 

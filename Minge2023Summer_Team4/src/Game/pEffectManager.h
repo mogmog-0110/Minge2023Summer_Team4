@@ -30,12 +30,15 @@ public:
 	// デストラクタ
 	static void destroy();
 
+	// エフェクト作成
+	void create_damageScoreEffect(Vec2 pos, int32 score);
 
+	// 描画
 	const void draw();
 };
 
 
-struct ScoreEffect : IEffect
+struct damageScoreEffect : IEffect
 {
 	Vec2 m_pos;
 	const Vec2& m_offset;
@@ -45,16 +48,15 @@ struct ScoreEffect : IEffect
 	Font font{ FontMethod::MSDF, 20, Typeface::Bold };
 
 
-	ScoreEffect(const Vec2& pos, const Vec2& offset, int32 score)
+	damageScoreEffect(const Vec2& pos, const Vec2& offset, int32 score)
 		: m_pos{ pos }
 		, m_score{ score }
 		, m_offset{ offset } {}
 
 	bool update(double t) override
 	{
-		const HSV color{ (90 - m_score * 1.8), 1.0 - (t * 0.5) };
-
-		font(m_score).drawAt((m_pos - m_offset).movedBy(0, t * -50), color);
+		
+		font(m_score).drawAt((m_pos - m_offset).movedBy(0, t * -20), Palette::Red);
 
 		return (t < 0.5);
 	}
