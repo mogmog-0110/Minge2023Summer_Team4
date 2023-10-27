@@ -4,6 +4,12 @@ Bullet::~Bullet()
 {
 }
 
+void Bullet::update()
+{
+	move();
+
+}
+
 void Bullet::move()
 {
 	pos += vel * Scene::DeltaTime();
@@ -19,3 +25,24 @@ bool Bullet::isDead(Vec2 playerPos_) {
 	if (abs(scPos.y) > Scene::Height() / 2) return true;
 	return false;
 }
+
+// getter
+
+BulletType Bullet::getBulletType()
+{
+	return this->bulletType;
+}
+
+// setter
+
+void Bullet::setBulletType(BulletType bulletType)
+{
+	this->bulletType = bulletType;
+}
+
+void Bullet::setLevel(int)
+{
+	this->level = level;
+}
+
+

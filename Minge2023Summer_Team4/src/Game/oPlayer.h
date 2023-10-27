@@ -53,6 +53,13 @@ private:
 	int level;
 	int nextLevelExp;
 
+	// 各通常弾、特殊弾のレベル
+	int levelNormal = 1;
+	int levelSpecialA = 0;
+	int levelSpecialB = 0;
+	int levelSpecialC = 0;
+	int levelSpecialD = 0;
+
 	double attractionRadius = 100;
 	double attractionSpeed = 10;
 
@@ -101,10 +108,14 @@ public:
 
 	void attractItems(Array<Item*>& items);
 
+	// 取得した特殊弾
+	Array<ItemType>availableBullet;
+
 	//getter
 	double getAttractionRadius() const;
 	double getAttractionSpeed() const;
 	int getLevel() const;
+	int getBulletLevel(BulletType) const;
 	int getNextlevelExp() const;
 
 	//setter

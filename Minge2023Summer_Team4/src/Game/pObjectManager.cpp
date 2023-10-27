@@ -7,6 +7,8 @@ ObjectManager::ObjectManager()
 	Player::create(50, 10, U"", Circle(30), Vec2(0, 0), 300);
 	myPlayer = Player::getInstance();
 	//createEnemy();
+	currentState = BulletType::None;
+	currentIndex = 0;
 }
 
 ObjectManager::~ObjectManager()
@@ -26,10 +28,21 @@ void ObjectManager::update()
 	updateObjList(myEnemies);
 	updateObjList(myItems);
 
-	if (!DebugBulletTimer.isRunning() && MouseL.pressed())
+	switchSpecialBullet();
+
+	// 通常弾の発射
+	if (!DebugBulletTimer.isRunning() && (MouseL.pressed() || KeyV.pressed()))
 	{
 		Vec2 elementVector = (Cursor::PosF() - Scene::CenterF()).setLength(1);
 		createPlayerBullet(myPlayer->getPos() + elementVector.setLength(50), elementVector.setLength(1000), { 1,1 });
+		DebugBulletTimer.restart();
+	}
+
+	// 特殊弾の発射
+	if (!DebugBulletTimer.isRunning() && (MouseR.pressed() || KeyB.pressed()))
+	{
+		Vec2 elementVector = (Cursor::PosF() - Scene::CenterF()).setLength(1);
+		createSpecialBullet(myPlayer->getPos() + elementVector.setLength(50), elementVector.setLength(1000), { 1,1 });
 		DebugBulletTimer.restart();
 	}
 
@@ -137,15 +150,73 @@ void ObjectManager::createDebris()
 
 void ObjectManager::createPlayerBullet(Vec2 pos_, Vec2 vel_, Vec2 acc_)
 {
-	GameObject* newPlayerBullet = ObjectAppearanceManager::createNewObject(ePlayerBullet, 1, 10 + myPlayer->getDamage(), U"", Circle{10}, pos_, vel_, acc_);
-	if (newPlayerBullet) {
-		myPlayerBullets << static_cast<Bullet*>(newPlayerBullet);
+	GameObject* newBullet = ObjectAppearanceManager::createNewObject(ePlayerBullet, 1, 10 + myPlayer->getDamage(), U"", Circle{10}, pos_, vel_, acc_);
+	if (newBullet) {
+		Bullet* newPlayerBullet = static_cast<Bullet*>(newBullet);
+		newPlayerBullet->setBulletType(BulletType::Normal);
+		newPlayerBullet->setLevel(Player::getInstance()->getBulletLevel(BulletType::Normal));
+		myPlayerBullets << newPlayerBullet;
+	}
+}
+
+void ObjectManager::createSpecialBullet(Vec2 pos, Vec2 vel, Vec2  acc)
+{
+	switch (currentState) 
+	{
+	case BulletType::SpecialA:
+	{
+		GameObject* tempBullet = ObjectAppearanceManager::createNewObject(ePlayerBullet, 1, 0, U"SpecialA", Circle{ 20 }, pos, vel, acc);
+		if (tempBullet) {
+			Bullet* newBullet = static_cast<Bullet*>(tempBullet);
+			newBullet->setBulletType(BulletType::SpecialA);
+			newBullet->setLevel(Player::getInstance()->getBulletLevel(BulletType::SpecialA));
+			myPlayerBullets << newBullet;
+		}
+	}
+		break;
+	case BulletType::SpecialB:
+	{
+		GameObject* tempBullet = ObjectAppearanceManager::createNewObject(ePlayerBullet, 1, 0, U"SpecialB", Circle{ 20 }, pos, vel, acc);
+		if (tempBullet) {
+			Bullet* newBullet = static_cast<Bullet*>(tempBullet);
+			newBullet->setBulletType(BulletType::SpecialB);
+			newBullet->setLevel(Player::getInstance()->getBulletLevel(BulletType::SpecialB));
+			myPlayerBullets << newBullet;
+		}
+	}
+		break;
+	case BulletType::SpecialC:
+	{
+		GameObject* tempBullet = ObjectAppearanceManager::createNewObject(ePlayerBullet, 1, 0, U"SpecialC", Circle{ 20 }, pos, vel, acc);
+		if (tempBullet) {
+			Bullet* newBullet = static_cast<Bullet*>(tempBullet);
+			newBullet->setBulletType(BulletType::SpecialC);
+			newBullet->setLevel(Player::getInstance()->getBulletLevel(BulletType::SpecialC));
+			myPlayerBullets << newBullet;
+		}
+	}
+		break;
+	case BulletType::SpecialD:
+	{
+		GameObject* tempBullet = ObjectAppearanceManager::createNewObject(ePlayerBullet, 1, 0, U"SpecialD", Circle{ 20 }, pos, vel, acc);
+		if (tempBullet) {
+			Bullet* newBullet = static_cast<Bullet*>(tempBullet);
+			newBullet->setBulletType(BulletType::SpecialD);
+			newBullet->setLevel(Player::getInstance()->getBulletLevel(BulletType::SpecialD));
+			myPlayerBullets << newBullet;
+		}
+	}
+		break;
+	case BulletType::None:
+	{
+	}
+		break;
 	}
 }
 
 void ObjectManager::createItem(Vec2 pos, int expPoints)
 {
-	int randomNum = Random(50);
+	int randomNum = Random(3);
 
 	// 50分の1の抽選で特殊弾のドロップ
 	if (randomNum == 1)
@@ -295,6 +366,38 @@ Figure ObjectManager::parseFigure(const String& str)
 void ObjectManager::stopEnemies() {
 	for (auto& enemy : myEnemies) {
 		enemy->setSpeed(0);  
+	}
+}
+
+void ObjectManager::switchSpecialBullet() {
+	if (KeySpace.down())
+	{
+		if (Player::getInstance()->availableBullet.isEmpty()) {
+			currentState = BulletType::None;
+			currentIndex = -1;
+		}
+		else
+		{
+			currentIndex = (currentIndex + 1) % Player::getInstance()->availableBullet.size();
+			currentState = fromItemType(Player::getInstance()->availableBullet[currentIndex]);
+		}
+	}
+}
+
+BulletType ObjectManager::fromItemType(ItemType itemType)
+{
+	switch (itemType)
+	{
+	case ItemType::SpecialMagicA:
+		return BulletType::SpecialA;
+	case ItemType::SpecialMagicB:
+		return BulletType::SpecialB;
+	case ItemType::SpecialMagicC:
+		return BulletType::SpecialC;
+	case ItemType::SpecialMagicD:
+		return BulletType::SpecialD;
+	default:
+		return BulletType::None;
 	}
 }
 

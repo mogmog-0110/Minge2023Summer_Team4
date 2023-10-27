@@ -137,7 +137,21 @@ void Game::debug()
 	Print << U"プレイヤーのステータス";
 	Print << Player::getInstance()->getHp();
 	Print << Player::getInstance()->getDamage();
-	Print << Player::getInstance()->getSpeed();
+
+	Print << U"特殊弾";
+	switch (objectManager.currentState)
+	{
+	case BulletType::SpecialA:
+		Print << U"SpecialA";
+	case BulletType::SpecialB:
+		Print << U"SpecialB";
+	case BulletType::SpecialC:
+		Print << U"SpecialC";
+	case BulletType::SpecialD:
+		Print << U"SpecialD";
+	case BulletType::None:
+		Print << U"未取得";
+	}
 }
 
 //====================================================
