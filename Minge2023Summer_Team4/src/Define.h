@@ -64,3 +64,13 @@ enum class ItemType {
 	SpecialMagicC,
 	SpecialMagicD,
 };
+
+// バレットの種類とステイトを表す
+enum class BulletType {
+	Normal,
+	SpecialA,
+	SpecialB,
+	SpecialC,
+	SpecialD,
+	None, // 特殊弾を取得していない
+};
