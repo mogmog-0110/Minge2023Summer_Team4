@@ -4,7 +4,7 @@
 ObjectManager::ObjectManager()
 {
 	// 初期ステータスの決定
-	Player::create(50, 10, U"", Circle(30), Vec2(0, 0), 300);
+	Player::create(100000, 1000, U"", Circle(30), Vec2(Scene::Center().x, Scene::Center().y), 300);
 	myPlayer = Player::getInstance();
 	//createEnemy();
 	currentState = BulletType::None;

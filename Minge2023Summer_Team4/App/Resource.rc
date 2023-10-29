@@ -126,7 +126,8 @@ Resource(Image/title.png)
 //Gameシーン
 Resource(Image/Cursor.png)
 Resource(Image/frame.png)
-Resource(IMage/Player.png)
+Resource(Image/Player.png)
+Resource(Image/Background.png)
 
 /* examples 
 
