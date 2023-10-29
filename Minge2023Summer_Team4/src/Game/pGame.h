@@ -68,4 +68,5 @@ public:
 	void setUpBackground();
 	void updateBackground();
 	void generateBackgroundChunk(Point);
+	bool isWasteland(int x, int y);
 };

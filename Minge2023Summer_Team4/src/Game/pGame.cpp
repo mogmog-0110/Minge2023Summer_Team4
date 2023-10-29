@@ -353,17 +353,37 @@ void Game::updateBackground()
 	}
 }
 
+// Perlinノイズ用の変数
+PerlinNoise perlinNoise;
+
 
 void Game::generateBackgroundChunk(Point chunkPos) {
 	BackgroundChunk chunk;
 
+	// PerlinNoise オブジェクトのインスタンス化
+	PerlinNoise perlinNoise;
+
 	for (int y = 0; y < CHUNK_SIZE; ++y) {
 		for (int x = 0; x < CHUNK_SIZE; ++x) {
-			int tileIndex = Random(0, 8); // 0～8番目のテクスチャをランダムに選択
 			BackgroundTile& tile = chunk.getTile(x, y);
-			tile.textureIndex = tileIndex;
 			tile.pos = Vec2(chunkPos.x * CHUNK_SIZE * TILE_SIZE + x * TILE_SIZE,
 							chunkPos.y * CHUNK_SIZE * TILE_SIZE + y * TILE_SIZE);
+
+			// Perlin ノイズを使用して荒れ地を生成するかどうかを決定
+			double offsetX = Random(7.0f);  // X軸方向のランダムなオフセット
+			double offsetY = Random(7.0f);  // Y軸方向のランダムなオフセット
+			double scale = 0.5f;  // スケールを調整（小さくすると大きなかたまりが生成される）
+			double persistence = 0.3f;  // パーシスタンスを調整（小さい値で細かいテクスチャ）
+			double threshold = Random(10.0f);  // 閾値を設定（大きい値で荒れ地がまばらになる）
+
+			double noiseValue = perlinNoise.octave2D0_1((x + offsetX) * scale, (y + offsetY) * scale, 3, persistence);
+
+			if (noiseValue > threshold) {
+				tile.textureIndex = Random(9, 11);  // 9～11番目のテクスチャをランダムに選択
+			}
+			else {
+				tile.textureIndex = Random(0, 8);  // 0～8番目のテクスチャをランダムに選択
+			}
 		}
 	}
 
