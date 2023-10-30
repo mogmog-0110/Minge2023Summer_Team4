@@ -22,9 +22,6 @@ private:
 	// プレイヤーの画像を読み込む
 	Texture playerImage = TextureAsset(U"playerImage");
 
-	// 画像の保存倍率
-	static constexpr double EXPORT_SCALE = 4.0;  // 400% => 4.0倍
-
 	// 各方向のアニメーションフレームを格納するHashTable
 	HashTable<String, Array<TextureRegion>> playerAnimations;
 
@@ -87,8 +84,6 @@ public:
 	void draw(Vec2 offset, bool isHitboxDraw) const override;
 
 	void setupAnimations();
-
-	Array<TextureRegion> splitImage(const Texture& texture, int cellWidth, int cellHeight);
 
 	bool isDead();
 	void playDeathAnimation();

@@ -30,6 +30,7 @@ void Main()
 	TextureAsset::Register(U"Cursor", Resource(U"Image/Cursor.png"));
 	TextureAsset::Register(U"Frame", Resource(U"Image/frame.png"));
 	TextureAsset::Register(U"playerImage", Resource(U"Image/Player.png"));
+	TextureAsset::Register(U"Background", Resource(U"Image/Background.png"));
 
 	while (System::Update())
 	{

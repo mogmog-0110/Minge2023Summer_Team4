@@ -147,22 +147,6 @@ void Player::setupAnimations()
 	playerAnimations[U"dead"] = { regions[16], regions[17], regions[18], regions[19] };
 }
 
-
-Array<TextureRegion> Player::splitImage(const Texture& texture, int cellWidth, int cellHeight)
-{
-	Array<TextureRegion> regions;
-
-	for (int y = 0; y < texture.height(); y += cellHeight)
-	{
-		for (int x = 0; x < texture.width(); x += cellWidth)
-		{
-			regions << texture(Rect(x, y, cellWidth, cellHeight));
-		}
-	}
-
-	return regions;
-}
-
 bool Player::isDead() {
 	if (hp <= 0) return true;
 	else return false;
