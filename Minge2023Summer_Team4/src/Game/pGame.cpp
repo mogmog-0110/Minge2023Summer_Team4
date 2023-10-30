@@ -13,10 +13,9 @@ Game::Game(const InitData& init)
 
 	Print << U"Push [Q] key";
 
-	topLeft = objectManager.myPlayer->getPos() - Scene::Center();
-
-	EffectManager::create(topLeft);
 	myEffectManager = EffectManager::getInstance();
+
+	topLeft = objectManager.myPlayer->getPos() - Scene::Center();
 
 	// 敵データの読み込み
 	objectManager.enemyDatas = objectManager.loadEnemyData(U"../src/Game/csvFile/enemyTest.csv");
@@ -115,7 +114,7 @@ void Game::draw() const
 	//TextureAsset(U"Frame").draw();
 	cursor.draw();
 	objectManager.draw(topLeft);
-	myEffectManager->draw();
+	myEffectManager->draw(topLeft);
 
 	miniMapDraw();
 

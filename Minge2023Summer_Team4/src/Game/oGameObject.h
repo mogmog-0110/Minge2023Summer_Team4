@@ -2,6 +2,7 @@
 #include "../Define.h"
 #include "../oSuperObject.h"
 #include "../Figure.h"
+#include "pEffectManager.h"
 
 
 class GameObject :
@@ -12,6 +13,8 @@ private:
 	Timer collisionalTimer;
 
 	const Font debugfont{ 15 };
+
+
 
 protected:
 
@@ -41,13 +44,17 @@ protected:
 	//アイテムが落ちるかどうかの設定。HPが0になる意外の特殊死亡ではfalseになる。なおアイテムがドロップしないオブジェクトタイプでは参照されない。
 	bool isItemDropable = true;
 
+	EffectManager* myEffectManager;
 
 public:
 
 	GameObject(eObjectType type, int hp_, int damage_, String textureStr_,
 			   Figure hitbox_, Vec2 pos_, Vec2 vel_, Vec2 acc_ = { 0,0 })
 		: objType(type), hp(hp_), damage(damage_), textureStr(textureStr_),
-		hitbox(hitbox_), pos(pos_), vel(vel_), acc(acc_){}
+		hitbox(hitbox_), pos(pos_), vel(vel_), acc(acc_)
+	{
+		myEffectManager = EffectManager::getInstance();
+	}
 
 	~GameObject();
 

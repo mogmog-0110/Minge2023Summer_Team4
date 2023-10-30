@@ -5,7 +5,7 @@
 class EffectManager
 {
 private:
-	EffectManager(const Vec2& offset);
+	EffectManager();
 	~EffectManager();
 
 	EffectManager(const EffectManager&) = delete;
@@ -19,8 +19,7 @@ private:
 
 
 	Effect myEffect;
-	const Vec2& offset;
-
+	Vec2 offset; //drawするときの間接変数渡し（参照型）
 
 public:
 
@@ -28,7 +27,7 @@ public:
 	static EffectManager* getInstance();
 
 	// 唯一のインスタンスを作成
-	static void create(const Vec2& offset);
+	static void create();
 
 	// デストラクタ
 	static void destroy();
@@ -37,7 +36,7 @@ public:
 	void create_damageScoreEffect(Vec2 pos, int32 score);
 
 	// 描画
-	const void draw();
+	const void draw(Vec2 offset);
 };
 
 //テスト用のダメージスコアエフェクト

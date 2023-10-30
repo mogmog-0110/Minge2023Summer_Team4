@@ -19,6 +19,7 @@ void Main()
 
 	manager.init(SceneList::Title);
 
+
 	// 画面サイズを変更
 	Window::Resize(1024, 768);
 
@@ -30,6 +31,8 @@ void Main()
 	TextureAsset::Register(U"Cursor", Resource(U"Image/Cursor.png"));
 	TextureAsset::Register(U"Frame", Resource(U"Image/frame.png"));
 	TextureAsset::Register(U"playerImage", Resource(U"Image/Player.png"));
+
+	EffectManager::create();
 
 	while (System::Update())
 	{

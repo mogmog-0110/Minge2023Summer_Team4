@@ -2,8 +2,7 @@
 
 EffectManager* EffectManager::instance = nullptr;
 
-EffectManager::EffectManager(const Vec2& offset_)
-	:offset(offset_)
+EffectManager::EffectManager()
 {
 	
 }
@@ -17,11 +16,11 @@ EffectManager* EffectManager::getInstance()
 	return instance;
 }
 
-void EffectManager::create(const Vec2& offset_)
+void EffectManager::create()
 {
 	if (instance == nullptr)
 	{
-		instance = new EffectManager(offset_);
+		instance = new EffectManager();
 	}
 }
 
@@ -39,7 +38,8 @@ void EffectManager::create_damageScoreEffect(Vec2 pos, int32 score) {
 
 
 
-const void EffectManager::draw() {
+const void EffectManager::draw(Vec2 offset_) {
+	offset = offset_;
 	myEffect.update();
 }
 
