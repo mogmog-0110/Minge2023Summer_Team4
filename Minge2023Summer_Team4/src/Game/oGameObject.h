@@ -53,6 +53,7 @@ public:
 		: objType(type), hp(hp_), damage(damage_), textureStr(textureStr_),
 		hitbox(hitbox_), pos(pos_), vel(vel_), acc(acc_)
 	{
+		hitbox.setCenter(pos);
 		myEffectManager = EffectManager::getInstance();
 	}
 
