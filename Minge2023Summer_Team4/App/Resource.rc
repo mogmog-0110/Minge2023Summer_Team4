@@ -120,13 +120,18 @@ Resource(engine/soundfont/GMGSx.sf2.zstdcmp)
 //
 //////////////////////////////////////////////////////
 
+//Font
+Resource(Font/Nosutaru-dot.ttf)
+
 //Titleシーン
 Resource(Image/title.png)
 
 //Gameシーン
 Resource(Image/Cursor.png)
 Resource(Image/frame.png)
-Resource(IMage/Player.png)
+Resource(Image/Player.png)
+
+
 
 /* examples 
 

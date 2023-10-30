@@ -32,6 +32,9 @@ void Main()
 	TextureAsset::Register(U"Frame", Resource(U"Image/frame.png"));
 	TextureAsset::Register(U"playerImage", Resource(U"Image/Player.png"));
 
+	//font
+	FontAsset::Register(U"dotFont1", 20, Resource(U"Font/Nosutaru-dot.ttf"));
+
 	EffectManager::create();
 
 	while (System::Update())

@@ -47,8 +47,7 @@ struct damageScoreEffect : IEffect
 
 	int32 m_score;
 
-	Font font{ FontMethod::MSDF, 20, Typeface::Bold };
-
+	
 
 	damageScoreEffect(const Vec2& pos, const Vec2& offset, int32 score)
 		: m_pos{ pos }
@@ -58,8 +57,8 @@ struct damageScoreEffect : IEffect
 	bool update(double t) override
 	{
 		
-		font(m_score).drawAt((m_pos - m_offset).movedBy(0, t * -75), Palette::Orange);
-
+		FontAsset(U"dotFont1")(m_score).drawAt((m_pos - m_offset).movedBy(0, t * -75), Palette::Orange);
+		
 		return (t < 0.3);
 	}
 };
