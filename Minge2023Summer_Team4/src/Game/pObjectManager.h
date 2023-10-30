@@ -17,8 +17,8 @@ class ObjectManager
 {
 private:
 	Timer DebugBulletTimer{ 0.1s, StartImmediately::Yes };
-	EffectManager* myEffectManager;
 
+	EffectManager* myEffectManager;
 
 	template<typename T, typename U>
 	void checkCollision(T* obj1, U* obj2);
@@ -40,6 +40,12 @@ private:
 
 public:
 
+	// 現在、どの特殊弾を選択しているかのState
+	BulletType currentState;
+
+	// どの特殊弾にアクセスしているか
+	int currentIndex;
+
 	// 各オブジェクトの配列
 	Array<Debris*> myDebrises;
 	Array<Bullet*> myPlayerBullets;
@@ -47,8 +53,7 @@ public:
 	Array<Enemy*> myEnemies;
 	Array<Item*> myItems;
 
-
-
+  
 	// 敵の名前をキーとした敵情報を格納したハッシュテーブル
 	HashTable<String, EnemyData> enemyDatas;
 
@@ -64,6 +69,7 @@ public:
 	void createDebris();
 	void createEnemy();
 	void createPlayerBullet(Vec2, Vec2, Vec2);
+	void createSpecialBullet(Vec2, Vec2, Vec2);
 	void createItem(Vec2, int);
 
 	HashTable<String, EnemyData> loadEnemyData(const String& filename);
@@ -72,7 +78,10 @@ public:
 	Enemy* createEnemyFromData(WaveData waveData);
 	static Figure parseFigure(const String&);
 	void stopEnemies();
+	void switchSpecialBullet();
+	BulletType fromItemType(ItemType);
 };
+
 
 // Collisionに関するテンプレート関数
 template<typename T, typename U>

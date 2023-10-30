@@ -64,3 +64,58 @@ enum class ItemType {
 	SpecialMagicC,
 	SpecialMagicD,
 };
+
+// バレットの種類とステイトを表す
+enum class BulletType {
+	Normal,
+	SpecialA,
+	SpecialB,
+	SpecialC,
+	SpecialD,
+	None, // 特殊弾を取得していない
+};
+
+// 背景タイルの情報を保持する構造体
+struct BackgroundTile
+{
+	Vec2 pos;  // タイルの位置
+	int textureIndex;  // 使用するテクスチャのインデックス
+};
+
+const int FIELD_WIDTH = 100000;
+const int FIELD_HEIGHT = 100000;
+
+
+// 画像の保存倍率
+static constexpr double EXPORT_SCALE = 4.0;  // 400% => 4.0倍
+
+const int TILE_SIZE = 16 * EXPORT_SCALE; // タイルサイズ（ピクセル）
+
+const int CHUNK_SIZE = 16; // チャンクサイズ（タイルの数）
+
+
+struct BackgroundChunk {
+	Array<BackgroundTile> tiles;  // このチャンクに含まれるタイルのリスト
+	BackgroundChunk() {
+		tiles.resize(CHUNK_SIZE * CHUNK_SIZE);
+	}
+
+	// (x, y)位置のタイルへの参照を返す関数
+	BackgroundTile& getTile(int x, int y) {
+		int index = y * CHUNK_SIZE + x;
+		return tiles[index];
+	}
+
+	// (x, y)位置のタイルを描画する関数
+	void draw(const Array<TextureRegion>& tileTextures, const Vec2& offset) const {
+		for (const auto& tile : tiles) {
+			if (0 <= tile.textureIndex && tile.textureIndex < tileTextures.size()) {
+				tileTextures[tile.textureIndex].draw(tile.pos - offset);
+			}
+		}
+	}
+};
+
+// グローバル関数（邪法）
+
+Array<TextureRegion> splitImage(const Texture& texture, int cellWidth, int cellHeight);

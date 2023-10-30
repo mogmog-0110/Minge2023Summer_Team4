@@ -31,6 +31,7 @@ void Main()
 	TextureAsset::Register(U"Cursor", Resource(U"Image/Cursor.png"));
 	TextureAsset::Register(U"Frame", Resource(U"Image/frame.png"));
 	TextureAsset::Register(U"playerImage", Resource(U"Image/Player.png"));
+	TextureAsset::Register(U"Background", Resource(U"Image/Background.png"));
 
 	//font
 	FontAsset::Register(U"dotFont1", 20, Resource(U"Font/Nosutaru-dot.ttf"));

@@ -15,10 +15,14 @@ Game::Game(const InitData& init)
 
 	myEffectManager = EffectManager::getInstance();
 
-	topLeft = objectManager.myPlayer->getPos() - Scene::Center();
+	// カメラの初期位置を設定
+	cameraPos = Vec2(0, 0);
+	topLeft = Vec2(0, 0);
+  topLeft = objectManager.myPlayer->getPos() - Scene::Center();
 
 	// 敵データの読み込み
 	objectManager.enemyDatas = objectManager.loadEnemyData(U"../src/Game/csvFile/enemyTest.csv");
+	setUpBackground();
 }
 
 
@@ -76,6 +80,8 @@ void Game::update()
 
 		scrollUpdate();
 		objectManager.update();
+		updateBackground();
+		
 		debug();
 		break;
 
@@ -107,18 +113,16 @@ void Game::update()
 
 void Game::draw() const
 {
-
 	//従来のマウスカーソルを非表示に
 	Cursor::RequestStyle(CursorStyle::Hidden);
 
 	//TextureAsset(U"Frame").draw();
-	cursor.draw();
+	
 	objectManager.draw(topLeft);
 	myEffectManager->draw(topLeft);
 
 	miniMapDraw();
-
-	//仮フレーム
+	cursor.draw();
 	//textureFrame.draw();
 
 }
@@ -127,12 +131,6 @@ void Game::debug()
 {
 	ClearPrint();
 
-	//マップスクロール用
-	for (int32 i = 0; i < 100; ++i)
-	{
-		Circle{ -topLeft, (50 + i * 50) }.drawFrame(2);
-	}
-
 	Print << U"経験値";
 	Print << Player::getInstance()->getExp();
 	Print << U"レベル";
@@ -140,57 +138,68 @@ void Game::debug()
 	Print << U"プレイヤーのステータス";
 	Print << Player::getInstance()->getHp();
 	Print << Player::getInstance()->getDamage();
-	Print << Player::getInstance()->getSpeed();
 
+	Print << U"特殊弾";
+	switch (objectManager.currentState)
+	{
+	case BulletType::SpecialA:
+		Print << U"SpecialA";
+	case BulletType::SpecialB:
+		Print << U"SpecialB";
+	case BulletType::SpecialC:
+		Print << U"SpecialC";
+	case BulletType::SpecialD:
+		Print << U"SpecialD";
+	case BulletType::None:
+		Print << U"未取得";
+	}
 
-	if (KeySpace.down()) myEffectManager->create_damageScoreEffect(myPlayer->getPos(), 10);
+	Print << topLeft;
+	Print << Player::getInstance()->getPos();
 }
 
 //====================================================
-//スクロール関係のコード。毎Tick実行する
 void Game::scrollUpdate()
 {
-	//カメラ座標と左上座標の更新
+	// カメラ座標をプレイヤーの座標に設定
 	cameraPos = objectManager.myPlayer->getPos();
 	topLeft = cameraPos - Scene::Center();
 
 	// X軸のステージの内外判定
-	if (cameraPos.x - Scene::Center().x <= 0.0f)
+	if (FIELD_WIDTH > Scene::Width())
 	{
-		cameraPos.x = Scene::Center().x;
-	}
-	else if (cameraPos.x + Scene::Center().x >= FIELD_WIDTH)
-	{
-		cameraPos.x = FIELD_WIDTH - Scene::Center().x;
+		if (cameraPos.x - Scene::Center().x <= 0.0f)
+		{
+			cameraPos.x = Scene::Center().x;
+		}
+		else if (cameraPos.x + Scene::Center().x >= FIELD_WIDTH)
+		{
+			cameraPos.x = FIELD_WIDTH - Scene::Center().x;
+		}
 	}
 
 	// Y軸のステージの内外判定
-	if (cameraPos.y - Scene::Center().y <= 0.0f)
+	if (FIELD_HEIGHT > Scene::Height())
 	{
-		cameraPos.y = Scene::Center().y;
-	}
-	else if (cameraPos.y + Scene::Center().y >= FIELD_HEIGHT)
-	{
-		cameraPos.y = FIELD_HEIGHT - Scene::Center().y;
+		if (cameraPos.y - Scene::Center().y <= 0.0f)
+		{
+			cameraPos.y = Scene::Center().y;
+		}
+		else if (cameraPos.y + Scene::Center().y >= FIELD_HEIGHT)
+		{
+			cameraPos.y = FIELD_HEIGHT - Scene::Center().y;
+		}
 	}
 
 	cameraPos = convertToScreenPos(cameraPos);
 	topLeft = convertToScreenPos(topLeft);
-
 }
+
 
 Vec2 Game::convertToScreenPos(Vec2 pos)
 {
-
-	// カメラ座標からスクリーン座標の原点に変換する
-	Vec2 screenOriginPos = cameraPos - Scene::Center();
-
-	// ワールド座標からスクリーン座標に変換する
-	Vec2 screenPos = pos - screenOriginPos;
-
-	return screenPos;
+	return pos - (cameraPos - Scene::Center());
 }
-
 
 
 
@@ -289,4 +298,98 @@ void Game::spawnEnemies()
 
 		accumulatedTime = 0.0; // accumulatedTimeリセット
 	}
+}
+
+// 背景生成の処理に関する処理
+
+void Game::setUpBackground() {
+	// TextureAssetからテクスチャを直接取得
+	const Texture& backgroundTexture = TextureAsset(U"Background");
+	tileRegions = splitImage(backgroundTexture, 16 * EXPORT_SCALE, 16 * EXPORT_SCALE);
+
+	// チャンクの数を計算
+	int horizontalChunks = FIELD_WIDTH / (CHUNK_SIZE * TILE_SIZE) + 2; // +2 は余裕を持たせるため
+	int verticalChunks = FIELD_HEIGHT / (CHUNK_SIZE * TILE_SIZE) + 2;
+
+	// すべてのチャンクを生成
+	for (int y = 0; y < verticalChunks; ++y) {
+		for (int x = 0; x < horizontalChunks; ++x) {
+			generateBackgroundChunk(Point(x, y));
+		}
+	}
+}
+void Game::updateBackground()
+{
+	// プレイヤーの位置を取得
+	Vec2 playerPos = Player::getInstance()->getPos();
+
+	// 描画するチャンクの範囲を計算 (拡張範囲を加える)
+	int extendRange = 2;  // 拡張するチャンクの範囲
+	RectF drawRect(playerPos.x - extendRange * CHUNK_SIZE * TILE_SIZE,
+				   playerPos.y - extendRange * CHUNK_SIZE * TILE_SIZE,
+				   Scene::Width() + 2 * extendRange * CHUNK_SIZE * TILE_SIZE,
+				   Scene::Height() + 2 * extendRange * CHUNK_SIZE * TILE_SIZE);
+
+	int startChunkX = static_cast<int>(drawRect.x / (CHUNK_SIZE * TILE_SIZE));
+	int startChunkY = static_cast<int>(drawRect.y / (CHUNK_SIZE * TILE_SIZE));
+	int endChunkX = static_cast<int>((drawRect.x + drawRect.w) / (CHUNK_SIZE * TILE_SIZE)) + 1;
+	int endChunkY = static_cast<int>((drawRect.y + drawRect.h) / (CHUNK_SIZE * TILE_SIZE)) + 1;
+
+	// 描画のオフセットを計算
+	Vec2 offset = playerPos - Scene::Center();
+
+	// 描画するチャンクをループ
+	for (int chunkY = startChunkY; chunkY <= endChunkY; ++chunkY)
+	{
+		for (int chunkX = startChunkX; chunkX <= endChunkX; ++chunkX)
+		{
+			Point chunkPos(chunkX, chunkY);
+
+			// 背景チャンクが生成されていない場合は生成
+			if (!backgroundChunks.contains(chunkPos))
+			{
+				generateBackgroundChunk(chunkPos);
+			}
+
+			// チャンクを描画
+			backgroundChunks[chunkPos].draw(tileRegions, offset);
+		}
+	}
+}
+
+// Perlinノイズ用の変数
+PerlinNoise perlinNoise;
+
+
+void Game::generateBackgroundChunk(Point chunkPos) {
+	BackgroundChunk chunk;
+
+	// PerlinNoise オブジェクトのインスタンス化
+	PerlinNoise perlinNoise;
+
+	for (int y = 0; y < CHUNK_SIZE; ++y) {
+		for (int x = 0; x < CHUNK_SIZE; ++x) {
+			BackgroundTile& tile = chunk.getTile(x, y);
+			tile.pos = Vec2(chunkPos.x * CHUNK_SIZE * TILE_SIZE + x * TILE_SIZE,
+							chunkPos.y * CHUNK_SIZE * TILE_SIZE + y * TILE_SIZE);
+
+			// Perlin ノイズを使用して荒れ地を生成するかどうかを決定
+			double offsetX = Random(7.0f);  // X軸方向のランダムなオフセット
+			double offsetY = Random(7.0f);  // Y軸方向のランダムなオフセット
+			double scale = 0.5f;  // スケールを調整（小さくすると大きなかたまりが生成される）
+			double persistence = 0.3f;  // パーシスタンスを調整（小さい値で細かいテクスチャ）
+			double threshold = Random(10.0f);  // 閾値を設定（大きい値で荒れ地がまばらになる）
+
+			double noiseValue = perlinNoise.octave2D0_1((x + offsetX) * scale, (y + offsetY) * scale, 3, persistence);
+
+			if (noiseValue > threshold) {
+				tile.textureIndex = Random(9, 11);  // 9～11番目のテクスチャをランダムに選択
+			}
+			else {
+				tile.textureIndex = Random(0, 8);  // 0～8番目のテクスチャをランダムに選択
+			}
+		}
+	}
+
+	backgroundChunks[chunkPos] = chunk;
 }

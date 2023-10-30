@@ -20,18 +20,11 @@ private:
 	//カメラ座標
 	Vec2 cameraPos;
 
-	//フィールドサイズ
-	const int FIELD_WIDTH = 10000000000;
-	const int FIELD_HEIGHT = 10000000000;
-
 	// スクリーン画面の幅と高さ
 	const Size screenSize{ 1024, 768 };
 
 	// 実際のミニマップは256x256。
 	const Size miniMapScaleSize = { 128, 128 };
-
-	// 仮のフレーム素材
-	const Texture textureFrame{ U"Image/frame_001.png" };
 
 	GameState currentState;
 
@@ -50,6 +43,8 @@ private:
 	// waveが読み込まれたどうか
 	bool waveLoaded = false;
 
+	Array<TextureRegion> tileRegions;
+	HashTable<Point, BackgroundChunk> backgroundChunks;
 
 public:
 	Game(const InitData& init);
@@ -71,4 +66,9 @@ public:
 	bool loadNextWave();
 	void spawnEnemies();
 
+	
+	void setUpBackground();
+	void updateBackground();
+	void generateBackgroundChunk(Point);
+	bool isWasteland(int x, int y);
 };

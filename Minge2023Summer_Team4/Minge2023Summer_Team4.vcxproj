@@ -412,6 +412,7 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\Define.cpp" />
     <ClCompile Include="src\Game\oBullet.cpp" />
     <ClCompile Include="src\Game\oDebris.cpp" />
     <ClCompile Include="src\Game\oEnemy.cpp" />

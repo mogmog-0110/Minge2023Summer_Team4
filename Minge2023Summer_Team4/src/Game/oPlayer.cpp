@@ -4,7 +4,8 @@
 Player* Player::instance = nullptr;
 
 Player::Player(int hp_, int damage_, String textureStr, Figure hitbox_, Vec2 pos_, double speed_)
-	:speed(speed_), GameObject(eObjectType::ePlayer, hp_, damage_,textureStr,hitbox_, pos_, { 0,0 }, { 0,0 }), expPoints(0), level(1), nextLevelExp(100)
+	:speed(speed_), GameObject(eObjectType::ePlayer, hp_, damage_,textureStr,hitbox_, pos_, { 0,0 }, { 0,0 }),
+	expPoints(0), level(1), nextLevelExp(100)
 {
 	setupAnimations();
 	changeCoolTime(1s);
@@ -144,22 +145,6 @@ void Player::setupAnimations()
 	playerAnimations[U"right"] = { regions[8], regions[9], regions[10], regions[11] };
 	playerAnimations[U"up"] = { regions[12], regions[13], regions[14], regions[15] };
 	playerAnimations[U"dead"] = { regions[16], regions[17], regions[18], regions[19] };
-}
-
-
-Array<TextureRegion> Player::splitImage(const Texture& texture, int cellWidth, int cellHeight)
-{
-	Array<TextureRegion> regions;
-
-	for (int y = 0; y < texture.height(); y += cellHeight)
-	{
-		for (int x = 0; x < texture.width(); x += cellWidth)
-		{
-			regions << texture(Rect(x, y, cellWidth, cellHeight));
-		}
-	}
-
-	return regions;
 }
 
 bool Player::isDead() {
@@ -308,7 +293,55 @@ void Player::applyItemEffect(Item* item) {
 		int expPoints = item->getExp();  // アイテムから経験値の量を取得
 		gainExp(expPoints);
 	}
-	// 他のアイテムタイプに応じた処理もここに追加
+	else if (item->getItemType() == ItemType::NormalMagic)
+	{
+		levelNormal+= 1;
+	}
+	else if (item->getItemType() == ItemType::SpecialMagicA)
+	{
+		if (availableBullet.includes(ItemType::SpecialMagicA))
+		{
+			levelSpecialA += 1;
+		}
+		else
+		{
+			availableBullet << ItemType::SpecialMagicA;
+		}
+	}
+	else if (item->getItemType() == ItemType::SpecialMagicB)
+	{
+		if (availableBullet.includes(ItemType::SpecialMagicB))
+		{
+			levelSpecialB += 1;
+		}
+		else
+		{
+			availableBullet << ItemType::SpecialMagicB;
+		}
+	}
+	else if (item->getItemType() == ItemType::SpecialMagicC)
+	{
+		if (availableBullet.includes(ItemType::SpecialMagicC))
+		{
+			levelSpecialC += 1;
+		}
+		else
+		{
+			availableBullet << ItemType::SpecialMagicC;
+		}
+	}
+	else if (item->getItemType() == ItemType::SpecialMagicD)
+	{
+		if (availableBullet.includes(ItemType::SpecialMagicD))
+		{
+			levelSpecialD += 1;
+		}
+		else
+		{
+			availableBullet << ItemType::SpecialMagicD;
+		}
+	}
+
 }
 
 void Player::attractItems(Array<Item*>& items)
@@ -342,6 +375,23 @@ double Player::getAttractionSpeed() const
 int Player::getLevel() const
 {
 	return this->level;
+}
+
+int Player::getBulletLevel(BulletType bulletType) const
+{
+	switch (bulletType)
+	{
+	case BulletType::Normal:
+		return levelNormal;
+	case BulletType::SpecialA:
+		return levelSpecialA;
+	case BulletType::SpecialB:
+		return levelSpecialB;
+	case BulletType::SpecialC:
+		return levelSpecialC;
+	case BulletType::SpecialD:
+		return levelSpecialD;
+	}
 }
 
 int Player::getNextlevelExp() const

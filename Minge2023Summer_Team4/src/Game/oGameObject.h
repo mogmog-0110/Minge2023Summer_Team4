@@ -86,6 +86,8 @@ public:
 	//セッター関数
 	void setSpeed(double);
 	void setPos(Vec2);
+	void setVelocity(Vec2);
+	void setAcceleration(Vec2);
 	void setTexture(String);
 	void setExp(int);
 };

@@ -1,5 +1,4 @@
-﻿
-#include "oGameObject.h"
+﻿#include "oGameObject.h"
 #include "oPlayer.h"
 
 GameObject::~GameObject()
@@ -147,13 +146,23 @@ int GameObject::getExp() const
 
 void GameObject::setSpeed(double speed)
 {
-	vel = { speed, speed };
+	this->speed = speed;
 }
 
 void GameObject::setPos(Vec2 newPos)
 {
 	pos = newPos;
 	hitbox.setCenter(newPos);
+}
+
+void GameObject::setVelocity(Vec2 vel)
+{
+	this->vel = vel;
+}
+
+void GameObject::setAcceleration(Vec2 acc )
+{
+	this->acc = acc;
 }
 
 void GameObject::setTexture(String textureStr)
