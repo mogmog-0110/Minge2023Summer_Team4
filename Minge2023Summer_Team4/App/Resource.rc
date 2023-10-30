@@ -126,10 +126,10 @@ Resource(Image/title.png)
 
 //Gameシーン
 Resource(Image/Cursor.png)
-Resource(Image/frame.png)
 Resource(Image/Player.png)
 Resource(Image/Background.png)
-
+Resource(Image/Effect1.png)
+Resource(Image/Effect2.png)
 
 //Font
 Resource(Font/Nosutaru-dot.ttf)
