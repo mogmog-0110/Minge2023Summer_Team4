@@ -13,9 +13,12 @@ Game::Game(const InitData& init)
 
 	Print << U"Push [Q] key";
 
+	myEffectManager = EffectManager::getInstance();
+
 	// カメラの初期位置を設定
 	cameraPos = Vec2(0, 0);
 	topLeft = Vec2(0, 0);
+  topLeft = objectManager.myPlayer->getPos() - Scene::Center();
 
 	// 敵データの読み込み
 	objectManager.enemyDatas = objectManager.loadEnemyData(U"../src/Game/csvFile/enemyTest.csv");
@@ -116,6 +119,7 @@ void Game::draw() const
 	//TextureAsset(U"Frame").draw();
 	
 	objectManager.draw(topLeft);
+	myEffectManager->draw(topLeft);
 
 	miniMapDraw();
 	cursor.draw();

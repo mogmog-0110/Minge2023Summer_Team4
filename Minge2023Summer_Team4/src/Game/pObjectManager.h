@@ -8,6 +8,7 @@
 # include "oBullet.h"
 # include "oEnemy.h"
 # include "oItem.h"
+# include "pEffectManager.h"
 
 class ObjectAppearanceManager;
 class Player;
@@ -16,7 +17,9 @@ class ObjectManager
 {
 private:
 	Timer DebugBulletTimer{ 0.1s, StartImmediately::Yes };
-	
+
+	EffectManager* myEffectManager;
+
 	template<typename T, typename U>
 	void checkCollision(T* obj1, U* obj2);
 
@@ -50,6 +53,7 @@ public:
 	Array<Enemy*> myEnemies;
 	Array<Item*> myItems;
 
+  
 	// 敵の名前をキーとした敵情報を格納したハッシュテーブル
 	HashTable<String, EnemyData> enemyDatas;
 

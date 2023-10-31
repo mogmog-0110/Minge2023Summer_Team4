@@ -3,6 +3,7 @@
 #include "../Figure.h"
 #include "pObjectManager.h"
 #include "oMouseCursor.h"
+#include "pEffectManager.h"
 
 class Player;
 
@@ -11,9 +12,10 @@ private:
 	ObjectManager objectManager;
 	MouseCursor cursor;
 	Player* myPlayer;
+	EffectManager* myEffectManager;
 
 	//プレイヤーから見た相対的な左上座標
-	Vec2 topLeft;
+	Vec2 topLeft = { 0,0 };
 
 	//カメラ座標
 	Vec2 cameraPos;

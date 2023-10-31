@@ -86,6 +86,8 @@ void GameObject::onCollisionResponse(int damage)
 {
 	collisionalTimer.restart();
 	hp -= damage;
+	
+	if (objType == eEnemy) myEffectManager->create_damageScoreEffect(pos, damage);
 }
 
 void GameObject::onCollisionResponse(Vec2 RepullPos)

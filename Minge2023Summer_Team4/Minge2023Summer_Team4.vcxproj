@@ -319,6 +319,7 @@
     <ClInclude Include="src\Game\oItem.h" />
     <ClInclude Include="src\Game\oMouseCursor.h" />
     <ClInclude Include="src\Game\oPlayer.h" />
+    <ClInclude Include="src\Game\pEffectManager.h" />
     <ClInclude Include="src\Game\pEventManager.h" />
     <ClInclude Include="src\Game\pGame.h" />
     <ClInclude Include="src\Game\pObjectAppearanceManager.h" />
@@ -419,6 +420,7 @@
     <ClCompile Include="src\Game\oItem.cpp" />
     <ClCompile Include="src\Game\oMouseCursor.cpp" />
     <ClCompile Include="src\Game\oPlayer.cpp" />
+    <ClCompile Include="src\Game\pEffectManager.cpp" />
     <ClCompile Include="src\Game\pEventManager.cpp" />
     <ClCompile Include="src\Game\pGame.cpp" />
     <ClCompile Include="src\Game\pObjectAppearanceManager.cpp" />

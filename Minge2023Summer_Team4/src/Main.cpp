@@ -19,6 +19,7 @@ void Main()
 
 	manager.init(SceneList::Title);
 
+
 	// 画面サイズを変更
 	Window::Resize(1024, 768);
 
@@ -31,6 +32,11 @@ void Main()
 	TextureAsset::Register(U"Frame", Resource(U"Image/frame.png"));
 	TextureAsset::Register(U"playerImage", Resource(U"Image/Player.png"));
 	TextureAsset::Register(U"Background", Resource(U"Image/Background.png"));
+
+	//font
+	FontAsset::Register(U"dotFont1", 20, Resource(U"Font/Nosutaru-dot.ttf"));
+
+	EffectManager::create();
 
 	while (System::Update())
 	{
