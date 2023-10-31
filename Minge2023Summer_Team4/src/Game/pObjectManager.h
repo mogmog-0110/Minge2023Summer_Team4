@@ -130,7 +130,12 @@ void ObjectManager::cleanUp(Array<T*>& objs, Vec2 playerPos) {
 	{
 		if ((*it)->isDead(playerPos))
 		{
-			if ((*it)->isItemDrop() && (*it)->getObjType() == eObjectType::eDebris);// アイテム処理
+			if ((*it)->isItemDrop() && (*it)->getObjType() == eObjectType::eDebris) {
+				// デブリの位置でアイテムを生成
+				Vec2 objPos = (*it)->getPos();
+				int expPoints = (*it)->getExp();
+				createItem(objPos, expPoints);
+			}
 			delete* it;
 			it = objs.erase(it);
 		}
@@ -147,8 +152,8 @@ void ObjectManager::cleanUp(Array<T*>& objs) {
 	for (auto it = objs.begin(); it != objs.end();) {
 		if ((*it)->isDead()) {
 			// オブジェクトの種類をチェック
-			if ((*it)->getObjType() == eObjectType::eEnemy || (*it)->getObjType() == eObjectType::eDebris) {
-				// 敵またはデブリの位置でアイテムを生成
+			if ((*it)->getObjType() == eObjectType::eEnemy) {
+				// 敵の位置でアイテムを生成
 				Vec2 objPos = (*it)->getPos();
 				int expPoints = (*it)->getExp();
 				createItem(objPos, expPoints);
