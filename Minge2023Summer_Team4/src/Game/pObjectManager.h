@@ -9,6 +9,7 @@
 # include "oEnemy.h"
 # include "oItem.h"
 # include "pEffectManager.h"
+# include "oGhost.h";
 
 class ObjectAppearanceManager;
 class Player;
@@ -19,6 +20,7 @@ private:
 	Timer DebugBulletTimer{ 0.1s, StartImmediately::Yes };
 
 	EffectManager* myEffectManager;
+	Ghost* myGhost;
 
 	template<typename T, typename U>
 	void checkCollision(T* obj1, U* obj2);

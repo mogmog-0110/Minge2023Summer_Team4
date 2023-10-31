@@ -5,7 +5,8 @@ ObjectManager::ObjectManager()
 {
 	// 初期ステータスの決定
 	Player::create(100000, 1000, U"", Circle(30), Vec2(Scene::Center().x, Scene::Center().y), 300);
-	myPlayer = Player::getInstance();
+	myGhost = new Ghost(1000000, 0, U"Ghost", Circle(10), Vec2(Scene::Center().x - 60, Scene::Center().y - 60), { 300, 300 }, { 1, 1 });
+	myPlayer = Player::getInstance(); 
 	myEffectManager = EffectManager::getInstance();
 	//createEnemy();
 	currentState = BulletType::None;
@@ -21,6 +22,8 @@ void ObjectManager::update()
 {
 	collision();
 	myPlayer->update();
+	// ゴーストの位置や向きの更新
+	myGhost->update(myPlayer->getPos(), myPlayer->currentDirection);
 	
 	createDebris();
 	updateObjList(myDebrises);
@@ -104,6 +107,7 @@ void ObjectManager::draw(Vec2 offset) const
 	for (size_t i = 0; i < myItems.size(); i++) myItems[i]->draw(offset, true);
 
 	this->myPlayer->draw(offset, false);
+	this->myGhost->draw(offset);
 }
 
 void ObjectManager::createEnemy()

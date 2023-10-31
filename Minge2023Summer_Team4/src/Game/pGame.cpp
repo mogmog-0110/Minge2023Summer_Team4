@@ -17,8 +17,7 @@ Game::Game(const InitData& init)
 
 	// カメラの初期位置を設定
 	cameraPos = Vec2(0, 0);
-	topLeft = Vec2(0, 0);
-  topLeft = objectManager.myPlayer->getPos() - Scene::Center();
+	topLeft = objectManager.myPlayer->getPos() - Scene::Center();
 
 	// 敵データの読み込み
 	objectManager.enemyDatas = objectManager.loadEnemyData(U"../src/Game/csvFile/enemyTest.csv");

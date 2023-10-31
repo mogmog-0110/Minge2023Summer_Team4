@@ -27,9 +27,6 @@ private:
 
 	const Texture tempTexture{ U"💩"_emoji };
 
-	// 現在のプレイヤーの向き
-	String currentDirection = U"up";
-
 	bool isDeadAnimationPlaying = false;
 
 	// アニメーションのフレームの経過時間をカウント
@@ -116,4 +113,7 @@ public:
 	//setter
 	void setAttractionRadius(double);
 	void setAttractionSpeed(double);
+
+	// 現在のプレイヤーの向き
+	String currentDirection = U"up";
 };

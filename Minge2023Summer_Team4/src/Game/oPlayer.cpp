@@ -16,7 +16,6 @@ Player::~Player()
 }
 
 
-
 Player* Player::getInstance()
 {
 	return instance;
@@ -47,7 +46,6 @@ void Player::update() {
 
 	// アニメーションを更新
 	updateAnimation();
-
 
 	// プレイヤーが動いている場合のみアニメーションフレームを更新
 	if (isMoving) {
@@ -84,9 +82,6 @@ void Player::move() {
 	}
 }
 
-
-
-
 void Player::getMoveDirection(Vec2& moveDir)
 {
 	isMoving = false;  // まず動いていないと仮定
@@ -113,8 +108,6 @@ void Player::getMoveDirection(Vec2& moveDir)
 	}
 }
 
-
-
 void Player::draw(Vec2 offset, bool isHitboxDraw) const
 {
 	// playerAnimations 内に currentDirection が存在するか確認
@@ -129,9 +122,8 @@ void Player::draw(Vec2 offset, bool isHitboxDraw) const
 
 	// アニメーションのフレームを描画
 	this->playerAnimations.at(currentDirection)[animationFrame].drawAt(pos - offset);
-	if (isHitboxDraw) drawHitbox(-offset); // ヒットボックスを描画
+	if (isHitboxDraw) drawHitbox(-offset); // ヒットボックスを描画	
 }
-
 
 void Player::setupAnimations()
 {
