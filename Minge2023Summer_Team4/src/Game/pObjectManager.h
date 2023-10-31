@@ -88,14 +88,21 @@ template<typename T, typename U>
 void ObjectManager::checkCollision(T* obj1, U* obj2) {
 	if (obj1->isCollisional() && obj2->isCollisional() && obj1->getHitbox().intersects(obj2->getHitbox())) {
 
-		obj1->onCollisionResponse(obj2->getPos());  // 押し出しの応答をobj1に適用
-		obj2->onCollisionResponse(obj1->getPos());  // 押し出しの応答をobj2に適用
+		if (obj1->getObjType() != eDebris) obj1->onCollisionResponse(obj2->getPos());  // 押し出しの応答をobj1に適用
+		if (obj2->getObjType() != eDebris) obj2->onCollisionResponse(obj1->getPos());  // 押し出しの応答をobj2に適用
+
 
 		// 敵同士の衝突でない場合のみダメージを適用
-		if (!(obj1->getObjType() == eEnemy && obj2->getObjType() == eEnemy)) {
+		// 10/31追記　debris-enemy間でもダメージを適用しない
+		if (obj1->getObjType() == eEnemy && obj2->getObjType() == eEnemy);
+		else if (obj1->getObjType() == eDebris && obj2->getObjType() == eEnemy);
+		else
+		{
 			obj1->onCollisionResponse(obj2->getDamage()); // ダメージの応答をobj1に適用
 			obj2->onCollisionResponse(obj1->getDamage()); // ダメージの応答をobj2に適用
+
 		}
+		
 	}
 }
 
