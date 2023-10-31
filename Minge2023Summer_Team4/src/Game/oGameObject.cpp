@@ -14,6 +14,7 @@ void GameObject::update()
 {
 	updateCommon();
 	move();
+	updateAnimation();
 }
 
 void GameObject::updateCommon()
@@ -43,10 +44,29 @@ void GameObject::move()
 
 void GameObject::draw(Vec2 offset, bool isHitboxDraw) const
 {
-	this->texture.drawAt(this->pos - offset); // offsetを減算
-	if (isHitboxDraw) drawHitbox(-offset);
+	if (texture)
+	{ // テクスチャが存在すれば描画
+		texture.drawAt(pos - offset);
+	}
+
+	if (isHitboxDraw)
+	{
+		drawHitbox(-offset);
+	}
+	drawAnimation(offset);
 }
 
+void GameObject::drawAnimation(Vec2 offset) const
+{
+	if (animations.contains(currentDirection)) {
+		const auto& frames = animations.at(currentDirection);
+		if (!frames.isEmpty())
+		{
+			size_t frameIndex = animationFrame % frames.size();  // size_t型の一時変数を使用
+			frames[frameIndex].draw(pos - offset);
+		}
+	}
+}
 
 void GameObject::drawHitbox(Vec2 offset) const
 {
@@ -59,20 +79,44 @@ void GameObject::drawHitbox(Vec2 offset) const
 	debugfont(Format(hp)).drawAt(this->pos + offset + Vec2{ 0,30 }, { Palette::Navy,0.5 });
 }
 
+// アニメーション関連のメソッド
+void GameObject::updateAnimation() {
+	// デルタタイムをアニメーションタイマーに加算
+	animationTimer += Scene::DeltaTime();
+
+	// タイマーがアニメーションの更新間隔を超えた場合
+	if (animationTimer >= animationInterval) {
+		// アニメーションフレームをインクリメント
+		animationFrame++;
+
+		// 現在の方向のアニメーションフレームの最大数を取得
+		int maxFrames = animations[currentDirection].size();
+
+		// フレーム数が最大を超えた場合、リセット
+		if (animationFrame >= maxFrames)
+		{
+			animationFrame = 0;
+		}
+
+		// アニメーションタイマーをリセット
+		animationTimer = 0.0;
+	}
+}
+
 
 //====================================================
 //外部からの変数取得
 
 
-Figure GameObject::getHitbox() {
+Figure GameObject::getHitbox()
+{
 	return hitbox;
 }
 
-int GameObject::getDamage() {
+int GameObject::getDamage()
+{
 	return damage;
 }
-
-
 
 //====================================================
 //接触関連

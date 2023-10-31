@@ -5,10 +5,6 @@ Item::~Item()
 
 }
 
-void Item::update()
-{
-}
-
 // ゲッター関数
 ItemType Item::getItemType() const
 {

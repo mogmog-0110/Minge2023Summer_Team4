@@ -6,13 +6,6 @@ class Ghost :
 	public GameObject
 {
 private:
-	Vec2 pos = Scene::Center();
-	int animationFrame = 0;
-	double animationTimer = 0.0;
-	double animationInterval = 0.1;  // アニメーションの更新間隔
-	String currentDirection = U"right";
-	HashTable<String, Array<TextureRegion>> ghostAnimations;
-
 public:
 	Ghost(int hp_, int damage_, String textureStr_,
 		   Figure hitbox_, Vec2 pos_, Vec2 vel_, Vec2 acc_ = { 0,0 })
@@ -23,8 +16,9 @@ public:
 
 	~Ghost();
 	void update(const Vec2& playerPos, const String& playerDirection);
-	void draw(Vec2) const;
+	void draw(Vec2 offset) const;
+
+	void animationDraw(Vec2 offset) const;
 
 	void setupAnimations();
-	void updateAnimation();
 };

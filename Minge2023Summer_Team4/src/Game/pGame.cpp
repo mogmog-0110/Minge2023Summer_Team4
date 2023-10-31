@@ -79,7 +79,7 @@ void Game::update()
 
 		scrollUpdate();
 		objectManager.update();
-		updateBackground();
+		//updateBackground();
 		
 		debug();
 		break;

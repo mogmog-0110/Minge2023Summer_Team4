@@ -32,6 +32,12 @@ void Main()
 	TextureAsset::Register(U"playerImage", Resource(U"Image/Player.png"));
 	TextureAsset::Register(U"Background", Resource(U"Image/Background.png"));
 	TextureAsset::Register(U"Ghost", Resource(U"Image/Ghost.png"));
+	TextureAsset::Register(U"Experience", Resource(U"Image/Experience.png"));
+	TextureAsset::Register(U"NormalBullet", Resource(U"Image/NormalBullet.png"));
+	TextureAsset::Register(U"MagicBook", Resource(U"Image/MagicBook.png"));
+	TextureAsset::Register(U"RockL", Resource(U"Image/RockL.png"));
+	TextureAsset::Register(U"RockM", Resource(U"Image/RockM.png"));
+	TextureAsset::Register(U"RockS", Resource(U"Image/RockS.png"));
 
 	//font
 	FontAsset::Register(U"dotFont1", 20, Resource(U"Font/Nosutaru-dot.ttf"));

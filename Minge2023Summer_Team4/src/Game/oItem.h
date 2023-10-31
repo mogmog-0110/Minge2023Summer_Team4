@@ -9,6 +9,7 @@ class Item
 private:
 	ItemType itemType;
 	bool isActive;
+	String currentDirection = U"None";
 
 public:
 	Item(int hp_, int damage_, String textureStr_,
@@ -18,8 +19,6 @@ public:
 	};
 
 	~Item();
-
-	void update() override;
 
 	// ゲッター
 	ItemType getItemType() const;

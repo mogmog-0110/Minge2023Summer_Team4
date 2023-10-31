@@ -100,7 +100,7 @@ void ObjectManager::collision() {
 void ObjectManager::draw(Vec2 offset) const
 {
 
-	for (size_t i = 0; i < myDebrises.size(); i++) myDebrises[i]->draw(offset, true);
+	for (size_t i = 0; i < myDebrises.size(); i++) myDebrises[i]->draw(offset, false);
 	for (size_t i = 0; i < myPlayerBullets.size(); i++) myPlayerBullets[i]->draw(offset, true);
 	for (size_t i = 0; i < myEnemyBullets.size(); i++) myEnemyBullets[i]->draw(offset, true);
 	for (size_t i = 0; i < myEnemies.size(); i++) myEnemies[i]->draw(offset, true);
@@ -143,10 +143,27 @@ void ObjectManager::createDebris()
 
 	while (myDebrises.size() < 100)
 	{
-		int randomSize = Random(30, 100);
-		int hp = 1000;
-		if (randomSize <= 50) hp = 300;
-		GameObject* newDebris = ObjectAppearanceManager::createNewObject(eDebris, hp, 10, U"", Circle(randomSize), ObjectAppearanceManager::generateRandomPos(), {0,0}, {0,0});
+		int n = Random(1, 3);
+		int hp;
+		int hitbox;
+
+		if (n == 1)
+		{
+			hitbox = 100;
+			hp = 1500;
+		}
+		else if (n == 2)
+		{
+			hitbox = 65;
+			hp = 1000;
+		}
+		else if (n == 3)
+		{
+			hitbox = 30;
+			hp = 500;
+		}
+		
+		GameObject* newDebris = ObjectAppearanceManager::createNewObject(eDebris, hp, 10, U"", Circle(hitbox), ObjectAppearanceManager::generateRandomPos(), {0,0}, {0,0});
 		if (newDebris) {
 			myDebrises << static_cast<Debris*>(newDebris);
 		}
@@ -155,7 +172,7 @@ void ObjectManager::createDebris()
 
 void ObjectManager::createPlayerBullet(Vec2 pos_, Vec2 vel_, Vec2 acc_)
 {
-	GameObject* newBullet = ObjectAppearanceManager::createNewObject(ePlayerBullet, 1, 10 + myPlayer->getDamage(), U"", Circle{10}, pos_, vel_, acc_);
+	GameObject* newBullet = ObjectAppearanceManager::createNewObject(ePlayerBullet, 1, 10 + myPlayer->getDamage(), U"NormalBullet", Circle{10}, pos_, vel_, acc_);
 	if (newBullet) {
 		Bullet* newPlayerBullet = static_cast<Bullet*>(newBullet);
 		newPlayerBullet->setBulletType(BulletType::Normal);
@@ -221,7 +238,7 @@ void ObjectManager::createSpecialBullet(Vec2 pos, Vec2 vel, Vec2  acc)
 
 void ObjectManager::createItem(Vec2 pos, int expPoints)
 {
-	int randomNum = Random(3);
+	int randomNum = Random(50);
 
 	// 50分の1の抽選で特殊弾のドロップ
 	if (randomNum == 1)
@@ -294,7 +311,7 @@ void ObjectManager::createItem(Vec2 pos, int expPoints)
 	}
 	else
 	{
-		GameObject* tempItem = ObjectAppearanceManager::createNewObject(eItem, 1, 0, U"ExpPoint", Circle{ 5 }, pos, { 0, 0 }, { 0, 0 });
+		GameObject* tempItem = ObjectAppearanceManager::createNewObject(eItem, 1, 0, U"Experience", Circle{ 5 }, pos, { 0, 0 }, { 0, 0 });
 		if (tempItem) {
 			Item* newItem = static_cast<Item*>(tempItem);
 			newItem->setItemType(ItemType::ExpPoint);

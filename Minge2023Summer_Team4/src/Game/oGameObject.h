@@ -14,8 +14,6 @@ private:
 
 	const Font debugfont{ 15 };
 
-
-
 protected:
 
 	eObjectType objType;
@@ -24,6 +22,7 @@ protected:
 	double speed;
 	String textureStr;
 	Figure hitbox;
+	int radius = hitbox.getCircle().r;
 	Vec2 pos;
 	Vec2 vel;
 	Vec2 acc;
@@ -38,8 +37,16 @@ protected:
 
 	bool isMoving = false;
 
+	// アニメーション関連のメンバ変数
+	double animationTimer = 0.0;
+	double animationInterval = 0.1;  // アニメーションフレームの更新間隔
+	size_t animationFrame = 0;
+	String currentDirection = U"left";
+	HashTable<String, Array<TextureRegion>> animations;
+
 	void updateCommon();
 	void drawHitbox(Vec2 offset) const;
+	void updateAnimation();
 
 	//アイテムが落ちるかどうかの設定。HPが0になる意外の特殊死亡ではfalseになる。なおアイテムがドロップしないオブジェクトタイプでは参照されない。
 	bool isItemDropable = true;
@@ -64,6 +71,9 @@ public:
 
 	virtual void draw(Vec2 offset, bool isHitboxDraw) const;
 
+	void drawAnimation(Vec2 offset) const;
+
+
 	bool isCollisional();
 	void onCollisionResponse(int damage);
 	void onCollisionResponse(Vec2 RepullPos);
@@ -72,6 +82,7 @@ public:
 
 	bool isDead(Vec2 playerPos_ = {0,0});
 	bool isItemDrop();
+
 	//実質ゲッター関数
 
 	//ゲッター関数
