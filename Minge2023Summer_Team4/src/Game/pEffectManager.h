@@ -11,6 +11,7 @@ private:
 	EffectManager(const EffectManager&) = delete;
 	EffectManager& operator=(const EffectManager&) = delete;
 
+	HashTable<String, Array<TextureRegion>> effectAnimations;
 
 	Array<TextureRegion> splitImage(const Texture& texture, int cellWidth, int cellHeight);
 
@@ -20,6 +21,8 @@ private:
 
 	Effect myEffect;
 	Vec2 offset; //drawするときの間接変数渡し（参照型）
+
+	void setupAnimations(String,int32);
 
 public:
 
@@ -34,9 +37,12 @@ public:
 
 	// エフェクト作成
 	void create_damageScoreEffect(Vec2 pos, int32 score);
+	void create_spliteEffect(Vec2 pos, String, double duration, double size = -1);
 
 	// 描画
 	const void draw(Vec2 offset);
+
+	//デバッグ
 };
 
 //テスト用のダメージスコアエフェクト
@@ -60,5 +66,40 @@ struct damageScoreEffect : IEffect
 		FontAsset(U"dotFont1")(m_score).drawAt((m_pos - m_offset).movedBy(0, t * -75), Palette::Orange);
 		
 		return (t < 0.3);
+	}
+};
+
+
+//テクスチャを順繰りに表示するエフェクト
+struct spliteEffect : IEffect
+{
+	Vec2 m_pos;
+	const Vec2& m_offset;
+	double m_duration;
+	double m_updateInterval;
+	double m_size = -1;
+
+	Array<TextureRegion> m_effectAnimation;
+
+
+	spliteEffect(Vec2 pos, const Vec2& offset,
+		Array<TextureRegion> effectAnimation, double duration, double size = -1)
+		: m_pos{ pos }
+		, m_offset{ offset }
+		, m_effectAnimation{ effectAnimation }
+		, m_duration{ duration }
+		, m_updateInterval{ duration / effectAnimation.size() }
+		, m_size{ size } {}
+
+	bool update(double t) override
+	{
+		int animationFrame = t / m_updateInterval;
+
+		if (m_effectAnimation.size() > animationFrame) {
+			if (m_size > 0)	m_effectAnimation[int(t / m_updateInterval)].resized(m_size).drawAt(m_pos - m_offset);
+			else m_effectAnimation[animationFrame].drawAt(m_pos - m_offset); 
+		}
+
+		return (t < m_duration);
 	}
 };

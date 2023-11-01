@@ -72,6 +72,12 @@ void ObjectManager::collision() {
 		checkCollisions(myPlayer, myItems);
 	}
 
+	/*
+	for (size_t i = 0; i < myPlayerBullets.size(); ++i) {
+		checkCollision(myPlayer, myPlayerBullets[j]);
+	}
+	*/
+
 	checkCollisionsBetweenArrays(myDebrises, myPlayerBullets);
 	checkCollisionsBetweenArrays(myDebrises, myEnemyBullets);
 	checkCollisionsBetweenArrays(myEnemies, myPlayerBullets);
@@ -219,7 +225,7 @@ void ObjectManager::createSpecialBullet(Vec2 pos, Vec2 vel, Vec2  acc)
 		break;
 	case BulletType::SpecialD:
 	{
-		GameObject* tempBullet = ObjectAppearanceManager::createNewObject(ePlayerBullet, 1, 0, U"SpecialD", Circle{ 20 }, pos, vel, acc);
+		GameObject* tempBullet = ObjectAppearanceManager::createNewObject(ePlayerBullet, 1, 0, U"SpecialD", Circle{ 20 }, pos, vel.setLength(300), acc);
 		if (tempBullet) {
 			Bullet* newBullet = static_cast<Bullet*>(tempBullet);
 			newBullet->setBulletType(BulletType::SpecialD);

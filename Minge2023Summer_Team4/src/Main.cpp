@@ -31,6 +31,7 @@ void Main()
 	TextureAsset::Register(U"Frame", Resource(U"Image/Frame.png"));
 	TextureAsset::Register(U"playerImage", Resource(U"Image/Player.png"));
 	TextureAsset::Register(U"Background", Resource(U"Image/Background.png"));
+
 	TextureAsset::Register(U"Ghost", Resource(U"Image/Ghost.png"));
 	TextureAsset::Register(U"Experience", Resource(U"Image/Experience.png"));
 	TextureAsset::Register(U"NormalBullet", Resource(U"Image/NormalBullet.png"));
@@ -50,6 +51,11 @@ void Main()
 	TextureAsset::Register(U"Hp", Resource(U"Image/Hp.png"));
 	TextureAsset::Register(U"HpFrame", Resource(U"Image/HpFrame.png"));
 
+	TextureAsset::Register(U"Effect1", Resource(U"Image/Effect1.png"));
+	TextureAsset::Register(U"Effect2", Resource(U"Image/Effect2.png"));
+	TextureAsset::Register(U"Effect3", Resource(U"Image/Effect3.png"));
+	TextureAsset::Register(U"Effect4", Resource(U"Image/Effect4.png"));
+  
 	//font
 	FontAsset::Register(U"dotFont1", 20, Resource(U"Font/Nosutaru-dot.ttf"));
 

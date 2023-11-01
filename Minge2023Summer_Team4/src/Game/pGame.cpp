@@ -37,6 +37,7 @@ Game::~Game()
 
 void Game::update()
 {
+	ClearPrint();
 	switch (currentState)
 	{
 	case GameState::Loading:
@@ -130,7 +131,6 @@ void Game::draw() const
 
 void Game::debug()
 {
-	ClearPrint();
 
 	Print << accumulatedTime;
 	Print << U"レベル";
@@ -139,6 +139,9 @@ void Game::debug()
 	Print << Player::getInstance()->getHp();
 
 	Print << U"特殊弾";
+
+	if (KeyEnter.down()) myEffectManager->create_spliteEffect(myPlayer->getPos(), U"Effect1", 0.25, 100);
+
 	switch (objectManager.currentState)
 	{
 	case BulletType::SpecialA:
