@@ -17,16 +17,16 @@ private:
 protected:
 
 	eObjectType objType;
-	int hp = 1;
+	double hp = 1;
 	int damage = 1;
 	double speed;
 	String textureStr;
 	Figure hitbox;
-	int radius = hitbox.getCircle().r;
+	int size = hitbox.getCircle().r * 3;
 	Vec2 pos;
 	Vec2 vel;
 	Vec2 acc;
-
+		
 	// 経験値
 	int expPoints;
 
@@ -91,7 +91,7 @@ public:
 	int getDamage();
 	Figure getHitbox();
 	eObjectType getObjType() const;
-	int getHp() const;
+	double getHp() const;
 	int getExp() const;
 
 	//セッター関数

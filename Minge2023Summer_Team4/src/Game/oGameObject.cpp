@@ -38,32 +38,36 @@ void GameObject::move()
 
 }
 
-
 //====================================================
 //描画関連
 
-void GameObject::draw(Vec2 offset, bool isHitboxDraw) const
-{
-	if (texture)
-	{ // テクスチャが存在すれば描画
-		texture.drawAt(pos - offset);
+void GameObject::draw(Vec2 offset, bool isHitboxDraw) const {
+	Vec2 drawPos = pos - offset;
+
+	// sizeはヒットボックスと大きさがほとんど一緒。OAMに渡す値で、ヒットボックスとテクスチャの大きさを決める。
+
+	if (texture) {
+		// テクスチャが存在すれば描画
+		texture.resized(size, size).drawAt(drawPos);
+	}
+	else
+	{
+		drawAnimation(drawPos);
 	}
 
-	if (isHitboxDraw)
-	{
+	if (isHitboxDraw) {
 		drawHitbox(-offset);
 	}
-	drawAnimation(offset);
 }
 
-void GameObject::drawAnimation(Vec2 offset) const
+void GameObject::drawAnimation(Vec2 drawPos) const
 {
 	if (animations.contains(currentDirection)) {
 		const auto& frames = animations.at(currentDirection);
 		if (!frames.isEmpty())
 		{
 			size_t frameIndex = animationFrame % frames.size();  // size_t型の一時変数を使用
-			frames[frameIndex].draw(pos - offset);
+			frames[frameIndex].resized(size, size).drawAt(drawPos);
 		}
 	}
 }
@@ -178,7 +182,7 @@ eObjectType GameObject::getObjType() const
 	return objType;
 }
 
-int GameObject::getHp() const
+double GameObject::getHp() const
 {
 	return hp;
 }
@@ -211,7 +215,7 @@ void GameObject::setAcceleration(Vec2 acc )
 
 void GameObject::setTexture(String textureStr)
 {
-	texture = Texture{ textureStr };
+	texture = TextureAsset{ textureStr };
 }
 
 void GameObject::setExp(int points)

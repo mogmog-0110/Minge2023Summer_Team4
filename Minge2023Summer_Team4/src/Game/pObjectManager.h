@@ -43,7 +43,7 @@ private:
 public:
 
 	// 現在、どの特殊弾を選択しているかのState
-	BulletType currentState;
+	BulletType currentState; 
 
 	// どの特殊弾にアクセスしているか
 	int currentIndex;

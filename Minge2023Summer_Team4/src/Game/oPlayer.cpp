@@ -9,6 +9,8 @@ Player::Player(int hp_, int damage_, String textureStr, Figure hitbox_, Vec2 pos
 {
 	setupAnimations();
 	changeCoolTime(1s);
+	maxHp = hp;
+	previousHp = hp;
 }
 
 Player::~Player()
@@ -44,9 +46,6 @@ void Player::update() {
 
 	move();
 
-	// アニメーションを更新
-	updateAnimation();
-
 	// プレイヤーが動いている場合のみアニメーションフレームを更新
 	if (isMoving) {
 		animationDuration++;
@@ -58,8 +57,38 @@ void Player::update() {
 		// プレイヤーが動いていない場合、アニメーションの最初のフレームを表示
 		animationFrame = 0;
 	}
+
+	// ダメージを受けたことを検知
+	if (previousHp > hp) {
+		damageDelayElapsed = 0.0;
+	}
+	else {
+		damageDelayElapsed += Scene::DeltaTime();
+	}
+
+	Logger << damageDelayElapsed;
+
+	regenerateHp(regeneVal);
+
+	previousHp = hp; // 現在のHPを前フレームのHPとして保存
 }
 
+void Player::regenerateHp(double regeneVal) {
+	if (damageDelayElapsed > regenDelay)
+	{
+
+		if (isMoving == true) regeneVal *= 0.25;
+
+		Logger << regeneVal;
+
+		hp += regeneVal;
+
+		if (hp > maxHp)
+		{
+			hp = maxHp;
+		}
+	}
+}
 
 void Player::move() {
 	const double deltaTime = Scene::DeltaTime();
@@ -174,28 +203,6 @@ bool Player::deathAnimationFinished() const {
 	}
 }
 
-void Player::updateAnimation() {
-	// デルタタイムをアニメーションタイマーに加算
-	animationTimer += Scene::DeltaTime();
-
-	// タイマーがアニメーションの更新間隔を超えた場合
-	if (animationTimer >= animationInterval) {
-		// アニメーションフレームをインクリメント
-		animationFrame++;
-
-		// 現在の方向のアニメーションフレームの最大数を取得
-		int maxFrames = playerAnimations[currentDirection].size();
-
-		// フレーム数が最大を超えた場合、リセット
-		if (animationFrame >= maxFrames) {
-			animationFrame = 0;
-		}
-
-		// アニメーションタイマーをリセット
-		animationTimer = 0.0;
-	}
-}
-
 void Player::updateDirectionToMouse() {
 	// マウスカーソルとプレイヤーの位置の差分を計算
 	Vec2 diff = (Cursor::PosF() - Scene::CenterF()).setLength(1);
@@ -258,7 +265,8 @@ void Player::levelUp()
 	// その他レベルアップ時の処理
 	switch (level % 4) {
 	case 0:
-		hp += 10; // 体力を10増加
+		maxHp += 10; // 体力を10増加
+		regeneVal += 0.05;
 		
 		break;
 	case 1:
@@ -389,6 +397,11 @@ int Player::getBulletLevel(BulletType bulletType) const
 int Player::getNextlevelExp() const
 {
 	return this->nextLevelExp;
+}
+
+int Player::getMaxHp() const
+{
+	return this->maxHp;
 }
 
 // セット関数
