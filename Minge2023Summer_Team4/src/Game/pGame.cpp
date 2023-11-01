@@ -144,14 +144,19 @@ void Game::debug()
 	{
 	case BulletType::SpecialA:
 		Print << U"SpecialA";
+		break;
 	case BulletType::SpecialB:
 		Print << U"SpecialB";
+		break;
 	case BulletType::SpecialC:
 		Print << U"SpecialC";
+		break;
 	case BulletType::SpecialD:
 		Print << U"SpecialD";
+		break;
 	case BulletType::None:
 		Print << U"未取得";
+		break;
 	}
 
 	Print << topLeft;
