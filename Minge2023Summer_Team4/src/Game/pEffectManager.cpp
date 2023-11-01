@@ -50,9 +50,9 @@ void EffectManager::create_damageScoreEffect(Vec2 pos, int32 score) {
 	myEffect.add<damageScoreEffect>(pos, offset, score);
 }
 
-void EffectManager::create_spliteEffect(Vec2 pos, String spliteName, double duration)
+void EffectManager::create_spliteEffect(Vec2 pos, String spliteName, double duration, double size)
 {
-	myEffect.add<spliteEffect>(pos, offset, effectAnimations[spliteName], duration);
+	myEffect.add<spliteEffect>(pos, offset, effectAnimations[spliteName], duration, size);
 
 }
 

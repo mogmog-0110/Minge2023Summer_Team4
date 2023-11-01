@@ -141,7 +141,7 @@ void Game::debug()
 
 	Print << U"特殊弾";
 
-	if (KeyEnter.down()) myEffectManager->create_spliteEffect(myPlayer->getPos(), U"Effect3", 0.5);
+	if (KeyEnter.down()) myEffectManager->create_spliteEffect(myPlayer->getPos(), U"Effect1", 0.25, 100);
 
 	switch (objectManager.currentState)
 	{
