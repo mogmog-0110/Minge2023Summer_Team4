@@ -38,6 +38,7 @@ Game::~Game()
 
 void Game::update()
 {
+	ClearPrint();
 	switch (currentState)
 	{
 	case GameState::Loading:
@@ -129,7 +130,6 @@ void Game::draw() const
 
 void Game::debug()
 {
-	ClearPrint();
 
 	Print << U"経験値";
 	Print << Player::getInstance()->getExp();
@@ -144,14 +144,19 @@ void Game::debug()
 	{
 	case BulletType::SpecialA:
 		Print << U"SpecialA";
+		break;
 	case BulletType::SpecialB:
 		Print << U"SpecialB";
+		break;
 	case BulletType::SpecialC:
 		Print << U"SpecialC";
+		break;
 	case BulletType::SpecialD:
 		Print << U"SpecialD";
+		break;
 	case BulletType::None:
 		Print << U"未取得";
+		break;
 	}
 
 	Print << topLeft;

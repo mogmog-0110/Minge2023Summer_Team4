@@ -9,7 +9,8 @@ class Bullet :
 {
 private:
 
-	BulletType bulletType;
+	BulletType bulletType ;
+	int bulletPhase = 0;
 	int level;
 
 protected:
@@ -26,6 +27,11 @@ public:
 
 	void update() override;
 	void move() override;
+
+
+	void onCollisionResponse(int damage);
+	void onCollisionResponse(Vec2 RepullPos);
+	bool isBulletSelfDamage();
 
 	bool isDead(Vec2 playerPos_);
 

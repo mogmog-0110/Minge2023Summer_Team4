@@ -9,6 +9,8 @@ Player::Player(int hp_, int damage_, String textureStr, Figure hitbox_, Vec2 pos
 {
 	setupAnimations();
 	changeCoolTime(1s);
+	//開発用
+	availableBullet << ItemType::SpecialMagicD;
 }
 
 Player::~Player()

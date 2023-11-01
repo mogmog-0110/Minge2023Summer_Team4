@@ -17,7 +17,7 @@ public:
 		: GameObject(eEnemy, hp_, damage_, textureStr_, hitbox_, pos_, vel_, acc_)
 	{
 		calcAndSetExp();
-		changeCoolTime(0.1s);
+		changeCoolTime(0.01s);
 	};
 
 	~Enemy();
