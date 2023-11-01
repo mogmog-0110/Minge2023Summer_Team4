@@ -71,8 +71,9 @@ public:
 	void changeCoolTime(Duration);
 
 	bool isDead(Vec2 playerPos_ = {0,0});
-	bool isItemDrop();
 	//実質ゲッター関数
+	bool isItemDrop();
+	bool isBulletSelfDamage();
 
 	//ゲッター関数
 	Vec2 getPos() const;

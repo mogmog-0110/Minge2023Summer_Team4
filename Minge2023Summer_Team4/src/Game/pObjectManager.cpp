@@ -70,6 +70,12 @@ void ObjectManager::collision() {
 		checkCollisions(myPlayer, myItems);
 	}
 
+	/*
+	for (size_t i = 0; i < myPlayerBullets.size(); ++i) {
+		checkCollision(myPlayer, myPlayerBullets[j]);
+	}
+	*/
+
 	checkCollisionsBetweenArrays(myDebrises, myPlayerBullets);
 	checkCollisionsBetweenArrays(myDebrises, myEnemyBullets);
 	checkCollisionsBetweenArrays(myEnemies, myPlayerBullets);

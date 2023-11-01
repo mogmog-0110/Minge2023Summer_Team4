@@ -84,6 +84,11 @@ BulletType Bullet::getBulletType()
 	return this->bulletType;
 }
 
+bool Bullet::isBulletSelfDamage()
+{
+	return (bulletType == BulletType::SpecialD);
+}
+
 // setter
 
 void Bullet::setBulletType(BulletType bulletType)

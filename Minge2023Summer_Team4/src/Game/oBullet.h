@@ -31,6 +31,7 @@ public:
 
 	void onCollisionResponse(int damage);
 	void onCollisionResponse(Vec2 RepullPos);
+	bool isBulletSelfDamage();
 
 	bool isDead(Vec2 playerPos_);
 

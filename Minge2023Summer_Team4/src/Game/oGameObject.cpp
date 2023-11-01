@@ -115,6 +115,11 @@ bool GameObject::isItemDrop() {
 	return isItemDropable;
 }
 
+bool GameObject::isBulletSelfDamage()
+{
+	return false;
+}
+
 //====================================================
 //君は完璧で最強のゲッター関数
 
