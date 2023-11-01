@@ -10,6 +10,7 @@ class Bullet :
 private:
 
 	BulletType bulletType ;
+	int bulletPhase = 0;
 	int level;
 
 protected:
@@ -29,6 +30,7 @@ public:
 
 
 	void onCollisionResponse(int damage);
+	void onCollisionResponse(Vec2 RepullPos);
 
 	bool isDead(Vec2 playerPos_);
 

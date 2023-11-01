@@ -38,6 +38,7 @@ Game::~Game()
 
 void Game::update()
 {
+	ClearPrint();
 	switch (currentState)
 	{
 	case GameState::Loading:
@@ -129,7 +130,6 @@ void Game::draw() const
 
 void Game::debug()
 {
-	ClearPrint();
 
 	Print << U"経験値";
 	Print << Player::getInstance()->getExp();

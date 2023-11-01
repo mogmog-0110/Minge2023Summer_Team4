@@ -8,6 +8,19 @@ void Bullet::update()
 {
 	move();
 
+	if (bulletType == BulletType::SpecialD && bulletPhase > 0)
+	{
+		static Timer brustKeepTimer(0.5s, StartImmediately::No);
+		if (bulletPhase == 1)
+		{
+			brustKeepTimer.start();
+			bulletPhase++;
+		}
+		else if (brustKeepTimer.isRunning() == false)
+		{
+			hp = 0;
+		}
+	}
 }
 
 void Bullet::move()
@@ -24,7 +37,7 @@ void Bullet::move()
 		if (vel.length() > 1)
 		{
 			//クソコード
-			vel.setLength(vel.length() * 0.95);
+			vel.setLength(vel.length() * 0.93);
 		}
 		break;
 	}
@@ -46,11 +59,23 @@ bool Bullet::isDead(Vec2 playerPos_) {
 
 void Bullet::onCollisionResponse(int damage)
 {
-	GameObject::onCollisionResponse(damage);
 
-
+	if (bulletType == BulletType::SpecialD) {
+ 		if (bulletPhase == 0)
+		{
+			hitbox = Circle(250);
+			hitbox.setCenter(pos);
+			GameObject::damage = 10000;
+			bulletPhase++;
+		}
+	}
+	else GameObject::onCollisionResponse(damage);
 }
 
+void Bullet::onCollisionResponse(Vec2 RepullPos)
+{
+	GameObject::onCollisionResponse(RepullPos);\
+}
 
 // getter
 
