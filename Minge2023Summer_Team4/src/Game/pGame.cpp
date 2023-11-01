@@ -140,6 +140,9 @@ void Game::debug()
 	Print << Player::getInstance()->getDamage();
 
 	Print << U"特殊弾";
+
+	if (KeyEnter.down()) myEffectManager->create_spliteEffect(myPlayer->getPos(), U"Effect1", 0.25, 100);
+
 	switch (objectManager.currentState)
 	{
 	case BulletType::SpecialA:

@@ -4,7 +4,10 @@ EffectManager* EffectManager::instance = nullptr;
 
 EffectManager::EffectManager()
 {
-	
+	setupAnimations(U"Effect1", 128);
+	setupAnimations(U"Effect2", 128);
+	setupAnimations(U"Effect3", 128);
+	setupAnimations(U"Effect4", 256);
 }
 
 EffectManager::~EffectManager()
@@ -30,10 +33,27 @@ void EffectManager::destroy()
 	instance = nullptr;
 }
 
+//正方形前提
+void EffectManager::setupAnimations(String strAsset, int32 height)
+{
+	// TextureAssetからテクスチャを直接取得
+	const Texture& effectTexture = TextureAsset(strAsset);
+
+	auto regions = splitImage(effectTexture, height, height);
+
+	effectAnimations[strAsset] = regions;
+
+}
 
 void EffectManager::create_damageScoreEffect(Vec2 pos, int32 score) {
 
 	myEffect.add<damageScoreEffect>(pos, offset, score);
+}
+
+void EffectManager::create_spliteEffect(Vec2 pos, String spliteName, double duration, double size)
+{
+	myEffect.add<spliteEffect>(pos, offset, effectAnimations[spliteName], duration, size);
+
 }
 
 

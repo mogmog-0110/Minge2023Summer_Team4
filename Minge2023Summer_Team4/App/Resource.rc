@@ -130,6 +130,8 @@ Resource(Image/Player.png)
 Resource(Image/Background.png)
 Resource(Image/Effect1.png)
 Resource(Image/Effect2.png)
+Resource(Image/Effect3.png)
+Resource(Image/Effect4.png)
 
 //Font
 Resource(Font/Nosutaru-dot.ttf)
