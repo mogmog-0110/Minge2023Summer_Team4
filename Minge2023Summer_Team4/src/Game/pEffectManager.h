@@ -37,9 +37,12 @@ public:
 
 	// エフェクト作成
 	void create_damageScoreEffect(Vec2 pos, int32 score);
+	void create_spliteEffect(Vec2 pos, String, double duration);
 
 	// 描画
 	const void draw(Vec2 offset);
+
+	//デバッグ
 };
 
 //テスト用のダメージスコアエフェクト
@@ -90,7 +93,12 @@ struct spliteEffect : IEffect
 	bool update(double t) override
 	{
 		//m_effectAnimation[int(t / m_updateInterval)].resized(m_size).drawAt(m_pos - m_offset);
-		m_effectAnimation[int(t / m_updateInterval)].drawAt(m_pos - m_offset);
+		int animationFrame = t / m_updateInterval;
+
+		if (m_effectAnimation.size() > animationFrame) {
+			m_effectAnimation[animationFrame].drawAt(m_pos - m_offset);
+		}
+
 		return (t < m_duration);
 	}
 };

@@ -6,6 +6,8 @@ EffectManager::EffectManager()
 {
 	setupAnimations(U"Effect1", 128);
 	setupAnimations(U"Effect2", 128);
+	setupAnimations(U"Effect3", 128);
+	setupAnimations(U"Effect4", 256);
 }
 
 EffectManager::~EffectManager()
@@ -46,6 +48,12 @@ void EffectManager::setupAnimations(String strAsset, int32 height)
 void EffectManager::create_damageScoreEffect(Vec2 pos, int32 score) {
 
 	myEffect.add<damageScoreEffect>(pos, offset, score);
+}
+
+void EffectManager::create_spliteEffect(Vec2 pos, String spliteName, double duration)
+{
+	myEffect.add<spliteEffect>(pos, offset, effectAnimations[spliteName], duration);
+
 }
 
 
