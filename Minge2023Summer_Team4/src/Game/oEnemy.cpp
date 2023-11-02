@@ -19,6 +19,12 @@ void Enemy::move()
 	hitbox.setCenter(pos);
 }
 
+void Enemy::update()
+{
+	GameObject::update();
+	updateDirection();
+}
+
 void Enemy::calcAndSetExp()
 {
 	int expPoints = 0;
@@ -49,6 +55,30 @@ void Enemy::calcAndSetExp()
 		expPoints += 50;
 	}
 	if (enemyLevel >= 6)
+	{
+		expPoints += 50;
+	}
+  if (enemyLevel >= 7)
+	{
+		expPoints += 50;
+	}
+  if (enemyLevel >= 8)
+	{
+		expPoints += 50;
+	}
+  if (enemyLevel >= 9)
+	{
+		expPoints += 50;
+	}
+  if (enemyLevel >= 10)
+	{
+		expPoints += 50;
+	}
+  if (enemyLevel >= 11)
+	{
+		expPoints += 50;
+	}
+  if (enemyLevel >= 12)
 	{
 		expPoints += 50;
 	}
@@ -237,4 +267,61 @@ Array<Vec2> Enemy::calculateDirection(int way)
 		}
 	}
 	return bulletVectors;
+=======
+void Enemy::setUpAnimation()
+{
+
+	// 敵の種類によってセットするアニメーションを変える。
+	if (textureStr == U"Kuro")
+	{
+		const Texture& texture = TextureAsset(textureStr);
+	}
+	else if (textureStr == U"Worm" || textureStr == U"BigSpider")
+	{
+		const Texture& texture = TextureAsset(textureStr);
+
+		// テクスチャを32x32ピクセルの領域に分割
+		auto regions = splitImage(texture, 32 * EXPORT_SCALE, 32 * EXPORT_SCALE);
+
+		// 各向きごとのアニメーションフレームを設定
+		animations[U"right"] = { regions[0], regions[1], regions[2], regions[3], regions[4], regions[5], regions[6], regions[7]};
+		animations[U"left"] = { regions[8], regions[9], regions[10], regions[11], regions[12], regions[13], regions[14], regions[15]};
+	}
+	else if (textureStr == U"EvilEye")
+	{
+		const Texture& texture = TextureAsset(textureStr);
+
+		// テクスチャを32x32ピクセルの領域に分割
+		auto regions = splitImage(texture, 32 * EXPORT_SCALE, 32 * EXPORT_SCALE);
+
+		// 各向きごとのアニメーションフレームを設定
+		animations[U"right"] = { regions[0], regions[1], regions[2], regions[3], regions[4], regions[5], regions[6]};
+		animations[U"left"] = { regions[7], regions[8], regions[9], regions[10], regions[11], regions[12], regions[13]};
+	}
+	else
+	{
+		const Texture& texture = TextureAsset(textureStr);
+
+		// テクスチャを16x16ピクセルの領域に分割
+		auto regions = splitImage(texture, 16 * EXPORT_SCALE, 16 * EXPORT_SCALE);
+
+		//　各向きごとのアニメーションフレームを設定
+		animations[U"right"] = { regions[0], regions[1], regions[2], regions[3] };
+		animations[U"left"] = { regions[4], regions[5], regions[6], regions[7] };
+	}
+}
+
+void Enemy::updateDirection()
+{
+	// 敵の位置とプレイヤーの位置の差を取得
+	Player* myPlayer = Player::getInstance();
+	double diff = myPlayer->getPos().x - this->pos.x;
+
+	// 差に基づいてcurrentDirectionを更新
+	if (diff > 0) {
+		this->currentDirection = U"right";
+	}
+	else {
+		this->currentDirection = U"left";
+	}
 }

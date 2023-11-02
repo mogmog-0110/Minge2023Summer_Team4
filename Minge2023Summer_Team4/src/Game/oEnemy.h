@@ -24,11 +24,14 @@ public:
 		calcAndSetExp();
 		changeCoolTime(0.01s);
 		maxHp = hp;
+		setUpAnimation();
 	};
 
 	~Enemy();
 
+
 	void move() override;
+	void update() override;
 
 	void calcAndSetExp();
 	int getStrength() const;
@@ -40,4 +43,7 @@ public:
 	Array<Vec2> calculateDirection(int way);
 
 	double bulletDelayElapsed = 0.0;  // 弾の生成遅延時間を計測するための変数
+
+	void setUpAnimation();
+	void updateDirection();
 };
