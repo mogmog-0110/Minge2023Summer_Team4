@@ -57,6 +57,67 @@ bool Bullet::isDead(Vec2 playerPos_) {
 	return false;
 }
 
+void Bullet::setUpAnimation()
+{
+	switch (bulletType)
+	{
+	case BulletType::Normal:
+	{
+		const Texture& texture = TextureAsset(textureStr);
+
+		// テクスチャを16x16ピクセルの領域に分割
+		auto regions = splitImage(texture, 16 * EXPORT_SCALE, 16 * EXPORT_SCALE);
+
+		// 各向きごとのアニメーションフレームを設定
+		animations[U"left"] = { regions[0], regions[1], regions[2], regions[3] };
+
+		break;
+	}
+	case BulletType::SpecialA:
+	{
+		const Texture& texture = TextureAsset(textureStr);
+
+		break;
+	}
+	case BulletType::SpecialB:
+	{
+		const Texture& texture = TextureAsset(textureStr);
+
+		// テクスチャを32x32ピクセルの領域に分割
+		auto regions = splitImage(texture, 32 * EXPORT_SCALE, 32 * EXPORT_SCALE);
+
+		// 各向きごとのアニメーションフレームを設定
+		animations[U"left"] = { regions[0], regions[1], regions[2], regions[3] };
+
+		break;
+	}
+	case BulletType::SpecialC:
+	{
+		const Texture& texture = TextureAsset(textureStr);
+
+		// テクスチャを32x32ピクセルの領域に分割
+		auto regions = splitImage(texture, 32 * EXPORT_SCALE, 32 * EXPORT_SCALE);
+
+		// 各向きごとのアニメーションフレームを設定
+		animations[U"left"] = { regions[0], regions[1], regions[2], regions[3] };
+
+		break;
+	}
+	case BulletType::SpecialD:
+	{
+		const Texture& texture = TextureAsset(textureStr);
+
+		// テクスチャを16x16ピクセルの領域に分割
+		auto regions = splitImage(texture, 16 * EXPORT_SCALE, 16 * EXPORT_SCALE);
+
+		// 各向きごとのアニメーションフレームを設定
+		animations[U"left"] = { regions[0], regions[1], regions[2], regions[3] };
+
+		break;
+	}
+	}
+}
+
 void Bullet::onCollisionResponse(int damage)
 {
 

@@ -71,7 +71,7 @@ public:
 
 	virtual void draw(Vec2 offset, bool isHitboxDraw) const;
 
-	void drawAnimation(Vec2 offset) const;
+	virtual void drawAnimation(Vec2 offset) const;
 
 
 	bool isCollisional();

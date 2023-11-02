@@ -39,6 +39,13 @@ void Main()
 	TextureAsset::Register(U"SpecialMagicB", Resource(U"Image/MagicBookB.png"));
 	TextureAsset::Register(U"SpecialMagicC", Resource(U"Image/MagicBookC.png"));
 	TextureAsset::Register(U"SpecialMagicD", Resource(U"Image/MagicBookD.png"));
+	TextureAsset::Register(U"EnemyBullet", Resource(U"Image/EnemyBullet.png"));
+	TextureAsset::Register(U"LaserBullet", Resource(U"Image/LaserBullet.png"));
+	TextureAsset::Register(U"MineBullet", Resource(U"Image/MineBullet.png"));
+	TextureAsset::Register(U"NormalBullet", Resource(U"Image/NormalBullet.png"));
+	TextureAsset::Register(U"PrasmaBullet", Resource(U"Image/prasmaBullet.png"));
+	TextureAsset::Register(U"WideBullet", Resource(U"Image/WideBullet.png"));
+
 	TextureAsset::Register(U"NormalMagic", Resource(U"Image/NormalBook.png"));
 	TextureAsset::Register(U"RockL", Resource(U"Image/RockL.png"));
 	TextureAsset::Register(U"RockM", Resource(U"Image/RockM.png"));

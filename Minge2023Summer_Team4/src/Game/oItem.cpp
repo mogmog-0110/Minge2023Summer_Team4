@@ -5,6 +5,18 @@ Item::~Item()
 
 }
 
+void Item::drawAnimation(Vec2 drawPos) const
+{
+	if (animations.contains(currentDirection)) {
+		const auto& frames = animations.at(currentDirection);
+		if (!frames.isEmpty())
+		{
+			size_t frameIndex = animationFrame % frames.size();  // size_t型の一時変数を使用
+			frames[frameIndex].resized(size, size).drawAt(drawPos, HSV{Scene::Time() * 60, 0.6, 1.0, 0.7});
+		}
+	}
+}
+
 void Item::setUpAnimation()
 {
 	if (textureStr == U"Experience")

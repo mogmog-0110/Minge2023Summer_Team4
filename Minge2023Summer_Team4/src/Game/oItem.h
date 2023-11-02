@@ -21,6 +21,7 @@ public:
 
 	~Item();
 
+	void drawAnimation(Vec2) const override;
 	void setUpAnimation();
 	void setMagicBookTexture();
 
