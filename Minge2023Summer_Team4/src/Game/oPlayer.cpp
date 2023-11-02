@@ -4,7 +4,7 @@
 Player* Player::instance = nullptr;
 
 Player::Player(int hp_, int damage_, String textureStr, Figure hitbox_, Vec2 pos_, double speed_)
-	:speed(speed_), GameObject(eObjectType::ePlayer, hp_, damage_,textureStr,hitbox_, pos_, { 0,0 }, { 0,0 }),
+	:speed(speed_), GameObject(eObjectType::ePlayer, hp_, damage_, textureStr, hitbox_, pos_, { 0,0 }, { 0,0 }),
 	expPoints(0), level(1), nextLevelExp(100)
 {
 	setupAnimations();
@@ -12,6 +12,7 @@ Player::Player(int hp_, int damage_, String textureStr, Figure hitbox_, Vec2 pos
 
 	maxHp = hp;
 	previousHp = hp;
+}
 
 Player::~Player()
 {

@@ -451,10 +451,12 @@ void Game::drawMagicBook() const
 	{
 		int index = getBookTextureIndex(type);
 		double alpha = 0.5;
+		/*
 		if (index == getBookTextureIndex(myPlayer->availableBullet[objectManager.currentIndex]))
 		{
 			alpha = 1;
 		}
+		*/
 		bookTextures[index].resized(64, 64).drawAt(bookPositions[index], ColorF(1, 1, 1, alpha));
 	}
 
