@@ -30,12 +30,15 @@ void Bullet::move()
 	case BulletType::SpecialA:
 		if (bulletPhase == 0)
 		{
-			Print << pos;
-			Print << tipPos;
 			tipPos += vel * Scene::DeltaTime();
-			Vec2 quadWidth = (tipPos - pos).rotated(90_deg).setLength(10);
+			Vec2 quadWidth = (tipPos - pos).rotated(90_deg).setLength(5);
 			hitbox = Quad{ pos + quadWidth, pos - quadWidth, tipPos - quadWidth, tipPos + quadWidth};
-
+			if ((tipPos - pos).length() > 200) bulletPhase++;
+		}
+		else
+		{
+			pos += vel * Scene::DeltaTime();
+			hitbox.moveBy(vel * Scene::DeltaTime());
 		}
 
 		break;
