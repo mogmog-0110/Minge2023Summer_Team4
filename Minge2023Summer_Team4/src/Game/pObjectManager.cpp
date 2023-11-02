@@ -4,7 +4,7 @@
 ObjectManager::ObjectManager()
 {
 	// 初期ステータスの決定
-	Player::create(200, 1000, U"", Circle(30), Vec2(Scene::Center().x, Scene::Center().y), 300);
+	Player::create(20000, 1000, U"", Circle(30), Vec2(Scene::Center().x, Scene::Center().y), 300);
 	myGhost = new Ghost(1000000, 0, U"Ghost", Circle(10), Vec2(Scene::Center().x - 60, Scene::Center().y - 60), { 300, 300 }, { 1, 1 });
 	myPlayer = Player::getInstance(); 
 	myEffectManager = EffectManager::getInstance();
@@ -138,7 +138,7 @@ Enemy* ObjectManager::createEnemyFromData(WaveData waveData)
 	double speed = enemyDatas[name].speed * waveData.statusModifier;
 	Vec2 spawnPos = { waveData.spawnPos.x + Random(50), waveData.spawnPos.y + Random(50) };
 
-	GameObject* newEnemy = ObjectAppearanceManager::createNewObject(eEnemy, hp, damage, textureStr, hitbox, spawnPos, { speed, speed }, { 1, 1 });
+	GameObject* newEnemy = ObjectAppearanceManager::createNewObject(eEnemy, hp, damage, textureStr, hitbox, spawnPos + myPlayer->getPos(), {speed, speed}, {1, 1});
 	return static_cast<Enemy*>(newEnemy);
 }
 
