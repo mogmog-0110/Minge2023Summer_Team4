@@ -6,9 +6,14 @@
 class Player;
 
 class Enemy :
-    public GameObject
+	public GameObject
 {
 private:
+
+	int enemyLevel; // 1～6の範囲
+	bool hasBullet;
+	double maxHp;
+
 protected:
 public:
 
@@ -18,6 +23,7 @@ public:
 	{
 		calcAndSetExp();
 		changeCoolTime(0.01s);
+		maxHp = hp;
 	};
 
 	~Enemy();
@@ -26,5 +32,12 @@ public:
 
 	void calcAndSetExp();
 	int getStrength() const;
-};
 
+	void setHasBullet();
+	BulletProperty createBulletProperty();
+	void determineLevel();
+
+	Array<Vec2> calculateDirection(int way);
+
+	double bulletDelayElapsed = 0.0;  // 弾の生成遅延時間を計測するための変数
+};

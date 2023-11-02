@@ -74,6 +74,8 @@ public:
 	void generateBackgroundChunk(Point);
 
 	void drawHpBar() const;
+	ItemType fromBulletType(BulletType bulletType);
+	BulletType fromItemType(ItemType itemType) const;
 	void drawMagicBook() const;
 
 	int getBookTextureIndex(ItemType) const;

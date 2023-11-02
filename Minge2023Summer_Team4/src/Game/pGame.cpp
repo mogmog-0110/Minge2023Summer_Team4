@@ -455,6 +455,7 @@ void Game::drawMagicBook() const
 		{
 			alpha = 1;
 		}
+
 		bookTextures[index].resized(64, 64).drawAt(bookPositions[index], ColorF(1, 1, 1, alpha));
 	}
 
@@ -479,8 +480,6 @@ int Game::getBookTextureIndex(ItemType type) const
 	}
 }
 
-
-
 void Game::drawHpBar() const
 {
 	Player* myPlayer = Player::getInstance();
@@ -499,6 +498,38 @@ void Game::drawHpBar() const
 
 	// HPのゲージを描画（長さを変えて）
 	hp.resized(gaugeWidth, 32).draw(startX, 320 - hp.height() / 2 + 16);
+}
+
+ItemType Game::fromBulletType(BulletType bulletType)
+{
+	switch (bulletType)
+	{
+	case BulletType::SpecialA:
+		return ItemType::SpecialMagicA;
+	case BulletType::SpecialB:
+		return ItemType::SpecialMagicB;
+	case BulletType::SpecialC:
+		return ItemType::SpecialMagicC;
+	case BulletType::SpecialD:
+		return ItemType::SpecialMagicD;
+	}
+}
+
+BulletType Game::fromItemType(ItemType itemType) const
+{
+	switch (itemType)
+	{
+	case ItemType::SpecialMagicA:
+		return BulletType::SpecialA;
+	case ItemType::SpecialMagicB:
+		return BulletType::SpecialB;
+	case ItemType::SpecialMagicC:
+		return BulletType::SpecialC;
+	case ItemType::SpecialMagicD:
+		return BulletType::SpecialD;
+	default:
+		return BulletType::None;
+	}
 }
 
 

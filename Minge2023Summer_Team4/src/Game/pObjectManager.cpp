@@ -186,6 +186,35 @@ void ObjectManager::createPlayerBullet(Vec2 pos_, Vec2 vel_, Vec2 acc_)
 	}
 }
 
+void ObjectManager::createEnemyBullet()
+{
+	for (size_t i = 0; i < myEnemies.size(); i++)
+	{
+		BulletProperty bp = myEnemies[i]->createBulletProperty();
+
+		myEnemies[i]->bulletDelayElapsed += Scene::DeltaTime();
+
+		if (myEnemies[i]->bulletDelayElapsed >= bp.delay)
+		{
+			for (const Vec2& dir : bp.direction)
+			{
+				Vec2 pos = myEnemies[i]->getPos();  // 敵の位置
+				Vec2 vel = dir * bp.speed;  // 速度ベクトル
+				Vec2 acc = { 1, 1 };  // 加速度ベクトル（必要に応じて設定）
+
+				GameObject* newBullet = ObjectAppearanceManager::createNewObject(eEnemyBullet, 1, bp.damage, U"EnemyBullet", Circle{ 16 }, pos, vel, acc);
+				if (newBullet) {
+					Bullet* newEnemyBullet = static_cast<Bullet*>(newBullet);
+					// 必要であれば、ここでnewEnemyBulletのプロパティを設定
+					myEnemyBullets << newEnemyBullet;
+				}
+			}
+			myEnemies[i]->bulletDelayElapsed = 0.0;  // 遅延時間をリセット
+		}
+	}
+}
+
+
 void ObjectManager::createSpecialBullet(Vec2 pos, Vec2 vel, Vec2  acc)
 {
 	switch (currentState) 

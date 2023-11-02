@@ -67,8 +67,6 @@ void Player::update() {
 		damageDelayElapsed += Scene::DeltaTime();
 	}
 
-	Logger << damageDelayElapsed;
-
 	regenerateHp(regeneVal);
 
 	previousHp = hp; // 現在のHPを前フレームのHPとして保存
@@ -79,8 +77,6 @@ void Player::regenerateHp(double regeneVal) {
 	{
 
 		if (isMoving == true) regeneVal *= 0.25;
-
-		Logger << regeneVal;
 
 		hp += regeneVal;
 

@@ -75,6 +75,17 @@ enum class BulletType {
 	None, // 特殊弾を取得していない
 };
 
+struct BulletProperty
+{
+	int damage;
+	Figure hitbox;
+	double speed;
+
+	double delay; // 弾生成の間隔
+	int way; // 2way, 3way, 4way ...etc
+	Array<Vec2> direction; // 弾の飛ぶ方向,実際にはVec2型として、velに格納
+};
+
 // 背景タイルの情報を保持する構造体
 struct BackgroundTile
 {
