@@ -20,7 +20,7 @@ Game::Game(const InitData& init)
 	topLeft = objectManager.myPlayer->getPos() - Scene::Center();
 
 	// 敵データの読み込み
-	objectManager.enemyDatas = objectManager.loadEnemyData(U"../src/Game/csvFile/enemyTest.csv");
+	objectManager.enemyDatas = objectManager.loadEnemyData(U"../src/Game/csvFile/enemy.csv");
 	setUpBackground();
 }
 
@@ -451,12 +451,14 @@ void Game::drawMagicBook() const
 	{
 		int index = getBookTextureIndex(type);
 		double alpha = 0.5;
-		/*
-		if (index == getBookTextureIndex(myPlayer->availableBullet[objectManager.currentIndex]))
+    
+		if (!(myPlayer->availableBullet.isEmpty()))
 		{
-			alpha = 1;
+			if (index == getBookTextureIndex(myPlayer->availableBullet[objectManager.currentIndex]))
+			{
+				alpha = 1;
+			}
 		}
-		*/
 		bookTextures[index].resized(64, 64).drawAt(bookPositions[index], ColorF(1, 1, 1, alpha));
 	}
 

@@ -12,10 +12,6 @@ Player::Player(int hp_, int damage_, String textureStr, Figure hitbox_, Vec2 pos
 
 	maxHp = hp;
 	previousHp = hp;
-
-
-	//開発用
-	availableBullet << ItemType::SpecialMagicA;
 }
 
 Player::~Player()

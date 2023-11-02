@@ -55,6 +55,17 @@ void Main()
 	TextureAsset::Register(U"Effect2", Resource(U"Image/Effect2.png"));
 	TextureAsset::Register(U"Effect3", Resource(U"Image/Effect3.png"));
 	TextureAsset::Register(U"Effect4", Resource(U"Image/Effect4.png"));
+
+	TextureAsset::Register(U"Bat", Resource(U"Image/Bat.png"));
+	TextureAsset::Register(U"BigRat", Resource(U"Image/BigRat.png"));
+	TextureAsset::Register(U"Rat", Resource(U"Image/Rat.png"));
+	TextureAsset::Register(U"BigSpider", Resource(U"Image/BigSpider.png"));
+	TextureAsset::Register(U"Spider", Resource(U"Image/Spider.png"));
+	TextureAsset::Register(U"BloatedBedBug", Resource(U"Image/BloatedBedBug.png"));
+	TextureAsset::Register(U"Cockroach", Resource(U"Image/Cockroach.png"));
+	TextureAsset::Register(U"EvilEye", Resource(U"Image/EvilEye.png"));
+	TextureAsset::Register(U"Worm", Resource(U"Image/Worm.png"));
+	TextureAsset::Register(U"Kuro", Resource(U"Image/Kuro.png")); // BOSS
   
 	//font
 	FontAsset::Register(U"dotFont1", 20, Resource(U"Font/Nosutaru-dot.ttf"));
