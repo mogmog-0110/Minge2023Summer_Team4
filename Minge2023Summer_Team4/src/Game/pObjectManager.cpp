@@ -4,12 +4,13 @@
 ObjectManager::ObjectManager()
 {
 	// 初期ステータスの決定
-	Player::create(100000, 1000, U"", Circle(30), Vec2(Scene::Center().x, Scene::Center().y), 300);
-	myPlayer = Player::getInstance();
+	Player::create(200, 1000, U"", Circle(30), Vec2(Scene::Center().x, Scene::Center().y), 300);
+	myGhost = new Ghost(1000000, 0, U"Ghost", Circle(10), Vec2(Scene::Center().x - 60, Scene::Center().y - 60), { 300, 300 }, { 1, 1 });
+	myPlayer = Player::getInstance(); 
 	myEffectManager = EffectManager::getInstance();
 	//createEnemy();
 	currentState = BulletType::None;
-	currentIndex = 0;
+	currentIndex = -1;
 }
 
 ObjectManager::~ObjectManager()
@@ -21,6 +22,7 @@ void ObjectManager::update()
 {
 	collision();
 	myPlayer->update();
+	myGhost->update(myPlayer->getPos(), myPlayer->currentDirection);
 	
 	createDebris();
 	updateObjList(myDebrises);
@@ -103,13 +105,14 @@ void ObjectManager::collision() {
 void ObjectManager::draw(Vec2 offset) const
 {
 
-	for (size_t i = 0; i < myDebrises.size(); i++) myDebrises[i]->draw(offset, true);
+	for (size_t i = 0; i < myDebrises.size(); i++) myDebrises[i]->draw(offset, false);
 	for (size_t i = 0; i < myPlayerBullets.size(); i++) myPlayerBullets[i]->draw(offset, true);
 	for (size_t i = 0; i < myEnemyBullets.size(); i++) myEnemyBullets[i]->draw(offset, true);
 	for (size_t i = 0; i < myEnemies.size(); i++) myEnemies[i]->draw(offset, true);
-	for (size_t i = 0; i < myItems.size(); i++) myItems[i]->draw(offset, true);
+	for (size_t i = 0; i < myItems.size(); i++) myItems[i]->draw(offset, false);
 
 	this->myPlayer->draw(offset, false);
+	this->myGhost->draw(offset);
 }
 
 void ObjectManager::createEnemy()
@@ -145,10 +148,27 @@ void ObjectManager::createDebris()
 
 	while (myDebrises.size() < 100)
 	{
-		int randomSize = Random(30, 100);
-		int hp = 1000;
-		if (randomSize <= 50) hp = 300;
-		GameObject* newDebris = ObjectAppearanceManager::createNewObject(eDebris, hp, 10, U"", Circle(randomSize), ObjectAppearanceManager::generateRandomPos(), {0,0}, {0,0});
+		int n = Random(1, 3);
+		int hp;
+		int hitbox;
+
+		if (n == 1)
+		{
+			hitbox = 100;
+			hp = 1500;
+		}
+		else if (n == 2)
+		{
+			hitbox = 65;
+			hp = 1000;
+		}
+		else if (n == 3)
+		{
+			hitbox = 30;
+			hp = 500;
+		}
+		
+		GameObject* newDebris = ObjectAppearanceManager::createNewObject(eDebris, hp, 10, U"", Circle(hitbox), ObjectAppearanceManager::generateRandomPos(), {0,0}, {0,0});
 		if (newDebris) {
 			myDebrises << static_cast<Debris*>(newDebris);
 		}
@@ -157,7 +177,7 @@ void ObjectManager::createDebris()
 
 void ObjectManager::createPlayerBullet(Vec2 pos_, Vec2 vel_, Vec2 acc_)
 {
-	GameObject* newBullet = ObjectAppearanceManager::createNewObject(ePlayerBullet, 1, 10 + myPlayer->getDamage(), U"", Circle{10}, pos_, vel_, acc_);
+	GameObject* newBullet = ObjectAppearanceManager::createNewObject(ePlayerBullet, 1, 10 + myPlayer->getDamage(), U"NormalBullet", Circle{10}, pos_, vel_, acc_);
 	if (newBullet) {
 		Bullet* newPlayerBullet = static_cast<Bullet*>(newBullet);
 		newPlayerBullet->setBulletType(BulletType::Normal);
@@ -225,8 +245,8 @@ void ObjectManager::createItem(Vec2 pos, int expPoints)
 {
 	int randomNum = Random(3);
 
-	// 50分の1の抽選で特殊弾のドロップ
-	if (randomNum == 1)
+	// 100分の1の抽選で特殊弾のドロップ
+	if (randomNum == 0)
 	{
 		randomNum = Random(1, 5);
 		// ItemTypeと対応
@@ -240,7 +260,6 @@ void ObjectManager::createItem(Vec2 pos, int expPoints)
 				newItem->setItemType(ItemType::NormalMagic);
 				newItem->setActive(true);
 				myItems << newItem;
-
 			}
 		}
 		break;
@@ -296,7 +315,7 @@ void ObjectManager::createItem(Vec2 pos, int expPoints)
 	}
 	else
 	{
-		GameObject* tempItem = ObjectAppearanceManager::createNewObject(eItem, 1, 0, U"ExpPoint", Circle{ 5 }, pos, { 0, 0 }, { 0, 0 });
+		GameObject* tempItem = ObjectAppearanceManager::createNewObject(eItem, 1, 0, U"Experience", Circle{ 10 }, pos, { 0, 0 }, { 0, 0 });
 		if (tempItem) {
 			Item* newItem = static_cast<Item*>(tempItem);
 			newItem->setItemType(ItemType::ExpPoint);
@@ -320,7 +339,7 @@ HashTable<String, EnemyData> ObjectManager::loadEnemyData(const String& filepath
 	for (size_t row = 0; row < csv.rows(); ++row) {
 		EnemyData enemy;
 		enemy.name = csv[row][0];
-		enemy.hp = Parse<int>(csv[row][1]);
+		enemy.hp = Parse<double>(csv[row][1]);
 		enemy.damage = Parse<int>(csv[row][2]);
 		enemy.textureStr = csv[row][3];
 		enemy.hitbox = ObjectManager::parseFigure(csv[row][4]);
@@ -407,6 +426,8 @@ BulletType ObjectManager::fromItemType(ItemType itemType)
 		return BulletType::None;
 	}
 }
+
+
 
 // アイテム用のcleanUP
 void ObjectManager::cleanUp(Array<Item*>& items) {

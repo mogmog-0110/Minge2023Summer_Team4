@@ -122,7 +122,7 @@ Resource(engine/soundfont/GMGSx.sf2.zstdcmp)
 
 
 //Titleシーン
-Resource(Image/title.png)
+Resource(Image/Title.png)
 
 //Gameシーン
 Resource(Image/Cursor.png)
@@ -132,6 +132,51 @@ Resource(Image/Effect1.png)
 Resource(Image/Effect2.png)
 Resource(Image/Effect3.png)
 Resource(Image/Effect4.png)
+
+Resource(Image/Experience.png)
+Resource(Image/Ghost.png)
+Resource(Image/MagicBookA.png)
+Resource(Image/MagicBookB.png)
+Resource(Image/MagicBookC.png)
+Resource(Image/MagicBookD.png)
+Resource(Image/NormalBook.png)
+Resource(Image/RockL.png)
+Resource(Image/RockM.png)
+Resource(Image/RockS.png)
+Resource(Image/Frame.png)
+
+// Bullet texture
+Resource(Image/EnemyBullet.png)
+Resource(Image/LaserBullet.png)
+Resource(Image/MineBullet.png)
+Resource(Image/NormalBullet.png)
+Resource(Image/prasmaBullet.png)
+Resource(Image/WideBullet.png)
+
+// Enemy texture
+Resource(Image/Bat.png)
+Resource(Image/BigRat.png)
+Resource(Image/BigSpider.png)
+Resource(Image/BloatedBedBug.png)
+Resource(Image/Cockroach.png)
+Resource(Image/EvilEye.png)
+Resource(Image/Kuro.png)
+Resource(Image/Rat.png)
+Resource(Image/Spider.png)
+Resource(Image/Worm.png)
+
+// Minimap texture
+Resource(Image/DebriIcon.png)
+Resource(Image/PlayerIcon.png)
+Resource(Image/EnemyIcon.png)
+Resource(Image/MiniMapFrame.png)
+Resource(Image/MagicFrame.png)
+Resource(Image/HP.png)
+Resource(Image/HPFrame.png)
+
+
+// Scenario Image
+Resource(Image/416_normal.png)
 
 //Font
 Resource(Font/Nosutaru-dot.ttf)

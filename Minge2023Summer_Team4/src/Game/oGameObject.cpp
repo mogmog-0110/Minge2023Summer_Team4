@@ -14,6 +14,7 @@ void GameObject::update()
 {
 	updateCommon();
 	move();
+	updateAnimation();
 }
 
 void GameObject::updateCommon()
@@ -37,16 +38,39 @@ void GameObject::move()
 
 }
 
-
 //====================================================
 //描画関連
 
-void GameObject::draw(Vec2 offset, bool isHitboxDraw) const
-{
-	this->texture.drawAt(this->pos - offset); // offsetを減算
-	if (isHitboxDraw) drawHitbox(-offset);
+void GameObject::draw(Vec2 offset, bool isHitboxDraw) const {
+	Vec2 drawPos = pos - offset;
+
+	// sizeはヒットボックスと大きさがほとんど一緒。OAMに渡す値で、ヒットボックスとテクスチャの大きさを決める。
+
+	if (texture) {
+		// テクスチャが存在すれば描画
+		texture.resized(size, size).drawAt(drawPos);
+	}
+	else
+	{
+		drawAnimation(drawPos);
+	}
+
+	if (isHitboxDraw) {
+		drawHitbox(-offset);
+	}
 }
 
+void GameObject::drawAnimation(Vec2 drawPos) const
+{
+	if (animations.contains(currentDirection)) {
+		const auto& frames = animations.at(currentDirection);
+		if (!frames.isEmpty())
+		{
+			size_t frameIndex = animationFrame % frames.size();  // size_t型の一時変数を使用
+			frames[frameIndex].resized(size, size).drawAt(drawPos);
+		}
+	}
+}
 
 void GameObject::drawHitbox(Vec2 offset) const
 {
@@ -59,20 +83,44 @@ void GameObject::drawHitbox(Vec2 offset) const
 	debugfont(Format(hp)).drawAt(this->pos + offset + Vec2{ 0,30 }, { Palette::Navy,0.5 });
 }
 
+// アニメーション関連のメソッド
+void GameObject::updateAnimation() {
+	// デルタタイムをアニメーションタイマーに加算
+	animationTimer += Scene::DeltaTime();
+
+	// タイマーがアニメーションの更新間隔を超えた場合
+	if (animationTimer >= animationInterval) {
+		// アニメーションフレームをインクリメント
+		animationFrame++;
+
+		// 現在の方向のアニメーションフレームの最大数を取得
+		int maxFrames = animations[currentDirection].size();
+
+		// フレーム数が最大を超えた場合、リセット
+		if (animationFrame >= maxFrames)
+		{
+			animationFrame = 0;
+		}
+
+		// アニメーションタイマーをリセット
+		animationTimer = 0.0;
+	}
+}
+
 
 //====================================================
 //外部からの変数取得
 
 
-Figure GameObject::getHitbox() {
+Figure GameObject::getHitbox()
+{
 	return hitbox;
 }
 
-int GameObject::getDamage() {
+int GameObject::getDamage()
+{
 	return damage;
 }
-
-
 
 //====================================================
 //接触関連
@@ -139,7 +187,7 @@ eObjectType GameObject::getObjType() const
 	return objType;
 }
 
-int GameObject::getHp() const
+double GameObject::getHp() const
 {
 	return hp;
 }
@@ -172,7 +220,7 @@ void GameObject::setAcceleration(Vec2 acc )
 
 void GameObject::setTexture(String textureStr)
 {
-	texture = Texture{ textureStr };
+	texture = TextureAsset{ textureStr };
 }
 
 void GameObject::setExp(int points)

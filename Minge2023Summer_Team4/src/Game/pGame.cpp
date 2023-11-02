@@ -9,7 +9,7 @@ Game::Game(const InitData& init)
 	Print << U"Game!";
 
 	// 背景の色を設定 | Set background color
-	Scene::SetBackground(ColorF{ 0.8, 0.9, 1.0 });
+	Scene::SetBackground(Palette::Black);
 
 	Print << U"Push [Q] key";
 
@@ -17,8 +17,7 @@ Game::Game(const InitData& init)
 
 	// カメラの初期位置を設定
 	cameraPos = Vec2(0, 0);
-	topLeft = Vec2(0, 0);
-  topLeft = objectManager.myPlayer->getPos() - Scene::Center();
+	topLeft = objectManager.myPlayer->getPos() - Scene::Center();
 
 	// 敵データの読み込み
 	objectManager.enemyDatas = objectManager.loadEnemyData(U"../src/Game/csvFile/enemyTest.csv");
@@ -116,28 +115,28 @@ void Game::draw() const
 {
 	//従来のマウスカーソルを非表示に
 	Cursor::RequestStyle(CursorStyle::Hidden);
-
-	//TextureAsset(U"Frame").draw();
 	
 	objectManager.draw(topLeft);
 	myEffectManager->draw(topLeft);
-
+	//TextureAsset(U"Frame").draw();
 	miniMapDraw();
 	cursor.draw();
-	//textureFrame.draw();
+	drawHpBar();
+	drawMagicBook();
 
+	// 文字
+	dotFont1(U"HP").drawAt(896, 288, Color(255, 255, 255, 255));
+	dotFont1(U"LEVEL ", Player::getInstance()->getLevel()).drawAt({896, 352}, Color(255, 255, 255, 255));
 }
 
 void Game::debug()
 {
 
-	Print << U"経験値";
-	Print << Player::getInstance()->getExp();
+	Print << accumulatedTime;
 	Print << U"レベル";
 	Print << myPlayer->getInstance()->getLevel();
 	Print << U"プレイヤーのステータス";
 	Print << Player::getInstance()->getHp();
-	Print << Player::getInstance()->getDamage();
 
 	Print << U"特殊弾";
 
@@ -161,9 +160,6 @@ void Game::debug()
 		Print << U"未取得";
 		break;
 	}
-
-	Print << topLeft;
-	Print << Player::getInstance()->getPos();
 }
 
 //====================================================
@@ -217,32 +213,41 @@ Vec2 Game::convertToScreenPos(Vec2 pos)
 void Game::miniMapDraw() const
 {
 	// マップの描写
-	Circle{ 896, 128, 128 }.draw(Palette::Gray);
+	//Circle{ 896, 128, 128 }.draw(Palette::Gray);
+	const Texture& mapFrame = TextureAsset(U"MiniMapFrame");
+	mapFrame.drawAt(896, 128);
 
 	//プレイヤーの描写
 	Vec2 playerPos = objectManager.myPlayer->getPos() - topLeft;
-	Circle{ calculateMiniMapPos(playerPos), 5 }.draw(Palette::Blue);
+	const Texture& playerIcon = TextureAsset(U"PlayerIcon");
+	playerIcon.resized(20, 20).drawAt(896, 128);
 
 	// 敵機の描写
+	const Texture& enemyIcon = TextureAsset(U"EnemyIcon");
 	Vec2 enemyPos;
 	for (size_t i = 0; i < objectManager.myEnemies.size(); i++)
 	{
 		enemyPos = objectManager.myEnemies[i]->getPos() - topLeft;
 		if (isInMiniMapRange(enemyPos))
 		{
-			Circle{ calculateMiniMapPos(enemyPos), 5 }.draw(ColorF(Palette::Red, calculateOpacity(playerPos, enemyPos)));
+			double opacity = calculateOpacity(playerPos, enemyPos);
+			ColorF color(1.0, opacity);  // 色を白（1.0, 1.0, 1.0）に設定し、透明度を設定
+			enemyIcon.resized(16, 16).drawAt(calculateMiniMapPos(enemyPos), color);
 		}
 
 	}
 
 	// デブリの描写
+	const Texture& debriIcon = TextureAsset(U"DebriIcon");
 	Vec2 debriPos;
 	for (size_t i = 0; i < objectManager.myDebrises.size(); i++)
 	{
 		debriPos = objectManager.myDebrises[i]->getPos() - topLeft;
 		if (isInMiniMapRange(debriPos))
 		{
-			Circle{ calculateMiniMapPos(debriPos), 5 }.draw(ColorF(Palette::Orange, calculateOpacity(playerPos, debriPos)));
+			double opacity = calculateOpacity(playerPos, debriPos);
+			ColorF color(1.0, opacity);  // 色を白（1.0, 1.0, 1.0）に設定し、透明度を設定
+			debriIcon.resized(16, 16).drawAt(calculateMiniMapPos(debriPos), color);
 		}
 
 	}
@@ -269,7 +274,7 @@ bool Game::isInMiniMapRange(Vec2 pos) const
 double Game::calculateOpacity(Vec2 playerPos, Vec2 objectPos) const
 {
 	double distance = playerPos.distanceFrom(objectPos);
-	const double maxDistance = 1024;
+	const double maxDistance = 800;
 	double opacity = 1.0 - (distance / maxDistance);
 	return Clamp(opacity, 0.0, 1.0); // 透明度を0から1の範囲にクランプ
 }
@@ -401,3 +406,100 @@ void Game::generateBackgroundChunk(Point chunkPos) {
 
 	backgroundChunks[chunkPos] = chunk;
 }
+
+void Game::drawMagicBook() const
+{
+	const Texture& mgFrame = TextureAsset(U"MagicFrame");
+	const Texture& normalMagic = TextureAsset(U"NormalMagic");
+	const Texture& laserMagic = TextureAsset(U"SpecialMagicA");
+	const Texture& wideMagic = TextureAsset(U"SpecialMagicB");
+	const Texture& pramaMagic = TextureAsset(U"SpecialMagicC");
+	const Texture& mineMagic = TextureAsset(U"SpecialMagicD");
+
+	Player* myPlayer = Player::getInstance();
+
+	Array<Texture> bookTextures =
+	{
+		laserMagic,
+		wideMagic,
+		pramaMagic,
+		mineMagic
+	};
+
+	Vec2 basePos = { 864, 400 };
+
+	// フレームの描画位置
+	Array<Vec2> bookPositions =
+	{
+		{928, 400},
+		{832, 460},
+		{896, 460},
+		{960, 460}
+	};
+
+	// ノーマルブックのフレームとテクスチャを描画
+	mgFrame.resized(64, 64).drawAt(basePos);
+	normalMagic.resized(64, 64).drawAt(basePos);
+
+	// 他の魔法書のフレームを描画
+	for (int i = 0; i < bookPositions.size(); i++) {
+		mgFrame.resized(64, 64).drawAt(bookPositions[i]);
+	}
+
+	// 取得している魔法書を描画、また選択している魔法書以外は半透明に。
+	for (ItemType type : myPlayer->availableBullet)
+	{
+		int index = getBookTextureIndex(type);
+		double alpha = 0.5;
+		if (index == getBookTextureIndex(myPlayer->availableBullet[objectManager.currentIndex]))
+		{
+			alpha = 1;
+		}
+		bookTextures[index].resized(64, 64).drawAt(bookPositions[index], ColorF(1, 1, 1, alpha));
+	}
+
+	// レベルの表示
+	dotFont1(myPlayer->getBulletLevel(BulletType::Normal)).drawAt(basePos, Color(255, 255, 255, 255));
+	dotFont1(myPlayer->getBulletLevel(BulletType::SpecialA)).drawAt(bookPositions[0], Color(255, 255, 255, 255));
+	dotFont1(myPlayer->getBulletLevel(BulletType::SpecialB)).drawAt(bookPositions[1], Color(255, 255, 255, 255));
+	dotFont1(myPlayer->getBulletLevel(BulletType::SpecialC)).drawAt(bookPositions[2], Color(255, 255, 255, 255));
+	dotFont1(myPlayer->getBulletLevel(BulletType::SpecialD)).drawAt(bookPositions[3], Color(255, 255, 255, 255));
+}
+
+
+
+int Game::getBookTextureIndex(ItemType type) const
+{
+	switch (type) {
+	case ItemType::SpecialMagicA: return 0;
+	case ItemType::SpecialMagicB: return 1;
+	case ItemType::SpecialMagicC: return 2;
+	case ItemType::SpecialMagicD: return 3;
+	default: return -1; // 無効な値
+	}
+}
+
+
+
+void Game::drawHpBar() const
+{
+	Player* myPlayer = Player::getInstance();
+
+	const Texture& hp = TextureAsset(U"Hp");
+	const Texture& hpFrame = TextureAsset(U"HpFrame");
+
+	// Hpバーの横幅の計算
+	double gaugeWidth = (static_cast<double>(myPlayer->getHp()) / static_cast<double>(myPlayer->getMaxHp())) * hp.width() / 2;
+
+	// HPバーの枠を描画
+	hpFrame.resized(224, 32).drawAt(896, 320);
+
+	// 描画するX座標の計算
+	double startX = 896 - (hpFrame.width() / 2) + 112;
+
+	// HPのゲージを描画（長さを変えて）
+	hp.resized(gaugeWidth, 32).draw(startX, 320 - hp.height() / 2 + 16);
+}
+
+
+

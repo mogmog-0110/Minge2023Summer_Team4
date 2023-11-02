@@ -15,11 +15,14 @@ public:
 		  Figure hitbox_, Vec2 pos_, Vec2 vel_, Vec2 acc_ = { 0,0 })
 		: GameObject(eItem, hp_, damage_, textureStr_, hitbox_, pos_, vel_, acc_)
 	{
+		setUpAnimation();
+
 	};
 
 	~Item();
 
-	void update() override;
+	void setUpAnimation();
+	void setMagicBookTexture();
 
 	// ゲッター
 	ItemType getItemType() const;

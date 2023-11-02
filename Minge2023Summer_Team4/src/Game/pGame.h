@@ -46,6 +46,8 @@ private:
 	Array<TextureRegion> tileRegions;
 	HashTable<Point, BackgroundChunk> backgroundChunks;
 
+	Font dotFont1 = FontAsset(U"dotFont1");
+
 public:
 	Game(const InitData& init);
 	~Game();
@@ -70,5 +72,9 @@ public:
 	void setUpBackground();
 	void updateBackground();
 	void generateBackgroundChunk(Point);
-	bool isWasteland(int x, int y);
+
+	void drawHpBar() const;
+	void drawMagicBook() const;
+
+	int getBookTextureIndex(ItemType) const;
 };

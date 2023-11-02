@@ -32,7 +32,6 @@ void Debris::calcAndSetExp()
 	setExp(expPoints);
  }
 
-
 bool Debris::isDead(Vec2 playerPos_) {
 	if ((pos - playerPos_).length() > 1800) {
 		isItemDropable = false;
@@ -40,4 +39,13 @@ bool Debris::isDead(Vec2 playerPos_) {
 	}
 	else if (hp <= 0) return true;
 	else return false;
+}
+
+// テクスチャをセットアップする関数
+void Debris::setUpTexture()
+{
+	int r = hitbox.getCircle().r;
+	if(r == 30) texture = TextureAsset(U"RockS");
+	if(r == 65) texture = TextureAsset(U"RockM");
+	if(r == 100) texture = TextureAsset(U"RockL");
 }

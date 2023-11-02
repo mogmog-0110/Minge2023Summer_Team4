@@ -16,11 +16,14 @@ public:
 	{
 		calcAndSetExp();
 		changeCoolTime(0.1s);
+		setUpTexture();
 	};
 
 	~Debris();
 
 	void calcAndSetExp();
 	bool isDead(Vec2 playerPos_ = { 0,0 });
+
+	void setUpTexture();
 };
 
