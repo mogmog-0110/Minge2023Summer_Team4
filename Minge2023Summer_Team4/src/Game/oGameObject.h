@@ -10,7 +10,6 @@ class GameObject :
 {
 private:
 
-	Timer collisionalTimer;
 
 	const Font debugfont{ 15 };
 
@@ -26,7 +25,10 @@ protected:
 	Vec2 pos;
 	Vec2 vel;
 	Vec2 acc;
-		
+
+	Timer collisionalTimer;
+
+
 	// 経験値
 	int expPoints;
 

@@ -107,6 +107,10 @@ public:
 	// 取得した特殊弾
 	Array<ItemType>availableBullet;
 
+	void onCollisionResponse(int);
+	void onCollisionResponse(Vec2);
+
+
 	//getter
 	double getAttractionRadius() const;
 	double getAttractionSpeed() const;

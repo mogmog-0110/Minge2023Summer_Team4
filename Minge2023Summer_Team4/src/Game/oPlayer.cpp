@@ -40,7 +40,9 @@ void Player::destroy()
 
 void Player::update() {
 
-	updateCommon();
+	//updateCommon();
+	if (velRepull.length() > 0.01) velRepull.setLength(velRepull.length() * 0.95);
+
 
 	// プレイヤーの向きをマウスカーソルの位置に基づいて更新
 	updateDirectionToMouse();
@@ -99,10 +101,14 @@ void Player::move() {
 	// 進行方向を保存
 	Vec2 normalizedMoveDir = moveDir.normalized();
 
+	Print << velRepull;
+
+
 	if (normalizedMoveDir.length() > 0)
 	{
 		Logger << speed;
 		pos += normalizedMoveDir * speed * deltaTime;
+
 		setPos(pos);
 		isMoving = true;
 	}
@@ -110,6 +116,8 @@ void Player::move() {
 	{
 		isMoving = false;
 	}
+	pos += velRepull * deltaTime * 10;
+
 }
 
 void Player::getMoveDirection(Vec2& moveDir)
@@ -360,6 +368,19 @@ void Player::attractItems(Array<Item*>& items)
 		}
 	}
 }
+
+void Player::onCollisionResponse(int damage)
+{
+	collisionalTimer.restart();
+	hp -= damage;
+}
+
+void Player::onCollisionResponse(Vec2 RepullPos)
+{
+	velRepull = (pos - RepullPos).setLength(vel.length() == 0 ? 100 : vel.length());
+
+}
+
 
 //ゲット関数
 
