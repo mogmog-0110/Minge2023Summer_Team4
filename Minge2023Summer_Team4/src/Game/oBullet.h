@@ -10,8 +10,10 @@ class Bullet :
 private:
 
 	BulletType bulletType ;
-	int bulletPhase = 0;
 	int level;
+
+	int bulletPhase = 0;
+	Vec2 tipPos;//レーザー用
 
 protected:
 public:
