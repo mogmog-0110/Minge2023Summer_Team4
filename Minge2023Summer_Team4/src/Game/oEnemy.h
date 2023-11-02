@@ -18,13 +18,18 @@ public:
 	{
 		calcAndSetExp();
 		changeCoolTime(0.01s);
+		setUpAnimation();
 	};
 
 	~Enemy();
 
+
 	void move() override;
+	void update() override;
 
 	void calcAndSetExp();
 	int getStrength() const;
-};
 
+	void setUpAnimation();
+	void updateDirection();
+};
