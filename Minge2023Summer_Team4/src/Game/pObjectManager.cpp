@@ -137,7 +137,7 @@ Enemy* ObjectManager::createEnemyFromData(WaveData waveData)
 	int damage = enemyDatas[name].damage * waveData.statusModifier;
 	String textureStr = enemyDatas[name].textureStr;
 	Figure hitbox = enemyDatas[name].hitbox;
-	double speed = enemyDatas[name].speed * waveData.statusModifier;
+	double speed = enemyDatas[name].speed * Sqrt(waveData.statusModifier);
 	Vec2 spawnPos = { waveData.spawnPos.x + Random(50), waveData.spawnPos.y + Random(50) };
 
 	GameObject* newEnemy = ObjectAppearanceManager::createNewObject(eEnemy, hp, damage, textureStr, hitbox, spawnPos + myPlayer->getPos(), {speed, speed}, {1, 1});
@@ -197,6 +197,7 @@ void ObjectManager::createEnemyBullet()
 
 			if (myEnemies[i]->bulletDelayElapsed >= bp.delay)
 			{
+				Logger << bp.direction.size();
 				
 				for (const Vec2& dir : bp.direction)
 				{
@@ -374,8 +375,6 @@ HashTable<String, EnemyData> ObjectManager::loadEnemyData(const String& filepath
 		enemy.speed = Parse<double>(csv[row][5]);
 
 		enemyDatas[enemy.name] = enemy; // エネミー名をキーとして、その情報をマップに保存
-
-		Logger << enemy.name;
 	}
 
 	return enemyDatas;
@@ -469,6 +468,16 @@ BulletType ObjectManager::fromItemType(ItemType itemType)
 	}
 }
 
+void ObjectManager::bossDead()
+{
+	for (size_t i = 0; i < myEnemies.size(); +i)
+	{
+		if (myEnemies[i]->isBossDead)
+		{
+			gameEnd = true;
+		}
+	}
+}
 
 
 // アイテム用のcleanUP

@@ -130,3 +130,4 @@ struct BackgroundChunk {
 // グローバル関数（邪法）
 
 Array<TextureRegion> splitImage(const Texture& texture, int cellWidth, int cellHeight);
+extern Vec2 bossDeathPos;

@@ -9,10 +9,14 @@ class Enemy :
 	public GameObject
 {
 private:
-
 	int enemyLevel = 1; // 1～6の範囲
 	double maxHp;
 	double strength;
+
+	bool isDeadAnimationPlaying;
+	int animationFrame;
+	int animationDuration;
+	int animationSpeed = 10;
 
 protected:
 public:
@@ -22,11 +26,11 @@ public:
 	{
 		maxHp = hp;
 		strength = maxHp + damage;
+		determineLevel();
 		calcAndSetExp();
 		changeCoolTime(0.01s);
 		setUpAnimation();
 		setHasBullet();
-		determineLevel();
 	};
 
 	~Enemy();
@@ -34,7 +38,7 @@ public:
 
 	void move() override;
 	void update() override;
-
+	
 	void calcAndSetExp();
 	double getStrength() const;
 
@@ -49,4 +53,11 @@ public:
 
 	void setUpAnimation();
 	void updateDirection();
+
+	void drawDeathAnimation();
+
+	bool isBoss = false;
+	bool isBossDead = false;
+
+	void playDeathAnimation();
 };

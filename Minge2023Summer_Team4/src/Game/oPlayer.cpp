@@ -99,7 +99,6 @@ void Player::move() {
 
 	if (normalizedMoveDir.length() > 0)
 	{
-		Logger << speed;
 		pos += normalizedMoveDir * speed * deltaTime;
 		setPos(pos);
 		isMoving = true;

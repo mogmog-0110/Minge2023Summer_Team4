@@ -40,6 +40,8 @@ private:
 	template<typename T>
 	void updateObjList(Array<T*>& objectList);
 
+	bool gameEnd = false;
+
 public:
 
 	// 現在、どの特殊弾を選択しているかのState
@@ -83,6 +85,8 @@ public:
 	void stopEnemies();
 	void switchSpecialBullet();
 	BulletType fromItemType(ItemType);
+
+	void bossDead();
 };
 
 
@@ -160,7 +164,7 @@ void ObjectManager::cleanUp(Array<T*>& objs) {
 				Vec2 objPos = (*it)->getPos();
 				int expPoints = (*it)->getExp();
 				createItem(objPos, expPoints);
-     }
+			}
 			delete* it;
 			it = objs.erase(it);
 		}

@@ -22,12 +22,13 @@ Game::Game(const InitData& init)
 	// 敵データの読み込み
 	objectManager.enemyDatas = objectManager.loadEnemyData(U"../src/Game/csvFile/enemy.csv");
 	setUpBackground();
+	setUpAnimation();
 }
 
 
 Game::~Game()
 {
-	
+
 }
 
 
@@ -81,7 +82,7 @@ void Game::update()
 		scrollUpdate();
 		objectManager.update();
 		updateBackground();
-		
+
 		debug();
 		break;
 
@@ -115,7 +116,7 @@ void Game::draw() const
 {
 	//従来のマウスカーソルを非表示に
 	Cursor::RequestStyle(CursorStyle::Hidden);
-	
+
 	objectManager.draw(topLeft);
 	myEffectManager->draw(topLeft);
 	//TextureAsset(U"Frame").draw();
@@ -126,7 +127,7 @@ void Game::draw() const
 
 	// 文字
 	dotFont1(U"HP").drawAt(896, 288, Color(255, 255, 255, 255));
-	dotFont1(U"LEVEL ", Player::getInstance()->getLevel()).drawAt({896, 352}, Color(255, 255, 255, 255));
+	dotFont1(U"LEVEL ", Player::getInstance()->getLevel()).drawAt({ 896, 352 }, Color(255, 255, 255, 255));
 }
 
 void Game::debug()
@@ -258,8 +259,8 @@ Vec2 Game::calculateMiniMapPos(Vec2 screenPos) const
 	Vec2 miniMapPos;
 
 	// スクリーン座標をミニ マップ座標に変換
-	miniMapPos = (screenPos * miniMapScaleSize) / screenSize + Vec2{768 + 64 , 0 + 64};
-	
+	miniMapPos = (screenPos * miniMapScaleSize) / screenSize + Vec2{ 768 + 64 , 0 + 64 };
+
 	return miniMapPos;
 }
 
@@ -472,7 +473,6 @@ void Game::drawMagicBook() const
 }
 
 
-
 int Game::getBookTextureIndex(ItemType type) const
 {
 	switch (type) {
@@ -482,6 +482,18 @@ int Game::getBookTextureIndex(ItemType type) const
 	case ItemType::SpecialMagicD: return 3;
 	default: return -1; // 無効な値
 	}
+}
+
+void Game::setUpAnimation()
+{
+	const Texture& texture = TextureAsset(U"Kuro");
+	const auto regions = splitImage(texture, 32 * EXPORT_SCALE, 32 * EXPORT_SCALE);
+
+	animations = {
+		regions[16], regions[17], regions[18], regions[19], regions[20], regions[21], regions[22], regions[23],
+		regions[24], regions[25], regions[26], regions[27], regions[28], regions[29], regions[30], regions[31]
+	};
+
 }
 
 void Game::drawHpBar() const

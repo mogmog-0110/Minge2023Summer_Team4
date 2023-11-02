@@ -101,163 +101,103 @@ void Enemy::setHasBullet()
 	}
 }
 
-BulletProperty Enemy::createBulletProperty()
-{
-	BulletProperty bp;
-
-	bp.damage = damage;
-	switch (enemyLevel)
-	{
-	case 1:
-	{
-		bp.way = 1;
-		bp.speed = 300;
-		bp.delay = 3.0;
-		bp.direction = calculateDirection(bp.way);
-		break;
-	}
-	case 2:
-	{
-		bp.way = 1;
-		bp.speed = 500;
-		bp.delay = 2.0;
-		bp.direction = calculateDirection(bp.way);
-		break;
-	}
-	case 3:
-	{
-		bp.way = 1;
-		bp.speed = 800;
-		bp.delay = 1.0;
-		bp.direction = calculateDirection(bp.way);
-		break;
-	}
-	case 4:
-	{
-		bp.way = 3;
-		bp.speed = 300;
-		bp.delay = 3.0;
-		bp.direction = calculateDirection(bp.way);
-		break;
-	}
-	case 5:
-	{
-		bp.way = 3;
-		bp.delay = 1.0;
-		bp.direction = calculateDirection(bp.way);
-		break;
-	}
-	case 6:
-	{
-		bp.way = 5;
-		bp.speed = 500;
-		bp.delay = 2.0;
-		bp.direction = calculateDirection(bp.way);
-		break;
-	}
-	case 7:
-	{
-		bp.way = 7;
-		bp.speed = 500;
-		bp.delay = 3.0;
-		bp.direction = calculateDirection(bp.way);
-		break;
-	}
-	case 8:
-	{
-		bp.way = 7;
-		bp.speed = 1000;
-		bp.delay = 2.0;
-		bp.direction = calculateDirection(bp.way);
-		break;
-	}
-	case 9:
-	{
-		bp.way = 9;
-		bp.speed = 800;
-		bp.delay = 3.0;
-		bp.direction = calculateDirection(bp.way);
-		break;
-	}
-	case 10:
-	{
-		bp.way = 9;
-		bp.speed = 1000;
-		bp.delay = 1.0;
-		bp.direction = calculateDirection(bp.way);
-		break;
-	}
-	case 11:
-	{
-		bp.way = 12;
-		bp.speed = 1000;
-		bp.delay = 1.0;
-		bp.direction = calculateDirection(bp.way);
-		break;
-	}
-	case 12:
-		bp.way = 12;
-		bp.speed = 1200;
-		bp.delay = 0.5;
-		bp.direction = calculateDirection(bp.way);
-		break;
-	}
-	Logger << bp.way;
-	return bp;
-}
-
 void Enemy::determineLevel()
 {
 	int strength = getStrength();
-	Logger << strength;
-	if (strength >= 100)
+
+	if (strength >= 6800)
 	{
-		enemyLevel = 1;
-	}
-	else if (strength >= 200)
-	{
-		enemyLevel = 2;
-	}
-	else if (strength >= 400)
-	{
-		enemyLevel = 3;
-	}
-	else if (strength >= 700)
-	{
-		enemyLevel = 4;
-	}
-	else if (strength >= 1100)
-	{
-		enemyLevel = 5;
-	}
-	else if (strength >= 1600)
-	{
-		enemyLevel = 6;
-	}
-	else if (strength >= 2200)
-	{
-		enemyLevel = 7;
-	}
-	else if (strength >= 2900)
-	{
-		enemyLevel = 8;
-	}
-	else if (strength >= 3700)
-	{
-		enemyLevel = 9;
-	}
-	else if (strength >= 4600)
-	{
-		enemyLevel = 10;
+		enemyLevel = 12;
 	}
 	else if (strength >= 5600)
 	{
 		enemyLevel = 11;
 	}
-	else if (strength >= 6800)
+	else if (strength >= 4600)
 	{
-		enemyLevel = 12;
+		enemyLevel = 10;
 	}
+	else if (strength >= 3700)
+	{
+		enemyLevel = 9;
+	}
+	else if (strength >= 2900)
+	{
+		enemyLevel = 8;
+	}
+	else if (strength >= 2200)
+	{
+		enemyLevel = 7;
+	}
+	else if (strength >= 1600)
+	{
+		enemyLevel = 6;
+	}
+	else if (strength >= 1100)
+	{
+		enemyLevel = 5;
+	}
+	else if (strength >= 700)
+	{
+		enemyLevel = 4;
+	}
+	else if (strength >= 400)
+	{
+		enemyLevel = 3;
+	}
+	else if (strength >= 200)
+	{
+		enemyLevel = 2;
+	}
+	else if (strength >= 100)
+	{
+		enemyLevel = 1;
+	}
+	else
+	{
+		// strength が 100 未満の場合の処理（必要に応じて）
+		enemyLevel = 0;
+	}
+}
+
+BulletProperty Enemy::createBulletProperty()
+{
+	BulletProperty bp;
+	bp.damage = damage;
+
+	switch (enemyLevel)
+	{
+	case 1:
+		bp.way = 1; bp.speed = 300; bp.delay = 3.0; break;
+	case 2:
+		bp.way = 1; bp.speed = 500; bp.delay = 2.0; break;
+	case 3:
+		bp.way = 1; bp.speed = 800; bp.delay = 1.0; break;
+	case 4:
+		bp.way = 3; bp.speed = 300; bp.delay = 3.0; break;
+	case 5:
+		bp.way = 3; bp.speed = 500; bp.delay = 1.0; break;
+	case 6:
+		bp.way = 5; bp.speed = 500; bp.delay = 2.0; break;
+	case 7:
+		bp.way = 7; bp.speed = 500; bp.delay = 3.0; break;
+	case 8:
+		bp.way = 7; bp.speed = 1000; bp.delay = 2.0; break;
+	case 9:
+		bp.way = 9; bp.speed = 800; bp.delay = 3.0; break;
+	case 10:
+		bp.way = 9; bp.speed = 1000; bp.delay = 1.0; break;
+	case 11:
+		bp.way = 12; bp.speed = 1000; bp.delay = 1.0; break;
+	case 12:
+		bp.way = 12; bp.speed = 1200; bp.delay = 0.5; break;
+	default:
+		// enemyLevelが0または想定外の値の場合の処理（必要に応じて）
+		bp.way = 1; bp.speed = 300; bp.delay = 3.0; break;
+	}
+
+	bp.direction = calculateDirection(bp.way);
+	return bp;
 }
 
 Array<Vec2> Enemy::calculateDirection(int way)
@@ -267,26 +207,24 @@ Array<Vec2> Enemy::calculateDirection(int way)
 
 	if (way == 12)
 	{
-		// 12wayの場合は全方向に弾を飛ばす
 		for (int i = 0; i < 12; ++i) {
-			double angle = i * (360.0 / 12);  // 30度ごと
+			double angle = i * (360.0 / 12) * Math::Pi / 180.0;  // 30度ごとにラジアンに変換
 			bulletVectors.push_back(Vec2(Cos(angle), Sin(angle)));
 		}
 	}
 	else
 	{
-		// それ以外の場合はplayerPosに向かって弾を飛ばす
-		Vec2 toPlayer = (myPlayer->getPos() - pos).setLength(1);  // 基本ベクトル
-		double angleOffset = 15.0;  // 基本ベクトルからの角度オフセット
-		bulletVectors.push_back(toPlayer);  // 中央の弾
+		Vec2 toPlayer = (myPlayer->getPos() - pos).setLength(1);
+		double angleOffset = 15.0 * Math::Pi / 180.0;  // ラジアンに変換
+		bulletVectors.push_back(toPlayer);
 		for (int i = 1; i <= way / 2; ++i) {
-			// 左右に弾を追加
 			bulletVectors.push_back(toPlayer.rotated(-angleOffset * i));
 			bulletVectors.push_back(toPlayer.rotated(angleOffset * i));
 		}
 	}
 	return bulletVectors;
 }
+
 
 void Enemy::setUpAnimation()
 {
@@ -295,6 +233,14 @@ void Enemy::setUpAnimation()
 	if (textureStr == U"Kuro")
 	{
 		const Texture& texture = TextureAsset(textureStr);
+		isBoss = true;
+
+		// テクスチャを32x32ピクセルの領域に分割
+		auto regions = splitImage(texture, 32 * EXPORT_SCALE, 32 * EXPORT_SCALE);
+
+		// 各向きごとのアニメーションフレームを設定
+		animations[U"right"] = { regions[0], regions[1], regions[2], regions[3], regions[4], regions[5], regions[6], regions[7] };
+		animations[U"left"] = { regions[8], regions[9], regions[10], regions[11], regions[12], regions[13], regions[14], regions[15] };
 	}
 	else if (textureStr == U"Worm" || textureStr == U"BigSpider")
 	{
@@ -343,5 +289,11 @@ void Enemy::updateDirection()
 	}
 	else {
 		this->currentDirection = U"left";
+	}
+
+	// ボスのとき
+	if (isBoss && isDead())
+	{
+		Vec2 bossDeathPos = pos;
 	}
 }

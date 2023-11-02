@@ -79,4 +79,6 @@ public:
 	void drawMagicBook() const;
 
 	int getBookTextureIndex(ItemType) const;
+
+	void setUpAnimation();
 };
