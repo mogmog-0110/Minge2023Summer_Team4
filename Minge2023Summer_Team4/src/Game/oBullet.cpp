@@ -28,6 +28,16 @@ void Bullet::move()
 	switch (bulletType)
 	{
 	case BulletType::SpecialA:
+		if (bulletPhase == 0)
+		{
+			Print << pos;
+			Print << tipPos;
+			tipPos += vel * Scene::DeltaTime();
+			Vec2 quadWidth = (tipPos - pos).rotated(90_deg).setLength(10);
+			hitbox = Quad{ pos + quadWidth, pos - quadWidth, tipPos - quadWidth, tipPos + quadWidth};
+
+		}
+
 		break;
 	case BulletType::SpecialB:
 		break;
@@ -42,8 +52,11 @@ void Bullet::move()
 		break;
 	}
 
-	pos += vel * Scene::DeltaTime();
-	hitbox.setCenter(pos);
+	if (bulletType != BulletType::SpecialA)
+	{
+		pos += vel * Scene::DeltaTime();
+		hitbox.setCenter(pos);
+	}
 
 }
 
@@ -60,7 +73,11 @@ bool Bullet::isDead(Vec2 playerPos_) {
 void Bullet::onCollisionResponse(int damage)
 {
 
-	if (bulletType == BulletType::SpecialD) {
+	if (bulletType == BulletType::SpecialA)
+	{
+
+	}
+	else if (bulletType == BulletType::SpecialD) {
  		if (bulletPhase == 0)
 		{
 			hitbox = Circle(250);
@@ -94,6 +111,7 @@ bool Bullet::isBulletSelfDamage()
 void Bullet::setBulletType(BulletType bulletType)
 {
 	this->bulletType = bulletType;
+	if (bulletType == BulletType::SpecialA) tipPos = pos;
 }
 
 void Bullet::setLevel(int)
