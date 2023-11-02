@@ -451,7 +451,7 @@ void Game::drawMagicBook() const
 	{
 		int index = getBookTextureIndex(type);
 		double alpha = 0.5;
-		if (!(myPlayer->availableBullet.isEmpty()))
+		if (!(myPlayer->availableBullet.isEmpty()) && objectManager.currentIndex > 0)
 		{
 			if (index == getBookTextureIndex(myPlayer->availableBullet[objectManager.currentIndex]))
 			{
