@@ -36,7 +36,7 @@ void Ghost::animationDraw(Vec2 offset) const
 		const auto& frames = animations.at(currentDirection);
 		if (!frames.isEmpty()) {
 			size_t frameIndex = animationFrame % frames.size();  // size_t型の一時変数を使用
-			frames[frameIndex].resized(48, 48).draw(pos - Vec2(64, 64) - offset);
+			frames[frameIndex].resized(32, 32).draw(pos - Vec2(64, 64) - offset);
 		}
 	}
 }

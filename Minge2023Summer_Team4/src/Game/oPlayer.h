@@ -48,17 +48,8 @@ private:
 	int nextLevelExp;
 
 	double maxHp;
-	double previousHp;
-	double damageDelayElapsed = 0.0; // 経過時間の保持
 	double regenDelay = 5.0; // 5秒の遅延
 	double regeneVal = 0.1;
-
-	// 各通常弾、特殊弾のレベル
-	int levelNormal = 1;
-	int levelSpecialA = 0;
-	int levelSpecialB = 0;
-	int levelSpecialC = 0;
-	int levelSpecialD = 0;
 
 	double attractionRadius = 100;
 	double attractionSpeed = 10;
@@ -104,14 +95,13 @@ public:
 
 	void regenerateHp(double);
 
-	// 取得した特殊弾
-	Array<ItemType>availableBullet;
+	// 取得した特殊弾とその個数
+	HashTable<ItemType, int>availableBullet;
 
 	//getter
 	double getAttractionRadius() const;
 	double getAttractionSpeed() const;
 	int getLevel() const;
-	int getBulletLevel(BulletType) const;
 	int getNextlevelExp() const;
 	int getMaxHp() const;
 
@@ -121,4 +111,5 @@ public:
 
 	// 現在のプレイヤーの向き
 	String currentDirection = U"up";
+	int normalMagicLevel;
 };

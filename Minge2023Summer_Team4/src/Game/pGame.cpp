@@ -440,6 +440,8 @@ void Game::drawMagicBook() const
 	// ノーマルブックのフレームとテクスチャを描画
 	mgFrame.resized(64, 64).drawAt(basePos);
 	normalMagic.resized(64, 64).drawAt(basePos);
+	// レベルを表示
+	dotFont1(myPlayer->normalMagicLevel).drawAt(basePos, Color(255, 255, 255));
 
 	// 他の魔法書のフレームを描画
 	for (int i = 0; i < bookPositions.size(); i++) {
@@ -447,28 +449,26 @@ void Game::drawMagicBook() const
 	}
 
 	// 取得している魔法書を描画、また選択している魔法書以外は半透明に。
-	for (ItemType type : myPlayer->availableBullet)
+	for (auto [type, level] : myPlayer->availableBullet)
 	{
-		int index = getBookTextureIndex(type);
-		double alpha = 0.5;
-    
-		if (!(myPlayer->availableBullet.isEmpty()) && objectManager.currentIndex > 0)
+		if (level > 0 && type != ItemType::NormalMagic)  // レベルが0より大きい場合のみ描画
 		{
-			if (index == getBookTextureIndex(myPlayer->availableBullet[objectManager.currentIndex]))
+
+			int index = getBookTextureIndex(type);
+			double alpha = 0.5;  // デフォルトは半透明
+
+			// 現在選択されているBulletTypeがこのアイテムタイプと一致する場合、不透明にする
+			if (fromItemType(type) == objectManager.currentState)
 			{
 				alpha = 1;
 			}
+
+			// 魔法書を描画
+			bookTextures[index].resized(64, 64).drawAt(bookPositions[index], ColorF(1, 1, 1, alpha));
+			// レベルを表示
+			dotFont1(level).drawAt(bookPositions[index], Color(255, 255, 255));
 		}
-
-		bookTextures[index].resized(64, 64).drawAt(bookPositions[index], ColorF(1, 1, 1, alpha));
 	}
-
-	// レベルの表示
-	dotFont1(myPlayer->getBulletLevel(BulletType::Normal)).drawAt(basePos, Color(255, 255, 255, 255));
-	dotFont1(myPlayer->getBulletLevel(BulletType::SpecialA)).drawAt(bookPositions[0], Color(255, 255, 255, 255));
-	dotFont1(myPlayer->getBulletLevel(BulletType::SpecialB)).drawAt(bookPositions[1], Color(255, 255, 255, 255));
-	dotFont1(myPlayer->getBulletLevel(BulletType::SpecialC)).drawAt(bookPositions[2], Color(255, 255, 255, 255));
-	dotFont1(myPlayer->getBulletLevel(BulletType::SpecialD)).drawAt(bookPositions[3], Color(255, 255, 255, 255));
 }
 
 

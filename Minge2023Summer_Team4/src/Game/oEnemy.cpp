@@ -4,7 +4,7 @@
 Enemy::~Enemy()
 {
 }
-	
+
 void Enemy::move()
 {
 	// プレイヤーの座標の取得
@@ -28,7 +28,6 @@ void Enemy::update()
 void Enemy::calcAndSetExp()
 {
 	int expPoints = 0;
-	int strength = getStrength();
 
 	// 基本経験値に強さの一定割合を加える
 	expPoints = 10 + static_cast<int>(strength * 0.5);
@@ -38,7 +37,7 @@ void Enemy::calcAndSetExp()
 	{
 		expPoints += 50;
 	}
-	if (enemyLevel>= 2)
+	if (enemyLevel >= 2)
 	{
 		expPoints += 50;
 	}
@@ -58,36 +57,36 @@ void Enemy::calcAndSetExp()
 	{
 		expPoints += 50;
 	}
-  if (enemyLevel >= 7)
+	if (enemyLevel >= 7)
 	{
 		expPoints += 50;
 	}
-  if (enemyLevel >= 8)
+	if (enemyLevel >= 8)
 	{
 		expPoints += 50;
 	}
-  if (enemyLevel >= 9)
+	if (enemyLevel >= 9)
 	{
 		expPoints += 50;
 	}
-  if (enemyLevel >= 10)
+	if (enemyLevel >= 10)
 	{
 		expPoints += 50;
 	}
-  if (enemyLevel >= 11)
+	if (enemyLevel >= 11)
 	{
 		expPoints += 50;
 	}
-  if (enemyLevel >= 12)
+	if (enemyLevel >= 12)
 	{
 		expPoints += 50;
 	}
 	setExp(expPoints);
 }
 
-int Enemy::getStrength() const
+double Enemy::getStrength() const
 {
-	return maxHp + damage;
+	return strength;
 }
 
 void Enemy::setHasBullet()
@@ -106,91 +105,111 @@ BulletProperty Enemy::createBulletProperty()
 {
 	BulletProperty bp;
 
-	if (hasBullet)
+	bp.damage = damage;
+	switch (enemyLevel)
 	{
-		bp.damage = damage;
-		switch (enemyLevel)
-		{
-		case 1:
-			bp.way = 1;
-			bp.speed = 300;
-			bp.delay = 3.0;
-			bp.direction = calculateDirection(bp.way);
-			break;
-		case 2:
-			bp.way = 1;
-			bp.speed = 500;
-			bp.delay = 2.0;
-			bp.direction = calculateDirection(bp.way);
-			break;
-		case 3:
-			bp.way = 1;
-			bp.speed = 800;
-			bp.delay = 1.0;
-			bp.direction = calculateDirection(bp.way);
-			break;
-		case 4:
-			bp.way = 3;
-			bp.speed = 300;
-			bp.delay = 3.0;
-			bp.direction = calculateDirection(bp.way);
-			break;
-		case 5:
-			bp.way = 3;
-			bp.way = 700;
-			bp.delay = 1.0;
-			bp.direction = calculateDirection(bp.way);
-			break;
-		case 6:
-			bp.way = 5;
-			bp.speed = 500;
-			bp.delay = 2.0;
-			bp.direction = calculateDirection(bp.way);
-			break;
-		case 7:
-			bp.way = 7;
-			bp.speed = 500;
-			bp.delay = 3.0;
-			bp.direction = calculateDirection(bp.way);
-			break;
-		case 8:
-			bp.way = 7;
-			bp.speed = 1000;
-			bp.delay = 2.0;
-			bp.direction = calculateDirection(bp.way);
-			break;
-		case 9:
-			bp.way = 9;
-			bp.speed = 800;
-			bp.delay = 3.0;
-			bp.direction = calculateDirection(bp.way);
-			break;
-		case 10:
-			bp.way = 9;
-			bp.speed = 1000;
-			bp.delay = 1.0;
-			bp.direction = calculateDirection(bp.way);
-			break;
-		case 11:
-			bp.way = 12;
-			bp.speed = 1000;
-			bp.delay = 1.0;
-			bp.direction = calculateDirection(bp.way);
-			break;
-		case 12:
-			bp.way = 12;
-			bp.speed = 1200;
-			bp.delay = 0.5;
-			bp.direction = calculateDirection(bp.way);
-			break;
-		}
-		return bp;
+	case 1:
+	{
+		bp.way = 1;
+		bp.speed = 300;
+		bp.delay = 3.0;
+		bp.direction = calculateDirection(bp.way);
+		break;
 	}
+	case 2:
+	{
+		bp.way = 1;
+		bp.speed = 500;
+		bp.delay = 2.0;
+		bp.direction = calculateDirection(bp.way);
+		break;
+	}
+	case 3:
+	{
+		bp.way = 1;
+		bp.speed = 800;
+		bp.delay = 1.0;
+		bp.direction = calculateDirection(bp.way);
+		break;
+	}
+	case 4:
+	{
+		bp.way = 3;
+		bp.speed = 300;
+		bp.delay = 3.0;
+		bp.direction = calculateDirection(bp.way);
+		break;
+	}
+	case 5:
+	{
+		bp.way = 3;
+		bp.delay = 1.0;
+		bp.direction = calculateDirection(bp.way);
+		break;
+	}
+	case 6:
+	{
+		bp.way = 5;
+		bp.speed = 500;
+		bp.delay = 2.0;
+		bp.direction = calculateDirection(bp.way);
+		break;
+	}
+	case 7:
+	{
+		bp.way = 7;
+		bp.speed = 500;
+		bp.delay = 3.0;
+		bp.direction = calculateDirection(bp.way);
+		break;
+	}
+	case 8:
+	{
+		bp.way = 7;
+		bp.speed = 1000;
+		bp.delay = 2.0;
+		bp.direction = calculateDirection(bp.way);
+		break;
+	}
+	case 9:
+	{
+		bp.way = 9;
+		bp.speed = 800;
+		bp.delay = 3.0;
+		bp.direction = calculateDirection(bp.way);
+		break;
+	}
+	case 10:
+	{
+		bp.way = 9;
+		bp.speed = 1000;
+		bp.delay = 1.0;
+		bp.direction = calculateDirection(bp.way);
+		break;
+	}
+	case 11:
+	{
+		bp.way = 12;
+		bp.speed = 1000;
+		bp.delay = 1.0;
+		bp.direction = calculateDirection(bp.way);
+		break;
+	}
+	case 12:
+		bp.way = 12;
+		bp.speed = 1200;
+		bp.delay = 0.5;
+		bp.direction = calculateDirection(bp.way);
+		break;
+	}
+	Logger << bp.way;
+	return bp;
 }
 
 void Enemy::determineLevel()
 {
 	int strength = getStrength();
+	Logger << strength;
 	if (strength >= 100)
 	{
 		enemyLevel = 1;
@@ -267,7 +286,8 @@ Array<Vec2> Enemy::calculateDirection(int way)
 		}
 	}
 	return bulletVectors;
-=======
+}
+
 void Enemy::setUpAnimation()
 {
 
@@ -284,8 +304,8 @@ void Enemy::setUpAnimation()
 		auto regions = splitImage(texture, 32 * EXPORT_SCALE, 32 * EXPORT_SCALE);
 
 		// 各向きごとのアニメーションフレームを設定
-		animations[U"right"] = { regions[0], regions[1], regions[2], regions[3], regions[4], regions[5], regions[6], regions[7]};
-		animations[U"left"] = { regions[8], regions[9], regions[10], regions[11], regions[12], regions[13], regions[14], regions[15]};
+		animations[U"right"] = { regions[0], regions[1], regions[2], regions[3], regions[4], regions[5], regions[6], regions[7] };
+		animations[U"left"] = { regions[8], regions[9], regions[10], regions[11], regions[12], regions[13], regions[14], regions[15] };
 	}
 	else if (textureStr == U"EvilEye")
 	{
@@ -295,8 +315,8 @@ void Enemy::setUpAnimation()
 		auto regions = splitImage(texture, 32 * EXPORT_SCALE, 32 * EXPORT_SCALE);
 
 		// 各向きごとのアニメーションフレームを設定
-		animations[U"right"] = { regions[0], regions[1], regions[2], regions[3], regions[4], regions[5], regions[6]};
-		animations[U"left"] = { regions[7], regions[8], regions[9], regions[10], regions[11], regions[12], regions[13]};
+		animations[U"right"] = { regions[0], regions[1], regions[2], regions[3], regions[4], regions[5], regions[6] };
+		animations[U"left"] = { regions[7], regions[8], regions[9], regions[10], regions[11], regions[12], regions[13] };
 	}
 	else
 	{

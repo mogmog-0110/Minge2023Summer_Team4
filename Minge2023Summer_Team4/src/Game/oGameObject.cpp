@@ -53,6 +53,7 @@ void GameObject::draw(Vec2 offset, bool isHitboxDraw) const {
 	else
 	{
 		drawAnimation(drawPos);
+		
 	}
 
 	if (isHitboxDraw) {
@@ -106,7 +107,6 @@ void GameObject::updateAnimation() {
 		animationTimer = 0.0;
 	}
 }
-
 
 //====================================================
 //外部からの変数取得

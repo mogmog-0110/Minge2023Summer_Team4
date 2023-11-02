@@ -12,6 +12,8 @@ Player::Player(int hp_, int damage_, String textureStr, Figure hitbox_, Vec2 pos
 
 	maxHp = hp;
 	previousHp = hp;
+
+	normalMagicLevel = 1;
 }
 
 Player::~Player()
@@ -147,7 +149,7 @@ void Player::draw(Vec2 offset, bool isHitboxDraw) const
 	}
 
 	// アニメーションのフレームを描画
-	this->playerAnimations.at(currentDirection)[animationFrame].drawAt(pos - offset);
+	this->playerAnimations.at(currentDirection)[animationFrame].resized(64, 64).drawAt(pos - offset);
 	if (isHitboxDraw) drawHitbox(-offset); // ヒットボックスを描画	
 }
 
@@ -284,62 +286,32 @@ void Player::levelUp()
 }
 
 void Player::applyItemEffect(Item* item) {
-	if (item->getItemType() == ItemType::ExpPoint)
+	ItemType itemType = item->getItemType();
+	if (itemType == ItemType::ExpPoint)
 	{
 		// アイテムが経験値を持っている場合、プレイヤーの経験値を増加させる
 		int expPoints = item->getExp();  // アイテムから経験値の量を取得
 		gainExp(expPoints);
 	}
-	else if (item->getItemType() == ItemType::NormalMagic)
+	else if  (itemType == ItemType::NormalMagic)
 	{
-		levelNormal+= 1;
+		normalMagicLevel += 1;
 	}
-	else if (item->getItemType() == ItemType::SpecialMagicA)
+	else
 	{
-		if (availableBullet.includes(ItemType::SpecialMagicA))
+		if (availableBullet.contains(itemType))
 		{
-			levelSpecialA += 1;
+			// 既にアイテムが存在する場合、個数を1増やす
+			availableBullet[itemType] += 1;
 		}
 		else
 		{
-			availableBullet << ItemType::SpecialMagicA;
+			// アイテムが存在しない場合、個数を1で初期化して追加
+			availableBullet[itemType] = 1;
 		}
 	}
-	else if (item->getItemType() == ItemType::SpecialMagicB)
-	{
-		if (availableBullet.includes(ItemType::SpecialMagicB))
-		{
-			levelSpecialB += 1;
-		}
-		else
-		{
-			availableBullet << ItemType::SpecialMagicB;
-		}
-	}
-	else if (item->getItemType() == ItemType::SpecialMagicC)
-	{
-		if (availableBullet.includes(ItemType::SpecialMagicC))
-		{
-			levelSpecialC += 1;
-		}
-		else
-		{
-			availableBullet << ItemType::SpecialMagicC;
-		}
-	}
-	else if (item->getItemType() == ItemType::SpecialMagicD)
-	{
-		if (availableBullet.includes(ItemType::SpecialMagicD))
-		{
-			levelSpecialD += 1;
-		}
-		else
-		{
-			availableBullet << ItemType::SpecialMagicD;
-		}
-	}
-
 }
+
 
 void Player::attractItems(Array<Item*>& items)
 {
@@ -372,23 +344,6 @@ double Player::getAttractionSpeed() const
 int Player::getLevel() const
 {
 	return this->level;
-}
-
-int Player::getBulletLevel(BulletType bulletType) const
-{
-	switch (bulletType)
-	{
-	case BulletType::Normal:
-		return levelNormal;
-	case BulletType::SpecialA:
-		return levelSpecialA;
-	case BulletType::SpecialB:
-		return levelSpecialB;
-	case BulletType::SpecialC:
-		return levelSpecialC;
-	case BulletType::SpecialD:
-		return levelSpecialD;
-	}
 }
 
 int Player::getNextlevelExp() const

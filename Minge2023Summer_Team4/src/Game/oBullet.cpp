@@ -6,6 +6,7 @@ Bullet::~Bullet()
 
 void Bullet::update()
 {
+	GameObject::update();
 	move();
 
 	if (bulletType == BulletType::SpecialD && bulletPhase > 0)
@@ -32,7 +33,7 @@ void Bullet::move()
 		{
 			tipPos += vel * Scene::DeltaTime();
 			Vec2 quadWidth = (tipPos - pos).rotated(90_deg).setLength(5);
-			hitbox = Quad{ pos + quadWidth, pos - quadWidth, tipPos - quadWidth, tipPos + quadWidth};
+			hitbox = Quad{ pos + quadWidth, pos - quadWidth, tipPos - quadWidth, tipPos + quadWidth };
 			if ((tipPos - pos).length() > 200) bulletPhase++;
 		}
 		else
@@ -75,9 +76,41 @@ bool Bullet::isDead(Vec2 playerPos_) {
 
 void Bullet::setUpAnimation()
 {
-	switch (bulletType)
+	if (textureStr == U"NormalBullet")
 	{
-	case BulletType::Normal:
+		const Texture& texture = TextureAsset(textureStr);
+
+		// テクスチャを16x16ピクセルの領域に分割
+		auto regions = splitImage(texture, 16 * EXPORT_SCALE, 16 * EXPORT_SCALE);
+
+		// 各向きごとのアニメーションフレームを設定
+		animations[U"left"] = { regions[0], regions[1], regions[2], regions[3] };
+	}
+	else if (textureStr == U"LaserBullet")
+	{
+		setTexture(textureStr);
+	}
+	else if (textureStr == U"WideBullet")
+	{
+		const Texture& texture = TextureAsset(textureStr);
+
+		// テクスチャを32x32ピクセルの領域に分割
+		auto regions = splitImage(texture, 32 * EXPORT_SCALE, 32 * EXPORT_SCALE);
+
+		// 各向きごとのアニメーションフレームを設定
+		animations[U"left"] = { regions[0], regions[1], regions[2], regions[3] };
+	}
+	else if (textureStr == U"PrasmaBullet")
+	{
+		const Texture& texture = TextureAsset(textureStr);
+
+		// テクスチャを64x64ピクセルの領域に分割
+		auto regions = splitImage(texture, 64 * EXPORT_SCALE, 64 * EXPORT_SCALE);
+
+		// 各向きごとのアニメーションフレームを設定
+		animations[U"left"] = { regions[0], regions[1], regions[2], regions[3] };
+	}
+	else if (textureStr == U"MineBullet")
 	{
 		const Texture& texture = TextureAsset(textureStr);
 
@@ -87,50 +120,15 @@ void Bullet::setUpAnimation()
 		// 各向きごとのアニメーションフレームを設定
 		animations[U"left"] = { regions[0], regions[1], regions[2], regions[3] };
 
-		break;
 	}
-	case BulletType::SpecialA:
+	else
 	{
-		const Texture& texture = TextureAsset(textureStr);
-
-		break;
-	}
-	case BulletType::SpecialB:
-	{
-		const Texture& texture = TextureAsset(textureStr);
-
-		// テクスチャを32x32ピクセルの領域に分割
-		auto regions = splitImage(texture, 32 * EXPORT_SCALE, 32 * EXPORT_SCALE);
-
-		// 各向きごとのアニメーションフレームを設定
-		animations[U"left"] = { regions[0], regions[1], regions[2], regions[3] };
-
-		break;
-	}
-	case BulletType::SpecialC:
-	{
-		const Texture& texture = TextureAsset(textureStr);
-
-		// テクスチャを32x32ピクセルの領域に分割
-		auto regions = splitImage(texture, 32 * EXPORT_SCALE, 32 * EXPORT_SCALE);
-
-		// 各向きごとのアニメーションフレームを設定
-		animations[U"left"] = { regions[0], regions[1], regions[2], regions[3] };
-
-		break;
-	}
-	case BulletType::SpecialD:
-	{
-		const Texture& texture = TextureAsset(textureStr);
-
+		const Texture& texture = TextureAsset(U"EnemyBullet");
 		// テクスチャを16x16ピクセルの領域に分割
 		auto regions = splitImage(texture, 16 * EXPORT_SCALE, 16 * EXPORT_SCALE);
 
 		// 各向きごとのアニメーションフレームを設定
 		animations[U"left"] = { regions[0], regions[1], regions[2], regions[3] };
-
-		break;
-	}
 	}
 }
 
@@ -142,7 +140,7 @@ void Bullet::onCollisionResponse(int damage)
 
 	}
 	else if (bulletType == BulletType::SpecialD) {
- 		if (bulletPhase == 0)
+		if (bulletPhase == 0)
 		{
 			hitbox = Circle(250);
 			hitbox.setCenter(pos);
@@ -155,7 +153,7 @@ void Bullet::onCollisionResponse(int damage)
 
 void Bullet::onCollisionResponse(Vec2 RepullPos)
 {
-	GameObject::onCollisionResponse(RepullPos);\
+	GameObject::onCollisionResponse(RepullPos); \
 }
 
 // getter
