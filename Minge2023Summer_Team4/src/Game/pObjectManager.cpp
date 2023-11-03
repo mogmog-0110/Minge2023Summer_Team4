@@ -495,7 +495,7 @@ void ObjectManager::switchSpecialBullet()
 	{
 		const auto& availableBullets = myPlayer->availableBullet;
 
-		if (availableBullets.empty()) {
+		if (myPlayer->isItemEmpty()) {
 			currentState = BulletType::None;
 			currentIndex = -1;
 		}
@@ -503,7 +503,11 @@ void ObjectManager::switchSpecialBullet()
 			// ハッシュマップのキーを配列として取得
 			Array<ItemType> keys;
 			for (const auto& pair : availableBullets) {
-				keys << pair.first;
+
+				if (pair.second == 0)
+				{
+					keys << pair.first;
+				}
 			}
 
 			// 現在のインデックスを更新

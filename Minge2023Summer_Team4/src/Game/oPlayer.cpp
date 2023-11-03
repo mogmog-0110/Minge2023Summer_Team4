@@ -308,16 +308,9 @@ void Player::applyItemEffect(Item* item) {
 	}
 	else
 	{
-		if (availableBullet.contains(itemType))
-		{
-			// 既にアイテムが存在する場合、個数を1増やす
-			availableBullet[itemType] += 1;
-		}
-		else
-		{
-			// アイテムが存在しない場合、個数を1で初期化して追加
-			availableBullet[itemType] = 1;
-		}
+		if (availableBullet[itemType] == 0) bIsItemEmpty = true;
+
+		availableBullet[itemType] += 1;
 	}
 }
 
@@ -528,4 +521,9 @@ BulletProperty Player::createLaserProperty()
 		bp.way = 7; bp.damage = 50 + normalMagicLevel; bp.speed = 1000; bp.size = 10 + normalMagicLevel; bp.delay = 0.3;
 	}
 	return bp;
+}
+
+bool Player::isItemEmpty()
+{
+	return bIsItemEmpty;
 }

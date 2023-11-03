@@ -474,10 +474,7 @@ void Game::drawMagicBook() const
 			double alpha = 0.5;  // デフォルトは半透明
 
 			// 現在選択されているBulletTypeがこのアイテムタイプと一致する場合、不透明にする
-			if (fromItemType(type) == objectManager.currentState)
-			{
-				alpha = 1;
-			}
+			if (fromItemType(type) == objectManager.currentState) alpha = 1;
 
 			// 魔法書を描画
 			bookTextures[index].resized(64, 64).drawAt(bookPositions[index], ColorF(1, 1, 1, alpha));

@@ -54,6 +54,8 @@ private:
 	double attractionRadius = 100;
 	double attractionSpeed = 10;
 
+	bool bIsItemEmpty = true;
+
 protected:
 
 public:
@@ -96,7 +98,13 @@ public:
 	void regenerateHp(double);
 
 	// 取得した特殊弾とその個数
-	HashTable<ItemType, int>availableBullet;
+	HashTable<ItemType, int>availableBullet =
+	{
+			{ ItemType::SpecialMagicA, 0},
+			{ ItemType::SpecialMagicB, 0},
+			{ ItemType::SpecialMagicC, 0},
+			{ ItemType::SpecialMagicD, 0},
+	};
 
 	//getter
 	double getAttractionRadius() const;
@@ -119,4 +127,6 @@ public:
 	BulletProperty createWideProperty();
 	BulletProperty createPrasmaProperty();
 	BulletProperty createLaserProperty();
+
+	bool isItemEmpty();
 };
