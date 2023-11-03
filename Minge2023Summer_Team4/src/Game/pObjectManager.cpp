@@ -169,7 +169,7 @@ void ObjectManager::createDebris()
 			hp = 500;
 		}
 
-		GameObject* newDebris = ObjectAppearanceManager::createNewObject(eDebris, hp, 10, U"", Circle(hitbox), ObjectAppearanceManager::generateRandomPos(), { 0,0 }, { 0,0 });
+		GameObject* newDebris = ObjectAppearanceManager::createNewObject(eDebris, hp, 50, U"", Circle(hitbox), ObjectAppearanceManager::generateRandomPos(), { 0,0 }, { 0,0 });
 		if (newDebris) {
 			myDebrises << static_cast<Debris*>(newDebris);
 		}
