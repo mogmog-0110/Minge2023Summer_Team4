@@ -81,7 +81,9 @@ void Game::update()
 		scrollUpdate();
 		objectManager.update();
 		updateBackground();
-		
+
+		myGameScenario.update();
+
 		debug();
 		break;
 
@@ -123,6 +125,8 @@ void Game::draw() const
 	cursor.draw();
 	drawHpBar();
 	drawMagicBook();
+
+	myGameScenario.draw();
 
 	// 文字
 	dotFont1(U"HP").drawAt(896, 288, Color(255, 255, 255, 255));
