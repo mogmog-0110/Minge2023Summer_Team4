@@ -107,7 +107,7 @@ void ObjectManager::draw(Vec2 offset) const
 {
 
 	for (size_t i = 0; i < myDebrises.size(); i++) myDebrises[i]->draw(offset, false);
-	for (size_t i = 0; i < myPlayerBullets.size(); i++) myPlayerBullets[i]->draw(offset, false);
+	for (size_t i = 0; i < myPlayerBullets.size(); i++) myPlayerBullets[i]->draw(offset, true);
 	for (size_t i = 0; i < myEnemyBullets.size(); i++) myEnemyBullets[i]->draw(offset, false);
 	for (size_t i = 0; i < myEnemies.size(); i++) myEnemies[i]->draw(offset, false);
 	for (size_t i = 0; i < myItems.size(); i++) myItems[i]->draw(offset, false);
@@ -273,7 +273,7 @@ void ObjectManager::createSpecialBullet(Vec2 pos, Vec2 vel, Vec2  acc)
 	{
 	case BulletType::SpecialA:
 	{
-		GameObject* tempBullet = ObjectAppearanceManager::createNewObject(ePlayerBullet, 1, 0, U"LaserBullet", Circle{ 20 }, pos, vel, acc);
+		GameObject* tempBullet = ObjectAppearanceManager::createNewObject(ePlayerBullet, 1, 0, U"LaserBullet", Circle{ 20 }, pos, vel.setLength(300), acc);
 		if (tempBullet) {
 			Bullet* newBullet = static_cast<Bullet*>(tempBullet);
 			newBullet->setBulletType(BulletType::SpecialA);

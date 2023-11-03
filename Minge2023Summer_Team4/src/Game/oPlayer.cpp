@@ -14,6 +14,8 @@ Player::Player(int hp_, int damage_, String textureStr, Figure hitbox_, Vec2 pos
 	previousHp = hp;
 
 	normalMagicLevel = 1;
+
+
 }
 
 Player::~Player()
