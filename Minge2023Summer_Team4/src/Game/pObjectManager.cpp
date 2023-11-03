@@ -109,7 +109,7 @@ void ObjectManager::draw(Vec2 offset) const
 {
 	for (size_t i = 0; i < myItems.size(); i++) myItems[i]->draw(offset, false);
 	for (size_t i = 0; i < myDebrises.size(); i++) myDebrises[i]->draw(offset, false);
-	for (size_t i = 0; i < myPlayerBullets.size(); i++) myPlayerBullets[i]->draw(offset, true);
+	for (size_t i = 0; i < myPlayerBullets.size(); i++) myPlayerBullets[i]->draw(offset, false);
 	for (size_t i = 0; i < myEnemyBullets.size(); i++) myEnemyBullets[i]->draw(offset, false);
 	for (size_t i = 0; i < myEnemies.size(); i++) myEnemies[i]->draw(offset, false);
 
@@ -234,6 +234,8 @@ void ObjectManager::createBullet(Vec2 pos, Vec2 vel, const BulletProperty& bp, V
 		Bullet* newPlayerBullet = static_cast<Bullet*>(newBullet);
 		newPlayerBullet->setBulletType(type);
 		myPlayerBullets << newPlayerBullet;
+
+		myEffectManager->create_spliteEffect(newPlayerBullet->getPos(), U"Effect4", 0.1, 100);
 	}
 }
 
@@ -304,6 +306,9 @@ void ObjectManager::createSpecialBullet(Vec2 pos, Vec2 vel, Vec2  acc)
 				myPlayerBullets << newBullet;
 			}
 		}
+
+		myEffectManager->create_spliteEffect(myPlayer->getPos(), U"Effect2", 0.5, 100);
+
 	} 
 	break;
 	case BulletType::SpecialC:

@@ -82,7 +82,7 @@ void Game::update()
 		objectManager.update();
 		updateBackground();
       
-		debug();
+		//debug();
 		break;
 
 	case GameState::Pausing:
