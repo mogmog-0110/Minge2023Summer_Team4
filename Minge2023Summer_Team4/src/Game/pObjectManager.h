@@ -17,7 +17,9 @@ class Player;
 class ObjectManager
 {
 private:
-	Timer DebugBulletTimer{ 0.1s, StartImmediately::Yes };
+	Timer bulletTimer{ 0.1s, StartImmediately::Yes };
+
+	Array<Timer> specialBulletTimer;
 
 	EffectManager* myEffectManager;
 	Ghost* myGhost;

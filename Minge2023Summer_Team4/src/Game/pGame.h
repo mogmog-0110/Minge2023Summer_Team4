@@ -4,6 +4,7 @@
 #include "pObjectManager.h"
 #include "oMouseCursor.h"
 #include "pEffectManager.h"
+#include "pGameScenario.h"
 
 class Player;
 
@@ -13,6 +14,7 @@ private:
 	MouseCursor cursor;
 	Player* myPlayer;
 	EffectManager* myEffectManager;
+	GameScenario myGameScenario;
 
 	//プレイヤーから見た相対的な左上座標
 	Vec2 topLeft = { 0,0 };

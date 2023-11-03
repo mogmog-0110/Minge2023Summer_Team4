@@ -35,18 +35,18 @@ void ObjectManager::update()
 	switchSpecialBullet();
 
 	// 通常弾の発射
-	if (!DebugBulletTimer.isRunning() && (MouseL.pressed() || KeyV.pressed()))
+	if (!bulletTimer.isRunning() && (MouseL.pressed() || KeyV.pressed()))
 	{
 		createPlayerBullet();
-		DebugBulletTimer.restart();
+		bulletTimer.restart();
 	}
 
 	// 特殊弾の発射
-	if (!DebugBulletTimer.isRunning() && (MouseR.pressed() || KeyB.pressed()))
+	if (!bulletTimer.isRunning() && (MouseR.pressed() || KeyB.pressed()))
 	{
 		Vec2 elementVector = (Cursor::PosF() - Scene::CenterF()).setLength(1);
 		createSpecialBullet(myPlayer->getPos() + elementVector.setLength(50), elementVector.setLength(100), { 1,1 });
-		DebugBulletTimer.restart();
+		bulletTimer.restart();
 	}
 
 	// プレイヤーとアイテムの衝突をチェック
