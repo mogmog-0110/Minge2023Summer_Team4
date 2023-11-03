@@ -21,6 +21,19 @@ void GameObject::updateCommon()
 {
 	if (velRepull.length() > 0.01) velRepull.setLength(velRepull.length() - repullDecaySpeed * Scene::DeltaTime());
 
+
+	if (blinkTimer1.isRunning())
+	{
+		if (!(blinkTimer2.isRunning()))
+		{
+			isBlinkShift = !isBlinkShift;
+			blinkTimer2.restart();
+		}
+	}
+	else
+	{
+		isBlinkShift = false;
+	}
 }
 
 void GameObject::move()
@@ -48,16 +61,11 @@ void GameObject::draw(Vec2 offset, bool isHitboxDraw) const {
 
 	if (texture) {
 		// テクスチャが存在すれば描画
-		if (objType == eDebris || objType == eEnemy)
-		{
-			texture.resized(size, size).drawAt(drawPos);
-		}
-		else texture.resized(size, size).drawAt(drawPos);
+		texture.resized(size, size).drawAt(drawPos, ColorF{ 1.0, isBlinkShift ? 0.5 : 1 });
 	}
 	else
 	{
 		drawAnimation(drawPos);
-		
 	}
 
 	if (isHitboxDraw) {
@@ -72,11 +80,7 @@ void GameObject::drawAnimation(Vec2 drawPos) const
 		if (!frames.isEmpty())
 		{
 			size_t frameIndex = animationFrame % frames.size();  // size_t型の一時変数を使用
-			if (objType == eDebris || objType == eEnemy)
-			{
-				frames[frameIndex].resized(size, size).drawAt(drawPos);
-			}
-			else frames[frameIndex].resized(size, size).drawAt(drawPos);
+			frames[frameIndex].resized(size, size).drawAt(drawPos, ColorF{ 1.0, isBlinkShift ? 0.5 : 1 });
 
 		}
 	}
@@ -143,7 +147,9 @@ void GameObject::onCollisionResponse(int damage)
 {
 	collisionalTimer.restart();
 	hp -= damage;
-	
+
+	if (objType == eDebris || objType == eEnemy || objType == ePlayer) blinkTimer1.restart();
+
 	if (objType == eEnemy) myEffectManager->create_damageScoreEffect(pos, damage);
 }
 

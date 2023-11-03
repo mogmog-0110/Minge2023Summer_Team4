@@ -12,6 +12,9 @@ private:
 
 	Timer collisionalTimer;
 
+	Timer blinkTimer1 = Timer{ 0.5s,StartImmediately::Yes };
+	Timer blinkTimer2 = Timer{ 0.1s,StartImmediately::Yes };;
+
 	const Font debugfont{ 15 };
 
 protected:
@@ -55,6 +58,9 @@ protected:
 	bool isItemDropable = true;
 
 	EffectManager* myEffectManager;
+
+	bool isBlinkShift = false;
+
 
 public:
 

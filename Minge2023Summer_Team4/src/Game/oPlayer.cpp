@@ -149,7 +149,7 @@ void Player::draw(Vec2 offset, bool isHitboxDraw) const
 	}
 
 	// アニメーションのフレームを描画
-	this->playerAnimations.at(currentDirection)[animationFrame].resized(64, 64).drawAt(pos - offset);
+	this->playerAnimations.at(currentDirection)[animationFrame].resized(64, 64).drawAt(pos - offset, ColorF{ 1.0, isBlinkShift ? 0.5 : 1 });
 	if (isHitboxDraw) drawHitbox(-offset); // ヒットボックスを描画	
 }
 
