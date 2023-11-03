@@ -4,7 +4,7 @@
 ObjectManager::ObjectManager()
 {
 	// 初期ステータスの決定
-	Player::create(100, 30, U"", Circle(24), Vec2(Scene::Center().x, Scene::Center().y), 200);
+	Player::create(1000, 3000, U"", Circle(24), Vec2(Scene::Center().x, Scene::Center().y), 200);
 	myGhost = new Ghost(1000000, 0, U"Ghost", Circle(10), Vec2(Scene::Center().x - 60, Scene::Center().y - 60), { 300, 300 }, { 1, 1 });
 	myPlayer = Player::getInstance();
 	myEffectManager = EffectManager::getInstance();
@@ -276,28 +276,71 @@ void ObjectManager::createSpecialBullet(Vec2 pos, Vec2 vel, Vec2  acc)
 	{
 	case BulletType::SpecialA:
 	{
-		GameObject* tempBullet = ObjectAppearanceManager::createNewObject(ePlayerBullet, 1, 0, U"LaserBullet", Circle{ 20 }, pos, vel.setLength(300), acc);
+		bp = myPlayer->createLaserProperty();
+
+		// 中心のレーザー
+		GameObject* tempBullet = ObjectAppearanceManager::createNewObject(ePlayerBullet, 1, bp.damage + myPlayer->getDamage(), U"LaserBullet", Circle{ 20 }, pos, vel.setLength(300), acc);
 		if (tempBullet) {
 			Bullet* newBullet = static_cast<Bullet*>(tempBullet);
 			newBullet->setBulletType(BulletType::SpecialA);
 			myPlayerBullets << newBullet;
 		}
+
+		double laserSpacing = 20.0; // レーザー間の間隔
+
+		// レーザーの速度ベクトルを正規化
+		Vec2 direction = (Cursor::PosF() - myPlayer->getPos()).setLength(1);
+		Vec2 velocity = direction.setLength(300);  // レーザーの速度
+
+		// レーザーの方向に垂直なベクトルを計算
+		Vec2 perpendicular = Vec2(-velocity.y, velocity.x).setLength(laserSpacing);
+
+		for (int i = 1; i <= bp.way / 2; ++i) {
+			// 右側のレーザーの位置
+			Vec2 rightPos = pos + perpendicular * i;
+			// 左側のレーザーの位置
+			Vec2 leftPos = pos - perpendicular * i;
+
+			// 右側のレーザー
+			GameObject* rightBullet = ObjectAppearanceManager::createNewObject(ePlayerBullet, 1, bp.damage + myPlayer->getDamage(), U"LaserBullet", Circle{ 20 }, rightPos, velocity, acc);
+			if (rightBullet) {
+				Bullet* newBullet = static_cast<Bullet*>(rightBullet);
+				newBullet->setBulletType(BulletType::SpecialA);
+				myPlayerBullets << newBullet;
+			}
+
+			// 左側のレーザー
+			GameObject* leftBullet = ObjectAppearanceManager::createNewObject(ePlayerBullet, 1, bp.damage + myPlayer->getDamage(), U"LaserBullet", Circle{ 20 }, leftPos, velocity, acc);
+			if (leftBullet) {
+				Bullet* newBullet = static_cast<Bullet*>(leftBullet);
+				newBullet->setBulletType(BulletType::SpecialA);
+				myPlayerBullets << newBullet;
+			}
+		}
 	}
+
 	break;
 	case BulletType::SpecialB:
 	{
 		bp = myPlayer->createWideProperty();
-		GameObject* tempBullet = ObjectAppearanceManager::createNewObject(ePlayerBullet, bp.hp, bp.damage, U"WideBullet", Circle{ 20 }, pos, vel, acc);
-		if (tempBullet) {
-			Bullet* newBullet = static_cast<Bullet*>(tempBullet);
-			newBullet->setBulletType(BulletType::SpecialB);
-			myPlayerBullets << newBullet;
+		for (int i = 0; i < 12; ++i) {
+			double angle = i * (360.0 / 12) * Math::Pi / 180.0;  // 30度ごとにラジアンに変換
+			Vec2 dir = { Cos(angle), Sin(angle) };
+			Vec2 vel = dir.setLength(300);
+
+			GameObject* tempBullet = ObjectAppearanceManager::createNewObject(ePlayerBullet, bp.hp, bp.damage + myPlayer->getDamage(), U"WideBullet", Circle{20}, myPlayer->getPos(), vel, acc);
+			if (tempBullet) {
+				Bullet* newBullet = static_cast<Bullet*>(tempBullet);
+				newBullet->setBulletType(BulletType::SpecialB);
+				myPlayerBullets << newBullet;
+			}
 		}
 	} 
 	break;
 	case BulletType::SpecialC:
 	{
-		GameObject* tempBullet = ObjectAppearanceManager::createNewObject(ePlayerBullet, 1, 0, U"PrasmaBullet", Circle{ 20 }, pos, vel, acc);
+		bp = myPlayer->createPrasmaProperty();
+		GameObject* tempBullet = ObjectAppearanceManager::createNewObject(ePlayerBullet, bp.hp, bp.damage + myPlayer->getDamage(), U"PrasmaBullet", Circle{ bp.size }, pos, vel, acc);
 		if (tempBullet) {
 			Bullet* newBullet = static_cast<Bullet*>(tempBullet);
 			newBullet->setBulletType(BulletType::SpecialC);
@@ -308,7 +351,7 @@ void ObjectManager::createSpecialBullet(Vec2 pos, Vec2 vel, Vec2  acc)
 	case BulletType::SpecialD:
 	{
 		bp = myPlayer->createMineProperty();
-		GameObject* tempBullet = ObjectAppearanceManager::createNewObject(ePlayerBullet, 1, bp.damage, U"MineBullet", Circle{ 20 }, pos, vel.setLength(300), acc);
+		GameObject* tempBullet = ObjectAppearanceManager::createNewObject(ePlayerBullet, 1, bp.damage + myPlayer->getDamage(), U"MineBullet", Circle{ 20 }, pos, vel.setLength(300), acc);
 		if (tempBullet) {
 			Bullet* newBullet = static_cast<Bullet*>(tempBullet);
 			newBullet->setBulletType(BulletType::SpecialD);
