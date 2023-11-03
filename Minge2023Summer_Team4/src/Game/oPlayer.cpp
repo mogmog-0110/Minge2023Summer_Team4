@@ -75,6 +75,10 @@ void Player::update() {
 	regenerateHp(regeneVal);
 
 	previousHp = hp; // 現在のHPを前フレームのHPとして保存
+	if (hp <= 0)
+	{
+		hp = 0;
+	}
 }
 
 void Player::regenerateHp(double regeneVal) {
