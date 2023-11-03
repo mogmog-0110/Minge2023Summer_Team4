@@ -36,6 +36,8 @@ public:
 	void update() override;
 	void move() override;
 
+	void draw(Vec2 offset, bool isHitboxDraw) const override;
+
 
 	void onCollisionResponse(int damage);
 	void onCollisionResponse(Vec2 RepullPos);

@@ -38,6 +38,7 @@ void Bullet::move()
 		}
 		else
 		{
+			tipPos += vel * Scene::DeltaTime();
 			pos += vel * Scene::DeltaTime();
 			hitbox.moveBy(vel * Scene::DeltaTime());
 		}
@@ -62,6 +63,19 @@ void Bullet::move()
 		pos += vel * Scene::DeltaTime();
 		hitbox.setCenter(pos);
 	}
+
+}
+
+void Bullet::draw(Vec2 offset, bool isHitboxDraw) const
+{
+	if (bulletType == BulletType::SpecialA)
+	{
+		texture.resized((tipPos - pos).length(), 50)
+			.rotatedAt(Vec2{ 0,25 },
+				(tipPos-pos).y > 0 ? acos((tipPos - pos).x / (tipPos - pos).length()) :
+					Math::TwoPi - acos((tipPos - pos).x / (tipPos - pos).length())).draw(pos - offset);
+	}
+	else GameObject::draw(offset, isHitboxDraw);
 
 }
 

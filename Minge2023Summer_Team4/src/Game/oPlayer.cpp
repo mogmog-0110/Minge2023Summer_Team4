@@ -14,6 +14,8 @@ Player::Player(int hp_, int damage_, String textureStr, Figure hitbox_, Vec2 pos
 	previousHp = hp;
 
 	normalMagicLevel = 1;
+
+
 }
 
 Player::~Player()
@@ -153,7 +155,7 @@ void Player::draw(Vec2 offset, bool isHitboxDraw) const
 	}
 
 	// アニメーションのフレームを描画
-	this->playerAnimations.at(currentDirection)[animationFrame].resized(64, 64).drawAt(pos - offset);
+	this->playerAnimations.at(currentDirection)[animationFrame].resized(64, 64).drawAt(pos - offset, ColorF{ 1.0, isBlinkShift ? 0.5 : 1 });
 	if (isHitboxDraw) drawHitbox(-offset); // ヒットボックスを描画	
 }
 
