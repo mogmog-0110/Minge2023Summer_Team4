@@ -281,7 +281,7 @@ void ObjectManager::createSpecialBullet(Vec2 pos, Vec2 vel, Vec2  acc)
 		bp = myPlayer->createLaserProperty();
 
 		// 中心のレーザー
-		GameObject* tempBullet = ObjectAppearanceManager::createNewObject(ePlayerBullet, 1, bp.damage + myPlayer->getDamage(), U"LaserBullet", Circle{ 20 }, pos, vel.setLength(300), acc);
+		GameObject* tempBullet = ObjectAppearanceManager::createNewObject(ePlayerBullet, 1, bp.damage, U"LaserBullet", Circle{ 20 }, pos, vel.setLength(1000), acc);
 		if (tempBullet) {
 			Bullet* newBullet = static_cast<Bullet*>(tempBullet);
 			newBullet->setBulletType(BulletType::SpecialA);

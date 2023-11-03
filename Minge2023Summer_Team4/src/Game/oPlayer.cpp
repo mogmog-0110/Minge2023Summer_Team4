@@ -496,7 +496,7 @@ BulletProperty Player::createPrasmaProperty()
 		bp.hp = 700; bp.damage = 240; bp.size = 85; bp.delay = 0.3;
 		break;
 	default:
-		bp.damage = 50 + availableBullet[ItemType::SpecialMagicC] * 2; bp.delay = 0.3; bp.hp = 50 + availableBullet[ItemType::SpecialMagicC] * 2;
+		bp.damage = 50 + availableBullet[ItemType::SpecialMagicC] * 2; bp.delay = 0.3; bp.hp = 50 + availableBullet[ItemType::SpecialMagicC] * 2; bp.size = 85;
 	}
 	return bp;
 }
@@ -507,16 +507,16 @@ BulletProperty Player::createLaserProperty()
 	switch (normalMagicLevel)
 	{
 	case 1:
-		bp.way = 1; bp.damage = 10; bp.speed = 300; bp.size = 10; bp.delay = 1.0;
+		bp.way = 1; bp.damage = 20; bp.speed = 300; bp.size = 10; bp.delay = 1.0;
 		break;
 	case 2:
-		bp.way = 1; bp.damage = 20; bp.speed = 500; bp.size = 12; bp.delay = 0.8;
+		bp.way = 1; bp.damage = 30; bp.speed = 500; bp.size = 12; bp.delay = 0.8;
 		break;
 	case 3:
-		bp.way = 3; bp.damage = 20; bp.speed = 500; bp.size = 12; bp.delay = 0.8;
+		bp.way = 3; bp.damage = 30; bp.speed = 500; bp.size = 12; bp.delay = 0.8;
 		break;
 	case 4:
-		bp.way = 3; bp.damage = 30; bp.speed = 600; bp.size = 14; bp.delay = 0.6;
+		bp.way = 3; bp.damage = 40; bp.speed = 600; bp.size = 14; bp.delay = 0.6;
 		break;
 	case 5:
 		bp.way = 5; bp.damage = 40; bp.speed = 700; bp.size = 14; bp.delay = 0.5;
@@ -525,7 +525,7 @@ BulletProperty Player::createLaserProperty()
 		bp.way = 5; bp.damage = 50; bp.speed = 1000; bp.size = 16; bp.delay = 0.3;
 		break;
 	default:
-		bp.way = 7; bp.damage = 50 + normalMagicLevel; bp.speed = 1000; bp.size = 10 + normalMagicLevel; bp.delay = 0.3;
+		bp.way = 7; bp.damage = 70 + normalMagicLevel; bp.speed = 1000; bp.size = 10 + normalMagicLevel; bp.delay = 0.3;
 	}
 	return bp;
 }

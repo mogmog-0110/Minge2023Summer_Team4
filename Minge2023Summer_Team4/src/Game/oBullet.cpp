@@ -103,7 +103,7 @@ void Bullet::setUpAnimation()
 	}
 	else if (textureStr == U"LaserBullet")
 	{
-		//setTexture(textureStr);
+		setTexture(textureStr);
 	}
 	else if (textureStr == U"WideBullet")
 	{
