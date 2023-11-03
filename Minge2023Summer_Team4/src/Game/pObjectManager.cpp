@@ -286,37 +286,6 @@ void ObjectManager::createSpecialBullet(Vec2 pos, Vec2 vel, Vec2  acc)
 			myPlayerBullets << newBullet;
 		}
 
-		double laserSpacing = 20.0; // レーザー間の間隔
-
-		// レーザーの速度ベクトルを正規化
-		Vec2 direction = (Cursor::PosF() - myPlayer->getPos()).setLength(1);
-		Vec2 velocity = direction.setLength(300);  // レーザーの速度
-
-		// レーザーの方向に垂直なベクトルを計算
-		Vec2 perpendicular = Vec2(-velocity.y, velocity.x).setLength(laserSpacing);
-
-		for (int i = 1; i <= bp.way / 2; ++i) {
-			// 右側のレーザーの位置
-			Vec2 rightPos = pos + perpendicular * i;
-			// 左側のレーザーの位置
-			Vec2 leftPos = pos - perpendicular * i;
-
-			// 右側のレーザー
-			GameObject* rightBullet = ObjectAppearanceManager::createNewObject(ePlayerBullet, 1, bp.damage + myPlayer->getDamage(), U"LaserBullet", Circle{ 20 }, rightPos, velocity, acc);
-			if (rightBullet) {
-				Bullet* newBullet = static_cast<Bullet*>(rightBullet);
-				newBullet->setBulletType(BulletType::SpecialA);
-				myPlayerBullets << newBullet;
-			}
-
-			// 左側のレーザー
-			GameObject* leftBullet = ObjectAppearanceManager::createNewObject(ePlayerBullet, 1, bp.damage + myPlayer->getDamage(), U"LaserBullet", Circle{ 20 }, leftPos, velocity, acc);
-			if (leftBullet) {
-				Bullet* newBullet = static_cast<Bullet*>(leftBullet);
-				newBullet->setBulletType(BulletType::SpecialA);
-				myPlayerBullets << newBullet;
-			}
-		}
 	}
 
 	break;
