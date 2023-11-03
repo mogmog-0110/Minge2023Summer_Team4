@@ -62,6 +62,12 @@ void Game::update()
 		break;
 
 	case GameState::Playing:
+		// コマンド
+		if (KeyJ.pressed() && KeyK.pressed() && KeyL.pressed())
+		{
+			myPlayer->setSpeed(500);
+			myPlayer->availableBullet.emplace(ItemType::SpecialMagicB, 100);
+		}
 		accumulatedTime += Scene::DeltaTime();
 		if (KeyP.down()) {
 			currentState = GameState::Pausing;
