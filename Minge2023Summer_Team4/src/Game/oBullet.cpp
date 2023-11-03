@@ -146,6 +146,7 @@ void Bullet::onCollisionResponse(int damage)
 			hitbox.setCenter(pos);
 			GameObject::damage = 10000;
 			bulletPhase++;
+			myEffectManager->create_spliteEffect(pos, U"Effect3", 0.3, 400);
 		}
 	}
 	else GameObject::onCollisionResponse(damage);
