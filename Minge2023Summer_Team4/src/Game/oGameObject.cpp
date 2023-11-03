@@ -48,7 +48,11 @@ void GameObject::draw(Vec2 offset, bool isHitboxDraw) const {
 
 	if (texture) {
 		// テクスチャが存在すれば描画
-		texture.resized(size, size).drawAt(drawPos);
+		if (objType == eDebris || objType == eEnemy)
+		{
+			texture.resized(size, size).drawAt(drawPos);
+		}
+		else texture.resized(size, size).drawAt(drawPos);
 	}
 	else
 	{
@@ -68,7 +72,12 @@ void GameObject::drawAnimation(Vec2 drawPos) const
 		if (!frames.isEmpty())
 		{
 			size_t frameIndex = animationFrame % frames.size();  // size_t型の一時変数を使用
-			frames[frameIndex].resized(size, size).drawAt(drawPos);
+			if (objType == eDebris || objType == eEnemy)
+			{
+				frames[frameIndex].resized(size, size).drawAt(drawPos);
+			}
+			else frames[frameIndex].resized(size, size).drawAt(drawPos);
+
 		}
 	}
 }
