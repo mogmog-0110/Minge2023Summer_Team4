@@ -4,12 +4,13 @@ bool GameScenario::update()
 {
 	if (KeySpace.down())
 	{
-		if (scenario[selectedScenario].size() > scenarioIndex) {
-
-			scenarioIndex++;
+		scenarioIndex++;
+		if (scenario[selectedScenario].size() <= scenarioIndex) {
+			scenarioIndex = 0;
 			return true;
 		}
 		else return false;
+
 	}
 	else return false;
 

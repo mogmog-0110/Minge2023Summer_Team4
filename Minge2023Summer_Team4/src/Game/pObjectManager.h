@@ -17,7 +17,9 @@ class Player;
 class ObjectManager
 {
 private:
-	Timer DebugBulletTimer{ 0.1s, StartImmediately::Yes };
+	Timer bulletTimer{ 0.1s, StartImmediately::Yes };
+
+	Array<Timer> specialBulletTimer;
 
 	EffectManager* myEffectManager;
 	Ghost* myGhost;
@@ -39,6 +41,8 @@ private:
 
 	template<typename T>
 	void updateObjList(Array<T*>& objectList);
+
+	bool gameEnd = false;
 
 public:
 
@@ -70,7 +74,9 @@ public:
 
 	void createDebris();
 	void createEnemy();
-	void createPlayerBullet(Vec2, Vec2, Vec2);
+	void createPlayerBullet();
+	void createBullet(Vec2 pos, Vec2 vel, const BulletProperty& bp, Vec2 acc, BulletType);
+	void createEnemyBullet();
 	void createSpecialBullet(Vec2, Vec2, Vec2);
 	void createItem(Vec2, int);
 
@@ -82,6 +88,8 @@ public:
 	void stopEnemies();
 	void switchSpecialBullet();
 	BulletType fromItemType(ItemType);
+
+	void bossDead();
 };
 
 
@@ -159,7 +167,7 @@ void ObjectManager::cleanUp(Array<T*>& objs) {
 				Vec2 objPos = (*it)->getPos();
 				int expPoints = (*it)->getExp();
 				createItem(objPos, expPoints);
-     }
+			}
 			delete* it;
 			it = objs.erase(it);
 		}

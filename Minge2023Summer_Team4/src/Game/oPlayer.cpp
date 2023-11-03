@@ -12,6 +12,8 @@ Player::Player(int hp_, int damage_, String textureStr, Figure hitbox_, Vec2 pos
 
 	maxHp = hp;
 	previousHp = hp;
+
+	normalMagicLevel = 1;
 }
 
 Player::~Player()
@@ -63,11 +65,10 @@ void Player::update() {
 	if (previousHp > hp) {
 		damageDelayElapsed = 0.0;
 	}
-	else {
+	else
+	{
 		damageDelayElapsed += Scene::DeltaTime();
 	}
-
-	Logger << damageDelayElapsed;
 
 	regenerateHp(regeneVal);
 
@@ -79,8 +80,6 @@ void Player::regenerateHp(double regeneVal) {
 	{
 
 		if (isMoving == true) regeneVal *= 0.25;
-
-		Logger << regeneVal;
 
 		hp += regeneVal;
 
@@ -101,7 +100,6 @@ void Player::move() {
 
 	if (normalizedMoveDir.length() > 0)
 	{
-		Logger << speed;
 		pos += normalizedMoveDir * speed * deltaTime;
 		setPos(pos);
 		isMoving = true;
@@ -151,7 +149,7 @@ void Player::draw(Vec2 offset, bool isHitboxDraw) const
 	}
 
 	// アニメーションのフレームを描画
-	this->playerAnimations.at(currentDirection)[animationFrame].drawAt(pos - offset);
+	this->playerAnimations.at(currentDirection)[animationFrame].resized(64, 64).drawAt(pos - offset);
 	if (isHitboxDraw) drawHitbox(-offset); // ヒットボックスを描画	
 }
 
@@ -194,7 +192,8 @@ void Player::playDeathAnimation() {
 	}
 }
 
-bool Player::deathAnimationFinished() const {
+bool Player::deathAnimationFinished() const
+{
 	try {
 		return isDeadAnimationPlaying && (animationFrame == playerAnimations.at(U"dead").size() - 1);
 	}
@@ -288,71 +287,43 @@ void Player::levelUp()
 }
 
 void Player::applyItemEffect(Item* item) {
-	if (item->getItemType() == ItemType::ExpPoint)
+	ItemType itemType = item->getItemType();
+	if (itemType == ItemType::ExpPoint)
 	{
 		// アイテムが経験値を持っている場合、プレイヤーの経験値を増加させる
 		int expPoints = item->getExp();  // アイテムから経験値の量を取得
 		gainExp(expPoints);
 	}
-	else if (item->getItemType() == ItemType::NormalMagic)
+	else if  (itemType == ItemType::NormalMagic)
 	{
-		levelNormal+= 1;
+		normalMagicLevel += 1;
 	}
-	else if (item->getItemType() == ItemType::SpecialMagicA)
+	else
 	{
-		if (availableBullet.includes(ItemType::SpecialMagicA))
+		if (availableBullet.contains(itemType))
 		{
-			levelSpecialA += 1;
+			// 既にアイテムが存在する場合、個数を1増やす
+			availableBullet[itemType] += 1;
 		}
 		else
 		{
-			availableBullet << ItemType::SpecialMagicA;
+			// アイテムが存在しない場合、個数を1で初期化して追加
+			availableBullet[itemType] = 1;
 		}
 	}
-	else if (item->getItemType() == ItemType::SpecialMagicB)
-	{
-		if (availableBullet.includes(ItemType::SpecialMagicB))
-		{
-			levelSpecialB += 1;
-		}
-		else
-		{
-			availableBullet << ItemType::SpecialMagicB;
-		}
-	}
-	else if (item->getItemType() == ItemType::SpecialMagicC)
-	{
-		if (availableBullet.includes(ItemType::SpecialMagicC))
-		{
-			levelSpecialC += 1;
-		}
-		else
-		{
-			availableBullet << ItemType::SpecialMagicC;
-		}
-	}
-	else if (item->getItemType() == ItemType::SpecialMagicD)
-	{
-		if (availableBullet.includes(ItemType::SpecialMagicD))
-		{
-			levelSpecialD += 1;
-		}
-		else
-		{
-			availableBullet << ItemType::SpecialMagicD;
-		}
-	}
-
 }
+
 
 void Player::attractItems(Array<Item*>& items)
 {
-	for (Item* item : items) {
+	for (Item* item : items)
+	{
 		if (item->getItemType() == ItemType::ExpPoint) {
 			Vec2 direction = item->getPos() - pos; // アイテムへの方向ベクトル
 			double distance = direction.length();
 
-			if (distance < attractionRadius) {
+			if (distance < attractionRadius)
+			{
 				// 吸い寄せの計算
 				Vec2 attraction = direction.normalized() * attractionSpeed; // attractionSpeedは吸い寄せる速度
 				item->setPos(item->getPos() - attraction);
@@ -378,23 +349,6 @@ int Player::getLevel() const
 	return this->level;
 }
 
-int Player::getBulletLevel(BulletType bulletType) const
-{
-	switch (bulletType)
-	{
-	case BulletType::Normal:
-		return levelNormal;
-	case BulletType::SpecialA:
-		return levelSpecialA;
-	case BulletType::SpecialB:
-		return levelSpecialB;
-	case BulletType::SpecialC:
-		return levelSpecialC;
-	case BulletType::SpecialD:
-		return levelSpecialD;
-	}
-}
-
 int Player::getNextlevelExp() const
 {
 	return this->nextLevelExp;
@@ -417,3 +371,29 @@ void Player::setAttractionSpeed(double speed)
 	this->attractionSpeed = speed;
 }
 
+BulletProperty Player::createProperty()
+{
+	BulletProperty bp;
+	switch (normalMagicLevel)
+	{
+		case 1:
+			bp.way = 1; bp.damage = 10; bp.speed = 300; bp.size = 10; bp.delay = 1.0;
+			break;
+		case 2:
+			bp.way = 1; bp.damage = 20; bp.speed = 500; bp.size = 12; bp.delay = 0.8;
+			break;
+		case 3:
+			bp.way = 3; bp.damage = 20; bp.speed = 500; bp.size = 12; bp.delay = 0.8;
+			break;
+		case 4:
+			bp.way = 5; bp.damage = 30; bp.speed = 600; bp.size = 14; bp.delay = 0.6;
+			break;
+		case 5:
+			bp.way = 7; bp.damage = 40; bp.speed = 700; bp.size = 14; bp.delay = 0.5;
+			break;
+		case 6:
+			bp.way = 7; bp.damage = 50; bp.speed = 1000; bp.size = 16; bp.delay = 0.1;
+			break;
+	}
+	return bp;
+}

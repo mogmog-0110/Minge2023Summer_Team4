@@ -7,4 +7,4 @@ EvilEye,300,120,EvilEye,Circle(16),80
 BigRat,500,100,BigRat,Circle(24),150
 BigSpider,450,150,BigSpider,Circle(32),120
 Worm,600,200,Worm,Circle(32),150
-Kuro,10000,500,Kuro,Circle(48),120
+Kuro,5000,500,Kuro,Circle(48),120

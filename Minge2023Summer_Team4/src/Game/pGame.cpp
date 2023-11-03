@@ -27,7 +27,7 @@ Game::Game(const InitData& init)
 
 Game::~Game()
 {
-	
+
 }
 
 
@@ -81,9 +81,7 @@ void Game::update()
 		scrollUpdate();
 		objectManager.update();
 		updateBackground();
-
-		myGameScenario.update();
-
+      
 		debug();
 		break;
 
@@ -127,7 +125,7 @@ void Game::draw() const
 {
 	//従来のマウスカーソルを非表示に
 	Cursor::RequestStyle(CursorStyle::Hidden);
-	
+
 	objectManager.draw(topLeft);
 	myEffectManager->draw(topLeft);
 	//TextureAsset(U"Frame").draw();
@@ -140,7 +138,7 @@ void Game::draw() const
 
 	// 文字
 	dotFont1(U"HP").drawAt(896, 288, Color(255, 255, 255, 255));
-	dotFont1(U"LEVEL ", Player::getInstance()->getLevel()).drawAt({896, 352}, Color(255, 255, 255, 255));
+	dotFont1(U"LEVEL ", Player::getInstance()->getLevel()).drawAt({ 896, 352 }, Color(255, 255, 255, 255));
 }
 
 void Game::debug()
@@ -276,8 +274,8 @@ Vec2 Game::calculateMiniMapPos(Vec2 screenPos) const
 	Vec2 miniMapPos;
 
 	// スクリーン座標をミニ マップ座標に変換
-	miniMapPos = (screenPos * miniMapScaleSize) / screenSize + Vec2{768 + 64 , 0 + 64};
-	
+	miniMapPos = (screenPos * miniMapScaleSize) / screenSize + Vec2{ 768 + 64 , 0 + 64 };
+
 	return miniMapPos;
 }
 
@@ -458,6 +456,8 @@ void Game::drawMagicBook() const
 	// ノーマルブックのフレームとテクスチャを描画
 	mgFrame.resized(64, 64).drawAt(basePos);
 	normalMagic.resized(64, 64).drawAt(basePos);
+	// レベルを表示
+	dotFont1(myPlayer->normalMagicLevel).drawAt(basePos, Color(255, 255, 255));
 
 	// 他の魔法書のフレームを描画
 	for (int i = 0; i < bookPositions.size(); i++) {
@@ -465,29 +465,27 @@ void Game::drawMagicBook() const
 	}
 
 	// 取得している魔法書を描画、また選択している魔法書以外は半透明に。
-	for (ItemType type : myPlayer->availableBullet)
+	for (auto [type, level] : myPlayer->availableBullet)
 	{
-		int index = getBookTextureIndex(type);
-		double alpha = 0.5;
-    
-		if (!(myPlayer->availableBullet.isEmpty()) && objectManager.currentIndex > 0)
+		if (level > 0 && type != ItemType::NormalMagic)  // レベルが0より大きい場合のみ描画
 		{
-			if (index == getBookTextureIndex(myPlayer->availableBullet[objectManager.currentIndex]))
+
+			int index = getBookTextureIndex(type);
+			double alpha = 0.5;  // デフォルトは半透明
+
+			// 現在選択されているBulletTypeがこのアイテムタイプと一致する場合、不透明にする
+			if (fromItemType(type) == objectManager.currentState)
 			{
 				alpha = 1;
 			}
+
+			// 魔法書を描画
+			bookTextures[index].resized(64, 64).drawAt(bookPositions[index], ColorF(1, 1, 1, alpha));
+			// レベルを表示
+			dotFont1(level).drawAt(bookPositions[index], Color(255, 255, 255));
 		}
-		bookTextures[index].resized(64, 64).drawAt(bookPositions[index], ColorF(1, 1, 1, alpha));
 	}
-
-	// レベルの表示
-	dotFont1(myPlayer->getBulletLevel(BulletType::Normal)).drawAt(basePos, Color(255, 255, 255, 255));
-	dotFont1(myPlayer->getBulletLevel(BulletType::SpecialA)).drawAt(bookPositions[0], Color(255, 255, 255, 255));
-	dotFont1(myPlayer->getBulletLevel(BulletType::SpecialB)).drawAt(bookPositions[1], Color(255, 255, 255, 255));
-	dotFont1(myPlayer->getBulletLevel(BulletType::SpecialC)).drawAt(bookPositions[2], Color(255, 255, 255, 255));
-	dotFont1(myPlayer->getBulletLevel(BulletType::SpecialD)).drawAt(bookPositions[3], Color(255, 255, 255, 255));
 }
-
 
 
 int Game::getBookTextureIndex(ItemType type) const
@@ -500,8 +498,6 @@ int Game::getBookTextureIndex(ItemType type) const
 	default: return -1; // 無効な値
 	}
 }
-
-
 
 void Game::drawHpBar() const
 {
@@ -521,6 +517,38 @@ void Game::drawHpBar() const
 
 	// HPのゲージを描画（長さを変えて）
 	hp.resized(gaugeWidth, 32).draw(startX, 320 - hp.height() / 2 + 16);
+}
+
+ItemType Game::fromBulletType(BulletType bulletType)
+{
+	switch (bulletType)
+	{
+	case BulletType::SpecialA:
+		return ItemType::SpecialMagicA;
+	case BulletType::SpecialB:
+		return ItemType::SpecialMagicB;
+	case BulletType::SpecialC:
+		return ItemType::SpecialMagicC;
+	case BulletType::SpecialD:
+		return ItemType::SpecialMagicD;
+	}
+}
+
+BulletType Game::fromItemType(ItemType itemType) const
+{
+	switch (itemType)
+	{
+	case ItemType::SpecialMagicA:
+		return BulletType::SpecialA;
+	case ItemType::SpecialMagicB:
+		return BulletType::SpecialB;
+	case ItemType::SpecialMagicC:
+		return BulletType::SpecialC;
+	case ItemType::SpecialMagicD:
+		return BulletType::SpecialD;
+	default:
+		return BulletType::None;
+	}
 }
 
 

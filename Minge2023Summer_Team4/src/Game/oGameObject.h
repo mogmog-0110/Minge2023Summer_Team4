@@ -18,6 +18,7 @@ protected:
 
 	eObjectType objType;
 	double hp = 1;
+	double previousHp;
 	int damage = 1;
 	double speed;
 	String textureStr;
@@ -29,6 +30,8 @@ protected:
 		
 	// 経験値
 	int expPoints;
+
+	double damageDelayElapsed = 0.0; // 経過時間の保持
 
 	Texture texture;
 
@@ -71,8 +74,7 @@ public:
 
 	virtual void draw(Vec2 offset, bool isHitboxDraw) const;
 
-	void drawAnimation(Vec2 offset) const;
-
+	virtual void drawAnimation(Vec2 offset) const;
 
 	bool isCollisional();
 	void onCollisionResponse(int damage);
