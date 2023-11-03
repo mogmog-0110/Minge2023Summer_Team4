@@ -338,7 +338,7 @@ void ObjectManager::createSpecialBullet(Vec2 pos, Vec2 vel, Vec2  acc)
 
 void ObjectManager::createItem(Vec2 pos, int expPoints)
 {
-	int randomNum = Random(50);
+	int randomNum = Random(1);
 
 	// 100分の1の抽選で特殊弾のドロップ
 	if (randomNum == 0)
