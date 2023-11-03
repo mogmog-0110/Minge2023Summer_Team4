@@ -61,6 +61,8 @@ void ObjectManager::update()
 
 	// 不要になったアイテムをクリーンアップ
 	cleanUp(myItems);
+
+	setDelayTimer();
 }
 
 
