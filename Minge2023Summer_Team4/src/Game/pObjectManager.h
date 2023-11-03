@@ -17,9 +17,10 @@ class Player;
 class ObjectManager
 {
 private:
-	Timer bulletTimer{ 0.1s, StartImmediately::Yes };
 
-	Array<Timer> specialBulletTimer;
+	Timer bulletTimer{ 0.5s, StartImmediately::Yes };
+	HashTable<BulletType, Timer> specialBulletTimer;
+
 
 	EffectManager* myEffectManager;
 	Ghost* myGhost;
@@ -88,6 +89,8 @@ public:
 	void stopEnemies();
 	void switchSpecialBullet();
 	BulletType fromItemType(ItemType);
+
+	void setDelayTimer();
 };
 
 
