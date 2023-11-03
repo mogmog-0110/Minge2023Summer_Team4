@@ -105,12 +105,11 @@ void ObjectManager::collision() {
 
 void ObjectManager::draw(Vec2 offset) const
 {
-
+	for (size_t i = 0; i < myItems.size(); i++) myItems[i]->draw(offset, false);
 	for (size_t i = 0; i < myDebrises.size(); i++) myDebrises[i]->draw(offset, false);
 	for (size_t i = 0; i < myPlayerBullets.size(); i++) myPlayerBullets[i]->draw(offset, false);
 	for (size_t i = 0; i < myEnemyBullets.size(); i++) myEnemyBullets[i]->draw(offset, false);
 	for (size_t i = 0; i < myEnemies.size(); i++) myEnemies[i]->draw(offset, false);
-	for (size_t i = 0; i < myItems.size(); i++) myItems[i]->draw(offset, false);
 
 	this->myPlayer->draw(offset, false);
 	this->myGhost->draw(offset);
@@ -137,7 +136,7 @@ Enemy* ObjectManager::createEnemyFromData(WaveData waveData)
 	String textureStr = enemyDatas[name].textureStr;
 	Figure hitbox = enemyDatas[name].hitbox;
 	double speed = enemyDatas[name].speed * (waveData.statusModifier * 1 / 2);
-	Vec2 spawnPos = { waveData.spawnPos.x + Random(50), waveData.spawnPos.y + Random(50) };
+	Vec2 spawnPos = { waveData.spawnPos.x + Random(300), waveData.spawnPos.y + Random(300) };
 
 	GameObject* newEnemy = ObjectAppearanceManager::createNewObject(eEnemy, hp, damage, textureStr, hitbox, spawnPos + myPlayer->getPos(), { speed, speed }, { 1, 1 });
 	return static_cast<Enemy*>(newEnemy);
@@ -145,7 +144,7 @@ Enemy* ObjectManager::createEnemyFromData(WaveData waveData)
 
 void ObjectManager::createDebris()
 {
-
+	
 	while (myDebrises.size() < 30)
 	{
 		int n = Random(1, 3);
@@ -325,7 +324,7 @@ void ObjectManager::createSpecialBullet(Vec2 pos, Vec2 vel, Vec2  acc)
 
 void ObjectManager::createItem(Vec2 pos, int expPoints)
 {
-	int randomNum = Random(2);
+	int randomNum = Random(50);
 
 	// 100分の1の抽選で特殊弾のドロップ
 	if (randomNum == 0)

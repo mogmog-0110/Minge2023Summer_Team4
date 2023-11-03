@@ -17,7 +17,7 @@ class Player;
 class ObjectManager
 {
 private:
-	Timer bulletTimer{ 0.1s, StartImmediately::Yes };
+	Timer bulletTimer{ 0.5s, StartImmediately::Yes };
 
 	Array<Timer> specialBulletTimer;
 
