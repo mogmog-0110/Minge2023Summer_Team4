@@ -4,7 +4,7 @@
 ObjectManager::ObjectManager()
 {
 	// 初期ステータスの決定
-	Player::create(100, 30, U"", Circle(24), Vec2(Scene::Center().x, Scene::Center().y), 200);
+	Player::create(1000, 3000, U"", Circle(24), Vec2(Scene::Center().x, Scene::Center().y), 200);
 	myGhost = new Ghost(1000000, 0, U"Ghost", Circle(10), Vec2(Scene::Center().x - 60, Scene::Center().y - 60), { 300, 300 }, { 1, 1 });
 	myPlayer = Player::getInstance();
 	myEffectManager = EffectManager::getInstance();
@@ -286,11 +286,17 @@ void ObjectManager::createSpecialBullet(Vec2 pos, Vec2 vel, Vec2  acc)
 	case BulletType::SpecialB:
 	{
 		bp = myPlayer->createWideProperty();
-		GameObject* tempBullet = ObjectAppearanceManager::createNewObject(ePlayerBullet, bp.hp, bp.damage, U"WideBullet", Circle{ 20 }, pos, vel, acc);
-		if (tempBullet) {
-			Bullet* newBullet = static_cast<Bullet*>(tempBullet);
-			newBullet->setBulletType(BulletType::SpecialB);
-			myPlayerBullets << newBullet;
+		for (int i = 0; i < 12; ++i) {
+			double angle = i * (360.0 / 12) * Math::Pi / 180.0;  // 30度ごとにラジアンに変換
+			Vec2 dir = { Cos(angle), Sin(angle) };
+			Vec2 vel = dir.setLength(300);
+
+			GameObject* tempBullet = ObjectAppearanceManager::createNewObject(ePlayerBullet, bp.hp, bp.damage, U"WideBullet", Circle{ 20 }, myPlayer->getPos(), vel, acc);
+			if (tempBullet) {
+				Bullet* newBullet = static_cast<Bullet*>(tempBullet);
+				newBullet->setBulletType(BulletType::SpecialB);
+				myPlayerBullets << newBullet;
+			}
 		}
 	} 
 	break;

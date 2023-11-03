@@ -443,26 +443,25 @@ BulletProperty Player::createWideProperty()
 	case 0:
 		break;
 	case 1:
-		bp.hp = 30; bp.damage = 10; bp.size = 20; bp.delay = 1.0;
+		bp.hp = 1; bp.damage = 70; bp.size = 20; bp.delay = 1.0;
 		break;
 	case 2:
-		bp.hp = 70; bp.damage = 20; bp.size = 25; bp.delay = 0.8;
+		bp.hp = 1; bp.damage = 90; bp.size = 25; bp.delay = 0.8;
 		break;
 	case 3:
-		bp.hp = 100; bp.damage = 20; bp.size = 30; bp.delay = 0.8;
+		bp.hp = 100; bp.damage = 100; bp.size = 30; bp.delay = 0.8;
 		break;
 	case 4:
-		bp.hp = 150; bp.damage = 30; bp.size = 35; bp.delay = 0.6;
+		bp.hp = 200; bp.damage = 120; bp.size = 35; bp.delay = 0.6;
 		break;
 	case 5:
-		bp.hp = 170; bp.damage = 40; bp.size = 40; bp.delay = 0.5;
+		bp.hp = 300; bp.damage = 150; bp.size = 40; bp.delay = 0.5;
 		break;
 	case 6:
-		bp.hp = 200; bp.damage = 50; bp.size = 45; bp.delay = 0.3;
+		bp.hp = 500; bp.damage = 200; bp.size = 45; bp.delay = 0.3;
 		break;
 	default:
 		bp.damage = 50 + availableBullet[ItemType::SpecialMagicB] * 2; bp.delay = 0.3; bp.hp = 50 + availableBullet[ItemType::SpecialMagicB] * 2;
-	
 	}
 	return bp;
 }
