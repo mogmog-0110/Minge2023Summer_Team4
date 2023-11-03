@@ -16,8 +16,8 @@ void GameScenario::draw() const
 	Rect{ 60,525,900,200 }.drawFrame(3, 0, Palette::Red);
 	Rect{ 80,485,150,40 }.drawFrame(3, 0, Palette::Red);
 
-	dotFont(scenario[selectedScenario][scenarioIndex].CharacterName).draw(100, 490, Palette::Blue);
-	dotFont(scenario[selectedScenario][scenarioIndex].dialogString).draw(80, 550, Palette::Blue);
+	dotFont(scenario[selectedScenario][scenarioIndex].CharacterName).draw(100, 490, Palette::White);
+	dotFont(scenario[selectedScenario][scenarioIndex].dialogString).draw(80, 550, Palette::White);
 
 
 	if (KeyPageDown.pressed())

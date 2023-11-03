@@ -93,6 +93,10 @@ void Game::update()
 		}
 		break;
 
+	case GameState::Scenario:
+		myGameScenario.update();
+		break;
+
 	case GameState::Dead:
 		// キー入力を受け付けない
 		// 敵の動きを止める
@@ -126,7 +130,7 @@ void Game::draw() const
 	drawHpBar();
 	drawMagicBook();
 
-	myGameScenario.draw();
+	if (currentState == GameState::Scenario) myGameScenario.draw();
 
 	// 文字
 	dotFont1(U"HP").drawAt(896, 288, Color(255, 255, 255, 255));
@@ -164,6 +168,10 @@ void Game::debug()
 		Print << U"未取得";
 		break;
 	}
+
+	if (KeyO.down()) currentState = GameState::Scenario;
+
+
 }
 
 //====================================================
