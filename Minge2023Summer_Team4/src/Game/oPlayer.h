@@ -114,5 +114,7 @@ public:
 	int normalMagicLevel;
 	double bulletDelayElapsed = 0.0;
 
-	BulletProperty createProperty();
+	BulletProperty createNormalProperty();
+	BulletProperty createMineProperty();
+	BulletProperty createWideProperty();
 };

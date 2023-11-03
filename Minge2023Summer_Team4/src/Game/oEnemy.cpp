@@ -231,7 +231,6 @@ void Enemy::setUpAnimation()
 	if (textureStr == U"Kuro")
 	{
 		const Texture& texture = TextureAsset(textureStr);
-		isBoss = true;
 
 		// テクスチャを32x32ピクセルの領域に分割
 		auto regions = splitImage(texture, 32 * EXPORT_SCALE, 32 * EXPORT_SCALE);
@@ -288,11 +287,5 @@ void Enemy::updateDirection()
 	else
 	{
 		this->currentDirection = U"left";
-	}
-
-	// ボスのとき
-	if (isBoss && isDead())
-	{
-		Vec2 bossDeathPos = pos;
 	}
 }

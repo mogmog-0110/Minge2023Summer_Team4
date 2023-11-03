@@ -78,6 +78,7 @@ enum class BulletType {
 
 struct BulletProperty
 {
+	int hp;
 	int damage;
 	int size;
 	double speed;
@@ -85,6 +86,11 @@ struct BulletProperty
 	double delay; // 弾生成の間隔
 	int way; // 2way, 3way, 4way ...etc
 	Array<Vec2> direction; // 弾の飛ぶ方向,実際にはVec2型として、velに格納
+
+	// Wide用
+
+	//Mine用
+	int exproRange;
 };
 
 // 背景タイルの情報を保持する構造体

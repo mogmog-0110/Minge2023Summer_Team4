@@ -2,7 +2,7 @@
 #include "oGameObject.h"
 #include "../Define.h"
 # include "oPlayer.h"
-
+# include "oEnemy.h"
 
 class Bullet :
     public GameObject
@@ -14,6 +14,11 @@ private:
 
 	int bulletPhase = 0;
 	Vec2 tipPos;//レーザー用
+
+	// Mine用メンバ変数
+	int exproRange;
+
+	// Wide用メンバ変数
 
 protected:
 public:
@@ -48,5 +53,6 @@ public:
 	// setter
 	void setBulletType(BulletType);
 	void setLevel(int);
+	void setExproRange(int);
 };
 

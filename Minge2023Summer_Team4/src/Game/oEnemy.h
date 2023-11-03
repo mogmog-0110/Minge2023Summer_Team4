@@ -18,6 +18,8 @@ private:
 	int animationDuration;
 	int animationSpeed = 10;
 
+	bool isInWide = false;
+
 protected:
 public:
 	Enemy(int hp_, int damage_, String textureStr_,
@@ -34,7 +36,6 @@ public:
 	};
 
 	~Enemy();
-
 
 	void move() override;
 	void update() override;
@@ -53,7 +54,4 @@ public:
 
 	void setUpAnimation();
 	void updateDirection();
-
-	bool isBoss = false;
-	bool isBossDead = false;
 };

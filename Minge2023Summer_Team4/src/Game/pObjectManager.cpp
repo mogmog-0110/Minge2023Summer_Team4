@@ -4,7 +4,7 @@
 ObjectManager::ObjectManager()
 {
 	// 初期ステータスの決定
-	Player::create(20000, 1000, U"", Circle(24), Vec2(Scene::Center().x, Scene::Center().y), 300);
+	Player::create(100, 30, U"", Circle(24), Vec2(Scene::Center().x, Scene::Center().y), 200);
 	myGhost = new Ghost(1000000, 0, U"Ghost", Circle(10), Vec2(Scene::Center().x - 60, Scene::Center().y - 60), { 300, 300 }, { 1, 1 });
 	myPlayer = Player::getInstance();
 	myEffectManager = EffectManager::getInstance();
@@ -177,7 +177,7 @@ void ObjectManager::createDebris()
 
 void ObjectManager::createPlayerBullet()
 {
-	BulletProperty bp = myPlayer->createProperty();
+	BulletProperty bp = myPlayer->createNormalProperty();
 	Vec2 elementVector = (Cursor::PosF() - Scene::Center()).setLength(1);
 
 	// 中心バレットの位置と速度を計算
@@ -253,7 +253,7 @@ void ObjectManager::createEnemyBullet()
 					Vec2 vel = dir * bp.speed;  // 速度ベクトル
 					Vec2 acc = { 1, 1 };  // 加速度ベクトル（必要に応じて設定）
 
-					GameObject* newBullet = ObjectAppearanceManager::createNewObject(eEnemyBullet, 1, bp.damage, U"EnemyBullet", Circle{ 16 }, pos, vel, acc);
+					GameObject* newBullet = ObjectAppearanceManager::createNewObject(eEnemyBullet, 1, bp.damage + myPlayer->getDamage(), U"EnemyBullet", Circle{ 16 }, pos, vel, acc);
 					if (newBullet) {
 						Bullet* newEnemyBullet = static_cast<Bullet*>(newBullet);
 						// 必要であれば、ここでnewEnemyBulletのプロパティを設定
@@ -269,6 +269,8 @@ void ObjectManager::createEnemyBullet()
 
 void ObjectManager::createSpecialBullet(Vec2 pos, Vec2 vel, Vec2  acc)
 {
+	BulletProperty bp;
+
 	switch (currentState)
 	{
 	case BulletType::SpecialA:
@@ -283,13 +285,14 @@ void ObjectManager::createSpecialBullet(Vec2 pos, Vec2 vel, Vec2  acc)
 	break;
 	case BulletType::SpecialB:
 	{
-		GameObject* tempBullet = ObjectAppearanceManager::createNewObject(ePlayerBullet, 1, 0, U"WideBullet", Circle{ 20 }, pos, vel, acc);
+		bp = myPlayer->createWideProperty();
+		GameObject* tempBullet = ObjectAppearanceManager::createNewObject(ePlayerBullet, bp.hp, bp.damage, U"WideBullet", Circle{ 20 }, pos, vel, acc);
 		if (tempBullet) {
 			Bullet* newBullet = static_cast<Bullet*>(tempBullet);
 			newBullet->setBulletType(BulletType::SpecialB);
 			myPlayerBullets << newBullet;
 		}
-	}
+	} 
 	break;
 	case BulletType::SpecialC:
 	{
@@ -303,10 +306,12 @@ void ObjectManager::createSpecialBullet(Vec2 pos, Vec2 vel, Vec2  acc)
 	break;
 	case BulletType::SpecialD:
 	{
-		GameObject* tempBullet = ObjectAppearanceManager::createNewObject(ePlayerBullet, 1, 0, U"MineBullet", Circle{ 20 }, pos, vel.setLength(300), acc);
+		bp = myPlayer->createMineProperty();
+		GameObject* tempBullet = ObjectAppearanceManager::createNewObject(ePlayerBullet, 1, bp.damage, U"MineBullet", Circle{ 20 }, pos, vel.setLength(300), acc);
 		if (tempBullet) {
 			Bullet* newBullet = static_cast<Bullet*>(tempBullet);
 			newBullet->setBulletType(BulletType::SpecialD);
+			newBullet->setExproRange(bp.exproRange);
 			myPlayerBullets << newBullet;
 		}
 	}
@@ -517,18 +522,6 @@ BulletType ObjectManager::fromItemType(ItemType itemType)
 		return BulletType::None;
 	}
 }
-
-void ObjectManager::bossDead()
-{
-	for (size_t i = 0; i < myEnemies.size(); +i)
-	{
-		if (myEnemies[i]->isBossDead)
-		{
-			gameEnd = true;
-		}
-	}
-}
-
 
 // アイテム用のcleanUP
 void ObjectManager::cleanUp(Array<Item*>& items)

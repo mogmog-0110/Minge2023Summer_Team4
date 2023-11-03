@@ -69,7 +69,6 @@ public:
 
 	bool loadNextWave();
 	void spawnEnemies();
-
 	
 	void setUpBackground();
 	void updateBackground();

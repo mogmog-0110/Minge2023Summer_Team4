@@ -45,6 +45,7 @@ void Bullet::move()
 
 		break;
 	case BulletType::SpecialB:
+
 		break;
 	case BulletType::SpecialC:
 		break;
@@ -156,9 +157,9 @@ void Bullet::onCollisionResponse(int damage)
 	else if (bulletType == BulletType::SpecialD) {
 		if (bulletPhase == 0)
 		{
-			hitbox = Circle(250);
+			hitbox = Circle(exproRange);
+			this->damage = damage;
 			hitbox.setCenter(pos);
-			GameObject::damage = 10000;
 			bulletPhase++;
 			myEffectManager->create_spliteEffect(pos, U"Effect3", 0.3, 400);
 		}
@@ -168,7 +169,7 @@ void Bullet::onCollisionResponse(int damage)
 
 void Bullet::onCollisionResponse(Vec2 RepullPos)
 {
-	GameObject::onCollisionResponse(RepullPos); \
+	GameObject::onCollisionResponse(RepullPos);
 }
 
 // getter
@@ -196,4 +197,7 @@ void Bullet::setLevel(int)
 	this->level = level;
 }
 
-
+void Bullet::setExproRange(int range)
+{
+	this->exproRange = range;
+}
