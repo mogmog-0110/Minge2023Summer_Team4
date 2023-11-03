@@ -94,7 +94,13 @@ void Game::update()
 		break;
 
 	case GameState::Scenario:
-		myGameScenario.update();
+		//シナリオが終了する時updateがtrueを返す
+		if (myGameScenario.update())
+		{
+			currentState = GameState::Playing;
+		}
+		
+
 		break;
 
 	case GameState::Dead:

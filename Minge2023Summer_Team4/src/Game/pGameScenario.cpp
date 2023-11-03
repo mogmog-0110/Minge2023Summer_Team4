@@ -4,11 +4,15 @@ bool GameScenario::update()
 {
 	if (KeySpace.down())
 	{
-		scenarioIndex++;
-		if (scenario[selectedScenario].size() <= scenarioIndex) scenarioIndex = 0;
-	}
+		if (scenario[selectedScenario].size() > scenarioIndex) {
 
-	return true;
+			scenarioIndex++;
+			return true;
+		}
+		else return false;
+	}
+	else return false;
+
 }
 
 void GameScenario::draw() const
