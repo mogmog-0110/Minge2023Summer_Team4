@@ -22,17 +22,20 @@ void GameObject::updateCommon()
 	if (velRepull.length() > 0.01) velRepull.setLength(velRepull.length() - repullDecaySpeed * Scene::DeltaTime());
 
 
-	if (blinkTimer1.isRunning())
+	if (objType == eDebris || objType == eEnemy || objType == ePlayer )
 	{
-		if (!(blinkTimer2.isRunning()))
+		if (blinkTimer1.isRunning())
 		{
-			isBlinkShift = !isBlinkShift;
-			blinkTimer2.restart();
+			if (!(blinkTimer2.isRunning()))
+			{
+				isBlinkShift = !isBlinkShift;
+				blinkTimer2.restart();
+			}
 		}
-	}
-	else
-	{
-		isBlinkShift = false;
+		else
+		{
+			isBlinkShift = false;
+		}
 	}
 }
 
