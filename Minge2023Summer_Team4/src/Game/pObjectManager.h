@@ -176,6 +176,7 @@ void ObjectManager::cleanUp(Array<T*>& objs) {
 				Vec2 objPos = (*it)->getPos();
 				int expPoints = (*it)->getExp();
 				createItem(objPos, expPoints);
+				myEffectManager->create_spliteEffect(objPos ,U"Effect1", 0.5, 100);
 			}
 			delete* it;
 			it = objs.erase(it);
