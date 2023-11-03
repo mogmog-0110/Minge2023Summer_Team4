@@ -465,3 +465,34 @@ BulletProperty Player::createWideProperty()
 	}
 	return bp;
 }
+
+BulletProperty Player::createPrasmaProperty()
+{
+	BulletProperty bp;
+	switch (availableBullet[ItemType::SpecialMagicC])
+	{
+	case 0:
+		break;
+	case 1:
+		bp.hp = 300; bp.damage = 80; bp.size = 40; bp.delay = 1.0;
+		break;
+	case 2:
+		bp.hp = 400; bp.damage = 100; bp.size = 45; bp.delay = 0.8;
+		break;
+	case 3:
+		bp.hp = 500; bp.damage = 110; bp.size = 50; bp.delay = 0.8;
+		break;
+	case 4:
+		bp.hp = 500; bp.damage = 150; bp.size = 65; bp.delay = 0.6;
+		break;
+	case 5:
+		bp.hp = 600; bp.damage = 200; bp.size = 70; bp.delay = 0.5;
+		break;
+	case 6:
+		bp.hp = 700; bp.damage = 240; bp.size = 85; bp.delay = 0.3;
+		break;
+	default:
+		bp.damage = 50 + availableBullet[ItemType::SpecialMagicC] * 2; bp.delay = 0.3; bp.hp = 50 + availableBullet[ItemType::SpecialMagicC] * 2;
+	}
+	return bp;
+}

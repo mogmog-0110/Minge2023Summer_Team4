@@ -117,4 +117,5 @@ public:
 	BulletProperty createNormalProperty();
 	BulletProperty createMineProperty();
 	BulletProperty createWideProperty();
+	BulletProperty createPrasmaProperty();
 };
