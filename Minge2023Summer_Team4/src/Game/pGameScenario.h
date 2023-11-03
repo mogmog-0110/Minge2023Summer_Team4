@@ -1,4 +1,5 @@
 ﻿#pragma once
+#include "../Define.h"
 
 struct dialogFormat
 {
@@ -27,7 +28,7 @@ private:
 	};
 
 	Array<dialogFormat> scenario1 = {
-		{U"Texture1.png", U"555", U"俺には夢がない。でもな、夢を守ることはできる！！"},
+		{U"Texture1.png", U"555", U"俺には夢がない。でもな、夢を守ることはできる"},
 		{U"Texture2.png", U"555", U"戦うことが罪なら、俺が背負ってやる"}
 	};
 
@@ -35,7 +36,7 @@ private:
 
 	Font dotFont = FontAsset(U"dotFont2");
 
-	int selectedScenario = 0;
+	int selectedScenario = 1;
 	int scenarioIndex = 0;
 
 public:
