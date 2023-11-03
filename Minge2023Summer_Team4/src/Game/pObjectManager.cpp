@@ -543,6 +543,31 @@ void ObjectManager::setDelayTimer()
 	{
 		bulletTimer.set(SecondsF(bp.delay));
 	}
+
+	bp = myPlayer->createLaserProperty();
+	if (specialBulletTimer[BulletType::SpecialA].duration().count() != bp.delay)
+	{
+		specialBulletTimer[BulletType::SpecialA].set(SecondsF(bp.delay));
+	}
+
+	bp = myPlayer->createWideProperty();
+	if (specialBulletTimer[BulletType::SpecialB].duration().count() != bp.delay)
+	{
+		specialBulletTimer[BulletType::SpecialB].set(SecondsF(bp.delay));
+	}
+
+	bp = myPlayer->createPrasmaProperty();
+	if (specialBulletTimer[BulletType::SpecialC].duration().count() != bp.delay)
+	{
+		specialBulletTimer[BulletType::SpecialC].set(SecondsF(bp.delay));
+	}
+
+	bp = myPlayer->createMineProperty();
+	if (specialBulletTimer[BulletType::SpecialD].duration().count() != bp.delay)
+	{
+		specialBulletTimer[BulletType::SpecialD].set(SecondsF(bp.delay));
+	}
+
 }
 
 // アイテム用のcleanUP
