@@ -63,6 +63,9 @@ private:
 	double attractionRadius = 100;
 	double attractionSpeed = 10;
 
+	Array<Vec2> pos_collideWithPlayer = {};
+	Array<Timer> pos_collideWithPlayerTimer = {};
+
 protected:
 
 public:
@@ -121,4 +124,9 @@ public:
 
 	// 現在のプレイヤーの向き
 	String currentDirection = U"up";
+
+	void onCollisionResponse(int damage);
+	void onCollisionResponse(Vec2 RepullPos);
+
+	Vec2 perpendicularComponent(Vec2 A, Vec2 B);
 };

@@ -102,7 +102,22 @@ void Player::move() {
 	if (normalizedMoveDir.length() > 0)
 	{
 		Logger << speed;
-		pos += normalizedMoveDir * speed * deltaTime;
+
+		Vec2 velWithCollide = normalizedMoveDir * speed;
+		for (size_t i = 0; i < pos_collideWithPlayer.size();)
+		{
+			velWithCollide = perpendicularComponent(velWithCollide, pos_collideWithPlayer[i]);
+			if (pos_collideWithPlayerTimer[i].isRunning() == false)
+			{
+				pos_collideWithPlayer.pop_front();
+				pos_collideWithPlayerTimer.pop_front();
+			}
+			else i++;
+		}
+
+		Print << U"{:.3f}"_fmt(velWithCollide.x) << U" , " << U"{:.3f}"_fmt(velWithCollide.y);
+
+		pos += velWithCollide * deltaTime;
 		setPos(pos);
 		isMoving = true;
 	}
@@ -415,5 +430,24 @@ void Player::setAttractionRadius(double radius)
 void Player::setAttractionSpeed(double speed)
 {
 	this->attractionSpeed = speed;
+}
+
+void Player::onCollisionResponse(int damage)
+{
+	GameObject::onCollisionResponse(damage);
+}
+
+void Player::onCollisionResponse(Vec2 RepullPos)
+{
+	pos_collideWithPlayer << RepullPos - pos;
+	pos_collideWithPlayerTimer << Timer(0.1s, StartImmediately::Yes);
+}
+
+// ベクトルBに対する垂直成分を求める関数
+Vec2 Player::perpendicularComponent(Vec2 A, Vec2 B) {
+	double dot = A.x * B.x + A.y * B.y;
+	double magnitudeSquared = B.x * B.x + B.y * B.y;
+	double scalar = dot / magnitudeSquared;
+	return { A.x - scalar * B.x, A.y - scalar * B.y };
 }
 
