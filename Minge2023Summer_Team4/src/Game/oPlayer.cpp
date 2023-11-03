@@ -270,15 +270,17 @@ void Player::levelUp()
 		
 		break;
 	case 1:
-		damage += 5; // ダメージを5増加
+		damage += 10; // 
 		
 		break;
 	case 2:
-		speed += 10; // スピードを1増加
-		
+		if (speed <= 500)
+		{
+			speed += 20; // スピードを1増加
+		}
 		break;
 	case 3:
-		attractionRadius += 10; // アイテム収集範囲を10増加
+		attractionRadius += 3; // アイテム収集範囲を10増加
 		
 		break;
 	}
