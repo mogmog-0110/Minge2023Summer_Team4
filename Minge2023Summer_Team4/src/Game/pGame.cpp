@@ -45,6 +45,7 @@ void Game::update()
 		if (!waveLoaded && objectManager.myEnemies.empty()) {
 			bool success = loadNextWave();
 			if (!success) {
+				isCleared = true;
 				currentState = GameState::Finished;
 			}
 			else {

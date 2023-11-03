@@ -134,6 +134,8 @@ struct BackgroundChunk {
 	}
 };
 
+extern bool isCleared;
+
 // グローバル関数（邪法）
 
 Array<TextureRegion> splitImage(const Texture& texture, int cellWidth, int cellHeight);
