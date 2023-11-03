@@ -118,4 +118,5 @@ public:
 	BulletProperty createMineProperty();
 	BulletProperty createWideProperty();
 	BulletProperty createPrasmaProperty();
+	BulletProperty createLaserProperty();
 };
