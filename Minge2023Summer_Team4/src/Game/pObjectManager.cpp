@@ -61,6 +61,8 @@ void ObjectManager::update()
 
 	// 不要になったアイテムをクリーンアップ
 	cleanUp(myItems);
+
+	setDelayTimer();
 }
 
 
@@ -520,6 +522,15 @@ BulletType ObjectManager::fromItemType(ItemType itemType)
 		return BulletType::SpecialD;
 	default:
 		return BulletType::None;
+	}
+}
+
+void ObjectManager::setDelayTimer()
+{
+	BulletProperty bp = myPlayer->createNormalProperty();
+	if (bulletTimer.duration().count() != bp.delay)
+	{
+		bulletTimer.set(SecondsF(bp.delay));
 	}
 }
 
