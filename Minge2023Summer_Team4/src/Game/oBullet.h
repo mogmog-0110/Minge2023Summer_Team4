@@ -2,7 +2,7 @@
 #include "oGameObject.h"
 #include "../Define.h"
 # include "oPlayer.h"
-
+# include "oEnemy.h"
 
 class Bullet :
     public GameObject
@@ -14,6 +14,13 @@ private:
 
 	int bulletPhase = 0;
 	Vec2 tipPos;//レーザー用
+
+	// Mine用メンバ変数
+	int exproRange;
+
+	// Wide用メンバ変数
+	int attractionRadius;
+	int attractionSpeed;
 
 protected:
 public:
@@ -34,6 +41,7 @@ public:
 
 	void onCollisionResponse(int damage);
 	void onCollisionResponse(Vec2 RepullPos);
+	void attractEnemy(Array<Enemy*>& enemy);
 	bool isBulletSelfDamage();
 
 	bool isDead(Vec2 playerPos_);
@@ -46,5 +54,8 @@ public:
 	// setter
 	void setBulletType(BulletType);
 	void setLevel(int);
+	void setExproRange(int);
+	void setAttractionRadius(int);
+	void setAttractionSpeed(int);
 };
 

@@ -58,6 +58,13 @@ void ObjectManager::update()
 	}
 
 	myPlayer->attractItems(myItems);
+	for (auto& bullet : myPlayerBullets)
+	{
+		if (bullet->getBulletType() == BulletType::SpecialB)
+		{
+			bullet->attractEnemy(myEnemies);
+		}
+	}
 
 	// 不要になったアイテムをクリーンアップ
 	cleanUp(myItems);
@@ -177,7 +184,7 @@ void ObjectManager::createDebris()
 
 void ObjectManager::createPlayerBullet()
 {
-	BulletProperty bp = myPlayer->createProperty();
+	BulletProperty bp = myPlayer->createNormalProperty();
 	Vec2 elementVector = (Cursor::PosF() - Scene::Center()).setLength(1);
 
 	// 中心バレットの位置と速度を計算
@@ -269,6 +276,8 @@ void ObjectManager::createEnemyBullet()
 
 void ObjectManager::createSpecialBullet(Vec2 pos, Vec2 vel, Vec2  acc)
 {
+	BulletProperty bp;
+
 	switch (currentState)
 	{
 	case BulletType::SpecialA:
@@ -283,10 +292,12 @@ void ObjectManager::createSpecialBullet(Vec2 pos, Vec2 vel, Vec2  acc)
 	break;
 	case BulletType::SpecialB:
 	{
-		GameObject* tempBullet = ObjectAppearanceManager::createNewObject(ePlayerBullet, 1, 0, U"WideBullet", Circle{ 20 }, pos, vel, acc);
+		GameObject* tempBullet = ObjectAppearanceManager::createNewObject(ePlayerBullet, 1, bp.damage, U"WideBullet", Circle{ 20 }, pos, vel, acc);
 		if (tempBullet) {
 			Bullet* newBullet = static_cast<Bullet*>(tempBullet);
 			newBullet->setBulletType(BulletType::SpecialB);
+			newBullet->setAttractionRadius(bp.attractionRadius);
+			newBullet->setAttractionSpeed(bp.attractionSpeed);
 			myPlayerBullets << newBullet;
 		}
 	}
@@ -303,10 +314,12 @@ void ObjectManager::createSpecialBullet(Vec2 pos, Vec2 vel, Vec2  acc)
 	break;
 	case BulletType::SpecialD:
 	{
-		GameObject* tempBullet = ObjectAppearanceManager::createNewObject(ePlayerBullet, 1, 0, U"MineBullet", Circle{ 20 }, pos, vel.setLength(300), acc);
+		bp = myPlayer->createMineProperty();
+		GameObject* tempBullet = ObjectAppearanceManager::createNewObject(ePlayerBullet, 1, bp.damage, U"MineBullet", Circle{ 20 }, pos, vel.setLength(300), acc);
 		if (tempBullet) {
 			Bullet* newBullet = static_cast<Bullet*>(tempBullet);
 			newBullet->setBulletType(BulletType::SpecialD);
+			newBullet->setExproRange(bp.exproRange);
 			myPlayerBullets << newBullet;
 		}
 	}
@@ -517,18 +530,6 @@ BulletType ObjectManager::fromItemType(ItemType itemType)
 		return BulletType::None;
 	}
 }
-
-void ObjectManager::bossDead()
-{
-	for (size_t i = 0; i < myEnemies.size(); +i)
-	{
-		if (myEnemies[i]->isBossDead)
-		{
-			gameEnd = true;
-		}
-	}
-}
-
 
 // アイテム用のcleanUP
 void ObjectManager::cleanUp(Array<Item*>& items)

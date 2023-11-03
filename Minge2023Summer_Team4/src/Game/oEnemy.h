@@ -35,7 +35,6 @@ public:
 
 	~Enemy();
 
-
 	void move() override;
 	void update() override;
 	
@@ -53,7 +52,4 @@ public:
 
 	void setUpAnimation();
 	void updateDirection();
-
-	bool isBoss = false;
-	bool isBossDead = false;
 };

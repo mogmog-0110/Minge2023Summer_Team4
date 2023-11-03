@@ -87,7 +87,6 @@ public:
 	void switchSpecialBullet();
 	BulletType fromItemType(ItemType);
 
-	void bossDead();
 };
 
 

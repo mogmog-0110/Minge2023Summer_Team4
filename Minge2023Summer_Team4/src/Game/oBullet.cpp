@@ -44,6 +44,7 @@ void Bullet::move()
 
 		break;
 	case BulletType::SpecialB:
+
 		break;
 	case BulletType::SpecialC:
 		break;
@@ -142,9 +143,9 @@ void Bullet::onCollisionResponse(int damage)
 	else if (bulletType == BulletType::SpecialD) {
 		if (bulletPhase == 0)
 		{
-			hitbox = Circle(250);
+			hitbox = Circle(exproRange);
+			this->damage = damage;
 			hitbox.setCenter(pos);
-			GameObject::damage = 10000;
 			bulletPhase++;
 		}
 	}
@@ -153,7 +154,23 @@ void Bullet::onCollisionResponse(int damage)
 
 void Bullet::onCollisionResponse(Vec2 RepullPos)
 {
-	GameObject::onCollisionResponse(RepullPos); \
+	GameObject::onCollisionResponse(RepullPos);
+}
+
+void Bullet::attractEnemy(Array<Enemy*>& enemies)
+{
+	for (Enemy* enemy : enemies)
+	{
+		Vec2 direction = enemy->getPos() - pos; // 敵の方向ベクトル
+		double distance = direction.length();
+
+		if (distance < attractionRadius)
+		{
+			// 吸い寄せの計算
+			Vec2 attraction = direction.normalized() * attractionSpeed; // attractionSpeedは吸い寄せる速度
+			enemy->setPos(enemy->getPos() - attraction);
+		}
+	}
 }
 
 // getter
@@ -181,4 +198,18 @@ void Bullet::setLevel(int)
 	this->level = level;
 }
 
+void Bullet::setExproRange(int range)
+{
+	this->exproRange = range;
+}
+
+void Bullet::setAttractionRadius(int radius)
+{
+	this->attractionRadius = radius;
+}
+
+void Bullet::setAttractionSpeed(int speed)
+{
+	this->attractionSpeed = speed;
+}
 
