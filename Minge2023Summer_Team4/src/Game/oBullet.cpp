@@ -103,7 +103,7 @@ void Bullet::setUpAnimation()
 	}
 	else if (textureStr == U"LaserBullet")
 	{
-		setTexture(textureStr);
+		//setTexture(textureStr);
 	}
 	else if (textureStr == U"WideBullet")
 	{
@@ -161,7 +161,7 @@ void Bullet::onCollisionResponse(int damage)
 			this->damage = damage;
 			hitbox.setCenter(pos);
 			bulletPhase++;
-			myEffectManager->create_spliteEffect(pos, U"Effect3", 0.3, 400);
+			myEffectManager->create_spliteEffect(pos, U"Effect3", 0.3, exproRange+100);
 		}
 	}
 	else GameObject::onCollisionResponse(damage);

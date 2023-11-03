@@ -19,7 +19,14 @@ class ObjectManager
 private:
 
 	Timer bulletTimer{ 0.5s, StartImmediately::Yes };
-	HashTable<BulletType, Timer> specialBulletTimer;
+	HashTable<BulletType, Timer> specialBulletTimer =
+	{
+		{ BulletType::SpecialA, Timer{ 1s, StartImmediately::No } },
+		{ BulletType::SpecialB, Timer{ 1s, StartImmediately::No } },
+		{ BulletType::SpecialC, Timer{ 1s, StartImmediately::No } },
+		{ BulletType::SpecialD, Timer{ 1s, StartImmediately::No } },
+	};
+
 
 
 	EffectManager* myEffectManager;
@@ -80,6 +87,7 @@ public:
 	void createEnemyBullet();
 	void createSpecialBullet(Vec2, Vec2, Vec2);
 	void createItem(Vec2, int);
+	void createItemConfirm(Vec2 pos, int ItemNum = -1);
 
 	HashTable<String, EnemyData> loadEnemyData(const String& filename);
 	Array<WaveData> loadWaveData(const String& filename);
@@ -168,6 +176,7 @@ void ObjectManager::cleanUp(Array<T*>& objs) {
 				Vec2 objPos = (*it)->getPos();
 				int expPoints = (*it)->getExp();
 				createItem(objPos, expPoints);
+				myEffectManager->create_spliteEffect(objPos ,U"Effect1", 0.5, 100);
 			}
 			delete* it;
 			it = objs.erase(it);

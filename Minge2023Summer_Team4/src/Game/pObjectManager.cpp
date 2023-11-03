@@ -4,7 +4,7 @@
 ObjectManager::ObjectManager()
 {
 	// 初期ステータスの決定
-	Player::create(100, 30, U"", Circle(24), Vec2(Scene::Center().x, Scene::Center().y), 200);
+	Player::create(1000, 40, U"", Circle(24), Vec2(Scene::Center().x, Scene::Center().y), 200);
 	myGhost = new Ghost(1000000, 0, U"Ghost", Circle(10), Vec2(Scene::Center().x - 60, Scene::Center().y - 60), { 300, 300 }, { 1, 1 });
 	myPlayer = Player::getInstance();
 	myEffectManager = EffectManager::getInstance();
@@ -109,7 +109,7 @@ void ObjectManager::draw(Vec2 offset) const
 {
 	for (size_t i = 0; i < myItems.size(); i++) myItems[i]->draw(offset, false);
 	for (size_t i = 0; i < myDebrises.size(); i++) myDebrises[i]->draw(offset, false);
-	for (size_t i = 0; i < myPlayerBullets.size(); i++) myPlayerBullets[i]->draw(offset, true);
+	for (size_t i = 0; i < myPlayerBullets.size(); i++) myPlayerBullets[i]->draw(offset, false);
 	for (size_t i = 0; i < myEnemyBullets.size(); i++) myEnemyBullets[i]->draw(offset, false);
 	for (size_t i = 0; i < myEnemies.size(); i++) myEnemies[i]->draw(offset, false);
 
@@ -234,6 +234,8 @@ void ObjectManager::createBullet(Vec2 pos, Vec2 vel, const BulletProperty& bp, V
 		Bullet* newPlayerBullet = static_cast<Bullet*>(newBullet);
 		newPlayerBullet->setBulletType(type);
 		myPlayerBullets << newPlayerBullet;
+
+		myEffectManager->create_spliteEffect(newPlayerBullet->getPos(), U"Effect4", 0.1, 100);
 	}
 }
 
@@ -276,28 +278,43 @@ void ObjectManager::createSpecialBullet(Vec2 pos, Vec2 vel, Vec2  acc)
 	{
 	case BulletType::SpecialA:
 	{
-		GameObject* tempBullet = ObjectAppearanceManager::createNewObject(ePlayerBullet, 1, 0, U"LaserBullet", Circle{ 20 }, pos, vel.setLength(300), acc);
+		bp = myPlayer->createLaserProperty();
+
+		// 中心のレーザー
+		GameObject* tempBullet = ObjectAppearanceManager::createNewObject(ePlayerBullet, 1, bp.damage + myPlayer->getDamage(), U"LaserBullet", Circle{ 20 }, pos, vel.setLength(300), acc);
 		if (tempBullet) {
 			Bullet* newBullet = static_cast<Bullet*>(tempBullet);
 			newBullet->setBulletType(BulletType::SpecialA);
 			myPlayerBullets << newBullet;
 		}
+
 	}
+
 	break;
 	case BulletType::SpecialB:
 	{
 		bp = myPlayer->createWideProperty();
-		GameObject* tempBullet = ObjectAppearanceManager::createNewObject(ePlayerBullet, bp.hp, bp.damage, U"WideBullet", Circle{ 20 }, pos, vel, acc);
-		if (tempBullet) {
-			Bullet* newBullet = static_cast<Bullet*>(tempBullet);
-			newBullet->setBulletType(BulletType::SpecialB);
-			myPlayerBullets << newBullet;
+		for (int i = 0; i < 12; ++i) {
+			double angle = i * (360.0 / 12) * Math::Pi / 180.0;  // 30度ごとにラジアンに変換
+			Vec2 dir = { Cos(angle), Sin(angle) };
+			Vec2 vel = dir.setLength(300);
+
+			GameObject* tempBullet = ObjectAppearanceManager::createNewObject(ePlayerBullet, bp.hp, bp.damage + myPlayer->getDamage(), U"WideBullet", Circle{20}, myPlayer->getPos(), vel, acc);
+			if (tempBullet) {
+				Bullet* newBullet = static_cast<Bullet*>(tempBullet);
+				newBullet->setBulletType(BulletType::SpecialB);
+				myPlayerBullets << newBullet;
+			}
 		}
+
+		myEffectManager->create_spliteEffect(myPlayer->getPos(), U"Effect2", 0.5, 100);
+
 	} 
 	break;
 	case BulletType::SpecialC:
 	{
-		GameObject* tempBullet = ObjectAppearanceManager::createNewObject(ePlayerBullet, 1, 0, U"PrasmaBullet", Circle{ 20 }, pos, vel, acc);
+		bp = myPlayer->createPrasmaProperty();
+		GameObject* tempBullet = ObjectAppearanceManager::createNewObject(ePlayerBullet, bp.hp, bp.damage + myPlayer->getDamage(), U"PrasmaBullet", Circle{ bp.size }, pos, vel, acc);
 		if (tempBullet) {
 			Bullet* newBullet = static_cast<Bullet*>(tempBullet);
 			newBullet->setBulletType(BulletType::SpecialC);
@@ -308,7 +325,7 @@ void ObjectManager::createSpecialBullet(Vec2 pos, Vec2 vel, Vec2  acc)
 	case BulletType::SpecialD:
 	{
 		bp = myPlayer->createMineProperty();
-		GameObject* tempBullet = ObjectAppearanceManager::createNewObject(ePlayerBullet, 1, bp.damage, U"MineBullet", Circle{ 20 }, pos, vel.setLength(300), acc);
+		GameObject* tempBullet = ObjectAppearanceManager::createNewObject(ePlayerBullet, 1, bp.damage + myPlayer->getDamage(), U"MineBullet", Circle{ 20 }, pos, vel.setLength(300), acc);
 		if (tempBullet) {
 			Bullet* newBullet = static_cast<Bullet*>(tempBullet);
 			newBullet->setBulletType(BulletType::SpecialD);
@@ -326,7 +343,7 @@ void ObjectManager::createSpecialBullet(Vec2 pos, Vec2 vel, Vec2  acc)
 
 void ObjectManager::createItem(Vec2 pos, int expPoints)
 {
-	int randomNum = Random(50);
+	int randomNum = Random(1);
 
 	// 100分の1の抽選で特殊弾のドロップ
 	if (randomNum == 0)
@@ -406,6 +423,76 @@ void ObjectManager::createItem(Vec2 pos, int expPoints)
 			newItem->setActive(true);
 			myItems << newItem;
 		}
+	}
+}
+
+void ObjectManager::createItemConfirm(Vec2 pos, int ItemNum)
+{
+	if (ItemNum < 1)
+	{
+		ItemNum = Random(1, 5);
+	}
+	switch (ItemNum)
+	{
+	case 1:
+	{
+		GameObject* tempItem = ObjectAppearanceManager::createNewObject(eItem, 1, 0, U"NormalMagic", Circle{ 20 }, pos, { 0, 0 }, { 0, 0 });
+		if (tempItem) {
+			Item* newItem = static_cast<Item*>(tempItem);
+			newItem->setItemType(ItemType::NormalMagic);
+			newItem->setActive(true);
+			myItems << newItem;
+		}
+	}
+	break;
+
+	case 2:
+	{
+		GameObject* tempItem = ObjectAppearanceManager::createNewObject(eItem, 1, 0, U"SpecialMagicA", Circle{ 20 }, pos, { 0, 0 }, { 0, 0 });
+		if (tempItem) {
+			Item* newItem = static_cast<Item*>(tempItem);
+			newItem->setItemType(ItemType::SpecialMagicA);
+			newItem->setActive(true);
+			myItems << newItem;
+		}
+	}
+	break;
+
+	case 3:
+	{
+		GameObject* tempItem = ObjectAppearanceManager::createNewObject(eItem, 1, 0, U"SpecialMagicB", Circle{ 20 }, pos, { 0, 0 }, { 0, 0 });
+		if (tempItem) {
+			Item* newItem = static_cast<Item*>(tempItem);
+			newItem->setItemType(ItemType::SpecialMagicB);
+			newItem->setActive(true);
+			myItems << newItem;
+		}
+	}
+	break;
+
+	case 4:
+	{
+		GameObject* tempItem = ObjectAppearanceManager::createNewObject(eItem, 1, 0, U"SpecialMagicC", Circle{ 20 }, pos, { 0, 0 }, { 0, 0 });
+		if (tempItem) {
+			Item* newItem = static_cast<Item*>(tempItem);
+			newItem->setItemType(ItemType::SpecialMagicC);
+			newItem->setActive(true);
+			myItems << newItem;
+		}
+	}
+	break;
+
+	case 5:
+	{
+		GameObject* tempItem = ObjectAppearanceManager::createNewObject(eItem, 1, 0, U"SpecialMagicD", Circle{ 20 }, pos, { 0, 0 }, { 0, 0 });
+		if (tempItem) {
+			Item* newItem = static_cast<Item*>(tempItem);
+			newItem->setItemType(ItemType::SpecialMagicD);
+			newItem->setActive(true);
+			myItems << newItem;
+		}
+	}
+	break;
 	}
 }
 
@@ -531,6 +618,31 @@ void ObjectManager::setDelayTimer()
 	{
 		bulletTimer.set(SecondsF(bp.delay));
 	}
+
+	bp = myPlayer->createLaserProperty();
+	if (specialBulletTimer[BulletType::SpecialA].duration().count() != bp.delay)
+	{
+		specialBulletTimer[BulletType::SpecialA].set(SecondsF(bp.delay));
+	}
+
+	bp = myPlayer->createWideProperty();
+	if (specialBulletTimer[BulletType::SpecialB].duration().count() != bp.delay)
+	{
+		specialBulletTimer[BulletType::SpecialB].set(SecondsF(bp.delay));
+	}
+
+	bp = myPlayer->createPrasmaProperty();
+	if (specialBulletTimer[BulletType::SpecialC].duration().count() != bp.delay)
+	{
+		specialBulletTimer[BulletType::SpecialC].set(SecondsF(bp.delay));
+	}
+
+	bp = myPlayer->createMineProperty();
+	if (specialBulletTimer[BulletType::SpecialD].duration().count() != bp.delay)
+	{
+		specialBulletTimer[BulletType::SpecialD].set(SecondsF(bp.delay));
+	}
+
 }
 
 // アイテム用のcleanUP

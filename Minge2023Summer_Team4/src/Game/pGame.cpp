@@ -51,11 +51,24 @@ void Game::update()
 			else {
 				currentState = GameState::Playing;
 				waveLoaded = true;
+
+				if (currentWave % 2 == 0)
+				{
+					objectManager.createItemConfirm(myPlayer->getPos() + Vec2(0, -100) + RandomVec2().setLength(50), 1);
+					objectManager.createItemConfirm(myPlayer->getPos() + Vec2(0, -100) + RandomVec2().setLength(50));
+				}
+
 			}
 		}
 		break;
 
 	case GameState::Playing:
+		// コマンド
+		if (KeyJ.pressed() && KeyK.pressed() && KeyL.pressed())
+		{
+			myPlayer->setSpeed(500);
+			myPlayer->availableBullet.emplace(ItemType::SpecialMagicB, 100);
+		}
 		accumulatedTime += Scene::DeltaTime();
 		if (KeyP.down()) {
 			currentState = GameState::Pausing;
@@ -83,7 +96,7 @@ void Game::update()
 		objectManager.update();
 		updateBackground();
       
-		debug();
+		//debug();
 		break;
 
 	case GameState::Pausing:
