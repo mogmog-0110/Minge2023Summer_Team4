@@ -18,6 +18,8 @@ private:
 	int animationDuration;
 	int animationSpeed = 10;
 
+	bool isInWide = false;
+
 protected:
 public:
 	Enemy(int hp_, int damage_, String textureStr_,

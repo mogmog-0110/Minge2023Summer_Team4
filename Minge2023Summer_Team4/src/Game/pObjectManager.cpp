@@ -58,13 +58,6 @@ void ObjectManager::update()
 	}
 
 	myPlayer->attractItems(myItems);
-	for (auto& bullet : myPlayerBullets)
-	{
-		if (bullet->getBulletType() == BulletType::SpecialB)
-		{
-			bullet->attractEnemy(myEnemies);
-		}
-	}
 
 	// 不要になったアイテムをクリーンアップ
 	cleanUp(myItems);
@@ -292,15 +285,14 @@ void ObjectManager::createSpecialBullet(Vec2 pos, Vec2 vel, Vec2  acc)
 	break;
 	case BulletType::SpecialB:
 	{
-		GameObject* tempBullet = ObjectAppearanceManager::createNewObject(ePlayerBullet, 1, bp.damage, U"WideBullet", Circle{ 20 }, pos, vel, acc);
+		bp = myPlayer->createWideProperty();
+		GameObject* tempBullet = ObjectAppearanceManager::createNewObject(ePlayerBullet, bp.hp, bp.damage, U"WideBullet", Circle{ 20 }, pos, vel, acc);
 		if (tempBullet) {
 			Bullet* newBullet = static_cast<Bullet*>(tempBullet);
 			newBullet->setBulletType(BulletType::SpecialB);
-			newBullet->setAttractionRadius(bp.attractionRadius);
-			newBullet->setAttractionSpeed(bp.attractionSpeed);
 			myPlayerBullets << newBullet;
 		}
-	}
+	} 
 	break;
 	case BulletType::SpecialC:
 	{

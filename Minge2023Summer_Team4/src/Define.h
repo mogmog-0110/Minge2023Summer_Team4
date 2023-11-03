@@ -77,6 +77,7 @@ enum class BulletType {
 
 struct BulletProperty
 {
+	int hp;
 	int damage;
 	int size;
 	double speed;
@@ -86,8 +87,6 @@ struct BulletProperty
 	Array<Vec2> direction; // 弾の飛ぶ方向,実際にはVec2型として、velに格納
 
 	// Wide用
-	int attractionRadius;
-	int attractionSpeed;
 
 	//Mine用
 	int exproRange;

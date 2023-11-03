@@ -19,8 +19,6 @@ private:
 	int exproRange;
 
 	// Wide用メンバ変数
-	int attractionRadius;
-	int attractionSpeed;
 
 protected:
 public:
@@ -41,7 +39,6 @@ public:
 
 	void onCollisionResponse(int damage);
 	void onCollisionResponse(Vec2 RepullPos);
-	void attractEnemy(Array<Enemy*>& enemy);
 	bool isBulletSelfDamage();
 
 	bool isDead(Vec2 playerPos_);
@@ -55,7 +52,5 @@ public:
 	void setBulletType(BulletType);
 	void setLevel(int);
 	void setExproRange(int);
-	void setAttractionRadius(int);
-	void setAttractionSpeed(int);
 };
 

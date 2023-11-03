@@ -439,27 +439,26 @@ BulletProperty Player::createWideProperty()
 	case 0:
 		break;
 	case 1:
-		bp.damage = 10; bp.size = 20; bp.delay = 1.0; bp.attractionRadius = 100; bp.attractionSpeed = 10;
+		bp.hp = 30; bp.damage = 10; bp.size = 20; bp.delay = 1.0;
 		break;
 	case 2:
-		bp.damage = 20; bp.size = 25; bp.delay = 0.8; bp.attractionRadius = 150; bp.attractionSpeed = 20;
+		bp.hp = 70; bp.damage = 20; bp.size = 25; bp.delay = 0.8;
 		break;
 	case 3:
-		bp.damage = 20; bp.size = 30; bp.delay = 0.8; bp.attractionRadius = 200; bp.attractionSpeed = 30;
+		bp.hp = 100; bp.damage = 20; bp.size = 30; bp.delay = 0.8;
 		break;
 	case 4:
-		bp.damage = 30; bp.size = 35; bp.delay = 0.6; bp.attractionRadius = 250; bp.attractionSpeed = 40;
+		bp.hp = 150; bp.damage = 30; bp.size = 35; bp.delay = 0.6;
 		break;
 	case 5:
-		bp.damage = 40; bp.size = 40; bp.delay = 0.5; bp.attractionRadius = 300; bp.attractionSpeed = 50;
+		bp.hp = 170; bp.damage = 40; bp.size = 40; bp.delay = 0.5;
 		break;
 	case 6:
-		bp.damage = 50; bp.size = 45; bp.delay = 0.3; bp.attractionRadius = 350; bp.attractionSpeed = 60;
+		bp.hp = 200; bp.damage = 50; bp.size = 45; bp.delay = 0.3;
 		break;
 	default:
-		bp.damage = 50 + availableBullet[ItemType::SpecialMagicB] * 2; bp.delay = 0.3;
-		bp.attractionRadius = 350 + availableBullet[ItemType::SpecialMagicB] * 2;
-		bp.attractionSpeed = 60 + availableBullet[ItemType::SpecialMagicB] * 2;
+		bp.damage = 50 + availableBullet[ItemType::SpecialMagicB] * 2; bp.delay = 0.3; bp.hp = 50 + availableBullet[ItemType::SpecialMagicB] * 2;
+	
 	}
 	return bp;
 }

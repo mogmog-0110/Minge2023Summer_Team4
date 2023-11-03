@@ -86,7 +86,6 @@ public:
 	void stopEnemies();
 	void switchSpecialBullet();
 	BulletType fromItemType(ItemType);
-
 };
 
 
