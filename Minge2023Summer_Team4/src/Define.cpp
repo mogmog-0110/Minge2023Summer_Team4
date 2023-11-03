@@ -12,3 +12,5 @@ Array<TextureRegion> splitImage(const Texture& texture, int cellWidth, int cellH
 	}
 	return regions;
 }
+
+bool isCleared = false;
