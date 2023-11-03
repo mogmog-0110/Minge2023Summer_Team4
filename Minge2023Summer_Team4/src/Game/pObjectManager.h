@@ -87,6 +87,7 @@ public:
 	void createEnemyBullet();
 	void createSpecialBullet(Vec2, Vec2, Vec2);
 	void createItem(Vec2, int);
+	void createItemConfirm(Vec2 pos, int ItemNum = -1);
 
 	HashTable<String, EnemyData> loadEnemyData(const String& filename);
 	Array<WaveData> loadWaveData(const String& filename);

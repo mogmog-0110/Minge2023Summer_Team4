@@ -4,7 +4,7 @@
 ObjectManager::ObjectManager()
 {
 	// 初期ステータスの決定
-	Player::create(1000, 3000, U"", Circle(24), Vec2(Scene::Center().x, Scene::Center().y), 200);
+	Player::create(1000, 40, U"", Circle(24), Vec2(Scene::Center().x, Scene::Center().y), 200);
 	myGhost = new Ghost(1000000, 0, U"Ghost", Circle(10), Vec2(Scene::Center().x - 60, Scene::Center().y - 60), { 300, 300 }, { 1, 1 });
 	myPlayer = Player::getInstance();
 	myEffectManager = EffectManager::getInstance();
@@ -423,6 +423,76 @@ void ObjectManager::createItem(Vec2 pos, int expPoints)
 			newItem->setActive(true);
 			myItems << newItem;
 		}
+	}
+}
+
+void ObjectManager::createItemConfirm(Vec2 pos, int ItemNum)
+{
+	if (ItemNum < 1)
+	{
+		ItemNum = Random(1, 5);
+	}
+	switch (ItemNum)
+	{
+	case 1:
+	{
+		GameObject* tempItem = ObjectAppearanceManager::createNewObject(eItem, 1, 0, U"NormalMagic", Circle{ 20 }, pos, { 0, 0 }, { 0, 0 });
+		if (tempItem) {
+			Item* newItem = static_cast<Item*>(tempItem);
+			newItem->setItemType(ItemType::NormalMagic);
+			newItem->setActive(true);
+			myItems << newItem;
+		}
+	}
+	break;
+
+	case 2:
+	{
+		GameObject* tempItem = ObjectAppearanceManager::createNewObject(eItem, 1, 0, U"SpecialMagicA", Circle{ 20 }, pos, { 0, 0 }, { 0, 0 });
+		if (tempItem) {
+			Item* newItem = static_cast<Item*>(tempItem);
+			newItem->setItemType(ItemType::SpecialMagicA);
+			newItem->setActive(true);
+			myItems << newItem;
+		}
+	}
+	break;
+
+	case 3:
+	{
+		GameObject* tempItem = ObjectAppearanceManager::createNewObject(eItem, 1, 0, U"SpecialMagicB", Circle{ 20 }, pos, { 0, 0 }, { 0, 0 });
+		if (tempItem) {
+			Item* newItem = static_cast<Item*>(tempItem);
+			newItem->setItemType(ItemType::SpecialMagicB);
+			newItem->setActive(true);
+			myItems << newItem;
+		}
+	}
+	break;
+
+	case 4:
+	{
+		GameObject* tempItem = ObjectAppearanceManager::createNewObject(eItem, 1, 0, U"SpecialMagicC", Circle{ 20 }, pos, { 0, 0 }, { 0, 0 });
+		if (tempItem) {
+			Item* newItem = static_cast<Item*>(tempItem);
+			newItem->setItemType(ItemType::SpecialMagicC);
+			newItem->setActive(true);
+			myItems << newItem;
+		}
+	}
+	break;
+
+	case 5:
+	{
+		GameObject* tempItem = ObjectAppearanceManager::createNewObject(eItem, 1, 0, U"SpecialMagicD", Circle{ 20 }, pos, { 0, 0 }, { 0, 0 });
+		if (tempItem) {
+			Item* newItem = static_cast<Item*>(tempItem);
+			newItem->setItemType(ItemType::SpecialMagicD);
+			newItem->setActive(true);
+			myItems << newItem;
+		}
+	}
+	break;
 	}
 }
 
