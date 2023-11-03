@@ -178,6 +178,10 @@ Resource(Image/HPFrame.png)
 // Scenario Image
 Resource(Image/416_normal.png)
 
+Resource(Image/gameover.png)
+Resource(Image/clear1.png)
+
+
 //Font
 Resource(Font/Nosutaru-dot.ttf)
 

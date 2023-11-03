@@ -73,6 +73,9 @@ void Main()
 	TextureAsset::Register(U"EvilEye", Resource(U"Image/EvilEye.png"));
 	TextureAsset::Register(U"Worm", Resource(U"Image/Worm.png"));
 	TextureAsset::Register(U"Kuro", Resource(U"Image/Kuro.png")); // BOSS
+
+	TextureAsset::Register(U"Worm", Resource(U"Image/clear1.png"));
+	TextureAsset::Register(U"Worm", Resource(U"Image/gameOver.png"));
   
 	//font
 	FontAsset::Register(U"dotFont1", 20, Resource(U"Font/Nosutaru-dot.ttf"));
