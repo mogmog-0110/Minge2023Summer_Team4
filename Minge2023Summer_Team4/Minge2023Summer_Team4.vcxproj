@@ -323,6 +323,7 @@
     <ClInclude Include="src\Game\pEffectManager.h" />
     <ClInclude Include="src\Game\pEventManager.h" />
     <ClInclude Include="src\Game\pGame.h" />
+    <ClInclude Include="src\Game\pGameScenario.h" />
     <ClInclude Include="src\Game\pObjectAppearanceManager.h" />
     <ClInclude Include="src\Game\pObjectManager.h" />
     <ClInclude Include="src\oSuperObject.h" />
@@ -425,6 +426,7 @@
     <ClCompile Include="src\Game\pEffectManager.cpp" />
     <ClCompile Include="src\Game\pEventManager.cpp" />
     <ClCompile Include="src\Game\pGame.cpp" />
+    <ClCompile Include="src\Game\pGameScenario.cpp" />
     <ClCompile Include="src\Game\pObjectAppearanceManager.cpp" />
     <ClCompile Include="src\Game\pObjectManager.cpp" />
     <ClCompile Include="src\Main.cpp" />

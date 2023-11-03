@@ -76,6 +76,7 @@ void Main()
   
 	//font
 	FontAsset::Register(U"dotFont1", 20, Resource(U"Font/Nosutaru-dot.ttf"));
+	FontAsset::Register(U"dotFont2", 30, Resource(U"Font/Nosutaru-dot.ttf"));
 
 	EffectManager::create();
 

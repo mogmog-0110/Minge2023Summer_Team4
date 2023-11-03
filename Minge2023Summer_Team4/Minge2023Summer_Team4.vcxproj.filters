@@ -825,7 +825,13 @@
     <ClInclude Include="src\Game\oItem.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="EffectManager.h">
+    <ClInclude Include="src\Game\oGhost.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Game\pEffectManager.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Game\pGameScenario.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -881,7 +887,16 @@
     <ClCompile Include="src\Game\oItem.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="EffectManager.cpp">
+    <ClCompile Include="src\Define.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Game\oGhost.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Game\pEffectManager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Game\pGameScenario.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

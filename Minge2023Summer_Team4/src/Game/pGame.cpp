@@ -81,7 +81,7 @@ void Game::update()
 		scrollUpdate();
 		objectManager.update();
 		updateBackground();
-
+      
 		debug();
 		break;
 
@@ -89,6 +89,16 @@ void Game::update()
 		if (KeyP.down()) {
 			currentState = GameState::Playing;
 		}
+		break;
+
+	case GameState::Scenario:
+		//シナリオが終了する時updateがtrueを返す
+		if (myGameScenario.update())
+		{
+			currentState = GameState::Playing;
+		}
+		
+
 		break;
 
 	case GameState::Dead:
@@ -123,6 +133,8 @@ void Game::draw() const
 	cursor.draw();
 	drawHpBar();
 	drawMagicBook();
+
+	if (currentState == GameState::Scenario) myGameScenario.draw();
 
 	// 文字
 	dotFont1(U"HP").drawAt(896, 288, Color(255, 255, 255, 255));
@@ -160,6 +172,10 @@ void Game::debug()
 		Print << U"未取得";
 		break;
 	}
+
+	if (KeyO.down()) currentState = GameState::Scenario;
+
+
 }
 
 //====================================================
