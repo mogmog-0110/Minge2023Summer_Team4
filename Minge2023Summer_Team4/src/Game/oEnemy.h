@@ -54,10 +54,6 @@ public:
 	void setUpAnimation();
 	void updateDirection();
 
-	void drawDeathAnimation();
-
 	bool isBoss = false;
 	bool isBossDead = false;
-
-	void playDeathAnimation();
 };

@@ -13,4 +13,3 @@ Array<TextureRegion> splitImage(const Texture& texture, int cellWidth, int cellH
 	}
 	return regions;
 }
-Vec2 bossDeathPos = { 0, 0 };

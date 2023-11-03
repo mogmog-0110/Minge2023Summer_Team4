@@ -112,4 +112,7 @@ public:
 	// 現在のプレイヤーの向き
 	String currentDirection = U"up";
 	int normalMagicLevel;
+	double bulletDelayElapsed = 0.0;
+
+	BulletProperty createProperty();
 };

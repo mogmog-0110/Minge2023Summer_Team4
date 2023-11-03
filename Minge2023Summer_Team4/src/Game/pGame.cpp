@@ -22,7 +22,6 @@ Game::Game(const InitData& init)
 	// 敵データの読み込み
 	objectManager.enemyDatas = objectManager.loadEnemyData(U"../src/Game/csvFile/enemy.csv");
 	setUpBackground();
-	setUpAnimation();
 }
 
 
@@ -482,18 +481,6 @@ int Game::getBookTextureIndex(ItemType type) const
 	case ItemType::SpecialMagicD: return 3;
 	default: return -1; // 無効な値
 	}
-}
-
-void Game::setUpAnimation()
-{
-	const Texture& texture = TextureAsset(U"Kuro");
-	const auto regions = splitImage(texture, 32 * EXPORT_SCALE, 32 * EXPORT_SCALE);
-
-	animations = {
-		regions[16], regions[17], regions[18], regions[19], regions[20], regions[21], regions[22], regions[23],
-		regions[24], regions[25], regions[26], regions[27], regions[28], regions[29], regions[30], regions[31]
-	};
-
 }
 
 void Game::drawHpBar() const

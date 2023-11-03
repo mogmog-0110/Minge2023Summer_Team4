@@ -72,7 +72,8 @@ public:
 
 	void createDebris();
 	void createEnemy();
-	void createPlayerBullet(Vec2, Vec2, Vec2);
+	void createPlayerBullet();
+	void createBullet(Vec2 pos, Vec2 vel, const BulletProperty& bp, Vec2 acc, BulletType);
 	void createEnemyBullet();
 	void createSpecialBullet(Vec2, Vec2, Vec2);
 	void createItem(Vec2, int);

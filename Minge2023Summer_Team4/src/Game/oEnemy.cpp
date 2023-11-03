@@ -225,10 +225,8 @@ Array<Vec2> Enemy::calculateDirection(int way)
 	return bulletVectors;
 }
 
-
 void Enemy::setUpAnimation()
 {
-
 	// 敵の種類によってセットするアニメーションを変える。
 	if (textureStr == U"Kuro")
 	{
@@ -287,7 +285,8 @@ void Enemy::updateDirection()
 	if (diff > 0) {
 		this->currentDirection = U"right";
 	}
-	else {
+	else
+	{
 		this->currentDirection = U"left";
 	}
 

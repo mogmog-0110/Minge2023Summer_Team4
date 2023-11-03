@@ -65,7 +65,8 @@ void Player::update() {
 	if (previousHp > hp) {
 		damageDelayElapsed = 0.0;
 	}
-	else {
+	else
+	{
 		damageDelayElapsed += Scene::DeltaTime();
 	}
 
@@ -191,7 +192,8 @@ void Player::playDeathAnimation() {
 	}
 }
 
-bool Player::deathAnimationFinished() const {
+bool Player::deathAnimationFinished() const
+{
 	try {
 		return isDeadAnimationPlaying && (animationFrame == playerAnimations.at(U"dead").size() - 1);
 	}
@@ -314,12 +316,14 @@ void Player::applyItemEffect(Item* item) {
 
 void Player::attractItems(Array<Item*>& items)
 {
-	for (Item* item : items) {
+	for (Item* item : items)
+	{
 		if (item->getItemType() == ItemType::ExpPoint) {
 			Vec2 direction = item->getPos() - pos; // アイテムへの方向ベクトル
 			double distance = direction.length();
 
-			if (distance < attractionRadius) {
+			if (distance < attractionRadius)
+			{
 				// 吸い寄せの計算
 				Vec2 attraction = direction.normalized() * attractionSpeed; // attractionSpeedは吸い寄せる速度
 				item->setPos(item->getPos() - attraction);
@@ -367,3 +371,29 @@ void Player::setAttractionSpeed(double speed)
 	this->attractionSpeed = speed;
 }
 
+BulletProperty Player::createProperty()
+{
+	BulletProperty bp;
+	switch (normalMagicLevel)
+	{
+		case 1:
+			bp.way = 1; bp.damage = 10; bp.speed = 300; bp.size = 10; bp.delay = 1.0;
+			break;
+		case 2:
+			bp.way = 1; bp.damage = 20; bp.speed = 500; bp.size = 12; bp.delay = 0.8;
+			break;
+		case 3:
+			bp.way = 3; bp.damage = 20; bp.speed = 500; bp.size = 12; bp.delay = 0.8;
+			break;
+		case 4:
+			bp.way = 5; bp.damage = 30; bp.speed = 600; bp.size = 14; bp.delay = 0.6;
+			break;
+		case 5:
+			bp.way = 7; bp.damage = 40; bp.speed = 700; bp.size = 14; bp.delay = 0.5;
+			break;
+		case 6:
+			bp.way = 7; bp.damage = 50; bp.speed = 1000; bp.size = 16; bp.delay = 0.1;
+			break;
+	}
+	return bp;
+}

@@ -78,7 +78,7 @@ enum class BulletType {
 struct BulletProperty
 {
 	int damage;
-	Figure hitbox;
+	int size;
 	double speed;
 
 	double delay; // 弾生成の間隔
@@ -130,4 +130,3 @@ struct BackgroundChunk {
 // グローバル関数（邪法）
 
 Array<TextureRegion> splitImage(const Texture& texture, int cellWidth, int cellHeight);
-extern Vec2 bossDeathPos;
