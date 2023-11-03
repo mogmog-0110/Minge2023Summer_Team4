@@ -523,6 +523,15 @@ BulletType ObjectManager::fromItemType(ItemType itemType)
 	}
 }
 
+void ObjectManager::setDelayTimer()
+{
+	BulletProperty bp = myPlayer->createNormalProperty();
+	if (bulletTimer.duration().count() != bp.delay)
+	{
+		bulletTimer.set(SecondsF(bp.delay));
+	}
+}
+
 // アイテム用のcleanUP
 void ObjectManager::cleanUp(Array<Item*>& items)
 {
