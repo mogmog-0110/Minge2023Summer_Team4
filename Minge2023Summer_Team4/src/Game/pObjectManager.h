@@ -19,7 +19,14 @@ class ObjectManager
 private:
 
 	Timer bulletTimer{ 0.5s, StartImmediately::Yes };
-	HashTable<BulletType, Timer> specialBulletTimer;
+	HashTable<BulletType, Timer> specialBulletTimer =
+	{
+		{ BulletType::SpecialA, Timer{ 1s, StartImmediately::No } },
+		{ BulletType::SpecialB, Timer{ 1s, StartImmediately::No } },
+		{ BulletType::SpecialC, Timer{ 1s, StartImmediately::No } },
+		{ BulletType::SpecialD, Timer{ 1s, StartImmediately::No } },
+	};
+
 
 
 	EffectManager* myEffectManager;

@@ -338,7 +338,7 @@ void ObjectManager::createSpecialBullet(Vec2 pos, Vec2 vel, Vec2  acc)
 
 void ObjectManager::createItem(Vec2 pos, int expPoints)
 {
-	int randomNum = Random(50);
+	int randomNum = Random(1);
 
 	// 100分の1の抽選で特殊弾のドロップ
 	if (randomNum == 0)
@@ -543,6 +543,31 @@ void ObjectManager::setDelayTimer()
 	{
 		bulletTimer.set(SecondsF(bp.delay));
 	}
+
+	bp = myPlayer->createLaserProperty();
+	if (specialBulletTimer[BulletType::SpecialA].duration().count() != bp.delay)
+	{
+		specialBulletTimer[BulletType::SpecialA].set(SecondsF(bp.delay));
+	}
+
+	bp = myPlayer->createWideProperty();
+	if (specialBulletTimer[BulletType::SpecialB].duration().count() != bp.delay)
+	{
+		specialBulletTimer[BulletType::SpecialB].set(SecondsF(bp.delay));
+	}
+
+	bp = myPlayer->createPrasmaProperty();
+	if (specialBulletTimer[BulletType::SpecialC].duration().count() != bp.delay)
+	{
+		specialBulletTimer[BulletType::SpecialC].set(SecondsF(bp.delay));
+	}
+
+	bp = myPlayer->createMineProperty();
+	if (specialBulletTimer[BulletType::SpecialD].duration().count() != bp.delay)
+	{
+		specialBulletTimer[BulletType::SpecialD].set(SecondsF(bp.delay));
+	}
+
 }
 
 // アイテム用のcleanUP
