@@ -24,15 +24,15 @@ void Result::update()
 
 void Result::draw() const
 {
-	Texture c = TextureAsset(U"clear1");
+	Texture c = TextureAsset(U"Clear");
 	Texture g = TextureAsset(U"gameOver");
 	if (isCleared)
 	{
-		c.draw();
+		c.draw(0,0);
 	}
 	else
 	{
-		g.draw();
+		g.draw(0, 0);
 	}
 
 }

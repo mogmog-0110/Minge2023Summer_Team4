@@ -72,9 +72,6 @@ void Game::update()
 			break;
 		}
 
-		if (KeyQ.down()) {
-			changeScene(SceneList::Result);
-		}
 
 		if (waveDataIndex < waveDatas.size()) {
 			spawnEnemies();  // まだスポーンすべき敵が残っている場合は、敵をスポーンさせる
@@ -120,7 +117,7 @@ void Game::update()
 		Player::getInstance()->playDeathAnimation();
 		Scene::SetBackground(Palette::Black);
 		if (Player::getInstance()->deathAnimationFinished()) {
-			if (KeyEnter.down()) {
+			if (MouseL.down()) {
 				changeScene(SceneList::Result); // アニメーション終了後にリザルトシーンへ遷移
 			}
 		}
