@@ -4,7 +4,7 @@
 ObjectManager::ObjectManager()
 {
 	// 初期ステータスの決定
-	Player::create(1000, 40, U"", Circle(24), Vec2(Scene::Center().x, Scene::Center().y), 200);
+	Player::create(100, 40, U"", Circle(24), Vec2(Scene::Center().x, Scene::Center().y), 200);
 	myGhost = new Ghost(1000000, 0, U"Ghost", Circle(10), Vec2(Scene::Center().x - 60, Scene::Center().y - 60), { 300, 300 }, { 1, 1 });
 	myPlayer = Player::getInstance();
 	myEffectManager = EffectManager::getInstance();
@@ -281,7 +281,7 @@ void ObjectManager::createSpecialBullet(Vec2 pos, Vec2 vel, Vec2  acc)
 		bp = myPlayer->createLaserProperty();
 
 		// 中心のレーザー
-		GameObject* tempBullet = ObjectAppearanceManager::createNewObject(ePlayerBullet, 1, bp.damage + myPlayer->getDamage(), U"LaserBullet", Circle{ 20 }, pos, vel.setLength(300), acc);
+		GameObject* tempBullet = ObjectAppearanceManager::createNewObject(ePlayerBullet, 1, bp.damage, U"LaserBullet", Circle{ 20 }, pos, vel.setLength(1000), acc);
 		if (tempBullet) {
 			Bullet* newBullet = static_cast<Bullet*>(tempBullet);
 			newBullet->setBulletType(BulletType::SpecialA);
@@ -343,7 +343,7 @@ void ObjectManager::createSpecialBullet(Vec2 pos, Vec2 vel, Vec2  acc)
 
 void ObjectManager::createItem(Vec2 pos, int expPoints)
 {
-	int randomNum = Random(1);
+	int randomNum = Random(80);
 
 	// 100分の1の抽選で特殊弾のドロップ
 	if (randomNum == 0)

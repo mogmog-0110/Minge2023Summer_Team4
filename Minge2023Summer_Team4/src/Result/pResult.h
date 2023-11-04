@@ -12,6 +12,5 @@ public:
 
 	void debug();
 
-	void iscleared();
 
 };

@@ -6,12 +6,9 @@ double accumulatedTime = 0;
 Game::Game(const InitData& init)
 	: IScene(init), objectManager(), currentState(GameState::Loading), currentWave(0), accumulatedTime(0.0)
 {
-	Print << U"Game!";
 
 	// 背景の色を設定 | Set background color
 	Scene::SetBackground(Palette::Black);
-
-	Print << U"Push [Q] key";
 
 	myEffectManager = EffectManager::getInstance();
 
@@ -75,9 +72,6 @@ void Game::update()
 			break;
 		}
 
-		if (KeyQ.down()) {
-			changeScene(SceneList::Result);
-		}
 
 		if (waveDataIndex < waveDatas.size()) {
 			spawnEnemies();  // まだスポーンすべき敵が残っている場合は、敵をスポーンさせる
@@ -123,7 +117,7 @@ void Game::update()
 		Player::getInstance()->playDeathAnimation();
 		Scene::SetBackground(Palette::Black);
 		if (Player::getInstance()->deathAnimationFinished()) {
-			if (KeyEnter.down()) {
+			if (MouseL.down()) {
 				changeScene(SceneList::Result); // アニメーション終了後にリザルトシーンへ遷移
 			}
 		}
