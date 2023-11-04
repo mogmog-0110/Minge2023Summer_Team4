@@ -6,12 +6,9 @@ double accumulatedTime = 0;
 Game::Game(const InitData& init)
 	: IScene(init), objectManager(), currentState(GameState::Loading), currentWave(0), accumulatedTime(0.0)
 {
-	Print << U"Game!";
 
 	// 背景の色を設定 | Set background color
 	Scene::SetBackground(Palette::Black);
-
-	Print << U"Push [Q] key";
 
 	myEffectManager = EffectManager::getInstance();
 

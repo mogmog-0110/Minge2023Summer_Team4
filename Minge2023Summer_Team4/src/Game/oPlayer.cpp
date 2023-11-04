@@ -496,7 +496,10 @@ BulletProperty Player::createPrasmaProperty()
 		bp.hp = 700; bp.damage = 240; bp.size = 85; bp.delay = 0.3;
 		break;
 	default:
-		bp.damage = 50 + availableBullet[ItemType::SpecialMagicC] * 2; bp.delay = 0.3; bp.hp = 50 + availableBullet[ItemType::SpecialMagicC] * 2;
+		bp.hp = 800;
+		bp.damage = 50 + availableBullet[ItemType::SpecialMagicC] * 2;
+		bp.size = 90;
+		bp.delay = 0.3; bp.hp = 50 + availableBullet[ItemType::SpecialMagicC] * 2;
 	}
 	return bp;
 }
