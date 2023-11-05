@@ -4,7 +4,7 @@
 ObjectManager::ObjectManager()
 {
 	// 初期ステータスの決定
-	Player::create(1000, 40, U"", Circle(24), Vec2(Scene::Center().x, Scene::Center().y), 200);
+	Player::create(100, 40, U"", Circle(24), Vec2(Scene::Center().x, Scene::Center().y), 200);
 	myGhost = new Ghost(1000000, 0, U"Ghost", Circle(10), Vec2(Scene::Center().x - 60, Scene::Center().y - 60), { 300, 300 }, { 1, 1 });
 	myPlayer = Player::getInstance();
 	myEffectManager = EffectManager::getInstance();
@@ -42,7 +42,7 @@ void ObjectManager::update()
 	}
 
 	// 特殊弾の発射
-	if (!bulletTimer.isRunning() && (MouseR.pressed() || KeyB.pressed()))
+	if (!bulletTimer.isRunning() && (MouseR.pressed() || KeyB.pressed()) && myPlayer->availableBullet[selectedItemType] != 0)
 	{
 		Vec2 elementVector = (Cursor::PosF() - Scene::CenterF()).setLength(1);
 		createSpecialBullet(myPlayer->getPos() + elementVector.setLength(50), elementVector.setLength(100), { 1,1 });
@@ -134,10 +134,10 @@ Enemy* ObjectManager::createEnemyFromData(WaveData waveData)
 {
 	String name = waveData.enemyName;
 	int hp = enemyDatas[name].hp * waveData.statusModifier;
-	int damage = enemyDatas[name].damage * waveData.statusModifier;
+	int damage = enemyDatas[name].damage * waveData.statusModifier * 1 / 2;
 	String textureStr = enemyDatas[name].textureStr;
 	Figure hitbox = enemyDatas[name].hitbox;
-	double speed = enemyDatas[name].speed * (waveData.statusModifier * 1 / 2);
+	double speed = enemyDatas[name].speed * (waveData.statusModifier * 1 / 3);
 	Vec2 spawnPos = { waveData.spawnPos.x + Random(300), waveData.spawnPos.y + Random(300) };
 
 	GameObject* newEnemy = ObjectAppearanceManager::createNewObject(eEnemy, hp, damage, textureStr, hitbox, spawnPos + myPlayer->getPos(), { speed, speed }, { 1, 1 });
@@ -169,7 +169,7 @@ void ObjectManager::createDebris()
 			hp = 500;
 		}
 
-		GameObject* newDebris = ObjectAppearanceManager::createNewObject(eDebris, hp, 10, U"", Circle(hitbox), ObjectAppearanceManager::generateRandomPos(), { 0,0 }, { 0,0 });
+		GameObject* newDebris = ObjectAppearanceManager::createNewObject(eDebris, hp, 50, U"", Circle(hitbox), ObjectAppearanceManager::generateRandomPos(), { 0,0 }, { 0,0 });
 		if (newDebris) {
 			myDebrises << static_cast<Debris*>(newDebris);
 		}
@@ -343,7 +343,7 @@ void ObjectManager::createSpecialBullet(Vec2 pos, Vec2 vel, Vec2  acc)
 
 void ObjectManager::createItem(Vec2 pos, int expPoints)
 {
-	int randomNum = Random(1);
+	int randomNum = Random(80);
 
 	// 100分の1の抽選で特殊弾のドロップ
 	if (randomNum == 0)
@@ -585,7 +585,7 @@ void ObjectManager::switchSpecialBullet()
 			currentIndex = (currentIndex + 1) % keys.size();
 
 			// 現在選択されているアイテムタイプを取得
-			ItemType selectedItemType = keys[currentIndex];
+			selectedItemType = keys[currentIndex];
 
 			// BulletTypeに変換
 			currentState = fromItemType(selectedItemType);

@@ -30,7 +30,7 @@ void Enemy::calcAndSetExp()
 	int expPoints = 0;
 
 	// 基本経験値に強さの一定割合を加える
-	expPoints = 10 + static_cast<int>(strength * 0.5);
+	expPoints = 10 + static_cast<int>(strength * 0.3);
 
 	// 強さが特定の閾値を超えた場合、ボーナス経験値を追加
 	if (enemyLevel >= 1)
@@ -103,7 +103,7 @@ void Enemy::setHasBullet()
 
 void Enemy::determineLevel()
 {
-	int strength = getStrength();
+	int strength = getStrength() / 2; 
 
 	if (strength >= 6800)
 	{

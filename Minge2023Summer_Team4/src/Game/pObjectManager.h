@@ -60,6 +60,8 @@ public:
 	// どの特殊弾にアクセスしているか
 	int currentIndex;
 
+	ItemType selectedItemType;
+
 	// 各オブジェクトの配列
 	Array<Debris*> myDebrises;
 	Array<Bullet*> myPlayerBullets;
