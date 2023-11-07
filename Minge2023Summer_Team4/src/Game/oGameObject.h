@@ -110,5 +110,5 @@ public:
 	void setAcceleration(Vec2);
 	void setTexture(String);
 	void setExp(int);
+	void setDamage(int);
 };
-

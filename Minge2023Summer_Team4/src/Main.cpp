@@ -86,6 +86,8 @@ void Main()
 
 	while (System::Update())
 	{
+		// マウスカーソルをウィンドウの表示域に制限する。
+		Cursor::ClipToWindow(true);
 		if (not manager.update())
 		{
 			break;

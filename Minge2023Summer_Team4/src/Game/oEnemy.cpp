@@ -105,47 +105,47 @@ void Enemy::determineLevel()
 {
 	int strength = getStrength() / 2; 
 
-	if (strength >= 6800)
+	if (strength >= 200000)
 	{
 		enemyLevel = 12;
 	}
-	else if (strength >= 5600)
+	else if (strength >= 100000)
 	{
 		enemyLevel = 11;
 	}
-	else if (strength >= 4600)
+	else if (strength >= 50000)
 	{
 		enemyLevel = 10;
 	}
-	else if (strength >= 3700)
+	else if (strength >= 10000)
 	{
 		enemyLevel = 9;
 	}
-	else if (strength >= 2900)
+	else if (strength >= 8000)
 	{
 		enemyLevel = 8;
 	}
-	else if (strength >= 2200)
+	else if (strength >= 5000)
 	{
 		enemyLevel = 7;
 	}
-	else if (strength >= 1600)
+	else if (strength >= 2000)
 	{
 		enemyLevel = 6;
 	}
-	else if (strength >= 1100)
+	else if (strength >= 1300)
 	{
 		enemyLevel = 5;
 	}
-	else if (strength >= 700)
+	else if (strength >= 1000)
 	{
 		enemyLevel = 4;
 	}
-	else if (strength >= 400)
+	else if (strength >= 500)
 	{
 		enemyLevel = 3;
 	}
-	else if (strength >= 200)
+	else if (strength >= 300)
 	{
 		enemyLevel = 2;
 	}
@@ -163,34 +163,34 @@ void Enemy::determineLevel()
 BulletProperty Enemy::createBulletProperty()
 {
 	BulletProperty bp;
-	bp.damage = damage;
+	bp.damage = damage/2;
 
 	switch (enemyLevel)
 	{
 	case 1:
-		bp.way = 1; bp.speed = 300; bp.delay = 3.0; break;
+		bp.way = 1; bp.speed = 100; bp.delay = 3.0; break;
 	case 2:
-		bp.way = 1; bp.speed = 500; bp.delay = 2.0; break;
+		bp.way = 1; bp.speed = 100; bp.delay = 2.0; break;
 	case 3:
-		bp.way = 1; bp.speed = 800; bp.delay = 1.0; break;
+		bp.way = 1; bp.speed = 100; bp.delay = 1.0; break;
 	case 4:
-		bp.way = 3; bp.speed = 300; bp.delay = 3.0; break;
+		bp.way = 3; bp.speed = 100; bp.delay = 3.0; break;
 	case 5:
-		bp.way = 3; bp.speed = 500; bp.delay = 1.0; break;
+		bp.way = 3; bp.speed = 200; bp.delay = 1.0; break;
 	case 6:
-		bp.way = 5; bp.speed = 500; bp.delay = 2.0; break;
+		bp.way = 5; bp.speed = 200; bp.delay = 2.0; break;
 	case 7:
-		bp.way = 7; bp.speed = 500; bp.delay = 3.0; break;
+		bp.way = 7; bp.speed = 200; bp.delay = 3.0; break;
 	case 8:
-		bp.way = 7; bp.speed = 1000; bp.delay = 2.0; break;
+		bp.way = 7; bp.speed = 200; bp.delay = 2.0; break;
 	case 9:
-		bp.way = 9; bp.speed = 800; bp.delay = 3.0; break;
+		bp.way = 9; bp.speed = 300; bp.delay = 3.0; break;
 	case 10:
-		bp.way = 9; bp.speed = 1000; bp.delay = 1.0; break;
+		bp.way = 9; bp.speed = 300; bp.delay = 1.0; break;
 	case 11:
-		bp.way = 12; bp.speed = 1000; bp.delay = 1.0; break;
+		bp.way = 12; bp.speed = 500; bp.delay = 1.0; break;
 	case 12:
-		bp.way = 12; bp.speed = 1200; bp.delay = 0.5; break;
+		bp.way = 12; bp.speed = 500; bp.delay = 0.5; break;
 	default:
 		// enemyLevelが0または想定外の値の場合の処理（必要に応じて）
 		bp.way = 1; bp.speed = 300; bp.delay = 3.0; break;

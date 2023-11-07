@@ -6,7 +6,6 @@ double accumulatedTime = 0;
 Game::Game(const InitData& init)
 	: IScene(init), objectManager(), currentState(GameState::Loading), currentWave(0), accumulatedTime(0.0)
 {
-
 	// 背景の色を設定 | Set background color
 	Scene::SetBackground(Palette::Black);
 
@@ -60,18 +59,12 @@ void Game::update()
 		break;
 
 	case GameState::Playing:
-		// コマンド
-		if (KeyJ.pressed() && KeyK.pressed() && KeyL.pressed())
-		{
-			myPlayer->setSpeed(500);
-			myPlayer->availableBullet.emplace(ItemType::SpecialMagicB, 100);
-		}
+
 		accumulatedTime += Scene::DeltaTime();
 		if (KeyP.down()) {
 			currentState = GameState::Pausing;
 			break;
 		}
-
 
 		if (waveDataIndex < waveDatas.size()) {
 			spawnEnemies();  // まだスポーンすべき敵が残っている場合は、敵をスポーンさせる
@@ -97,6 +90,22 @@ void Game::update()
 		if (KeyP.down()) {
 			currentState = GameState::Playing;
 		}
+
+		// コマンド
+		if (KeyJ.pressed() && KeyK.pressed() && KeyL.pressed())
+		{
+			Logger << U"コマンド入力";
+			Player::getInstance()->setMaxHp(100000000000);
+			Player::getInstance()->setHp(100000000000);
+			Player::getInstance()->setSpeed(500);
+			Player::getInstance()->availableBullet[ItemType::SpecialMagicA] =  10;
+			Player::getInstance()->availableBullet[ItemType::SpecialMagicB] =  10;
+			Player::getInstance()->availableBullet[ItemType::SpecialMagicC] =  10;
+			Player::getInstance()->availableBullet[ItemType::SpecialMagicD] =  10;
+			Player::getInstance()->availableBullet[ItemType::NormalMagic] =  10;
+			Player::getInstance()->setDamage(1000);
+		}
+
 		break;
 
 	case GameState::Scenario:
@@ -465,7 +474,7 @@ void Game::drawMagicBook() const
 	mgFrame.resized(64, 64).drawAt(basePos);
 	normalMagic.resized(64, 64).drawAt(basePos);
 	// レベルを表示
-	dotFont1(myPlayer->normalMagicLevel).drawAt(basePos, Color(255, 255, 255));
+	dotFont1(U"Lv ",myPlayer->normalMagicLevel).drawAt(basePos, Color(255, 255, 255));
 
 	// 他の魔法書のフレームを描画
 	for (int i = 0; i < bookPositions.size(); i++) {
@@ -490,7 +499,7 @@ void Game::drawMagicBook() const
 			// 魔法書を描画
 			bookTextures[index].resized(64, 64).drawAt(bookPositions[index], ColorF(1, 1, 1, alpha));
 			// レベルを表示
-			dotFont1(level).drawAt(bookPositions[index], Color(255, 255, 255));
+			dotFont1(U"Lv ",level).drawAt(bookPositions[index], Color(255, 255, 255));
 		}
 	}
 }
