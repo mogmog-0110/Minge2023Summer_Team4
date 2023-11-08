@@ -94,16 +94,16 @@ void Game::update()
 		// コマンド
 		if (KeyJ.pressed() && KeyK.pressed() && KeyL.pressed())
 		{
-			Logger << U"コマンド入力";
+
 			Player::getInstance()->setMaxHp(100000000000);
 			Player::getInstance()->setHp(100000000000);
 			Player::getInstance()->setSpeed(500);
-			Player::getInstance()->availableBullet[ItemType::SpecialMagicA] =  10;
-			Player::getInstance()->availableBullet[ItemType::SpecialMagicB] =  10;
-			Player::getInstance()->availableBullet[ItemType::SpecialMagicC] =  10;
-			Player::getInstance()->availableBullet[ItemType::SpecialMagicD] =  10;
-			Player::getInstance()->availableBullet[ItemType::NormalMagic] =  10;
-			Player::getInstance()->setDamage(1000);
+			Player::getInstance()->availableBullet[ItemType::SpecialMagicA] =  100;
+			Player::getInstance()->availableBullet[ItemType::SpecialMagicB] =  100;
+			Player::getInstance()->availableBullet[ItemType::SpecialMagicC] =  100;
+			Player::getInstance()->availableBullet[ItemType::SpecialMagicD] =  100;
+			Player::getInstance()->normalMagicLevel =  100;
+			Player::getInstance()->setDamage(10000);
 		}
 
 		break;
@@ -136,6 +136,7 @@ void Game::update()
 		changeScene(SceneList::Result);
 	}
 }
+
 
 
 void Game::draw() const
@@ -567,6 +568,3 @@ BulletType Game::fromItemType(ItemType itemType) const
 		return BulletType::None;
 	}
 }
-
-
-
