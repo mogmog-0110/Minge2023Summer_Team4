@@ -24,6 +24,8 @@ private:
 
 	void setupAnimations(String,int32);
 
+	Array<String> DebugStr = {};
+
 public:
 
 	// 唯一のインスタンスを取得するための静的メソッド
@@ -43,6 +45,8 @@ public:
 	const void draw(Vec2 offset);
 
 	//デバッグ
+	void singleton_debug(String);
+	void singleton_debug_print();
 };
 
 //テスト用のダメージスコアエフェクト

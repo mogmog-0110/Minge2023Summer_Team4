@@ -83,7 +83,7 @@ void Game::update()
 		objectManager.update();
 		updateBackground();
       
-		//debug();
+		debug();
 		break;
 
 	case GameState::Pausing:
@@ -192,6 +192,7 @@ void Game::debug()
 
 	if (KeyO.down()) currentState = GameState::Scenario;
 
+	//myEffectManager->singleton_debug_print();
 
 }
 
@@ -339,7 +340,6 @@ void Game::spawnEnemies()
 			Enemy* enemy = objectManager.createEnemyFromData(waveDatas[waveDataIndex]);
 			objectManager.myEnemies.push_back(enemy);
 		}
-
 		waveDataIndex++;
 
 		accumulatedTime = 0.0; // accumulatedTimeリセット

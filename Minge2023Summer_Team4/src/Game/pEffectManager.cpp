@@ -63,6 +63,18 @@ const void EffectManager::draw(Vec2 offset_) {
 	myEffect.update();
 }
 
+void EffectManager::singleton_debug(String str)
+{
+	DebugStr << str;
+}
+
+void EffectManager::singleton_debug_print()
+{
+	for (auto str : DebugStr)
+	{
+		Print << str;
+	}
+}
 
 Array<TextureRegion> EffectManager::splitImage(const Texture& texture, int cellWidth, int cellHeight)
 {
