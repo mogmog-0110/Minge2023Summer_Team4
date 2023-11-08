@@ -30,7 +30,7 @@ public:
 		strength = maxHp + damage;
 		determineLevel();
 		calcAndSetExp();
-		changeCoolTime(0.01s);
+		changeCoolTime(0.2s);
 		setUpAnimation();
 		setHasBullet();
 	};

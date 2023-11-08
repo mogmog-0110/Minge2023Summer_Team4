@@ -108,6 +108,9 @@ public:
 	//setter
 	void setAttractionRadius(double);
 	void setAttractionSpeed(double);
+	void setMaxHp(int);
+	void setSpeed(double);
+	void setHp(double);
 
 	// 現在のプレイヤーの向き
 	String currentDirection = U"up";

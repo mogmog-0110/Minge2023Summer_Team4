@@ -5,6 +5,6 @@ BloatedBedBug,500,30,BloatedBedBug,Circle(16),300
 Cockroach,800,130,Cockroach,Circle(16),300
 EvilEye,4800,200,EvilEye,Circle(16),180
 BigRat,3000,150,BigRat,Circle(24),280
-BigSpider,30000,250,BigSpider,Circle(32),200
+BigSpider,30000,250,BigSpider,Circle(32),300
 Worm,60000,250,Worm,Circle(32),350
-Kuro,150000,500,Kuro,Circle(48),120
+Kuro,150000,500,Kuro,Circle(48),350

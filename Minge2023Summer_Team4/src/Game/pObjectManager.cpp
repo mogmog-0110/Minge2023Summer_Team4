@@ -4,7 +4,7 @@
 ObjectManager::ObjectManager()
 {
 	// 初期ステータスの決定
-	Player::create(100, 40, U"", Circle(24), Vec2(Scene::Center().x, Scene::Center().y), 200);
+	Player::create(100, 30, U"", Circle(24), Vec2(Scene::Center().x, Scene::Center().y), 200);
 	myGhost = new Ghost(1000000, 0, U"Ghost", Circle(10), Vec2(Scene::Center().x - 60, Scene::Center().y - 60), { 300, 300 }, { 1, 1 });
 	myPlayer = Player::getInstance();
 	myEffectManager = EffectManager::getInstance();
@@ -61,6 +61,18 @@ void ObjectManager::update()
 
 	// 不要になったアイテムをクリーンアップ
 	cleanUp(myItems);
+
+	// アイテムの上限数
+	if (myItems.size() >= 100)
+	{
+		myItems.pop_front();
+	}
+
+	// バレットの上限数
+	if (myPlayerBullets.size() >= 100)
+	{
+		myPlayerBullets.pop_front();
+	}
 
 	setDelayTimer();
 }
@@ -256,7 +268,7 @@ void ObjectManager::createEnemyBullet()
 					Vec2 vel = dir * bp.speed;  // 速度ベクトル
 					Vec2 acc = { 1, 1 };  // 加速度ベクトル（必要に応じて設定）
 
-					GameObject* newBullet = ObjectAppearanceManager::createNewObject(eEnemyBullet, 1, bp.damage + myPlayer->getDamage(), U"EnemyBullet", Circle{ 16 }, pos, vel, acc);
+					GameObject* newBullet = ObjectAppearanceManager::createNewObject(eEnemyBullet, 1, bp.damage, U"EnemyBullet", Circle{ 16 }, pos, vel, acc);
 					if (newBullet) {
 						Bullet* newEnemyBullet = static_cast<Bullet*>(newBullet);
 						// 必要であれば、ここでnewEnemyBulletのプロパティを設定
@@ -566,7 +578,7 @@ void ObjectManager::stopEnemies()
 
 void ObjectManager::switchSpecialBullet()
 {
-	if (KeySpace.down())
+	if (KeySpace.down() || MouseM.down())
 	{
 		const auto& availableBullets = myPlayer->availableBullet;
 

@@ -246,3 +246,8 @@ void GameObject::setExp(int points)
 	expPoints = points;
 
 }
+
+void GameObject::setDamage(int damage)
+{
+	this->damage = damage;
+}

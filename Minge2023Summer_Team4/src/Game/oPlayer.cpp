@@ -266,12 +266,12 @@ void Player::checkLevelUp()
 // レベルアップ時の処理を行うメソッド
 void Player::levelUp()
 {
-	nextLevelExp += (level * 50); // 次のレベルに必要な経験値を増加させる
+	nextLevelExp += (level * 70); // 次のレベルに必要な経験値を増加させる
 
 	// その他レベルアップ時の処理
 	switch (level % 4) {
 	case 0:
-		maxHp += 20; // 体力を10増加
+		maxHp += 5; // 体力を10増加
 		regeneVal += 0.05;
 		
 		break;
@@ -282,11 +282,11 @@ void Player::levelUp()
 	case 2:
 		if (speed <= 500)
 		{
-			speed += 20; // スピードを1増加
+			speed += 5; // スピードを1増加
 		}
 		break;
 	case 3:
-		attractionRadius += 3; // アイテム収集範囲を10増加
+		attractionRadius += 5; // アイテム収集範囲を10増加
 		
 		break;
 	}
@@ -379,6 +379,22 @@ void Player::setAttractionSpeed(double speed)
 	this->attractionSpeed = speed;
 }
 
+void Player::setMaxHp(int hp)
+{
+	this->maxHp = hp;
+}
+
+void Player::setSpeed(double speed)
+{
+	this->speed = speed;
+}
+
+void Player::setHp(double)
+{
+	this->hp = hp;
+
+}
+
 BulletProperty Player::createNormalProperty()
 {
 	BulletProperty bp;
@@ -406,6 +422,7 @@ BulletProperty Player::createNormalProperty()
 			bp.way = 7; bp.damage = 60 + normalMagicLevel; bp.speed = 1000; bp.size = 10 + normalMagicLevel; bp.delay = 0.3;
 	}
 	return bp;
+
 }
 
 BulletProperty Player::createMineProperty()
@@ -434,7 +451,7 @@ BulletProperty Player::createMineProperty()
 		bp.damage = 180; bp.size = 16; bp.delay = 0.3; bp.exproRange = 225;
 		break;
 	default:
-		bp.damage = 50 + availableBullet[ItemType::SpecialMagicD] * 2; bp.delay = 0.3; bp.exproRange = 225 + availableBullet[ItemType::SpecialMagicD] * 2;
+		bp.damage = 200 + availableBullet[ItemType::SpecialMagicD] * 2; bp.delay = 0.3; bp.exproRange = 225 + availableBullet[ItemType::SpecialMagicD] * 2;
 	}
 	return bp;
 }
@@ -447,25 +464,26 @@ BulletProperty Player::createWideProperty()
 	case 0:
 		break;
 	case 1:
-		bp.hp = 1; bp.damage = 70; bp.size = 20; bp.delay = 3.0;
+		bp.hp = 1; bp.damage = 60; bp.size = 20; bp.delay = 3.0;
 		break;
 	case 2:
-		bp.hp = 1; bp.damage = 90; bp.size = 25; bp.delay = 2.5;
+		bp.hp = 10; bp.damage = 70; bp.size = 30; bp.delay = 1.5;
 		break;
 	case 3:
-		bp.hp = 100; bp.damage = 100; bp.size = 30; bp.delay = 2.0;
+		bp.hp = 100; bp.damage = 100; bp.size = 40; bp.delay = 1.0;
 		break;
 	case 4:
-		bp.hp = 200; bp.damage = 120; bp.size = 35; bp.delay = 1.0;
+		bp.hp = 100; bp.damage = 120; bp.size = 45; bp.delay = 0.7;
 		break;
 	case 5:
-		bp.hp = 300; bp.damage = 150; bp.size = 40; bp.delay = 0.5;
+		bp.hp = 500; bp.damage = 150; bp.size = 60; bp.delay = 0.3;
 		break;
 	case 6:
-		bp.hp = 500; bp.damage = 200; bp.size = 45; bp.delay = 0.3;
+		bp.hp = 1000; bp.damage = 200; bp.size = 80; bp.delay = 0.1;
 		break;
 	default:
-		bp.damage = 50 + availableBullet[ItemType::SpecialMagicB] * 2; bp.delay = 0.3; bp.hp = 50 + availableBullet[ItemType::SpecialMagicB] * 2;
+		bp.damage = 200 + availableBullet[ItemType::SpecialMagicB] * 2; bp.delay = 0.3; bp.hp = 1000 + availableBullet[ItemType::SpecialMagicB] * 2;
+		bp.size = 100;
 	}
 	return bp;
 }
@@ -478,22 +496,22 @@ BulletProperty Player::createPrasmaProperty()
 	case 0:
 		break;
 	case 1:
-		bp.hp = 300; bp.damage = 80; bp.size = 40; bp.delay = 3.0;
+		bp.hp = 100; bp.damage = 80; bp.size = 40; bp.delay = 10.0;
 		break;
 	case 2:
-		bp.hp = 400; bp.damage = 100; bp.size = 45; bp.delay = 2.5;
+		bp.hp = 300; bp.damage = 100; bp.size = 45; bp.delay = 8.0;
 		break;
 	case 3:
-		bp.hp = 500; bp.damage = 110; bp.size = 50; bp.delay = 2.0;
+		bp.hp = 500; bp.damage = 110; bp.size = 50; bp.delay = 6.0;
 		break;
 	case 4:
-		bp.hp = 500; bp.damage = 150; bp.size = 65; bp.delay = 1.0;
+		bp.hp = 800; bp.damage = 150; bp.size = 65; bp.delay = 4.0;
 		break;
 	case 5:
-		bp.hp = 600; bp.damage = 200; bp.size = 70; bp.delay = 0.5;
+		bp.hp = 1000; bp.damage = 200; bp.size = 70; bp.delay = 2.5;
 		break;
 	case 6:
-		bp.hp = 700; bp.damage = 240; bp.size = 85; bp.delay = 0.3;
+		bp.hp = 1500; bp.damage = 240; bp.size = 85; bp.delay = 1.0;
 		break;
 	default:
 		bp.damage = 50 + availableBullet[ItemType::SpecialMagicC] * 2; bp.delay = 0.3; bp.hp = 50 + availableBullet[ItemType::SpecialMagicC] * 2; bp.size = 85;
