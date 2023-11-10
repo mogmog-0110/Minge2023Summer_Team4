@@ -3,6 +3,7 @@
 Title::Title(const InitData& init)
 	:IScene(init)
 {
+	titleAudio.play();
 }
 
 void Title::update()
@@ -11,11 +12,15 @@ void Title::update()
 	if (MouseL.down())
 	{
 		//タイトルシーンに遷移する
-		changeScene(SceneList::Game);
+		titleAudio.fadeVolume(0.0, 3s);
+		changeScene(SceneList::Game, 3s);
 	}
 
 	debug();
 }
+
+
+
 
 void Title::draw() const
 {
