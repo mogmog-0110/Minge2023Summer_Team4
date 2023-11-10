@@ -327,6 +327,7 @@
     <ClInclude Include="src\Game\pObjectAppearanceManager.h" />
     <ClInclude Include="src\Game\pObjectManager.h" />
     <ClInclude Include="src\oSuperObject.h" />
+    <ClInclude Include="src\pSoundPlayer.h" />
     <ClInclude Include="src\Result\pResult.h" />
     <ClInclude Include="src\Title\pTitle.h" />
     <ClInclude Include="stdafx.h" />
@@ -431,6 +432,7 @@
     <ClCompile Include="src\Game\pObjectManager.cpp" />
     <ClCompile Include="src\Main.cpp" />
     <ClCompile Include="src\oSuperObject.cpp" />
+    <ClCompile Include="src\pSoundPlayer.cpp" />
     <ClCompile Include="src\Result\pResult.cpp" />
     <ClCompile Include="src\Title\pTitle.cpp" />
     <ClCompile Include="stdafx.cpp">

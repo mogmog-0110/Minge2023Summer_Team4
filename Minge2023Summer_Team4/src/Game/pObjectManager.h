@@ -9,6 +9,7 @@
 # include "oEnemy.h"
 # include "oItem.h"
 # include "pEffectManager.h"
+#include "../pSoundPlayer.h"
 # include "oGhost.h";
 
 class ObjectAppearanceManager;
@@ -29,6 +30,7 @@ private:
 
 
 
+	SoundPlayer* mySoundPlayer;
 	EffectManager* myEffectManager;
 	Ghost* myGhost;
 
@@ -120,8 +122,10 @@ void ObjectManager::checkCollision(T* obj1, U* obj2) {
 
 		// 敵同士の衝突でない場合のみダメージを適用
 		// 10/31追記　debris-enemy間でもダメージを適用しない
+		// 11/10追記　Itemでダメージ受けてどうすんだよ！！！！！！！
 		if (obj1->getObjType() == eEnemy && obj2->getObjType() == eEnemy);
 		else if (obj1->getObjType() == eDebris && obj2->getObjType() == eEnemy);
+		else if (obj1->getObjType() == ePlayer && obj2->getObjType() == eItem);
 		else
 		{
 			obj1->onCollisionResponse(obj2->getDamage()); // ダメージの応答をobj1に適用
@@ -185,7 +189,11 @@ void ObjectManager::cleanUp(Array<T*>& objs) {
 				createItem(objPos, expPoints);
 				myEffectManager->create_spliteEffect(objPos ,U"Effect1", 0.5, 100);
 				defeatCount += 1;
+				mySoundPlayer->playEffect(effectHit1);
 			}
+
+			if ((*it)->getObjType() == eObjectType::eDebris) mySoundPlayer->playEffect(effectHitDebris);
+
 			delete* it;
 			it = objs.erase(it);
 		}

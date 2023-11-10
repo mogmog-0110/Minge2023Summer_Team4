@@ -154,6 +154,8 @@ void GameObject::onCollisionResponse(int damage)
 	if (objType == eDebris || objType == eEnemy || objType == ePlayer) blinkTimer1.restart();
 
 	if (objType == eEnemy) myEffectManager->create_damageScoreEffect(pos, damage);
+
+	if (objType == ePlayer) mySoundPlayer->playEffect(effectHitPlayer);
 }
 
 void GameObject::onCollisionResponse(Vec2 RepullPos)

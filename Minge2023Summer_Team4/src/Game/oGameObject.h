@@ -3,6 +3,7 @@
 #include "../oSuperObject.h"
 #include "../Figure.h"
 #include "pEffectManager.h"
+#include "../pSoundPlayer.h"
 
 
 class GameObject :
@@ -18,6 +19,9 @@ private:
 	const Font debugfont{ 15 };
 
 protected:
+
+	EffectManager* myEffectManager;
+	SoundPlayer* mySoundPlayer;
 
 	eObjectType objType;
 	double hp = 1;
@@ -57,7 +61,6 @@ protected:
 	//アイテムが落ちるかどうかの設定。HPが0になる意外の特殊死亡ではfalseになる。なおアイテムがドロップしないオブジェクトタイプでは参照されない。
 	bool isItemDropable = true;
 
-	EffectManager* myEffectManager;
 
 	bool isBlinkShift = false;
 
@@ -71,6 +74,7 @@ public:
 	{
 		hitbox.setCenter(pos);
 		myEffectManager = EffectManager::getInstance();
+		mySoundPlayer = SoundPlayer::getInstance();
 	}
 
 	~GameObject();
