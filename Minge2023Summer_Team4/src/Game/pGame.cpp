@@ -101,8 +101,8 @@ void Game::update()
 		if (KeyJ.pressed() && KeyK.pressed() && KeyL.pressed())
 		{
 			Logger << U"コマンド入力";
-			Player::getInstance()->setMaxHp(100000000000);
-			Player::getInstance()->setHp(100000000000);
+			Player::getInstance()->setMaxHp(10000);
+			Player::getInstance()->setHp(10000);
 			Player::getInstance()->setSpeed(500);
 			Player::getInstance()->availableBullet[ItemType::SpecialMagicA] =  10;
 			Player::getInstance()->availableBullet[ItemType::SpecialMagicB] =  10;

@@ -185,7 +185,9 @@ void ObjectManager::cleanUp(Array<T*>& objs) {
 				myEffectManager->create_spliteEffect(objPos ,U"Effect1", 0.5, 100);
 				mySoundPlayer->playEffect(effectHit1);
 			}
-			else if ((*it)->getObjType() == eObjectType::eDebris) mySoundPlayer->playEffect(effectHitDebris);
+
+			if ((*it)->getObjType() == eObjectType::eDebris) mySoundPlayer->playEffect(effectHitDebris);
+
 			delete* it;
 			it = objs.erase(it);
 		}
