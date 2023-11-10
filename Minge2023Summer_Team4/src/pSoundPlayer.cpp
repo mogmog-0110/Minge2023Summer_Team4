@@ -5,7 +5,7 @@ SoundPlayer* SoundPlayer::instance = nullptr;
 SoundPlayer::SoundPlayer()
 {
 	SoundTable.emplace(enumSound::eTitle, Audio{ Audio::Stream, U"Music/mapselect.mp3" });
-	SoundTable.emplace(enumSound::eStageIntro, Audio{ U"Music/speedy_Intro.mp3" });
+	SoundTable.emplace(enumSound::eStageIntro, Audio{ U"Music/speedy_pre.mp3" });
 	SoundTable.emplace(enumSound::eStageLoop, Audio{ Audio::Stream, U"Music/speedy_loop.mp3" });
 	SoundTable.emplace(enumSound::eGameOver, Audio{ Audio::Stream, U"Music/tasogare.mp3" });
 }
@@ -41,7 +41,11 @@ void SoundPlayer::playSound(enumSound eS)
 }
 
 
-
+void SoundPlayer::playSound(enumSound eS, Duration fadeSecond)
+{
+	nowPlaying = eS;
+	SoundTable[nowPlaying].play(fadeSecond);
+}
 
 void SoundPlayer::loopCheck()
 {
@@ -52,8 +56,8 @@ void SoundPlayer::loopCheck()
 	}
 }
 
-void SoundPlayer::fadeOutLoopAudio(Duration fadeSecond)
+void SoundPlayer::fadeoutAudio(Duration fadeSecond)
 {
-	SoundTable[nowPlaying].fadeVolume(0.0, fadeSecond);
+	SoundTable[nowPlaying].stop(fadeSecond);
 
 }

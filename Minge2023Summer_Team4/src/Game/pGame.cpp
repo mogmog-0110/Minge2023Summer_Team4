@@ -10,6 +10,8 @@ Game::Game(const InitData& init)
 	Scene::SetBackground(Palette::Black);
 
 	myEffectManager = EffectManager::getInstance();
+	mySoundPlayer = SoundPlayer::getInstance();
+	mySoundPlayer->playSound(eStageIntro,10s);
 
 	// カメラの初期位置を設定
 	cameraPos = Vec2(0, 0);
@@ -82,7 +84,9 @@ void Game::update()
 		scrollUpdate();
 		objectManager.update();
 		updateBackground();
-      
+
+		//mySoundPlayer->loopCheck();
+
 		debug();
 		break;
 

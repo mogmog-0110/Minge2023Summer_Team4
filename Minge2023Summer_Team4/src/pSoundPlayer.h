@@ -38,8 +38,9 @@ public:
 	static void destroy();
 
 	void playSound(enumSound eS);
+	void playSound(enumSound eS, Duration fadeSecond);
 
-	void fadeOutLoopAudio(Duration);
+	void fadeoutAudio(Duration);
 
 
 	void loopCheck();
