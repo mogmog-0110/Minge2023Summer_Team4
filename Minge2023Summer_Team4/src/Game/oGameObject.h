@@ -74,6 +74,7 @@ public:
 	{
 		hitbox.setCenter(pos);
 		myEffectManager = EffectManager::getInstance();
+		mySoundPlayer = SoundPlayer::getInstance();
 	}
 
 	~GameObject();
