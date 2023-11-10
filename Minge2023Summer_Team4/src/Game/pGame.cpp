@@ -79,6 +79,7 @@ void Game::update()
 		if (Player::getInstance()->isDead())
 		{
 			currentState = GameState::Dead;
+			mySoundPlayer->fadeoutAudio(0.5s);
 		}
 
 		scrollUpdate();
