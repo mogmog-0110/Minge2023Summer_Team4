@@ -101,6 +101,11 @@ public:
 	BulletType fromItemType(ItemType);
 
 	void setDelayTimer();
+	double calcDistance(const Vec2&, const Vec2&);
+
+	Enemy* findClosestEnemy();
+	void drawArrow(const Vec2&, const Vec2&, Vec2 offset);
+	void updateAndDrawArrow(Vec2 offset);
 };
 
 
@@ -179,6 +184,7 @@ void ObjectManager::cleanUp(Array<T*>& objs) {
 				int expPoints = (*it)->getExp();
 				createItem(objPos, expPoints);
 				myEffectManager->create_spliteEffect(objPos ,U"Effect1", 0.5, 100);
+				defeatCount += 1;
 			}
 			delete* it;
 			it = objs.erase(it);

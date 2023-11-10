@@ -47,18 +47,13 @@ void Game::update()
 			else {
 				currentState = GameState::Playing;
 				waveLoaded = true;
-
-				if (currentWave % 2 == 0)
-				{
-					objectManager.createItemConfirm(myPlayer->getPos() + Vec2(0, -100) + RandomVec2().setLength(50), 1);
-					objectManager.createItemConfirm(myPlayer->getPos() + Vec2(0, -100) + RandomVec2().setLength(50));
-				}
-
 			}
 		}
 		break;
 
 	case GameState::Playing:
+
+		if (hellMode == 2) Print << U"ヘルモード";
 
 		accumulatedTime += Scene::DeltaTime();
 		if (KeyP.down()) {
@@ -79,8 +74,16 @@ void Game::update()
 			currentState = GameState::Dead;
 		}
 
+		if (defeatCount != 0 && defeatCount % (10 * dropCount) == 0 && dropCount <= 3)
+		{
+			dropCount += 1;
+			if(dropCount % 2 == 0) objectManager.createItemConfirm(myPlayer->getPos() + Vec2(0, -100) + RandomVec2().setLength(50), 1);
+			objectManager.createItemConfirm(myPlayer->getPos() + Vec2(0, -100) + RandomVec2().setLength(50));
+		}
+
 		scrollUpdate();
 		objectManager.update();
+		objectManager.updateAndDrawArrow(topLeft);
 		updateBackground();
       
 		debug();
@@ -94,16 +97,20 @@ void Game::update()
 		// コマンド
 		if (KeyJ.pressed() && KeyK.pressed() && KeyL.pressed())
 		{
-			Logger << U"コマンド入力";
-			Player::getInstance()->setMaxHp(100000000000);
-			Player::getInstance()->setHp(100000000000);
+			muteki = true;
 			Player::getInstance()->setSpeed(500);
-			Player::getInstance()->availableBullet[ItemType::SpecialMagicA] =  10;
-			Player::getInstance()->availableBullet[ItemType::SpecialMagicB] =  10;
-			Player::getInstance()->availableBullet[ItemType::SpecialMagicC] =  10;
-			Player::getInstance()->availableBullet[ItemType::SpecialMagicD] =  10;
-			Player::getInstance()->availableBullet[ItemType::NormalMagic] =  10;
-			Player::getInstance()->setDamage(1000);
+			Player::getInstance()->availableBullet[ItemType::SpecialMagicA] =  50;
+			Player::getInstance()->availableBullet[ItemType::SpecialMagicB] =  50;
+			Player::getInstance()->availableBullet[ItemType::SpecialMagicC] =  50;
+			Player::getInstance()->availableBullet[ItemType::SpecialMagicD] =  50;
+			Player::getInstance()->normalMagicLevel =  50;
+			Player::getInstance()->setDamage(1000000000);
+		}
+
+		// ヘルモード
+		if (KeyH.pressed() && KeyL.pressed())
+		{
+			hellMode = 2;
 		}
 
 		break;

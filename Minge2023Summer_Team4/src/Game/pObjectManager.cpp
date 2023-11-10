@@ -145,12 +145,16 @@ void ObjectManager::createEnemy()
 Enemy* ObjectManager::createEnemyFromData(WaveData waveData)
 {
 	String name = waveData.enemyName;
-	int hp = enemyDatas[name].hp * waveData.statusModifier;
-	int damage = enemyDatas[name].damage * waveData.statusModifier * 1 / 2;
+	int hp = enemyDatas[name].hp * waveData.statusModifier * hellMode;
+	int damage = enemyDatas[name].damage * waveData.statusModifier * 1 / 2 * hellMode;
 	String textureStr = enemyDatas[name].textureStr;
 	Figure hitbox = enemyDatas[name].hitbox;
 	double speed = enemyDatas[name].speed * (waveData.statusModifier * 1 / 3);
-	Vec2 spawnPos = { waveData.spawnPos.x + Random(300), waveData.spawnPos.y + Random(300) };
+	if (hellMode == 2)
+	{
+		speed = enemyDatas[name].speed * 2;
+	}
+	Vec2 spawnPos = { waveData.spawnPos.x + Random(50), waveData.spawnPos.y + Random(50) };
 
 	GameObject* newEnemy = ObjectAppearanceManager::createNewObject(eEnemy, hp, damage, textureStr, hitbox, spawnPos + myPlayer->getPos(), { speed, speed }, { 1, 1 });
 	return static_cast<Enemy*>(newEnemy);
@@ -159,7 +163,7 @@ Enemy* ObjectManager::createEnemyFromData(WaveData waveData)
 void ObjectManager::createDebris()
 {
 	
-	while (myDebrises.size() < 30)
+	while (myDebrises.size() < 20)
 	{
 		int n = Random(1, 3);
 		int hp;
@@ -355,9 +359,9 @@ void ObjectManager::createSpecialBullet(Vec2 pos, Vec2 vel, Vec2  acc)
 
 void ObjectManager::createItem(Vec2 pos, int expPoints)
 {
-	int randomNum = Random(80);
+	int randomNum = Random(400);
 
-	// 100分の1の抽選で特殊弾のドロップ
+	// 300分の1の抽選で特殊弾のドロップ
 	if (randomNum == 0)
 	{
 		randomNum = Random(1, 5);
@@ -655,6 +659,51 @@ void ObjectManager::setDelayTimer()
 		specialBulletTimer[BulletType::SpecialD].set(SecondsF(bp.delay));
 	}
 
+}
+
+double ObjectManager::calcDistance(const Vec2& a, const Vec2& b)
+{
+	return (a - b).length();
+}
+
+Enemy* ObjectManager::findClosestEnemy()
+{
+	Enemy* closest = nullptr;
+	double minDistance = std::numeric_limits<double>::max();
+	Vec2 playerPos = myPlayer->getPos();
+
+	for (auto* enemy : myEnemies) {
+		double dist = calcDistance(playerPos, enemy->getPos());
+		if (dist < minDistance) {
+			minDistance = dist;
+			closest = enemy;
+		}
+	}
+
+	return closest;
+}
+
+void ObjectManager::drawArrow(const Vec2& from, const Vec2& to, Vec2 offset)
+{
+	const Texture& arrowTexture = TextureAsset(U"Yajirusi");
+
+	// ベクトルの角度を計算（ラジアン）
+	Vec2 direction = to - from;
+	double angle = Math::Atan2(direction.y, direction.x);
+
+	// 矢印のテクスチャを回転させて描画
+	arrowTexture.rotated(angle + 90).drawAt(from - offset);
+}
+
+void ObjectManager::updateAndDrawArrow(Vec2 offset) {
+	Vec2 playerPos = myPlayer->getPos();
+	Enemy* closestEnemy = findClosestEnemy();
+
+	// 特定の距離以上離れているか
+	if (closestEnemy && calcDistance(playerPos, closestEnemy->getPos()) > 800) {
+		// 矢印を描画する
+		drawArrow(playerPos, closestEnemy->getPos(), offset);
+	}
 }
 
 // アイテム用のcleanUP

@@ -174,8 +174,12 @@ void Player::setupAnimations()
 }
 
 bool Player::isDead() {
-	if (hp <= 0) return true;
-	else return false;
+	if (muteki == false)
+	{
+		if (hp <= 0) return true;
+		else return false;
+	}
+	return false;
 }
 
 void Player::playDeathAnimation() {

@@ -91,7 +91,7 @@ double Enemy::getStrength() const
 
 void Enemy::setHasBullet()
 {
-	if (textureStr == U"Kuro" || textureStr == U"EvilEye" || textureStr == U"Worm")
+	if (textureStr == U"Kuro" || textureStr == U"EvilEye" || textureStr == U"Worm" || textureStr == U"BigSpider")
 	{
 		hasBullet = true;
 	}

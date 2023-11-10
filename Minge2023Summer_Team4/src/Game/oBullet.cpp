@@ -45,7 +45,6 @@ void Bullet::move()
 
 		break;
 	case BulletType::SpecialB:
-
 		break;
 	case BulletType::SpecialC:
 		break;

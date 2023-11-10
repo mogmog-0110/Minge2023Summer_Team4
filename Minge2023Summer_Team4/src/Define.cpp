@@ -14,3 +14,7 @@ Array<TextureRegion> splitImage(const Texture& texture, int cellWidth, int cellH
 }
 
 bool isCleared = false;
+int defeatCount = 0;
+int dropCount = 1;
+int hellMode = 1;
+bool muteki = false;
