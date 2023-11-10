@@ -135,6 +135,10 @@ struct BackgroundChunk {
 };
 
 extern bool isCleared;
+extern int defeatCount;
+extern int dropCount;
+extern int hellMode;
+extern bool muteki;
 
 // グローバル関数（邪法）
 

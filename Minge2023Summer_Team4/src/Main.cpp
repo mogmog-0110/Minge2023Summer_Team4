@@ -76,6 +76,7 @@ void Main()
 
 	TextureAsset::Register(U"Clear", Resource(U"Image/clear1.png"));
 	TextureAsset::Register(U"gameOver", Resource(U"Image/gameOver.png"));
+	TextureAsset::Register(U"Yajirusi", Resource(U"Image/Yajirusi.png"));
   
 	//font
 	FontAsset::Register(U"dotFont1", 20, Resource(U"Font/Nosutaru-dot.ttf"));
