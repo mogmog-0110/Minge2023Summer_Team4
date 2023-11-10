@@ -5,6 +5,7 @@
 #include "oMouseCursor.h"
 #include "pEffectManager.h"
 #include "pGameScenario.h"
+#include "../pSoundPlayer.h"
 
 class Player;
 
@@ -15,6 +16,8 @@ private:
 	Player* myPlayer;
 	EffectManager* myEffectManager;
 	GameScenario myGameScenario;
+	SoundPlayer* mySoundPlayer;
+
 
 	//プレイヤーから見た相対的な左上座標
 	Vec2 topLeft = { 0,0 };

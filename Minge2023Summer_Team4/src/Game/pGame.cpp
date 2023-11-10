@@ -10,6 +10,8 @@ Game::Game(const InitData& init)
 	Scene::SetBackground(Palette::Black);
 
 	myEffectManager = EffectManager::getInstance();
+	mySoundPlayer = SoundPlayer::getInstance();
+	mySoundPlayer->playSound(eStageIntro,10s);
 
 	// カメラの初期位置を設定
 	cameraPos = Vec2(0, 0);
@@ -77,12 +79,16 @@ void Game::update()
 		if (Player::getInstance()->isDead())
 		{
 			currentState = GameState::Dead;
+			mySoundPlayer->playEffect(effectDead);
+			mySoundPlayer->fadeoutAudio(0.5s);
 		}
 
 		scrollUpdate();
 		objectManager.update();
 		updateBackground();
-      
+
+		mySoundPlayer->update();
+
 		debug();
 		break;
 
@@ -95,8 +101,8 @@ void Game::update()
 		if (KeyJ.pressed() && KeyK.pressed() && KeyL.pressed())
 		{
 			Logger << U"コマンド入力";
-			Player::getInstance()->setMaxHp(100000000000);
-			Player::getInstance()->setHp(100000000000);
+			Player::getInstance()->setMaxHp(10000);
+			Player::getInstance()->setHp(10000);
 			Player::getInstance()->setSpeed(500);
 			Player::getInstance()->availableBullet[ItemType::SpecialMagicA] =  10;
 			Player::getInstance()->availableBullet[ItemType::SpecialMagicB] =  10;
