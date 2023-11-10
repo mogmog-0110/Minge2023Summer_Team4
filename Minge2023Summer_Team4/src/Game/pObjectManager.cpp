@@ -40,7 +40,7 @@ void ObjectManager::update()
 	{
 		createPlayerBullet();
 		bulletTimer.restart();
-		mySoundPlayer->playSound(effectShot);
+		mySoundPlayer->playEffect(effectShot);
 	}
 
 	// 特殊弾の発射

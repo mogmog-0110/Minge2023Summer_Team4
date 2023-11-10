@@ -9,9 +9,11 @@ SoundPlayer::SoundPlayer()
 	SoundTable.emplace(enumSound::eStageLoop, Audio{ Audio::Stream, U"Music/speedy_loop.mp3" });
 	SoundTable.emplace(enumSound::eGameOver, Audio{ Audio::Stream, U"Music/tasogare.mp3" });
 
-	SoundTable.emplace(enumSound::effectShot, Audio{ U"Effect/se_shot_001.wav" });
-	SoundTable.emplace(enumSound::effectSelect, Audio{ U"Effect/poka02.mp3" });
-	SoundTable.emplace(enumSound::effectDead, Audio{ U"Effect/se_powerdown_003.wav" });
+	EffectTable.emplace(enumEffect::effectShot, Audio{ U"Effect/se_shot_001.wav" });
+	EffectTable.emplace(enumEffect::effectSelect, Audio{ U"Effect/poka02.mp3" });
+	EffectTable.emplace(enumEffect::effectDead, Audio{ U"Effect/se_powerdown_003.wav" });
+	EffectTable.emplace(enumEffect::effectHit1, Audio{ U"Effect/se_hit_007.wav" });
+	EffectTable.emplace(enumEffect::effectHit2, Audio{ U"Effect/se_hit_008.wav" });
 
 }
 
@@ -39,12 +41,20 @@ void SoundPlayer::destroy()
 }
 
 
-void SoundPlayer::playSound(enumSound eS)
+void SoundPlayer::playEffect(enumEffect eE)
 {
-	nowPlaying = eS;
-	SoundTable[nowPlaying].play();
+	arrEffect.push_back(EffectTable[eE]);
+	arrEffect[arrEffect.size() - 1].play();
 }
 
+void SoundPlayer::update()
+{
+	Print << arrEffect.size();
+	Print << U"";
+
+	loopCheck();
+	arrEffect.remove_if([](const Audio& b) { return (b.isPlaying() == false); });
+}
 
 void SoundPlayer::playSound(enumSound eS, Duration fadeSecond)
 {
@@ -52,8 +62,12 @@ void SoundPlayer::playSound(enumSound eS, Duration fadeSecond)
 	SoundTable[nowPlaying].play(fadeSecond);
 }
 
+
+
+
 void SoundPlayer::loopCheck()
 {
+
 	if (nowPlaying == eStageIntro && SoundTable[nowPlaying].isPlaying() == false)
 	{
 		nowPlaying = eStageLoop;

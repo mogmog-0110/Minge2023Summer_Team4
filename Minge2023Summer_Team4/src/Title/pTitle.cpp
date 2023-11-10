@@ -20,6 +20,8 @@ void Title::update()
 		changeScene(SceneList::Game, 3s);
 	}
 
+	mySoundPlayer->update();
+
 	debug();
 }
 

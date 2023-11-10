@@ -181,6 +181,7 @@ void ObjectManager::cleanUp(Array<T*>& objs) {
 				int expPoints = (*it)->getExp();
 				createItem(objPos, expPoints);
 				myEffectManager->create_spliteEffect(objPos ,U"Effect1", 0.5, 100);
+				mySoundPlayer->playEffect(effectHit1);
 			}
 			delete* it;
 			it = objs.erase(it);

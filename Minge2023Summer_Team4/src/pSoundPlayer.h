@@ -8,9 +8,15 @@ enum enumSound
 	eStageLoop,
 	eGameOver,
 	eGameClear,
+};
+
+enum enumEffect
+{
 	effectShot,
 	effectSelect,
 	effectDead,
+	effectHit1,
+	effectHit2,
 };
 
 class SoundPlayer
@@ -28,7 +34,13 @@ private:
 
 	HashTable<enumSound, Audio> SoundTable;
 	enumSound nowPlaying;
-	
+
+	HashTable<enumEffect, Audio> EffectTable;
+	Array<Audio> arrEffect;
+
+	void loopCheck();
+
+
 public:
 
 	// 唯一のインスタンスを取得するための静的メソッド
@@ -40,13 +52,13 @@ public:
 	// デストラクタ
 	static void destroy();
 
-	void playSound(enumSound eS);
 	void playSound(enumSound eS, Duration fadeSecond);
+	void playEffect(enumEffect eE);
 
 	void fadeoutAudio(Duration);
 
+	void update();
 
-	void loopCheck();
 };
 
 
