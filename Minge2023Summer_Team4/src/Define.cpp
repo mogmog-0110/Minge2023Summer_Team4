@@ -18,3 +18,4 @@ int defeatCount = 0;
 int dropCount = 1;
 int hellMode = 1;
 bool muteki = false;
+Vec2 closestEnemyPos = {-1, -1};

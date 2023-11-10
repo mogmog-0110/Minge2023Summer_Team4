@@ -3,6 +3,7 @@
 #include "../Define.h"
 # include "oPlayer.h"
 # include "oEnemy.h"
+# include "pEnemyFinder.h"
 
 class Bullet :
     public GameObject
@@ -11,6 +12,8 @@ private:
 
 	BulletType bulletType ;
 	int level;
+
+	bool isHoming;
 
 	int bulletPhase = 0;
 	Vec2 tipPos;//レーザー用
@@ -54,5 +57,6 @@ public:
 	void setBulletType(BulletType);
 	void setLevel(int);
 	void setExproRange(int);
+	void setHoming(bool);
 };
 
