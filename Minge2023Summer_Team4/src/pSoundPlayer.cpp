@@ -14,6 +14,8 @@ SoundPlayer::SoundPlayer()
 	EffectTable.emplace(enumEffect::effectDead, Audio{ U"Effect/se_powerdown_003.wav" });
 	EffectTable.emplace(enumEffect::effectHit1, Audio{ U"Effect/se_hit_007.wav" });
 	EffectTable.emplace(enumEffect::effectHit2, Audio{ U"Effect/se_hit_008.wav" });
+	EffectTable.emplace(enumEffect::effectHitPlayer, Audio{ U"Effect/se_hit_003.wav" });
+	EffectTable.emplace(enumEffect::effectHitDebris, Audio{ U"Effect/se_hit_006.wav" });
 
 }
 
@@ -45,11 +47,13 @@ void SoundPlayer::playEffect(enumEffect eE)
 {
 	arrEffect.push_back(EffectTable[eE]);
 	arrEffect[arrEffect.size() - 1].play();
+	cnt++;
 }
 
 void SoundPlayer::update()
 {
 	Print << arrEffect.size();
+	Print << cnt;
 	Print << U"";
 
 	loopCheck();

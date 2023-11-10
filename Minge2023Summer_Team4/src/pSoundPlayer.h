@@ -17,6 +17,8 @@ enum enumEffect
 	effectDead,
 	effectHit1,
 	effectHit2,
+	effectHitPlayer,
+	effectHitDebris,
 };
 
 class SoundPlayer
@@ -37,6 +39,7 @@ private:
 
 	HashTable<enumEffect, Audio> EffectTable;
 	Array<Audio> arrEffect;
+	int cnt = 0;
 
 	void loopCheck();
 
