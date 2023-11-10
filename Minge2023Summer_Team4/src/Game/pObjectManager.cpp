@@ -8,6 +8,7 @@ ObjectManager::ObjectManager()
 	myGhost = new Ghost(1000000, 0, U"Ghost", Circle(10), Vec2(Scene::Center().x - 60, Scene::Center().y - 60), { 300, 300 }, { 1, 1 });
 	myPlayer = Player::getInstance();
 	myEffectManager = EffectManager::getInstance();
+	mySoundPlayer = SoundPlayer::getInstance();
 	//createEnemy();
 	currentState = BulletType::None;
 	currentIndex = -1;
@@ -39,6 +40,7 @@ void ObjectManager::update()
 	{
 		createPlayerBullet();
 		bulletTimer.restart();
+		mySoundPlayer->playSound(effectShot);
 	}
 
 	// 特殊弾の発射

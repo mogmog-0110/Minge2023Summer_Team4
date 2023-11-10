@@ -8,6 +8,9 @@ enum enumSound
 	eStageLoop,
 	eGameOver,
 	eGameClear,
+	effectShot,
+	effectSelect,
+	effectDead,
 };
 
 class SoundPlayer

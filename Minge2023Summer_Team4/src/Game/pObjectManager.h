@@ -9,6 +9,7 @@
 # include "oEnemy.h"
 # include "oItem.h"
 # include "pEffectManager.h"
+#include "../pSoundPlayer.h"
 # include "oGhost.h";
 
 class ObjectAppearanceManager;
@@ -29,6 +30,7 @@ private:
 
 
 
+	SoundPlayer* mySoundPlayer;
 	EffectManager* myEffectManager;
 	Ghost* myGhost;
 

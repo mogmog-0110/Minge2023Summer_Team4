@@ -8,6 +8,11 @@ SoundPlayer::SoundPlayer()
 	SoundTable.emplace(enumSound::eStageIntro, Audio{ U"Music/speedy_pre.mp3" });
 	SoundTable.emplace(enumSound::eStageLoop, Audio{ Audio::Stream, U"Music/speedy_loop.mp3" });
 	SoundTable.emplace(enumSound::eGameOver, Audio{ Audio::Stream, U"Music/tasogare.mp3" });
+
+	SoundTable.emplace(enumSound::effectShot, Audio{ U"Effect/se_shot_001.wav" });
+	SoundTable.emplace(enumSound::effectSelect, Audio{ U"Effect/poka02.mp3" });
+	SoundTable.emplace(enumSound::effectDead, Audio{ U"Effect/se_powerdown_003.wav" });
+
 }
 
 SoundPlayer::~SoundPlayer()

@@ -79,6 +79,7 @@ void Game::update()
 		if (Player::getInstance()->isDead())
 		{
 			currentState = GameState::Dead;
+			mySoundPlayer->playSound(effectDead);
 			mySoundPlayer->fadeoutAudio(0.5s);
 		}
 
@@ -86,7 +87,7 @@ void Game::update()
 		objectManager.update();
 		updateBackground();
 
-		//mySoundPlayer->loopCheck();
+		mySoundPlayer->loopCheck();
 
 		debug();
 		break;
