@@ -20,7 +20,6 @@ Game::Game(const InitData& init)
 	// 敵データの読み込み
 	objectManager.enemyDatas = objectManager.loadEnemyData(U"../src/Game/csvFile/enemy.csv");
 	setUpBackground();
-	currentWave = 5;
 }
 
 
@@ -49,7 +48,7 @@ void Game::update()
 			if (!success) {
 				isCleared = true;
 				currentState = GameState::Finished;
-				mySoundPlayer->fadeoutAudio(1.5s);
+				mySoundPlayer->fadeoutAudio(5s);
 
 			}
 			else {
@@ -99,7 +98,7 @@ void Game::update()
 		updateBackground();
 
 
-		debug();
+		//debug();
 		break;
 
 	case GameState::Pausing:
@@ -141,8 +140,6 @@ void Game::update()
 		{
 			currentState = GameState::Loading;
 		}
-
-
 		break;
 
 	case GameState::Dead:
@@ -160,7 +157,7 @@ void Game::update()
 		break;
 
 	case GameState::Finished:
-		changeScene(SceneList::Result);
+		changeScene(SceneList::Result,5s);
 	}
 }
 
@@ -228,8 +225,6 @@ void Game::debug()
 		Print << U"未取得";
 		break;
 	}
-
-	if (KeyO.down()) currentState = GameState::Scenario;
 
 	//myEffectManager->singleton_debug_print();
 
