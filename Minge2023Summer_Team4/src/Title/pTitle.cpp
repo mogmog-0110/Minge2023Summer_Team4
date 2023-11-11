@@ -17,7 +17,7 @@ void Title::update()
 	{
 		//タイトルシーンに遷移する
 		mySoundPlayer->fadeoutAudio(1.5s);
-		changeScene(SceneList::Game, 3s);
+		changeScene(SceneList::Game, 1s);
 	}
 
 	mySoundPlayer->update();

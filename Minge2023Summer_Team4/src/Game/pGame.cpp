@@ -11,7 +11,6 @@ Game::Game(const InitData& init)
 
 	myEffectManager = EffectManager::getInstance();
 	mySoundPlayer = SoundPlayer::getInstance();
-	mySoundPlayer->playSound(eStageIntro, 10s);
 
 	// カメラの初期位置を設定
 	cameraPos = Vec2(0, 0);
@@ -21,7 +20,6 @@ Game::Game(const InitData& init)
 	objectManager.enemyDatas = objectManager.loadEnemyData(U"../src/Game/csvFile/enemy.csv");
 	setUpBackground();
 
-	currentWave = 5;
 }
 
 
@@ -141,6 +139,8 @@ void Game::update()
 		if (myGameScenario.update())
 		{
 			currentState = GameState::Loading;
+			mySoundPlayer->playSound(eStageIntro, 5s);
+
 		}
 		break;
 
@@ -186,10 +186,13 @@ void Game::draw() const
 	}
 
 	if (currentState == GameState::Dead && KeyAlt.pressed()) {
-		FontAsset(U"dotFont3")(U"Click to Move").drawAt(50, Vec2{ 950,700 }, Palette::White);
+		FontAsset(U"dotFont3")(U"Click...").drawAt(50, Vec2{ 950,700 }, Palette::White);
 	}
 
-	if (currentState == GameState::Scenario) myGameScenario.draw();
+	if (currentState == GameState::Scenario) {
+		myGameScenario.draw();
+		FontAsset(U"dotFont3")(U"Click to Start").drawAt(50, Vec2{ 800,700 }, Palette::White);
+	}
 }
 
 void Game::debug()
