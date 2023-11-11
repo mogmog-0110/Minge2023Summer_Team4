@@ -253,8 +253,6 @@ void Player::gainExp(int points)
 	expPoints += points;
 	setExp(expPoints);
 	checkLevelUp();
-
-	// 経験値を増加させた後の処理（レベルアップ処理等）をここに記述
 }
 
 // レベルアップの確認を行うメソッド

@@ -68,8 +68,11 @@ void Main()
 	TextureAsset::Register(U"Rat", Resource(U"Image/Rat.png"));
 	TextureAsset::Register(U"BigSpider", Resource(U"Image/BigSpider.png"));
 	TextureAsset::Register(U"Spider", Resource(U"Image/Spider.png"));
-	TextureAsset::Register(U"BloatedBedBug", Resource(U"Image/BloatedBedBug.png"));
-	TextureAsset::Register(U"Cockroach", Resource(U"Image/Cockroach.png"));
+	TextureAsset::Register(U"BloatedBedBugA", Resource(U"Image/BloatedBedBug.png"));
+	TextureAsset::Register(U"BloatedBedBugB", Resource(U"Image/BloatedBedBug.png"));
+	TextureAsset::Register(U"CockroachA", Resource(U"Image/Cockroach.png"));
+	TextureAsset::Register(U"CockroachB", Resource(U"Image/Cockroach.png"));
+	TextureAsset::Register(U"CockroachC", Resource(U"Image/Cockroach.png"));
 	TextureAsset::Register(U"EvilEye", Resource(U"Image/EvilEye.png"));
 	TextureAsset::Register(U"Worm", Resource(U"Image/Worm.png"));
 	TextureAsset::Register(U"Kuro", Resource(U"Image/Kuro.png")); // BOSS
