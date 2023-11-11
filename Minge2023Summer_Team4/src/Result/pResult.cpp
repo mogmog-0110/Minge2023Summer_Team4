@@ -39,6 +39,7 @@ void Result::draw() const
 		dotTitle1(U"GAME").drawAt(500, 400, 100, ColorF(Palette::White));
 		dotTitle1(U"OVER").drawAt(500, 650, 300, ColorF(Palette::White));
 
+		dotFont1(U"Tips").drawAt(25, 500, 575, ColorF(Palette::White));
 		dotFont1(selectedTip).drawAt(25, 500, 650, ColorF(Palette::White));
 	}
 }
