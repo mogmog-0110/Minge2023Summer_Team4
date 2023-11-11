@@ -20,7 +20,7 @@ Game::Game(const InitData& init)
 	// 敵データの読み込み
 	objectManager.enemyDatas = objectManager.loadEnemyData(U"../src/Game/csvFile/enemy.csv");
 	setUpBackground();
-	currentWave = 3;
+	currentWave = 5;
 }
 
 
@@ -49,6 +49,8 @@ void Game::update()
 			if (!success) {
 				isCleared = true;
 				currentState = GameState::Finished;
+				mySoundPlayer->fadeoutAudio(1.5s);
+
 			}
 			else {
 				currentState = GameState::Playing;
@@ -108,7 +110,7 @@ void Game::update()
 		// コマンド
 		if (KeyJ.pressed() && KeyK.pressed() && KeyL.pressed())
 		{
-			muteki = true;
+			//muteki = true;
 			//Player::getInstance()->setSpeed(350);
 			Player::getInstance()->availableBullet[ItemType::SpecialMagicA] = 2;
 			Player::getInstance()->availableBullet[ItemType::SpecialMagicB] = 2;

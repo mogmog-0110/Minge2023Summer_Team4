@@ -406,28 +406,28 @@ BulletProperty Player::createNormalProperty()
 	switch (normalMagicLevel)
 	{
 		case 1:
-			bp.way = 1; bp.damage = 20; bp.speed = 300; bp.size = 10; bp.delay = 1.0; bp.homing = false;
+			bp.way = 1; bp.damage = 20; bp.speed = 300; bp.size = 10; bp.delay = 2.0; bp.homing = false;
 			break;
 		case 2:
-			bp.way = 1; bp.damage = 25; bp.speed = 500; bp.size = 12; bp.delay = 0.8; bp.homing = false;
+			bp.way = 1; bp.damage = 25; bp.speed = 500; bp.size = 12; bp.delay = 1.7; bp.homing = false;
 			break;
 		case 3:
-			bp.way = 3; bp.damage = 30; bp.speed = 500; bp.size = 12; bp.delay = 0.8; bp.homing = false;
+			bp.way = 3; bp.damage = 30; bp.speed = 500; bp.size = 12; bp.delay = 1.4; bp.homing = false;
 			break;
 		case 4:
-			bp.way = 5; bp.damage = 40; bp.speed = 600; bp.size = 14; bp.delay = 0.6; bp.homing = false;
+			bp.way = 5; bp.damage = 40; bp.speed = 600; bp.size = 14; bp.delay = 1.1; bp.homing = false;
 			break;
 		case 5:
-			bp.way = 7; bp.damage = 50; bp.speed = 700; bp.size = 14; bp.delay = 0.5; bp.homing = false;
+			bp.way = 7; bp.damage = 50; bp.speed = 700; bp.size = 14; bp.delay = 0.8; bp.homing = false;
 			break;
 		case 6:
-			bp.way = 7; bp.damage = 60; bp.speed = 800; bp.size = 16; bp.delay = 0.3; bp.homing = false;
+			bp.way = 7; bp.damage = 60; bp.speed = 800; bp.size = 16; bp.delay = 0.5; bp.homing = false;
 			break;
 		case 7:
-			bp.way = 9; bp.damage = 70; bp.speed = 800; bp.size = 16; bp.delay = 0.3; bp.homing = false;
+			bp.way = 9; bp.damage = 70; bp.speed = 800; bp.size = 16; bp.delay = 0.2; bp.homing = false;
 			break;
 		case 8:
-			bp.way = 9; bp.damage = 80; bp.speed = 850; bp.size = 16; bp.delay = 0.3; bp.homing = false;
+			bp.way = 9; bp.damage = 80; bp.speed = 850; bp.size = 16; bp.delay = 0.1; bp.homing = false;
 			break;
 		default:
 			bp.way = 5; bp.damage = 80 + normalMagicLevel; bp.speed = 700; bp.size = 16; bp.delay = 0.1; bp.homing = true;

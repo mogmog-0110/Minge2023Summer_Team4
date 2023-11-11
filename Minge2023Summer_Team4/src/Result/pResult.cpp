@@ -6,7 +6,9 @@ Result::Result(const InitData& init)
 	// 背景の色を設定 | Set background color
 	Scene::SetBackground(Palette::Black);
 	mySoundPlayer = SoundPlayer::getInstance();
-	mySoundPlayer->playSound(eGameOver, 0.5s);
+	if (isCleared) mySoundPlayer->playSound(eGameClear, 0.5s);
+	else mySoundPlayer->playSound(eGameOver, 0.5s);
+
 
 	selectedTip = tipString.choice();
 }

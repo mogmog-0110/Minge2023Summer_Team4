@@ -6,8 +6,8 @@ BloatedBedBugB,200,50,BloatedBedBugB,Circle(16),300
 CockroachA,450,130,CockroachA,Circle(16),100
 CockroachB,150,80,CockroachB,Circle(16),600
 CockroachC,10000,200,CockroachC,Circle(48),150
-EvilEye,700,300,EvilEye,Circle(16),180
+EvilEye,1200,300,EvilEye,Circle(16),180
 BigRat,3000,150,BigRat,Circle(24),280
 BigSpider,10000,250,BigSpider,Circle(32),450
 Worm,15000,400,Worm,Circle(32),350
-Kuro,30000,600,Kuro,Circle(48),100
+Kuro,100000,600,Kuro,Circle(48),100

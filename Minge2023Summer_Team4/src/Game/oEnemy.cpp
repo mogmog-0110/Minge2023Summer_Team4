@@ -172,21 +172,21 @@ BulletProperty Enemy::createBulletProperty()
 	case 2:
 		bp.way = 1; bp.speed = 100; bp.delay = 2.0; break;
 	case 3:
-		bp.way = 1; bp.speed = 100; bp.delay = 1.0; break;
+		bp.way = 1; bp.speed = 200; bp.delay = 1.0; break;
 	case 4:
-		bp.way = 3; bp.speed = 100; bp.delay = 3.0; break;
+		bp.way = 3; bp.speed = 250; bp.delay = 3.0; break;
 	case 5:
-		bp.way = 3; bp.speed = 200; bp.delay = 1.0; break;
+		bp.way = 3; bp.speed = 300; bp.delay = 1.0; break;
 	case 6:
-		bp.way = 5; bp.speed = 200; bp.delay = 2.0; break;
+		bp.way = 5; bp.speed = 350; bp.delay = 2.0; break;
 	case 7:
-		bp.way = 7; bp.speed = 200; bp.delay = 3.0; break;
+		bp.way = 7; bp.speed = 400; bp.delay = 3.0; break;
 	case 8:
-		bp.way = 7; bp.speed = 200; bp.delay = 2.0; break;
+		bp.way = 7; bp.speed = 400; bp.delay = 2.0; break;
 	case 9:
-		bp.way = 9; bp.speed = 300; bp.delay = 1.0; break;
+		bp.way = 9; bp.speed = 400; bp.delay = 1.0; break;
 	case 10:
-		bp.way = 9; bp.speed = 300; bp.delay = 0.6; break;
+		bp.way = 9; bp.speed = 400; bp.delay = 0.6; break;
 	case 11:
 		bp.way = 12; bp.speed = 500; bp.delay = 0.5; break;
 	case 12:
