@@ -308,7 +308,7 @@ void ObjectManager::createSpecialBullet(Vec2 pos, Vec2 vel, Vec2  acc)
 		bp = myPlayer->createLaserProperty();
 
 		// 中心のレーザー
-		GameObject* tempBullet = ObjectAppearanceManager::createNewObject(ePlayerBullet, 1, bp.damage, U"LaserBullet", Circle{ 20 }, pos, vel.setLength(1000), acc);
+		GameObject* tempBullet = ObjectAppearanceManager::createNewObject(ePlayerBullet, 1, bp.damage, U"LaserBullet", Circle{ 20 }, pos, vel.setLength(bp.speed), acc);
 		if (tempBullet) {
 			Bullet* newBullet = static_cast<Bullet*>(tempBullet);
 			newBullet->setBulletType(BulletType::SpecialA);
@@ -343,7 +343,7 @@ void ObjectManager::createSpecialBullet(Vec2 pos, Vec2 vel, Vec2  acc)
 	case BulletType::SpecialC:
 	{
 		bp = myPlayer->createPrasmaProperty();
-		GameObject* tempBullet = ObjectAppearanceManager::createNewObject(ePlayerBullet, bp.hp, bp.damage + myPlayer->getDamage(), U"PrasmaBullet", Circle{ bp.size }, pos, vel, acc);
+		GameObject* tempBullet = ObjectAppearanceManager::createNewObject(ePlayerBullet, bp.hp, bp.damage + myPlayer->getDamage(), U"PrasmaBullet", Circle{ bp.size }, pos, vel.setLength(bp.speed), acc);
 		if (tempBullet) {
 			Bullet* newBullet = static_cast<Bullet*>(tempBullet);
 			newBullet->setBulletType(BulletType::SpecialC);
@@ -360,6 +360,7 @@ void ObjectManager::createSpecialBullet(Vec2 pos, Vec2 vel, Vec2  acc)
 			Bullet* newBullet = static_cast<Bullet*>(tempBullet);
 			newBullet->setBulletType(BulletType::SpecialD);
 			newBullet->setExproRange(bp.exproRange);
+			newBullet->setBoomDamage(bp.damage + myPlayer->getDamage());
 			myPlayerBullets << newBullet;
 		}
 		mySoundPlayer->playEffect(effectShotMinePop);

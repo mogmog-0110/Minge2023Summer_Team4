@@ -19,9 +19,8 @@ private:
 
 	// Mine用メンバ変数
 	int exproRange;
-
-	// Wide用メンバ変数
-
+	int boomDamage;
+	
 protected:
 public:
 
@@ -56,6 +55,7 @@ public:
 	void setBulletType(BulletType);
 	void setLevel(int);
 	void setExproRange(int);
+	void setBoomDamage(int);
 	void setHoming(bool);
 };
 

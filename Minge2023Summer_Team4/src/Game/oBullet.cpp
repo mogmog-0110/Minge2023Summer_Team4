@@ -184,7 +184,7 @@ void Bullet::onCollisionResponse(int damage)
 		if (bulletPhase == 0)
 		{
 			hitbox = Circle(exproRange);
-			this->damage = damage;
+			this->damage = boomDamage;
 			hitbox.setCenter(pos);
 			bulletPhase++;
 			myEffectManager->create_spliteEffect(pos, U"Effect3", 0.3, exproRange+100);
@@ -227,6 +227,11 @@ void Bullet::setLevel(int)
 void Bullet::setExproRange(int range)
 {
 	this->exproRange = range;
+}
+
+void Bullet::setBoomDamage(int damage)
+{
+	boomDamage = damage;
 }
 
 void Bullet::setHoming(bool isHoming)

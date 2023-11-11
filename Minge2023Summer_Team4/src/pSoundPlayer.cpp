@@ -69,9 +69,12 @@ void SoundPlayer::update()
 
 void SoundPlayer::playSound(enumSound eS, Duration fadeSecond)
 {
-	isPlaying = true;
-	nowPlaying = eS;
-	SoundTable[nowPlaying].play(fadeSecond);
+	if (isPlaying == false)
+	{
+		isPlaying = true;
+		nowPlaying = eS;
+		SoundTable[nowPlaying].play(fadeSecond);
+	}
 }
 
 
