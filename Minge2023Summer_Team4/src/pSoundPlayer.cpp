@@ -17,7 +17,7 @@ SoundPlayer::SoundPlayer()
 	EffectTable.emplace(enumEffect::effectShotPrazma, Audio{ U"Effect/thunder_attack.wav" });
 	EffectTable.emplace(enumEffect::effectShotMinePop, Audio{ U"Effect/shoot01.mp3" });
 	EffectTable.emplace(enumEffect::effectShotMineBoom, Audio{ U"Effect/explosion01.mp3" });
-	EffectTable.emplace(enumEffect::effectSelect, Audio{ U"Effect/poka02.mp3" });
+	EffectTable.emplace(enumEffect::effectPickup, Audio{ U"Effect/poka02.mp3" });
 	EffectTable.emplace(enumEffect::effectDead, Audio{ U"Effect/se_powerdown_003.wav" });
 	EffectTable.emplace(enumEffect::effectHit1, Audio{ U"Effect/se_hit_007.wav" });
 	EffectTable.emplace(enumEffect::effectHit2, Audio{ U"Effect/se_hit_008.wav" });

@@ -54,6 +54,7 @@ void Game::update()
 			else {
 				currentState = GameState::Scenario;
 				waveLoaded = true;
+				mySoundPlayer->playSound(eStageIntro, 5s);
 			}
 		}
 		break;

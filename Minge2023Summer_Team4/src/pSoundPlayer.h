@@ -20,7 +20,7 @@ enum enumEffect
 	effectShotPrazma,
 	effectShotMinePop,
 	effectShotMineBoom,
-	effectSelect,
+	effectPickup,
 	effectDead,
 	effectHit1,
 	effectHit2,

@@ -3,7 +3,6 @@
 #include "../Define.h"
 # include "oPlayer.h"
 # include "oEnemy.h"
-# include "pEnemyFinder.h"
 
 class Bullet :
     public GameObject
