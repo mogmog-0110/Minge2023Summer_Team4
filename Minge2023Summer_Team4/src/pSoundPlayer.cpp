@@ -59,9 +59,9 @@ void SoundPlayer::playEffect(enumEffect eE)
 
 void SoundPlayer::update()
 {
-	Print << arrEffect.size();
-	Print << cnt;
-	Print << U"";
+	//Print << arrEffect.size();
+	//Print << cnt;
+	//Print << U"";
 
 	loopCheck();
 	arrEffect.remove_if([](const Audio& b) { return (b.isPlaying() == false); });
@@ -69,6 +69,7 @@ void SoundPlayer::update()
 
 void SoundPlayer::playSound(enumSound eS, Duration fadeSecond)
 {
+	isPlaying = true;
 	nowPlaying = eS;
 	SoundTable[nowPlaying].play(fadeSecond);
 }
@@ -79,7 +80,7 @@ void SoundPlayer::playSound(enumSound eS, Duration fadeSecond)
 void SoundPlayer::loopCheck()
 {
 
-	if (nowPlaying == eStageIntro && SoundTable[nowPlaying].isPlaying() == false)
+	if (nowPlaying == eStageIntro && SoundTable[nowPlaying].isPlaying() == false && isPlaying == true)
 	{
 		nowPlaying = eStageLoop;
 		SoundTable[nowPlaying].play();
@@ -89,5 +90,5 @@ void SoundPlayer::loopCheck()
 void SoundPlayer::fadeoutAudio(Duration fadeSecond)
 {
 	SoundTable[nowPlaying].stop(fadeSecond);
-
+	isPlaying = false;
 }

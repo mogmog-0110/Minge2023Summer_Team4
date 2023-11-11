@@ -47,9 +47,9 @@ private:
 	HashTable<enumEffect, Audio> EffectTable;
 	Array<Audio> arrEffect;
 	int cnt = 0;
+	bool isPlaying;
 
 	void loopCheck();
-
 
 public:
 
