@@ -105,47 +105,47 @@ void Enemy::determineLevel()
 {
 	int strength = getStrength() / 2; 
 
-	if (strength >= 200000)
+	if (strength >= 40000)
 	{
 		enemyLevel = 12;
 	}
-	else if (strength >= 100000)
+	else if (strength >= 30000)
 	{
 		enemyLevel = 11;
 	}
-	else if (strength >= 50000)
+	else if (strength >= 20000)
 	{
 		enemyLevel = 10;
 	}
-	else if (strength >= 10000)
+	else if (strength >= 15000)
 	{
 		enemyLevel = 9;
 	}
-	else if (strength >= 8000)
+	else if (strength >= 10000)
 	{
 		enemyLevel = 8;
 	}
-	else if (strength >= 5000)
+	else if (strength >= 7500)
 	{
 		enemyLevel = 7;
 	}
-	else if (strength >= 2000)
+	else if (strength >= 5000)
 	{
 		enemyLevel = 6;
 	}
-	else if (strength >= 1300)
+	else if (strength >= 3000)
 	{
 		enemyLevel = 5;
 	}
-	else if (strength >= 1000)
+	else if (strength >= 1500)
 	{
 		enemyLevel = 4;
 	}
-	else if (strength >= 500)
+	else if (strength >= 1000)
 	{
 		enemyLevel = 3;
 	}
-	else if (strength >= 300)
+	else if (strength >= 500)
 	{
 		enemyLevel = 2;
 	}

@@ -161,7 +161,7 @@ Enemy* ObjectManager::createEnemyFromData(WaveData waveData)
 	double speed = enemyDatas[name].speed * (waveData.statusModifier * 1 / 3);
 	if (hellMode == 2)
 	{
-		speed = enemyDatas[name].speed * 2;
+		speed = enemyDatas[name].speed * 1.3;
 	}
 	Vec2 spawnPos = { waveData.spawnPos.x + Random(50), waveData.spawnPos.y + Random(50) };
 
