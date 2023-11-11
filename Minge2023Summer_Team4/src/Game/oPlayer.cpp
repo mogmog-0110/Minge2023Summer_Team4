@@ -278,7 +278,7 @@ void Player::levelUp()
 		
 		break;
 	case 1:
-		damage += 5; // 
+		damage += 20; // 
 		
 		break;
 	case 2:
@@ -288,7 +288,7 @@ void Player::levelUp()
 		}
 		break;
 	case 3:
-		attractionRadius += 5; // アイテム収集範囲を10増加
+		attractionRadius += 10; // アイテム収集範囲を10増加
 		
 		break;
 	}
@@ -438,19 +438,20 @@ BulletProperty Player::createMineProperty()
 	case 0:
 		break;
 	case 1:
-		bp.damage = 60; bp.size = 10; bp.delay = 3.0; bp.exproRange = 200;
+
+		bp.damage = 100; bp.size = 10; bp.delay = 3.0; bp.exproRange = 200;
 		break;
 	case 2:
-		bp.damage = 80; bp.size = 12; bp.delay = 2.5; bp.exproRange = 200;
+		bp.damage = 200; bp.size = 12; bp.delay = 2.5; bp.exproRange = 200;
 		break;
 	case 3:
-		bp.damage = 100; bp.size = 12; bp.delay = 2.0; bp.exproRange = 200;
+		bp.damage = 300; bp.size = 12; bp.delay = 2.0; bp.exproRange = 250;
 		break;
 	case 4:
-		bp.damage = 120; bp.size = 14; bp.delay = 1.5; bp.exproRange = 200;
+		bp.damage = 400; bp.size = 14; bp.delay = 1.5; bp.exproRange = 250;
 		break;
 	case 5:
-		bp.damage = 140; bp.size = 14; bp.delay = 1.0; bp.exproRange = 200;
+		bp.damage = 500; bp.size = 14; bp.delay = 1.0; bp.exproRange = 300;
 		break;
 	case 6:
 		bp.damage = 180; bp.size = 16; bp.delay = 0.3; bp.exproRange = 200;
@@ -529,7 +530,7 @@ BulletProperty Player::createPrasmaProperty()
 BulletProperty Player::createLaserProperty()
 {
 	BulletProperty bp;
-	switch (normalMagicLevel)
+	switch (availableBullet[ItemType::SpecialMagicA])
 	{
 	case 1:
 		bp.way = 1; bp.damage = 40; bp.size = 10; bp.delay = 1.2; bp.speed = 1200;
