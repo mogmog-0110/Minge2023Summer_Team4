@@ -13,6 +13,13 @@ enum enumSound
 enum enumEffect
 {
 	effectShot,
+	effectShotLaser,
+	effectShotLaser2,
+	effectShotWide,
+	effectShotWide2,
+	effectShotPrazma,
+	effectShotMinePop,
+	effectShotMineBoom,
 	effectSelect,
 	effectDead,
 	effectHit1,

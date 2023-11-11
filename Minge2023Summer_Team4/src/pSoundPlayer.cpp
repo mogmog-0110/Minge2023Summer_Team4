@@ -4,12 +4,19 @@ SoundPlayer* SoundPlayer::instance = nullptr;
 
 SoundPlayer::SoundPlayer()
 {
-	SoundTable.emplace(enumSound::eTitle, Audio{ Audio::Stream, U"Music/mapselect.mp3" });
+	SoundTable.emplace(enumSound::eTitle, Audio{ Audio::Stream, U"Music/mapselect.mp3" }, Loop::Yes);
 	SoundTable.emplace(enumSound::eStageIntro, Audio{ U"Music/speedy_pre.mp3" });
-	SoundTable.emplace(enumSound::eStageLoop, Audio{ Audio::Stream, U"Music/speedy_loop.mp3" });
-	SoundTable.emplace(enumSound::eGameOver, Audio{ Audio::Stream, U"Music/tasogare.mp3" });
+	SoundTable.emplace(enumSound::eStageLoop, Audio{ Audio::Stream, U"Music/speedy_loop.mp3" }, Loop::Yes);
+	SoundTable.emplace(enumSound::eGameOver, Audio{ Audio::Stream, U"Music/tasogare.mp3" }, Loop::Yes);
 
 	EffectTable.emplace(enumEffect::effectShot, Audio{ U"Effect/se_shot_001.wav" });
+	EffectTable.emplace(enumEffect::effectShotLaser, Audio{ U"Effect/se_shot_004.wav" });
+	EffectTable.emplace(enumEffect::effectShotLaser2, Audio{ U"Effect/laser03.mp3" });
+	EffectTable.emplace(enumEffect::effectShotWide, Audio{ U"Effect/maou_se_8bit18.wav" });
+	EffectTable.emplace(enumEffect::effectShotWide2, Audio{ U"Effect/garagara.wav" });
+	EffectTable.emplace(enumEffect::effectShotPrazma, Audio{ U"Effect/thunder_attack.wav" });
+	EffectTable.emplace(enumEffect::effectShotMinePop, Audio{ U"Effect/shoot01.mp3" });
+	EffectTable.emplace(enumEffect::effectShotMineBoom, Audio{ U"Effect/explosion01.mp3" });
 	EffectTable.emplace(enumEffect::effectSelect, Audio{ U"Effect/poka02.mp3" });
 	EffectTable.emplace(enumEffect::effectDead, Audio{ U"Effect/se_powerdown_003.wav" });
 	EffectTable.emplace(enumEffect::effectHit1, Audio{ U"Effect/se_hit_007.wav" });

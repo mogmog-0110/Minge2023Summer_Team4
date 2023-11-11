@@ -165,6 +165,7 @@ void ObjectManager::cleanUp(Array<T*>& objs, Vec2 playerPos) {
 				Vec2 objPos = (*it)->getPos();
 				int expPoints = (*it)->getExp();
 				createItem(objPos, expPoints);
+				if ((*it)->getObjType() == eObjectType::eDebris) mySoundPlayer->playEffect(effectHitDebris);
 			}
 			delete* it;
 			it = objs.erase(it);
@@ -191,8 +192,6 @@ void ObjectManager::cleanUp(Array<T*>& objs) {
 				defeatCount += 1;
 				mySoundPlayer->playEffect(effectHit1);
 			}
-
-			if ((*it)->getObjType() == eObjectType::eDebris) mySoundPlayer->playEffect(effectHitDebris);
 
 			delete* it;
 			it = objs.erase(it);
