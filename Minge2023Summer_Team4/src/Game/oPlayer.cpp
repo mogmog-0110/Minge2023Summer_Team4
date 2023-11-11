@@ -423,7 +423,7 @@ BulletProperty Player::createNormalProperty()
 			bp.way = 7; bp.damage = 60; bp.speed = 800; bp.size = 16; bp.delay = 0.3; bp.homing = false;
 			break;
 		default:
-			bp.way = 5; bp.damage = 60 + normalMagicLevel; bp.speed = 1000; bp.size = 16; bp.delay = 0.1; bp.homing = true;
+			bp.way = 3; bp.damage = 60 + normalMagicLevel; bp.speed = 700; bp.size = 16; bp.delay = 0.1; bp.homing = true;
 	}
 	return bp;
 
