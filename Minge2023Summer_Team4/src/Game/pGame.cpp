@@ -36,6 +36,9 @@ Game::~Game()
 void Game::update()
 {
 	ClearPrint();
+	mySoundPlayer->update();
+
+
 	switch (currentState)
 	{
 	case GameState::Loading:
@@ -91,7 +94,6 @@ void Game::update()
 		objectManager.updateAndDrawArrow(topLeft);
 		updateBackground();
 
-		mySoundPlayer->update();
 
 		debug();
 		break;
@@ -166,7 +168,12 @@ void Game::draw() const
 	drawMagicBook();
 
 	if (currentState == GameState::Scenario) myGameScenario.draw();
-
+	if (currentState == GameState::Dead) {
+		FontAsset(U"dotFont3")(U"Click→").drawAt(50, Vec2{ 800,700 }, Palette::White);
+	}
+	if (currentState == GameState::Dead && KeyAlt.pressed()) {
+		FontAsset(U"dotFont3")(U"Click to Move").drawAt(50, Vec2{ 950,700 }, Palette::White);
+	}
 	// 文字
 	dotFont1(U"HP").drawAt(896, 288, Color(255, 255, 255, 255));
 	dotFont1(U"LEVEL ", Player::getInstance()->getLevel()).drawAt({ 896, 352 }, Color(255, 255, 255, 255));

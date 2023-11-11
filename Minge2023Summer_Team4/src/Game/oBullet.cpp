@@ -188,6 +188,7 @@ void Bullet::onCollisionResponse(int damage)
 			hitbox.setCenter(pos);
 			bulletPhase++;
 			myEffectManager->create_spliteEffect(pos, U"Effect3", 0.3, exproRange+100);
+			mySoundPlayer->playEffect(effectShotMineBoom);
 		}
 	}
 	else GameObject::onCollisionResponse(damage);

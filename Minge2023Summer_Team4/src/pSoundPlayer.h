@@ -13,6 +13,13 @@ enum enumSound
 enum enumEffect
 {
 	effectShot,
+	effectShotLaser,
+	effectShotLaser2,
+	effectShotWide,
+	effectShotWide2,
+	effectShotPrazma,
+	effectShotMinePop,
+	effectShotMineBoom,
 	effectSelect,
 	effectDead,
 	effectHit1,
@@ -40,9 +47,9 @@ private:
 	HashTable<enumEffect, Audio> EffectTable;
 	Array<Audio> arrEffect;
 	int cnt = 0;
+	bool isPlaying;
 
 	void loopCheck();
-
 
 public:
 

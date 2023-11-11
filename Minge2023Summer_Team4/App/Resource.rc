@@ -184,6 +184,7 @@ Resource(Image/clear1.png)
 
 //Font
 Resource(Font/Nosutaru-dot.ttf)
+Resource(Font/Square.ttf)
 
 /* examples 
 

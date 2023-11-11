@@ -45,7 +45,6 @@ void ObjectManager::update()
 	{
 		createPlayerBullet();
 		bulletTimer.restart();
-		mySoundPlayer->playEffect(effectShot);
 	}
 
 	// 特殊弾の発射
@@ -262,6 +261,7 @@ void ObjectManager::createBullet(Vec2 pos, Vec2 vel, const BulletProperty& bp, V
 		if (bp.homing == true) newPlayerBullet->setHoming(true);
 
 		myEffectManager->create_spliteEffect(newPlayerBullet->getPos(), U"Effect4", 0.1, 100);
+		mySoundPlayer->playEffect(effectShot);
 	}
 }
 
@@ -314,6 +314,8 @@ void ObjectManager::createSpecialBullet(Vec2 pos, Vec2 vel, Vec2  acc)
 			myPlayerBullets << newBullet;
 		}
 
+		mySoundPlayer->playEffect(effectShotLaser2);
+
 	}
 
 	break;
@@ -334,7 +336,7 @@ void ObjectManager::createSpecialBullet(Vec2 pos, Vec2 vel, Vec2  acc)
 		}
 
 		myEffectManager->create_spliteEffect(myPlayer->getPos(), U"Effect2", 0.5, 100);
-
+		mySoundPlayer->playEffect(effectShotWide2);
 	} 
 	break;
 	case BulletType::SpecialC:
@@ -346,6 +348,7 @@ void ObjectManager::createSpecialBullet(Vec2 pos, Vec2 vel, Vec2  acc)
 			newBullet->setBulletType(BulletType::SpecialC);
 			myPlayerBullets << newBullet;
 		}
+		mySoundPlayer->playEffect(effectShotPrazma);
 	}
 	break;
 	case BulletType::SpecialD:
@@ -358,6 +361,8 @@ void ObjectManager::createSpecialBullet(Vec2 pos, Vec2 vel, Vec2  acc)
 			newBullet->setExproRange(bp.exproRange);
 			myPlayerBullets << newBullet;
 		}
+		mySoundPlayer->playEffect(effectShotMinePop);
+
 	}
 	break;
 	case BulletType::None:
