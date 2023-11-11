@@ -107,13 +107,20 @@ void Game::update()
 		if (KeyJ.pressed() && KeyK.pressed() && KeyL.pressed())
 		{
 			muteki = true;
-			Player::getInstance()->setSpeed(500);
-			Player::getInstance()->availableBullet[ItemType::SpecialMagicA] =  50;
-			Player::getInstance()->availableBullet[ItemType::SpecialMagicB] =  50;
-			Player::getInstance()->availableBullet[ItemType::SpecialMagicC] =  50;
-			Player::getInstance()->availableBullet[ItemType::SpecialMagicD] =  50;
-			Player::getInstance()->normalMagicLevel =  7;
-			Player::getInstance()->setDamage(1000000000);
+			//Player::getInstance()->setSpeed(350);
+			Player::getInstance()->availableBullet[ItemType::SpecialMagicA] =  2;
+			Player::getInstance()->availableBullet[ItemType::SpecialMagicB] =  2;
+			Player::getInstance()->availableBullet[ItemType::SpecialMagicC] =  2;
+			Player::getInstance()->availableBullet[ItemType::SpecialMagicD] =  2;
+			Player::getInstance()->normalMagicLevel =  4;
+			//Player::getInstance()->setDamage(100000000);
+		}
+
+		
+		if (KeyL.pressed() && KeyU.pressed())
+		{
+			int point = myPlayer->getNextlevelExp() - myPlayer->getExp();
+			myPlayer->gainExp(point);
 		}
 
 		// ヘルモード
