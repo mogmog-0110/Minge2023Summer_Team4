@@ -11,7 +11,7 @@ Game::Game(const InitData& init)
 
 	myEffectManager = EffectManager::getInstance();
 	mySoundPlayer = SoundPlayer::getInstance();
-	mySoundPlayer->playSound(eStageIntro,10s);
+	mySoundPlayer->playSound(eStageIntro, 10s);
 
 	// カメラの初期位置を設定
 	cameraPos = Vec2(0, 0);
@@ -20,6 +20,8 @@ Game::Game(const InitData& init)
 	// 敵データの読み込み
 	objectManager.enemyDatas = objectManager.loadEnemyData(U"../src/Game/csvFile/enemy.csv");
 	setUpBackground();
+
+
 }
 
 
@@ -50,7 +52,7 @@ void Game::update()
 				currentState = GameState::Finished;
 			}
 			else {
-				currentState = GameState::Playing;
+				currentState = GameState::Scenario;
 				waveLoaded = true;
 			}
 		}
@@ -85,7 +87,7 @@ void Game::update()
 		if (defeatCount != 0 && defeatCount % (10 * dropCount) == 0 && dropCount <= 3)
 		{
 			dropCount += 1;
-			if(dropCount % 2 == 0) objectManager.createItemConfirm(myPlayer->getPos() + Vec2(0, -100) + RandomVec2().setLength(50), 1);
+			if (dropCount % 2 == 0) objectManager.createItemConfirm(myPlayer->getPos() + Vec2(0, -100) + RandomVec2().setLength(50), 1);
 			objectManager.createItemConfirm(myPlayer->getPos() + Vec2(0, -100) + RandomVec2().setLength(50));
 		}
 
@@ -108,15 +110,15 @@ void Game::update()
 		{
 			muteki = true;
 			//Player::getInstance()->setSpeed(350);
-			Player::getInstance()->availableBullet[ItemType::SpecialMagicA] =  2;
-			Player::getInstance()->availableBullet[ItemType::SpecialMagicB] =  2;
-			Player::getInstance()->availableBullet[ItemType::SpecialMagicC] =  2;
-			Player::getInstance()->availableBullet[ItemType::SpecialMagicD] =  2;
-			Player::getInstance()->normalMagicLevel =  4;
+			Player::getInstance()->availableBullet[ItemType::SpecialMagicA] = 2;
+			Player::getInstance()->availableBullet[ItemType::SpecialMagicB] = 2;
+			Player::getInstance()->availableBullet[ItemType::SpecialMagicC] = 2;
+			Player::getInstance()->availableBullet[ItemType::SpecialMagicD] = 2;
+			Player::getInstance()->normalMagicLevel = 7;
 			//Player::getInstance()->setDamage(100000000);
 		}
 
-		
+
 		if (KeyL.pressed() && KeyU.pressed())
 		{
 			int point = myPlayer->getNextlevelExp() - myPlayer->getExp();
@@ -137,7 +139,7 @@ void Game::update()
 		{
 			currentState = GameState::Playing;
 		}
-		
+
 
 		break;
 
@@ -174,16 +176,19 @@ void Game::draw() const
 	drawHpBar();
 	drawMagicBook();
 
-	if (currentState == GameState::Scenario) myGameScenario.draw();
-	if (currentState == GameState::Dead) {
-		FontAsset(U"dotFont3")(U"Click→").drawAt(50, Vec2{ 800,700 }, Palette::White);
-	}
-	if (currentState == GameState::Dead && KeyAlt.pressed()) {
-		FontAsset(U"dotFont3")(U"Click to Move").drawAt(50, Vec2{ 950,700 }, Palette::White);
-	}
 	// 文字
 	dotFont1(U"HP").drawAt(896, 288, Color(255, 255, 255, 255));
 	dotFont1(U"LEVEL ", Player::getInstance()->getLevel()).drawAt({ 896, 352 }, Color(255, 255, 255, 255));
+
+	if (currentState == GameState::Dead) {
+		FontAsset(U"dotFont3")(U"Click...").drawAt(50, Vec2{ 800,700 }, Palette::White);
+	}
+
+	if (currentState == GameState::Dead && KeyAlt.pressed()) {
+		FontAsset(U"dotFont3")(U"Click to Move").drawAt(50, Vec2{ 950,700 }, Palette::White);
+	}
+
+	if (currentState == GameState::Scenario) myGameScenario.draw();
 }
 
 void Game::debug()
@@ -506,7 +511,7 @@ void Game::drawMagicBook() const
 	mgFrame.resized(64, 64).drawAt(basePos);
 	normalMagic.resized(64, 64).drawAt(basePos);
 	// レベルを表示
-	dotFont1(U"Lv ",myPlayer->normalMagicLevel).drawAt(basePos, Color(255, 255, 255));
+	dotFont1(U"Lv ", myPlayer->normalMagicLevel).drawAt(basePos, Color(255, 255, 255));
 
 	// 他の魔法書のフレームを描画
 	for (int i = 0; i < bookPositions.size(); i++) {
@@ -531,7 +536,7 @@ void Game::drawMagicBook() const
 			// 魔法書を描画
 			bookTextures[index].resized(64, 64).drawAt(bookPositions[index], ColorF(1, 1, 1, alpha));
 			// レベルを表示
-			dotFont1(U"Lv ",level).drawAt(bookPositions[index], Color(255, 255, 255));
+			dotFont1(U"Lv ", level).drawAt(bookPositions[index], Color(255, 255, 255));
 		}
 	}
 }
