@@ -21,7 +21,7 @@ Game::Game(const InitData& init)
 	objectManager.enemyDatas = objectManager.loadEnemyData(U"../src/Game/csvFile/enemy.csv");
 	setUpBackground();
 
-
+	currentWave = 3;
 }
 
 
