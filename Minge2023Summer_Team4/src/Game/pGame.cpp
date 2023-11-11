@@ -20,6 +20,7 @@ Game::Game(const InitData& init)
 	// 敵データの読み込み
 	objectManager.enemyDatas = objectManager.loadEnemyData(U"../src/Game/csvFile/enemy.csv");
 	setUpBackground();
+	currentWave = 3;
 }
 
 
