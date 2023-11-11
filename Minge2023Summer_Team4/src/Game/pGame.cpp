@@ -11,7 +11,6 @@ Game::Game(const InitData& init)
 
 	myEffectManager = EffectManager::getInstance();
 	mySoundPlayer = SoundPlayer::getInstance();
-	mySoundPlayer->playSound(eStageIntro,10s);
 
 	// カメラの初期位置を設定
 	cameraPos = Vec2(0, 0);
@@ -52,6 +51,7 @@ void Game::update()
 			else {
 				currentState = GameState::Playing;
 				waveLoaded = true;
+				mySoundPlayer->playSound(eStageIntro, 5s);
 			}
 		}
 		break;

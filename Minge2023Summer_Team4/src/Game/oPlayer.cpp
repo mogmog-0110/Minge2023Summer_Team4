@@ -307,9 +307,12 @@ void Player::applyItemEffect(Item* item) {
 	else if  (itemType == ItemType::NormalMagic)
 	{
 		normalMagicLevel += 1;
+		mySoundPlayer->playEffect(effectPickup);
+
 	}
 	else
 	{
+		mySoundPlayer->playEffect(effectPickup);
 		if (availableBullet.contains(itemType))
 		{
 			// 既にアイテムが存在する場合、個数を1増やす

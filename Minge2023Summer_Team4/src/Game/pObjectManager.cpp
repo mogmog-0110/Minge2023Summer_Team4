@@ -34,6 +34,7 @@ void ObjectManager::update()
 	updateObjList(myItems);
 
 	switchSpecialBullet();
+	
 
 	Enemy* closestEnemy = findClosestEnemy();
 	if (closestEnemy != nullptr) {
@@ -48,11 +49,11 @@ void ObjectManager::update()
 	}
 
 	// 特殊弾の発射
-	if (!bulletTimer.isRunning() && (MouseR.pressed() || KeyB.pressed()) && myPlayer->availableBullet[selectedItemType] != 0)
+	if (!specialBulletTimer[selectedItemType].isRunning() && (MouseR.pressed() || KeyB.pressed()) && myPlayer->availableBullet[selectedItemType] != 0)
 	{
 		Vec2 elementVector = (Cursor::PosF() - Scene::CenterF()).setLength(1);
 		createSpecialBullet(myPlayer->getPos() + elementVector.setLength(50), elementVector.setLength(100), { 1,1 });
-		bulletTimer.restart();
+		specialBulletTimer[selectedItemType].restart();
 	}
 
 	// プレイヤーとアイテムの衝突をチェック
@@ -651,27 +652,27 @@ void ObjectManager::setDelayTimer()
 	}
 
 	bp = myPlayer->createLaserProperty();
-	if (specialBulletTimer[BulletType::SpecialA].duration().count() != bp.delay)
+	if (specialBulletTimer[ItemType::SpecialMagicA].duration().count() != bp.delay)
 	{
-		specialBulletTimer[BulletType::SpecialA].set(SecondsF(bp.delay));
+		specialBulletTimer[ItemType::SpecialMagicA].set(SecondsF(bp.delay));
 	}
 
 	bp = myPlayer->createWideProperty();
-	if (specialBulletTimer[BulletType::SpecialB].duration().count() != bp.delay)
+	if (specialBulletTimer[ItemType::SpecialMagicB].duration().count() != bp.delay)
 	{
-		specialBulletTimer[BulletType::SpecialB].set(SecondsF(bp.delay));
+		specialBulletTimer[ItemType::SpecialMagicB].set(SecondsF(bp.delay));
 	}
 
 	bp = myPlayer->createPrasmaProperty();
-	if (specialBulletTimer[BulletType::SpecialC].duration().count() != bp.delay)
+	if (specialBulletTimer[ItemType::SpecialMagicC].duration().count() != bp.delay)
 	{
-		specialBulletTimer[BulletType::SpecialC].set(SecondsF(bp.delay));
+		specialBulletTimer[ItemType::SpecialMagicC].set(SecondsF(bp.delay));
 	}
 
 	bp = myPlayer->createMineProperty();
-	if (specialBulletTimer[BulletType::SpecialD].duration().count() != bp.delay)
+	if (specialBulletTimer[ItemType::SpecialMagicD].duration().count() != bp.delay)
 	{
-		specialBulletTimer[BulletType::SpecialD].set(SecondsF(bp.delay));
+		specialBulletTimer[ItemType::SpecialMagicD].set(SecondsF(bp.delay));
 	}
 
 }
