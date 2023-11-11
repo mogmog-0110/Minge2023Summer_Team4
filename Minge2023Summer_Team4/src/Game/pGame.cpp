@@ -56,6 +56,7 @@ void Game::update()
 	case GameState::Playing:
 
 		if (hellMode == 2) Print << U"ヘルモード";
+		if (muteki == true) Print << U"無敵モード";
 
 		accumulatedTime += Scene::DeltaTime();
 		if (KeyP.down()) {
@@ -109,7 +110,7 @@ void Game::update()
 			Player::getInstance()->availableBullet[ItemType::SpecialMagicB] =  50;
 			Player::getInstance()->availableBullet[ItemType::SpecialMagicC] =  50;
 			Player::getInstance()->availableBullet[ItemType::SpecialMagicD] =  50;
-			Player::getInstance()->normalMagicLevel =  50;
+			Player::getInstance()->normalMagicLevel =  7;
 			Player::getInstance()->setDamage(1000000000);
 		}
 
@@ -173,7 +174,11 @@ void Game::draw() const
 
 void Game::debug()
 {
+	Print << U"最も近い敵の座標";
+	Print << closestEnemyPos;
 
+	Print << U"プレイヤーの座標";
+	Print << myPlayer->getPos();
 	Print << accumulatedTime;
 	Print << U"レベル";
 	Print << myPlayer->getInstance()->getLevel();

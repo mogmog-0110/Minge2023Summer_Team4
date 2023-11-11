@@ -35,6 +35,11 @@ void ObjectManager::update()
 
 	switchSpecialBullet();
 
+	Enemy* closestEnemy = findClosestEnemy();
+	if (closestEnemy != nullptr) {
+		closestEnemyPos = closestEnemy->getPos();
+	}
+
 	// 通常弾の発射
 	if (!bulletTimer.isRunning() && (MouseL.pressed() || KeyV.pressed()))
 	{
@@ -254,6 +259,7 @@ void ObjectManager::createBullet(Vec2 pos, Vec2 vel, const BulletProperty& bp, V
 		Bullet* newPlayerBullet = static_cast<Bullet*>(newBullet);
 		newPlayerBullet->setBulletType(type);
 		myPlayerBullets << newPlayerBullet;
+		if (bp.homing == true) newPlayerBullet->setHoming(true);
 
 		myEffectManager->create_spliteEffect(newPlayerBullet->getPos(), U"Effect4", 0.1, 100);
 	}

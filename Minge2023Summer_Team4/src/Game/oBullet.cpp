@@ -28,6 +28,33 @@ void Bullet::move()
 {
 	switch (bulletType)
 	{
+	case BulletType::Normal:
+		if (isHoming) {
+			if (closestEnemyPos != Vec2{-1, -1}) {
+				// ターゲットの位置を取得
+				Vec2 targetPos = closestEnemyPos;
+
+				// 現在の弾丸の方向とターゲットとの相対位置から新しい方向を計算
+				Vec2 directionToTarget = (targetPos - pos).normalized();
+
+				// 現在の速度ベクトルを少しターゲットの方向に調整する
+				// ホーミングの反応速度を調整するためのパラメータ (例: 0.05)
+				double homingSensitivity = 0.1;
+
+				// 新しい速度ベクトルを計算（既存の速度ベクトルと新しい方向の間の線形補間を行う）
+				vel = (vel.normalized() * (1 - homingSensitivity) + directionToTarget * homingSensitivity).setLength(vel.length());
+
+				// 新しい速度ベクトルで位置を更新
+				pos += vel * Scene::DeltaTime();
+				hitbox.setCenter(pos);
+			}
+		}
+		else {
+			// ホーミングでない場合は通常通りに移動
+			pos += vel * Scene::DeltaTime();
+			hitbox.setCenter(pos);
+		}
+		break;
 	case BulletType::SpecialA:
 		if (bulletPhase == 0)
 		{
@@ -57,7 +84,7 @@ void Bullet::move()
 		break;
 	}
 
-	if (bulletType != BulletType::SpecialA)
+	if (bulletType != BulletType::SpecialA && bulletType != BulletType::Normal)
 	{
 		pos += vel * Scene::DeltaTime();
 		hitbox.setCenter(pos);
@@ -199,4 +226,9 @@ void Bullet::setLevel(int)
 void Bullet::setExproRange(int range)
 {
 	this->exproRange = range;
+}
+
+void Bullet::setHoming(bool isHoming)
+{
+	this->isHoming = isHoming;
 }

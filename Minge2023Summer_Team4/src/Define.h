@@ -87,6 +87,8 @@ struct BulletProperty
 	int way; // 2way, 3way, 4way ...etc
 	Array<Vec2> direction; // 弾の飛ぶ方向,実際にはVec2型として、velに格納
 
+	bool homing;
+
 	// Wide用
 
 	//Mine用
@@ -134,11 +136,14 @@ struct BackgroundChunk {
 	}
 };
 
+// 邪淫。良い子のみんなは真似しないでね
+
 extern bool isCleared;
 extern int defeatCount;
 extern int dropCount;
 extern int hellMode;
 extern bool muteki;
+extern Vec2 closestEnemyPos;
 
 // グローバル関数（邪法）
 
