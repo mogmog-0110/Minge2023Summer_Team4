@@ -4,7 +4,7 @@
 double accumulatedTime = 0;
 
 Game::Game(const InitData& init)
-	: IScene(init), objectManager(), currentState(GameState::Loading), currentWave(0), accumulatedTime(0.0)
+	: IScene(init), objectManager(), currentState(GameState::Scenario), currentWave(0), accumulatedTime(0.0)
 {
 	// 背景の色を設定 | Set background color
 	Scene::SetBackground(Palette::Black);
@@ -20,8 +20,6 @@ Game::Game(const InitData& init)
 	// 敵データの読み込み
 	objectManager.enemyDatas = objectManager.loadEnemyData(U"../src/Game/csvFile/enemy.csv");
 	setUpBackground();
-
-
 }
 
 
@@ -52,7 +50,7 @@ void Game::update()
 				currentState = GameState::Finished;
 			}
 			else {
-				currentState = GameState::Scenario;
+				currentState = GameState::Playing;
 				waveLoaded = true;
 				mySoundPlayer->playSound(eStageIntro, 5s);
 			}
@@ -138,7 +136,7 @@ void Game::update()
 		//シナリオが終了する時updateがtrueを返す
 		if (myGameScenario.update())
 		{
-			currentState = GameState::Playing;
+			currentState = GameState::Loading;
 		}
 
 
