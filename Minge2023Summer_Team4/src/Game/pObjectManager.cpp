@@ -270,7 +270,7 @@ void ObjectManager::createEnemyBullet()
 {
 	for (size_t i = 0; i < myEnemies.size(); i++)
 	{
-		if (myEnemies[i]->hasBullet) {
+		if (myEnemies[i]->hasBullet && myEnemies[i]->deathPhase == 0) {
 			BulletProperty bp = myEnemies[i]->createBulletProperty();
 
 			myEnemies[i]->bulletDelayElapsed += Scene::DeltaTime();

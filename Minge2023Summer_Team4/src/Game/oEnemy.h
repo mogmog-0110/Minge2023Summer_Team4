@@ -13,6 +13,8 @@ private:
 	double maxHp;
 	double strength;
 
+	bool isDeathDelay = false;
+
 	bool isDeadAnimationPlaying;
 	int animationFrame;
 	int animationDuration;
@@ -22,6 +24,9 @@ private:
 
 protected:
 public:
+
+	int deathPhase = 0;
+
 	Enemy(int hp_, int damage_, String textureStr_,
 		  Figure hitbox_, Vec2 pos_, Vec2 vel_, Vec2 acc_ = { 0,0 })
 		: GameObject(eEnemy, hp_, damage_, textureStr_, hitbox_, pos_, vel_, acc_)
@@ -33,19 +38,25 @@ public:
 		changeCoolTime(0.2s);
 		setUpAnimation();
 		setHasBullet();
+		setDeathDelay();
 	};
 
 	~Enemy();
 
 	void move() override;
 	void update() override;
-	
+
+	void onCollisionResponse(int damage);
+	void onCollisionResponse(Vec2 RepullPos);
+
 	void calcAndSetExp();
 	double getStrength() const;
 
 	void setHasBullet();
 	BulletProperty createBulletProperty();
 	void determineLevel();
+
+	void setDeathDelay();
 
 	Array<Vec2> calculateDirection(int way);
 

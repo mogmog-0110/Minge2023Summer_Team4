@@ -24,6 +24,9 @@ SoundPlayer::SoundPlayer()
 	EffectTable.emplace(enumEffect::effectHit2, Audio{ U"Effect/se_hit_008.wav" });
 	EffectTable.emplace(enumEffect::effectHitPlayer, Audio{ U"Effect/se_hit_003.wav" });
 	EffectTable.emplace(enumEffect::effectHitDebris, Audio{ U"Effect/se_hit_006.wav" });
+	EffectTable.emplace(enumEffect::effectBossDeathSound1, Audio{ U"Effect/zushaa.mp3" });
+	EffectTable.emplace(enumEffect::effectBossDeathSound2, Audio{ U"Effect/zubashu.mp3" });
+	EffectTable.emplace(enumEffect::effectBossDeathSound3, Audio{ U"Effect/hard_attack.mp3" });
 
 }
 

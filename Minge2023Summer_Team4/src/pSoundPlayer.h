@@ -26,6 +26,9 @@ enum enumEffect
 	effectHit2,
 	effectHitPlayer,
 	effectHitDebris,
+	effectBossDeathSound1,
+	effectBossDeathSound2,
+	effectBossDeathSound3,
 };
 
 class SoundPlayer

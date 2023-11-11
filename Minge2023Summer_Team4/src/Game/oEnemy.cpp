@@ -23,6 +23,52 @@ void Enemy::update()
 {
 	GameObject::update();
 	updateDirection();
+
+	if (deathPhase > 0)
+	{
+		static Timer deathBoomTimer{ 0.2s, StartImmediately::Yes };
+		static Timer deathEffectTimer{ 5s, StartImmediately::Yes };
+
+		if (!deathBoomTimer.isRunning())
+		{
+			myEffectManager->create_spliteEffect(pos + RandomVec2(Random(100)), U"Effect1", 0.15, Random(100));
+			myEffectManager->create_spliteEffect(pos + RandomVec2(Random(100)), U"Effect2", 0.15, Random(100));
+			mySoundPlayer->playEffect(effectHit2);
+			mySoundPlayer->playEffect(effectHitDebris);
+		}
+		if (!deathEffectTimer.isRunning()) {
+			hp = 0;
+			mySoundPlayer->playEffect(effectBossDeathSound1);
+			mySoundPlayer->playEffect(effectBossDeathSound2);
+
+		}
+	}
+
+}
+
+void Enemy::onCollisionResponse(int damage)
+{
+	if (isDeathDelay)
+	{
+		if (deathPhase == 0)
+		{
+			GameObject::onCollisionResponse(damage);
+			if (hp <= 0) {
+				deathPhase++;
+				hp = 1;
+				this->damage = 0;
+				speed = 10;
+				mySoundPlayer->playEffect(effectBossDeathSound3);
+			}
+		}
+	}
+	else GameObject::onCollisionResponse(damage);
+
+}
+
+void Enemy::onCollisionResponse(Vec2 RepullPos)
+{
+	GameObject::onCollisionResponse(RepullPos);
 }
 
 void Enemy::calcAndSetExp()
@@ -100,6 +146,20 @@ void Enemy::setHasBullet()
 		hasBullet = false;
 	}
 }
+
+void Enemy::setDeathDelay()
+{
+	if (textureStr == U"Kuro" || textureStr == U"BigRat" || textureStr == U"BigSpider")
+	{
+		isDeathDelay = true;
+	}
+	else
+	{
+		isDeathDelay = false;
+	}
+}
+
+
 
 void Enemy::determineLevel()
 {
