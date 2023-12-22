@@ -82,6 +82,9 @@ void Main()
 	TextureAsset::Register(U"Yajirusi", Resource(U"Image/Yajirusi.png"));
 	TextureAsset::Register(U"Tuto", Resource(U"Image/Tuto.png"));
 
+	// TutorialVideo
+
+
   
 	//font
 	FontAsset::Register(U"dotFont1", 20, Resource(U"Font/Nosutaru-dot.ttf"));

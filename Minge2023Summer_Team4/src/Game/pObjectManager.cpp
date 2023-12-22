@@ -709,10 +709,11 @@ void ObjectManager::drawArrow(const Vec2& from, const Vec2& to, Vec2 offset)
 	double angle = Math::Atan2(direction.y, direction.x);
 
 	// 矢印のテクスチャを回転させて描画
-	arrowTexture.rotated(angle + 90).drawAt(from - offset);
+	arrowTexture.scaled(0.8).rotated(angle + 90).drawAt(from - offset);
 }
 
-void ObjectManager::updateAndDrawArrow(Vec2 offset) {
+void ObjectManager::updateAndDrawArrow(Vec2 offset)
+{
 	Vec2 playerPos = myPlayer->getPos();
 	Enemy* closestEnemy = findClosestEnemy();
 

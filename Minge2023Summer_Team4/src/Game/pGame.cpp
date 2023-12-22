@@ -20,6 +20,8 @@ Game::Game(const InitData& init)
 	objectManager.enemyDatas = objectManager.loadEnemyData(U"../src/Game/csvFile/enemy.csv");
 	setUpBackground();
 
+	// ボーナスドロップのリセット
+	dropCount = 1;
 }
 
 
@@ -93,30 +95,32 @@ void Game::update()
 		}
 
 		scrollUpdate();
+		updateBackground();
 		objectManager.update();
 		objectManager.updateAndDrawArrow(topLeft);
-		updateBackground();
+		
 
 
-		//debug();
+		// debug();
 		break;
 
 	case GameState::Pausing:
-		if (KeyP.down()) {
+		if (KeyP.down())
+		{
 			currentState = GameState::Playing;
 		}
 
 		// コマンド
 		if (KeyJ.pressed() && KeyK.pressed() && KeyL.pressed())
 		{
-			//muteki = true;
-			//Player::getInstance()->setSpeed(350);
-			Player::getInstance()->availableBullet[ItemType::SpecialMagicA] = 2;
-			Player::getInstance()->availableBullet[ItemType::SpecialMagicB] = 2;
-			Player::getInstance()->availableBullet[ItemType::SpecialMagicC] = 2;
-			Player::getInstance()->availableBullet[ItemType::SpecialMagicD] = 2;
-			Player::getInstance()->normalMagicLevel = 7;
-			//Player::getInstance()->setDamage(100000000);
+			muteki = true;
+			Player::getInstance()->setSpeed(350);
+			Player::getInstance()->availableBullet[ItemType::SpecialMagicA] = 10;
+			Player::getInstance()->availableBullet[ItemType::SpecialMagicB] = 10;
+			Player::getInstance()->availableBullet[ItemType::SpecialMagicC] = 10;
+			Player::getInstance()->availableBullet[ItemType::SpecialMagicD] = 10;
+			Player::getInstance()->normalMagicLevel = 10;
+			Player::getInstance()->setDamage(100000000);
 		}
 
 
@@ -136,6 +140,7 @@ void Game::update()
 
 	case GameState::Scenario:
 		//シナリオが終了する時updateがtrueを返す
+		Scene::SetBackground(Palette::Black);
 		if (myGameScenario.update())
 		{
 			currentState = GameState::Loading;
@@ -191,7 +196,7 @@ void Game::draw() const
 
 	if (currentState == GameState::Scenario) {
 		myGameScenario.draw();
-		FontAsset(U"dotFont3")(U"Click to Start").drawAt(50, Vec2{ 800,700 }, Palette::White);
+		FontAsset(U"dotFont3")(U"Click...").drawAt(25, Vec2{ 800,700 }, Palette::White);
 	}
 }
 

@@ -5,26 +5,47 @@ bool GameScenario::update()
 	if (KeySpace.down() || MouseL.down())
 	{
 		scenarioIndex++;
-		if (scenario[selectedScenario].size() <= scenarioIndex) {
+		if (tutos.size() <= scenarioIndex) {
 			scenarioIndex = 0;
 			return true;
 		}
 		else return false;
-
 	}
-	else return false;
 }
 
 void GameScenario::draw() const
 {
-	/*Rect{ 60,525,900,200 }.drawFrame(3, 0, Palette::Red);
-	Rect{ 80,485,150,40 }.drawFrame(3, 0, Palette::Red);
+	const TutorialFormat& tuto = tutos[scenarioIndex];
+	Rect{ 0,0,2000,2000 }.draw(ColorF(Palette::Black));
 
-	dotFont(scenario[selectedScenario][scenarioIndex].CharacterName).draw(100, 490, Palette::White);
-	dotFont(scenario[selectedScenario][scenarioIndex].dialogString).draw(80, 550, Palette::White);
-	*/
-	const Texture& image = TextureAsset(U"Tuto");
-	image.draw(0, 0);
+	// videoの再生
+	switch (tuto.tutoNumber)
+	{
+	case 1:
+		video1.scaled(0.5).draw();
+		video1.advance();
+		break;
+	case 2:
+		video2.scaled(0.5).draw();
+		video2.advance();
+		break;
+	case 3:
+		video3.scaled(0.5).draw();
+		video3.advance();
+		break;
+	case 4:
+		video4.scaled(0.5).draw();
+		video4.advance();
+		break;
+	case 5:
+		video5.scaled(0.5).draw();
+		video5.advance();
+		break;
+	case 6:
+		break;
+	}
+	
+	dotFont(tuto.tutoText).drawAt(500, 600, ColorF(Palette::White));
 }
 
 void GameScenario::setScenario(int selectedScenario_)
