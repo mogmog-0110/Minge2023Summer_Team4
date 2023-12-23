@@ -1,7 +1,7 @@
 Bat,10,30,Bat,Circle(16),500
 Rat,50,40,Rat,Circle(16),80
 Spider,300,150,Spider,Circle(16),120
-BloatedBedBugA,50,50,BloatedBedBugA,Circle(16),600
+BloatedBedBugA,50,50,BloatedBedBugA,Circle(16),500
 BloatedBedBugB,200,50,BloatedBedBugB,Circle(16),300
 CockroachA,450,130,CockroachA,Circle(16),100
 CockroachB,150,80,CockroachB,Circle(16),600

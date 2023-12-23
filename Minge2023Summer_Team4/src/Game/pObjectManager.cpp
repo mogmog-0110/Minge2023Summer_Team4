@@ -343,7 +343,7 @@ void ObjectManager::createSpecialBullet(Vec2 pos, Vec2 vel, Vec2  acc)
 	case BulletType::SpecialC:
 	{
 		bp = myPlayer->createPrasmaProperty();
-		GameObject* tempBullet = ObjectAppearanceManager::createNewObject(ePlayerBullet, bp.hp, bp.damage + myPlayer->getDamage(), U"PrasmaBullet", Circle{ bp.size }, pos, vel.setLength(bp.speed), acc);
+		GameObject* tempBullet = ObjectAppearanceManager::createNewObject(ePlayerBullet, bp.hp, bp.damage + myPlayer->getDamage() * 0.7, U"PrasmaBullet", Circle{ bp.size }, pos, vel.setLength(bp.speed), acc);
 		if (tempBullet) {
 			Bullet* newBullet = static_cast<Bullet*>(tempBullet);
 			newBullet->setBulletType(BulletType::SpecialC);
@@ -593,7 +593,15 @@ Figure ObjectManager::parseFigure(const String& str)
 void ObjectManager::stopEnemies()
 {
 	for (auto& enemy : myEnemies) {
+		enemySpeed.push_back(enemy->getSpeed());
 		enemy->setSpeed(0);
+	}
+}
+
+void ObjectManager::startEnemies()
+{
+	for (size_t i = 0; i < myEnemies.size(); ++i) {
+		myEnemies[i]->setSpeed(enemySpeed[i]);
 	}
 }
 
