@@ -28,12 +28,11 @@ private:
 	const Texture tempTexture{ U"💩"_emoji };
 
 	bool isDeadAnimationPlaying = false;
+	// アニメーションの経過時間をカウントする変数（浮動小数点型）
+	double animationDuration = 0.0;
 
-	// アニメーションのフレームの経過時間をカウント
-	int animationDuration = 0;
-
-	// この値は、1フレームあたりのアップデートの頻度を示す。値が大きいほどアニメーションは遅くなる
-	const int animationSpeed = 10;
+	// 1フレームあたりのアップデートの頻度を示す値。値が小さいほどアニメーションは速くなる
+	const double animationSpeed = 0.1; // 10FPSの場合
 
 	// アニメーションを制御するための変数
 	double animationTimer = 0.0; // アニメーションのタイマー
@@ -52,7 +51,7 @@ private:
 	double regeneVal = 0.1;
 
 	double attractionRadius = 100;
-	double attractionSpeed = 10;
+	double attractionSpeed = 100;
 
 protected:
 

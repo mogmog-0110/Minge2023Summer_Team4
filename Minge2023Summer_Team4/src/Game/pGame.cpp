@@ -22,6 +22,8 @@ Game::Game(const InitData& init)
 
 	// ボーナスドロップのリセット
 	dropCount = 1;
+
+	deadCount = 3;
 }
 
 
@@ -150,14 +152,28 @@ void Game::update()
 		break;
 
 	case GameState::Dead:
+
+		// debug();
+
 		// キー入力を受け付けない
 		// 敵の動きを止める
 		objectManager.stopEnemies();
 		// 死亡アニメーションを流す
 		Player::getInstance()->playDeathAnimation();
 		Scene::SetBackground(Palette::Black);
-		if (Player::getInstance()->deathAnimationFinished()) {
-			if (MouseL.down()) {
+		if (Player::getInstance()->deathAnimationFinished())
+		{
+			if (KeyR.down() && deadCount != 0)
+			{
+				deadCount -= 1;
+				currentState = GameState::Playing;
+				Player::getInstance()->setHp(Player::getInstance()->getMaxHp());
+				objectManager.startEnemies();
+				mySoundPlayer->playSound(eStageIntro, 5s);
+			}
+
+			if (KeyEnter.down())
+			{
 				changeScene(SceneList::Result); // アニメーション終了後にリザルトシーンへ遷移
 			}
 		}
@@ -185,9 +201,14 @@ void Game::draw() const
 	// 文字
 	dotFont1(U"HP").drawAt(896, 288, Color(255, 255, 255, 255));
 	dotFont1(U"LEVEL ", Player::getInstance()->getLevel()).drawAt({ 896, 352 }, Color(255, 255, 255, 255));
+	dotFont1(U"残機:  ", deadCount).drawAt({ 896 , 515}, Color(255, 255, 255));
 
 	if (currentState == GameState::Dead) {
-		FontAsset(U"dotFont3")(U"Click...").drawAt(50, Vec2{ 800,700 }, Palette::White);
+		FontAsset(U"dotFont3")(U"Enterでリザルト").drawAt(50, Vec2{ 800,700 }, Palette::White);
+		if(deadCount >= 1)
+		{
+			FontAsset(U"dotFont3")(U"Rキーでリトライ").drawAt(50, Vec2{ 400,700 }, Palette::White);
+		}
 	}
 
 	if (currentState == GameState::Dead && KeyAlt.pressed()) {
@@ -212,6 +233,7 @@ void Game::debug()
 	Print << myPlayer->getInstance()->getLevel();
 	Print << U"プレイヤーのステータス";
 	Print << Player::getInstance()->getHp();
+	Print << Player::getInstance()->getMaxHp();
 
 	Print << U"特殊弾";
 

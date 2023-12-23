@@ -53,6 +53,9 @@ private:
 
 	Font dotFont1 = FontAsset(U"dotFont1");
 
+	// 残機
+	int deadCount;
+
 public:
 	Game(const InitData& init);
 	~Game();

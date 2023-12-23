@@ -53,14 +53,19 @@ void Player::update() {
 
 	// プレイヤーが動いている場合のみアニメーションフレームを更新
 	if (isMoving) {
-		animationDuration++;
-		if (animationDuration % animationSpeed == 0) {
+		// DeltaTimeを使用して経過時間を加算
+		animationDuration += Scene::DeltaTime();
+
+		if (animationDuration >= animationSpeed) {
 			animationFrame = (animationFrame + 1) % playerAnimations.at(currentDirection).size();
+			animationDuration -= animationSpeed; // 次のフレームのために経過時間をリセット
 		}
 	}
-	else {
+	else
+	{
 		// プレイヤーが動いていない場合、アニメーションの最初のフレームを表示
 		animationFrame = 0;
+		animationDuration = 0.0; // 経過時間をリセット
 	}
 
 	// ダメージを受けたことを検知
@@ -73,6 +78,11 @@ void Player::update() {
 	}
 
 	regenerateHp(regeneVal);
+
+	if (hp > maxHp)
+	{
+		hp = maxHp;
+	}
 
 	previousHp = hp; // 現在のHPを前フレームのHPとして保存
 	if (hp <= 0)
@@ -88,11 +98,6 @@ void Player::regenerateHp(double regeneVal) {
 		if (isMoving == true) regeneVal *= 0.25;
 
 		hp += regeneVal;
-
-		if (hp > maxHp)
-		{
-			hp = maxHp;
-		}
 	}
 }
 
@@ -187,17 +192,18 @@ void Player::playDeathAnimation() {
 		currentDirection = U"dead";  // 死亡アニメーションへの方向を設定
 		animationFrame = 0;  // アニメーションフレームをリセット
 		isDeadAnimationPlaying = true;  // フラグを設定
-		animationDuration = 0;
+		animationDuration = 0.0;  // 経過時間をリセット
 	}
 
-	 //アニメーションフレームのインクリメント
+	// アニメーションフレームのインクリメント
 	if (isDeadAnimationPlaying) {
-		animationDuration++;
-		if (animationDuration % animationSpeed == 0) {
+		animationDuration += Scene::DeltaTime();
+		if (animationDuration >= animationSpeed) {
 			animationFrame++;
 			if (animationFrame >= playerAnimations[U"dead"].size()) {
 				animationFrame = playerAnimations[U"dead"].size() - 1;  // アニメーションの最後のフレームに留める
 			}
+			animationDuration -= animationSpeed; // 次のフレームのために経過時間をリセット
 		}
 	}
 }
@@ -278,7 +284,7 @@ void Player::levelUp()
 		
 		break;
 	case 1:
-		damage += 20; // 
+		damage += 15; // 
 		
 		break;
 	case 2:
@@ -289,6 +295,7 @@ void Player::levelUp()
 		break;
 	case 3:
 		attractionRadius += 10; // アイテム収集範囲を10増加
+		attractionSpeed += 20;
 		
 		break;
 	}
@@ -338,7 +345,7 @@ void Player::attractItems(Array<Item*>& items)
 			if (distance < attractionRadius)
 			{
 				// 吸い寄せの計算
-				Vec2 attraction = direction.normalized() * attractionSpeed; // attractionSpeedは吸い寄せる速度
+				Vec2 attraction = direction.normalized() * attractionSpeed * Scene::DeltaTime(); // attractionSpeedは吸い寄せる速度
 				item->setPos(item->getPos() - attraction);
 			}
 		}
@@ -394,7 +401,7 @@ void Player::setSpeed(double speed)
 	this->speed = speed;
 }
 
-void Player::setHp(double)
+void Player::setHp(double hp)
 {
 	this->hp = hp;
 
@@ -459,7 +466,7 @@ BulletProperty Player::createMineProperty()
 		bp.damage = 500; bp.size = 14; bp.delay = 1.0; bp.exproRange = 300;
 		break;
 	case 6:
-		bp.damage = 180; bp.size = 16; bp.delay = 0.3; bp.exproRange = 200;
+		bp.damage = 500; bp.size = 16; bp.delay = 0.3; bp.exproRange = 300;
 		break;
 	default:
 		bp.damage = 200 + availableBullet[ItemType::SpecialMagicD] * 2; bp.delay = 0.3; bp.exproRange = 200;
@@ -508,26 +515,26 @@ BulletProperty Player::createPrasmaProperty()
 	case 0:
 		break;
 	case 1:
-		bp.hp = 100; bp.damage = 80; bp.size = 50; bp.delay = 1.0; bp.speed = 100;
+		bp.hp = 50; bp.damage = 50; bp.size = 50; bp.delay = 1.3; bp.speed = 100;
 		break;
 	case 2:
-		bp.hp = 300; bp.damage = 100; bp.size = 75; bp.delay = 1.0; bp.speed = 100;
+		bp.hp = 100; bp.damage = 80; bp.size = 75; bp.delay = 1.2; bp.speed = 100;
 		break;
 	case 3:
-		bp.hp = 500; bp.damage = 110; bp.size = 100; bp.delay = 1.0; bp.speed = 50;
+		bp.hp = 200; bp.damage = 100; bp.size = 100; bp.delay = 1.1; bp.speed = 50;
 		break;
 	case 4:
-		bp.hp = 800; bp.damage = 150; bp.size = 125; bp.delay = 1.0; bp.speed = 50;
+		bp.hp = 300; bp.damage = 120; bp.size = 125; bp.delay = 1.0; bp.speed = 50;
 		break;
 	case 5:
-		bp.hp = 1000; bp.damage = 200; bp.size = 150; bp.delay = 1.0; bp.speed = 25;
+		bp.hp = 500; bp.damage = 150; bp.size = 150; bp.delay = 1.0; bp.speed = 25;
 		break;
 	case 6:
-		bp.hp = 1500; bp.damage = 240; bp.size = 200; bp.delay = 1.0; bp.speed = 25;
+		bp.hp = 700; bp.damage = 200; bp.size = 200; bp.delay = 1.0; bp.speed = 25;
 		break;
 	default:
-		bp.damage = 50 + availableBullet[ItemType::SpecialMagicC] * 2; bp.delay = 0.3; bp.hp = 50 + availableBullet[ItemType::SpecialMagicC] * 2;
-		bp.size = 85; bp.speed = 25;
+		bp.damage = 200 + availableBullet[ItemType::SpecialMagicC] * 2; bp.delay = 0.8; bp.hp = 700 + availableBullet[ItemType::SpecialMagicC] * 20;
+		bp.size = 200; bp.speed = 25;
 	}
 	return bp;
 }
@@ -538,25 +545,25 @@ BulletProperty Player::createLaserProperty()
 	switch (availableBullet[ItemType::SpecialMagicA])
 	{
 	case 1:
-		bp.way = 1; bp.damage = 40; bp.size = 10; bp.delay = 1.2; bp.speed = 1200;
+		bp.way = 1; bp.damage = 40; bp.size = 10; bp.delay = 1.0; bp.speed = 1200;
 		break;
 	case 2:
-		bp.way = 1; bp.damage = 50; bp.size = 12; bp.delay = 1.0; bp.speed = 1200;
+		bp.way = 1; bp.damage = 40; bp.size = 12; bp.delay = 0.7; bp.speed = 1200;
 		break;
 	case 3:
-		bp.way = 3; bp.damage = 60; bp.size = 12; bp.delay = 0.8; bp.speed = 1200;
+		bp.way = 3; bp.damage = 50; bp.size = 12; bp.delay = 0.6; bp.speed = 1200;
 		break;
 	case 4:
-		bp.way = 3; bp.damage = 70; bp.size = 14; bp.delay = 0.6; bp.speed = 1200;
+		bp.way = 3; bp.damage = 50; bp.size = 14; bp.delay = 0.3; bp.speed = 1200;
 		break;
 	case 5:
-		bp.way = 5; bp.damage = 80; bp.size = 14; bp.delay = 0.4; bp.speed = 1200;
+		bp.way = 5; bp.damage = 60; bp.size = 14; bp.delay = 0.2; bp.speed = 1200;
 		break;
 	case 6:
-		bp.way = 5; bp.damage = 90; bp.size = 16; bp.delay = 0.2; bp.speed = 1200;
+		bp.way = 5; bp.damage = 70; bp.size = 16; bp.delay = 0.1; bp.speed = 1200;
 		break;
 	default:
-		bp.way = 7; bp.damage = 20 + normalMagicLevel * 10; bp.size = 10 + normalMagicLevel;
+		bp.way = 7; bp.damage = 75 + availableBullet[ItemType::SpecialMagicC] * 10; bp.size = 10 + availableBullet[ItemType::SpecialMagicC];
 		bp.delay = 0.1; bp.speed = 1200;
 	}
 	return bp;

@@ -71,6 +71,9 @@ public:
 	Array<Enemy*> myEnemies;
 	Array<Item*> myItems;
 
+	// 敵オブジェクトのスピードを保存する配列
+	Array<double> enemySpeed;
+
   
 	// 敵の名前をキーとした敵情報を格納したハッシュテーブル
 	HashTable<String, EnemyData> enemyDatas;
@@ -99,6 +102,7 @@ public:
 	Enemy* createEnemyFromData(WaveData waveData);
 	static Figure parseFigure(const String&);
 	void stopEnemies();
+	void startEnemies();
 	void switchSpecialBullet();
 	BulletType fromItemType(ItemType);
 
