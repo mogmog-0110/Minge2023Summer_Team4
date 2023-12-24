@@ -93,6 +93,7 @@ struct BulletProperty
 
 	//Mine用
 	int exproRange;
+
 };
 
 // 背景タイルの情報を保持する構造体

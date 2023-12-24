@@ -23,7 +23,7 @@ Game::Game(const InitData& init)
 	// ボーナスドロップのリセット
 	dropCount = 1;
 
-	deadCount = 3;
+	deadCount = 99;
 }
 
 
