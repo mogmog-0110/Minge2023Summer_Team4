@@ -7,6 +7,7 @@ private:
 	const Audio titleAudio{ Audio::Stream, U"Music/mapselect.mp3" };
 
 	SoundPlayer* mySoundPlayer;
+	
 
 public:
 	Title(const InitData& init);

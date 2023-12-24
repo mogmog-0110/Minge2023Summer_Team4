@@ -89,6 +89,26 @@ void Player::update() {
 	{
 		hp = 0;
 	}
+
+	if (startCoolTime) {
+		isCoolTimeActive = true;
+		remainingCoolTime = 3.0f; // クールタイムを3秒に設定
+		changeCoolTime(3.0s);
+		startCoolTime = false;
+	}
+
+	if (isCoolTimeActive) {
+		remainingCoolTime -= Scene::DeltaTime();
+		if (remainingCoolTime <= 0) {
+			isCoolTimeActive = false; // クールタイム終了
+		}
+	}
+
+	if (!(isCoolTimeActive) && !(startCoolTime) && !(isSet))
+	{
+		isSet = true;
+		changeCoolTime(1.0s);
+	}
 }
 
 void Player::regenerateHp(double regeneVal) {
@@ -279,8 +299,8 @@ void Player::levelUp()
 	// その他レベルアップ時の処理
 	switch (level % 4) {
 	case 0:
-		maxHp += 5; // 体力を10増加
-		regeneVal += 0.05;
+		maxHp += 20; // 体力を10増加
+		regeneVal += 0.01;
 		
 		break;
 	case 1:
@@ -451,25 +471,25 @@ BulletProperty Player::createMineProperty()
 		break;
 	case 1:
 
-		bp.damage = 100; bp.size = 10; bp.delay = 3.0; bp.exproRange = 200;
+		bp.damage = 100; bp.size = 10; bp.delay = 3.0; bp.exproRange = 100; bp.speed = 500;
 		break;
 	case 2:
-		bp.damage = 200; bp.size = 12; bp.delay = 2.5; bp.exproRange = 200;
+		bp.damage = 200; bp.size = 12; bp.delay = 2.5; bp.exproRange = 150; bp.speed = 650;
 		break;
 	case 3:
-		bp.damage = 300; bp.size = 12; bp.delay = 2.0; bp.exproRange = 250;
+		bp.damage = 300; bp.size = 12; bp.delay = 2.0; bp.exproRange = 200; bp.speed = 800;
 		break;
 	case 4:
-		bp.damage = 400; bp.size = 14; bp.delay = 1.5; bp.exproRange = 250;
+		bp.damage = 400; bp.size = 14; bp.delay = 1.5; bp.exproRange = 250; bp.speed = 950;
 		break;
 	case 5:
-		bp.damage = 500; bp.size = 14; bp.delay = 1.0; bp.exproRange = 300;
+		bp.damage = 500; bp.size = 14; bp.delay = 1.0; bp.exproRange = 300; bp.speed = 1100;
 		break;
 	case 6:
-		bp.damage = 500; bp.size = 16; bp.delay = 0.3; bp.exproRange = 300;
+		bp.damage = 500; bp.size = 16; bp.delay = 0.3; bp.exproRange = 350; bp.speed = 1350;
 		break;
 	default:
-		bp.damage = 200 + availableBullet[ItemType::SpecialMagicD] * 2; bp.delay = 0.3; bp.exproRange = 200;
+		bp.damage = 500 + availableBullet[ItemType::SpecialMagicD] * 2; bp.delay = 0.3; bp.exproRange = 400; bp.speed = 1500;
 	}
 	return bp;
 }

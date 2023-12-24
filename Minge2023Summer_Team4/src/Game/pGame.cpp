@@ -23,7 +23,7 @@ Game::Game(const InitData& init)
 	// ボーナスドロップのリセット
 	dropCount = 1;
 
-	deadCount = 3;
+	deadCount = 99;
 }
 
 
@@ -168,6 +168,8 @@ void Game::update()
 				deadCount -= 1;
 				currentState = GameState::Playing;
 				Player::getInstance()->setHp(Player::getInstance()->getMaxHp());
+				Player::getInstance()->startCoolTime = true; // クールタイムを開始する
+				Player::getInstance()->isSet = false;
 				objectManager.startEnemies();
 				mySoundPlayer->playSound(eStageIntro, 5s);
 			}
@@ -234,7 +236,6 @@ void Game::debug()
 	Print << U"プレイヤーのステータス";
 	Print << Player::getInstance()->getHp();
 	Print << Player::getInstance()->getMaxHp();
-
 	Print << U"特殊弾";
 
 	if (KeyEnter.down()) myEffectManager->create_spliteEffect(myPlayer->getPos(), U"Effect1", 0.25, 100);

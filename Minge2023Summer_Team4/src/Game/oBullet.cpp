@@ -12,6 +12,7 @@ void Bullet::update()
 	if (bulletType == BulletType::SpecialD && bulletPhase > 0)
 	{
 		static Timer brustKeepTimer(0.5s, StartImmediately::No);
+
 		if (bulletPhase == 1)
 		{
 			brustKeepTimer.start();
@@ -103,6 +104,14 @@ void Bullet::draw(Vec2 offset, bool isHitboxDraw) const
 	}
 	else GameObject::draw(offset, isHitboxDraw);
 
+	if (bulletType == BulletType::SpecialD)
+	{
+		double alpha = 0.5 * Sin(Scene::Time() * Math::Pi) + 0.5; // 透明度の変化
+		alpha *= 0.5; // 透明度をさらに上げる（より透明にする）
+
+		// 明滅する円を描画
+		Circle{ pos - offset, exproRange }.draw(ColorF(1.0, 0.0, 0.0, alpha)); // 赤色の円
+	}
 }
 
 bool Bullet::isDead(Vec2 playerPos_) {
@@ -110,8 +119,8 @@ bool Bullet::isDead(Vec2 playerPos_) {
 	Vec2 scPos = pos - playerPos_;
 
 	if (hp <= 0) return true;
-	if (abs(scPos.x) > Scene::Width() / 2) return true;
-	if (abs(scPos.y) > Scene::Height() / 2) return true;
+	if (abs(scPos.x) > Scene::Width() * 1.1) return true;
+	if (abs(scPos.y) > Scene::Height() * 1.1) return true;
 	return false;
 }
 
