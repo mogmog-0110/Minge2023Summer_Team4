@@ -89,6 +89,26 @@ void Player::update() {
 	{
 		hp = 0;
 	}
+
+	if (startCoolTime) {
+		isCoolTimeActive = true;
+		remainingCoolTime = 3.0f; // クールタイムを3秒に設定
+		changeCoolTime(3.0s);
+		startCoolTime = false;
+	}
+
+	if (isCoolTimeActive) {
+		remainingCoolTime -= Scene::DeltaTime();
+		if (remainingCoolTime <= 0) {
+			isCoolTimeActive = false; // クールタイム終了
+		}
+	}
+
+	if (!(isCoolTimeActive) && !(startCoolTime) && !(isSet))
+	{
+		isSet = true;
+		changeCoolTime(1.0s);
+	}
 }
 
 void Player::regenerateHp(double regeneVal) {

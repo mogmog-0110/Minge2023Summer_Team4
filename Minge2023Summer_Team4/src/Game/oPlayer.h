@@ -57,6 +57,11 @@ protected:
 
 public:
 
+	bool isCoolTimeActive = false;
+	float remainingCoolTime = 0.0f;
+	bool startCoolTime = false; // クールタイム開始フラグ
+	bool isSet = false;
+
 	// 唯一のインスタンスを取得するための静的メソッド
 	static Player* getInstance();
 

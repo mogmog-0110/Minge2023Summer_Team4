@@ -242,15 +242,15 @@ BulletProperty Enemy::createBulletProperty()
 	case 7:
 		bp.way = 7; bp.speed = 400; bp.delay = 3.0; break;
 	case 8:
-		bp.way = 7; bp.speed = 400; bp.delay = 2.0; break;
+		bp.way = 7; bp.speed = 400; bp.delay = 1.0; break;
 	case 9:
-		bp.way = 9; bp.speed = 400; bp.delay = 1.0; break;
+		bp.way = 9; bp.speed = 400; bp.delay = 0.8; break;
 	case 10:
-		bp.way = 9; bp.speed = 400; bp.delay = 0.6; break;
+		bp.way = 9; bp.speed = 400; bp.delay = 0.5; break;
 	case 11:
-		bp.way = 12; bp.speed = 500; bp.delay = 0.5; break;
-	case 12:
 		bp.way = 12; bp.speed = 500; bp.delay = 0.3; break;
+	case 12:
+		bp.way = 12; bp.speed = 500; bp.delay = 0.2; break;
 	default:
 		// enemyLevelが0または想定外の値の場合の処理（必要に応じて）
 		bp.way = 1; bp.speed = 300; bp.delay = 3.0; break;
