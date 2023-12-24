@@ -23,6 +23,7 @@ Game::Game(const InitData& init)
 	// ボーナスドロップのリセット
 	dropCount = 1;
 
+	// 残機
 	deadCount = 3;
 }
 
@@ -138,6 +139,11 @@ void Game::update()
 			hellMode = 2;
 		}
 
+		// 114514
+		if (KeyY.pressed() && KeyJ.pressed())
+		{
+			deadCount = 114514;
+		}
 		break;
 
 	case GameState::Scenario:
